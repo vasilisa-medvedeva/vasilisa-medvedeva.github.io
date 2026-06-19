@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom: Toggle</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 48px;
+      padding: 48px;
+      background: var(--color-primary-transparent-04);
+      align-items: flex-start;
+      min-width: 600px;
+    }
+
+    .toggle-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .toggle-group__label {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-32);
+      text-transform: uppercase;
+    }
+
+    .toggle-pair {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ── Switch ── */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 26px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .switch__track {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--color-primary-transparent-08);
+      border: 2px solid var(--color-primary-transparent-32);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .switch__thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-32);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .switch[aria-checked="true"] .switch__track {
+      background: var(--color-brand-yellow-secondary);
+      border-color: var(--color-primary-transparent-87);
+    }
+
+    .switch[aria-checked="true"] .switch__thumb {
+      transform: translateX(18px);
+      background: var(--color-primary-transparent-87);
+    }
+
+    .switch:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 3px;
+      border-radius: 9999px;
+    }
+
+    /* ── Checkbox & Radio shared ── */
+    .toggle-cb,
+    .toggle-radio {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .toggle-cb:focus-visible,
+    .toggle-radio:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 3px;
+      border-radius: 50%;
+    }
+
+    /* OFF: only ring visible */
+    .toggle-cb   .t-ring,
+    .toggle-radio .t-ring  { display: block; }
+    .toggle-cb   .t-fill,
+    .toggle-radio .t-fill  { display: none; }
+    .toggle-cb   .t-border,
+    .toggle-radio .t-border { display: none; }
+    .toggle-cb   .t-mark,
+    .toggle-radio .t-mark  { display: none; }
+
+    /* ON: fill + border + mark visible, ring hidden */
+    .toggle-cb[aria-checked="true"]    .t-ring,
+    .toggle-radio[aria-checked="true"] .t-ring   { display: none; }
+    .toggle-cb[aria-checked="true"]    .t-fill,
+    .toggle-radio[aria-checked="true"] .t-fill   { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-border,
+    .toggle-radio[aria-checked="true"] .t-border { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-mark,
+    .toggle-radio[aria-checked="true"] .t-mark   { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Switch -->
+  <div class="toggle-group">
+    <span class="toggle-group__label">Switch</span>
+    <div class="toggle-pair">
+      <!-- ON -->
+      <button class="switch" role="switch" aria-checked="true" aria-label="Switch on" tabindex="0">
+        <span class="switch__track"></span>
+        <span class="switch__thumb"></span>
+      </button>
+      <!-- OFF -->
+      <button class="switch" role="switch" aria-checked="false" aria-label="Switch off" tabindex="0">
+        <span class="switch__track"></span>
+        <span class="switch__thumb"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="toggle-group">
+    <span class="toggle-group__label">Checkbox</span>
+    <div class="toggle-pair">
+      <!-- ON -->
+      <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox checked" tabindex="0">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <!-- OFF ring -->
+          <circle class="t-ring" cx="14" cy="14" r="11" stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+          <!-- ON fill -->
+          <circle class="t-fill" cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+          <!-- ON border -->
+          <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+          <!-- ON checkmark (dark) -->
+          <path class="t-mark" d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <!-- OFF -->
+      <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox unchecked" tabindex="0">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle class="t-ring" cx="14" cy="14" r="11" stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+          <circle class="t-fill" cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+          <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+          <path class="t-mark" d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Radio -->
+  <div class="toggle-group">
+    <span class="toggle-group__label">Radio</span>
+    <div class="toggle-pair">
+      <!-- ON -->
+      <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio checked" tabindex="0">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <!-- OFF ring -->
+          <circle class="t-ring" cx="14" cy="14" r="11" stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+          <!-- ON fill -->
+          <circle class="t-fill" cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+          <!-- ON border -->
+          <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+          <!-- ON center dot (dark) -->
+          <circle class="t-mark" cx="14" cy="14" r="5" fill="var(--color-primary-transparent-87)"/>
+        </svg>
+      </button>
+      <!-- OFF -->
+      <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio unchecked" tabindex="0">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle class="t-ring" cx="14" cy="14" r="11" stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+          <circle class="t-fill" cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+          <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+          <circle class="t-mark" cx="14" cy="14" r="5" fill="var(--color-primary-transparent-87)"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.switch, .toggle-cb, .toggle-radio').forEach(function(el) {
+      function toggle() {
+        var checked = el.getAttribute('aria-checked') === 'true';
+        el.setAttribute('aria-checked', String(!checked));
+      }
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+    });
+  </script>
+
+</body>
+</html>

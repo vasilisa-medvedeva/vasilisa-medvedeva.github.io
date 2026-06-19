@@ -1,0 +1,106 @@
+/* ── Two-level sidebar navigation ── */
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 220px;
+  background: #fff;
+  border-right: 1px solid var(--color-primary-transparent-16);
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 24px;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.sidebar__logo {
+  display: block;
+  flex-shrink: 0;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--color-primary-transparent-16);
+  text-decoration: none;
+}
+
+.sidebar__logo img {
+  width: 140px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.sidebar__logo--active {
+  color: var(--color-primary);
+  background: var(--color-brand-yellow-4);
+}
+
+/* ── Level 1: group header ── */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-group__header {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 20px 4px;
+  font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-title-medium-font-size);
+  font-weight: var(--text-title-medium-font-weight);
+  line-height: var(--text-title-medium-line-height);
+  letter-spacing: var(--text-title-medium-letter-spacing);
+  color: var(--color-primary-transparent-60);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.nav-group__header:hover {
+  color: var(--color-primary);
+}
+
+.nav-group__chevron {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  color: var(--color-primary-transparent-48);
+}
+
+.nav-group.is-open .nav-group__chevron {
+  transform: rotate(90deg);
+}
+
+/* ── Level 2: child links ── */
+.nav-group__items {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+.nav-group.is-open .nav-group__items {
+  max-height: 600px;
+}
+
+.sidebar__link {
+  display: block;
+  padding: 8px 20px 8px 28px;
+  font-family: var(--text-title-small-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-title-small-font-size);
+  font-weight: var(--text-title-small-font-weight);
+  line-height: var(--text-title-small-line-height);
+  letter-spacing: var(--text-title-small-letter-spacing);
+  color: var(--color-primary-transparent-70);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__link:hover,
+.sidebar__link--active {
+  background: var(--color-brand-yellow-4);
+  color: var(--color-primary);
+}

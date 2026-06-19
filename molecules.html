@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Molecules</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px;
+    }
+
+    .page-title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 40px;
+    }
+
+    /* ── Component block ── */
+    .component-block {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .component-block__preview {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 40px;
+    }
+
+    .component-block__preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .component-block__preview-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+    }
+
+    .state-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .state-label {
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Docs panel ── */
+    .docs {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 24px;
+      align-self: start;
+    }
+
+    .docs__name {
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      margin-bottom: 4px;
+    }
+
+    .docs__type {
+      display: inline-block;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      line-height: var(--text-label-small-line-height);
+      color: var(--color-info-secondary);
+      background: var(--color-info-transparent-8);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .docs__section { margin-bottom: 16px; }
+
+    .docs__section-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .docs__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+    }
+
+    .docs__row:last-child { border-bottom: none; }
+    .docs__row-label { color: var(--color-primary-transparent-60); }
+    .docs__row-value { font-weight: var(--text-label-medium-font-weight); color: var(--color-primary); text-align: right; }
+
+    .docs__token {
+      font-size: var(--text-body-small-font-size);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: monospace;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .docs__status {
+      display: inline-block;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .docs__status--draft {
+      background: var(--color-primary-transparent-08);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Docs collapsible ── */
+    .docs__section--collapsible { display: none; }
+    .docs.is-expanded .docs__section--collapsible { display: block; }
+    .docs__toggle {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; gap: 6px;
+      width: 100%; margin-top: 8px; padding: 8px 0;
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      cursor: pointer;
+      border-top: 1px solid var(--color-primary-transparent-16);
+      transition: color 0.15s;
+    }
+    .docs__toggle:hover { color: var(--color-primary); }
+    .docs__toggle svg { width: 14px; height: 14px; flex-shrink: 0; transition: transform 0.2s ease; }
+    .docs.is-expanded .docs__toggle svg { transform: rotate(180deg); }
+
+    /* ── Code panel ── */
+    .code-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: "Roboto", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 6px; padding: 4px 10px; cursor: pointer;
+      transition: background 0.15s, color 0.15s; white-space: nowrap;
+    }
+    .code-toggle-btn:hover { background: var(--color-primary-transparent-08); color: var(--color-primary-transparent-87); }
+    .code-toggle-btn.is-active { background: var(--color-primary-transparent-87); color: var(--color-constant-primary); border-color: transparent; }
+
+    .code-panel {
+      grid-column: 1 / -1; background: #1a1a1a; border-radius: 10px;
+      padding: 20px 24px; position: relative; display: none; margin-top: -24px;
+    }
+    .code-panel.is-open { display: block; }
+    .code-panel pre {
+      font-family: "Roboto Mono", "Fira Code", monospace; font-size: 12.5px;
+      line-height: 1.7; color: #d4d4d4; white-space: pre; overflow-x: auto; padding-right: 80px;
+    }
+    .code-panel pre .tok-tag  { color: #569cd6; }
+    .code-panel pre .tok-attr { color: #9cdcfe; }
+    .code-panel pre .tok-str  { color: #ce9178; }
+    .code-panel pre .tok-cmt  { color: #6a9955; }
+
+    .copy-code-btn {
+      position: absolute; top: 14px; right: 16px;
+      font-family: "Roboto", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
+      border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .copy-code-btn:hover  { background: #3a3a3a; color: #fff; }
+    .copy-code-btn.copied { color: #4ec9b0; border-color: #4ec9b0; }
+
+    .section-divider {
+      height: 1px; background: var(--color-primary-transparent-16); margin: 0 0 48px;
+    }
+
+    /* ── Molecule: PhotoPlaceholder ── */
+    .photo-placeholder {
+      position: relative;
+      width: 134px;
+      height: 134px;
+      border-radius: 4px;
+      background: var(--color-primary-transparent-16);
+      flex-shrink: 0;
+    }
+
+    /* ── Atom: Toggle (reused) ── */
+    .toggle-cb {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .toggle-cb:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 3px;
+      border-radius: 50%;
+    }
+
+    .toggle-cb   .t-ring  { display: block; }
+    .toggle-cb   .t-fill  { display: none; }
+    .toggle-cb   .t-border { display: none; }
+    .toggle-cb   .t-mark  { display: none; }
+
+    .toggle-cb[aria-checked="true"] .t-ring   { display: none; }
+    .toggle-cb[aria-checked="true"] .t-fill   { display: block; }
+    .toggle-cb[aria-checked="true"] .t-border { display: block; }
+    .toggle-cb[aria-checked="true"] .t-mark   { display: block; }
+
+    /* ── Atom: VideoChip (reused) ── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px 4px 4px;
+      gap: 4px;
+      border-radius: 60px;
+      background: var(--color-constant-transparent-48);
+    }
+
+    .chip--playing {
+      padding: 4px 8px;
+      background: var(--color-constant-transparent-60);
+      gap: 0;
+    }
+
+    .chip__icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chip__icon img { width: 32px; height: 32px; display: block; }
+
+    .chip__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .chip__duration {
+      font-family: var(--text-label-medium-font-family), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+
+    .chip__size {
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+    }
+
+    /* Positioning atoms inside photo-placeholder */
+    .photo-placeholder .toggle-cb {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+
+    .photo-placeholder .chip--playing {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+    }
+
+    .photo-placeholder__camera {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+    }
+
+    /* ── Molecule: TextFields ── */
+    .text-field {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 318px;
+    }
+
+    .text-field__btn-add {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--color-constant-primary);
+      border: 1px solid var(--color-primary-transparent-24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .text-field__btn-add img {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .text-field__field {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-constant-primary);
+      border: 1px solid var(--color-primary-transparent-24);
+      border-radius: 20px;
+      padding: 6px 6px 6px 12px;
+    }
+
+    .text-field__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      padding: 2px 0;
+    }
+
+    .text-field__value {
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    .text-field__value--typed {
+      color: var(--color-primary-transparent-87);
+    }
+
+    .text-field__caret {
+      color: var(--color-primary-transparent-87);
+      font-weight: 300;
+    }
+
+    .text-field__emoji {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: block;
+      padding: 2px;
+      box-sizing: border-box;
+    }
+
+    /* row 2 и 3 — высота поля увеличивается, кнопка и поле прижаты к низу */
+    .text-field--row-2,
+    .text-field--row-3 { align-items: flex-end; }
+
+    .text-field--row-2 .text-field__field {
+      min-height: 56px;
+      align-items: flex-end;
+    }
+
+    .text-field--row-2 .text-field__text {
+      align-items: flex-start;
+      align-self: stretch;
+      min-height: 44px;
+    }
+
+    .text-field--row-2 .text-field__value {
+      white-space: normal;
+    }
+
+    .text-field--row-3 .text-field__field {
+      min-height: 76px;
+      align-items: flex-end;
+    }
+
+    .text-field--row-3 .text-field__text {
+      align-items: flex-start;
+      align-self: stretch;
+      min-height: 64px;
+    }
+
+    .text-field--row-3 .text-field__value {
+      white-space: normal;
+    }
+
+    /* TextFields playground */
+    .text-field__textarea {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      resize: none;
+      overflow-y: hidden;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 0; margin: 0;
+      max-height: 64px;
+    }
+    .text-field__textarea::placeholder { color: var(--color-primary-transparent-60); }
+    .tf-pg                    { align-items: flex-end; }
+    .tf-pg .text-field__field { align-items: flex-end; }
+    .tf-pg .text-field__text  { align-items: flex-start; align-self: stretch; min-height: 20px; }
+
+    /* InputField playground wrapper */
+    .if-playground {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+      margin-bottom: 28px;
+    }
+    .if-playground__title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── Molecule: SearchField ── */
+    .search-field {
+      display: flex;
+      align-items: center;
+      width: 318px;
+      background: var(--color-constant-primary);
+      border: 1px solid var(--color-primary-transparent-24);
+      border-radius: 20px;
+      padding: 4px 12px;
+      box-sizing: border-box;
+    }
+
+    /* Active border — focused/typed/progressing */
+    .search-field--focused,
+    .search-field--typed,
+    .search-field--progressing {
+      border-width: 1.5px;
+      border-color: var(--color-primary-transparent-87);
+      padding-right: 8px;
+    }
+
+    /* Cancel icon present → gap between inner and cancel */
+    .search-field--typed,
+    .search-field--progressing {
+      gap: 4px;
+    }
+
+    /* M size overrides */
+    .search-field--m {
+      border-radius: 25px;
+      padding: 10px 12px;
+    }
+
+    .search-field--m.search-field--focused,
+    .search-field--m.search-field--typed,
+    .search-field--m.search-field--progressing {
+      gap: 4px;
+      padding-right: 12px;
+    }
+
+    .search-field__inner {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 0;
+    }
+
+    .search-field__icon {
+      width: 24px;
+      height: 24px;
+      max-width: 24px;
+      max-height: 24px;
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: block;
+      align-self: center;
+      object-fit: contain;
+    }
+
+    .search-field__value {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    .search-field__value--active {
+      color: var(--color-primary-transparent-87);
+    }
+
+    .search-field__caret {
+      color: var(--color-primary-transparent-87);
+      font-weight: 300;
+    }
+
+    .search-field__cancel {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-field__cancel img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    @keyframes sf-spin {
+      0%   { transform: rotate(0deg);   animation-timing-function: ease-in; }
+      50%  { transform: rotate(180deg); animation-timing-function: ease-out; }
+      100% { transform: rotate(360deg); }
+    }
+    .search-field--progressing .search-field__icon {
+      animation: sf-spin 1.0s linear infinite;
+      transform-origin: center;
+    }
+
+    /* SearchField: real input */
+    .search-field__input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 0; margin: 0;
+    }
+    .search-field__input::placeholder { color: var(--color-primary-transparent-48); }
+    /* hide the native clear button (Chrome/Safari) */
+    .search-field__input::-webkit-search-cancel-button { display: none; }
+
+    /* SearchField playground — cancel visibility */
+    .sf-pg .search-field__cancel { display: none; }
+    .sf-pg.search-field--typed .search-field__cancel,
+    .sf-pg.search-field--progressing .search-field__cancel { display: flex; }
+    .sf-pg.search-field--m.search-field--focused .search-field__cancel { display: flex; }
+
+    /* ── Molecule: CardProfileText ── */
+    .card-profile-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 356px;
+    }
+
+    .card-profile-text--with-bio {
+      gap: 12px;
+    }
+
+    .card-profile-text__top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .card-profile-text--private .card-profile-text__top {
+      gap: 4px;
+    }
+
+    .card-profile-text__title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card-profile-text__title {
+      font-family: var(--text-title-large-font-family), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      width: 100%;
+    }
+
+    .card-profile-text__subtitle {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      width: 100%;
+    }
+
+    .card-profile-text__private {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      width: 100%;
+    }
+
+    .card-profile-text__lock {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .card-profile-text__private-label {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .card-profile-text__bio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .card-profile-text__bio-text {
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-align: center;
+      flex: 1;
+    }
+
+    /* ── Molecule: Gallery ── */
+    .gallery {
+      position: relative;
+      width: 189px;
+      height: 189px;
+      border-radius: 8px;
+      background: var(--color-primary-transparent-16);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .gallery__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+    }
+
+    /* Centered chip anchor (video: download / loading / regular) */
+    .gallery__chip-anchor {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Playing chip: bottom-right 8px */
+    .gallery__chip-playing {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+    }
+
+    /* Centered icon (image/download, image/loading) */
+    .gallery__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    /* "+N" label (more/regular) */
+    .gallery__more {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: var(--text-headline-medium-letter-spacing);
+      color: var(--color-constant-primary);
+      white-space: nowrap;
+    }
+
+    /* ── Molecule: TextFields.S ── */
+    .tf-s { display: flex; flex-direction: column; gap: 6px; width: 318px; }
+
+    .tf-s__control {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--color-constant-primary);
+      border: 1px solid var(--color-primary-transparent-24);
+      border-radius: 30px;
+      padding: 6px 8px 6px 16px;
+      box-sizing: border-box;
+    }
+
+    .tf-s--focused .tf-s__control,
+    .tf-s--typing  .tf-s__control  { border-width: 1.5px; border-color: var(--color-primary-transparent-87); }
+    .tf-s--error   .tf-s__control  { border-width: 1.5px; border-color: var(--color-warning-primary); }
+    .tf-s--disabled      .tf-s__control,
+    .tf-s--disabled-text .tf-s__control {
+      border-width: 1.5px;
+      border-color: var(--color-primary-transparent-32);
+      padding-right: 16px;
+    }
+
+    .tf-s__text {
+      flex: 1; min-width: 0;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      margin: 0; padding: 2px 0;
+    }
+    .tf-s__text--placeholder { color: var(--color-primary-transparent-60); }
+    .tf-s__text--muted       { color: var(--color-primary-transparent-32); }
+    .tf-s__caret { color: var(--color-primary-transparent-87); font-weight: 300; }
+
+    .tf-s__input {
+      flex: 1; min-width: 0;
+      border: none; outline: none; background: transparent;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 2px 0; margin: 0;
+    }
+    .tf-s__input::placeholder { color: var(--color-primary-transparent-60); }
+
+    .tf-s__icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
+
+    .tf-s__supporting {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 0 4px 0 16px; margin: 0;
+    }
+    .tf-s--error        .tf-s__supporting { color: var(--color-warning-primary); }
+    .tf-s--disabled     .tf-s__supporting { color: var(--color-primary-transparent-32); }
+    .tf-s--disabled-text .tf-s__supporting { color: var(--color-primary-transparent-48); }
+
+    /* ── Molecule: TextFields.L ── */
+    .tf-l { display: flex; flex-direction: column; gap: 6px; width: 318px; }
+
+    .tf-l__control {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--color-brand-yellow-4);
+      border: 1px solid var(--color-primary-transparent-24);
+      border-radius: 30px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .tf-l--focused .tf-l__control,
+    .tf-l--typing  .tf-l__control  { border-width: 1.5px; border-color: var(--color-primary-transparent-87); }
+    .tf-l--typed   .tf-l__control  { border-width: 1px;   border-color: var(--color-primary-transparent-48); }
+    .tf-l--error   .tf-l__control  { border-width: 1.5px; border-color: var(--color-warning-primary); }
+    .tf-l--disabled      .tf-l__control,
+    .tf-l--disabled-text .tf-l__control { border-width: 1.5px; border-color: var(--color-primary-transparent-32); }
+
+    /* Floating label */
+    .tf-l__label {
+      position: absolute;
+      left: 16px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      font-weight: var(--text-body-large-font-weight);
+      color: var(--color-primary-transparent-87);
+      background: var(--color-brand-yellow-4);
+      padding: 0;
+      pointer-events: none; white-space: nowrap;
+      transition: top .14s ease, font-size .14s ease, padding .14s ease,
+                  line-height .14s ease, left .14s ease, color .14s ease;
+    }
+    .tf-l--focused   .tf-l__label,
+    .tf-l--typing    .tf-l__label,
+    .tf-l--typed     .tf-l__label,
+    .tf-l--has-value .tf-l__label {
+      top: 0; left: 12px;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      padding: 0 4px;
+      color: var(--color-primary-transparent-48);
+    }
+    .tf-l--error .tf-l__label {
+      top: 0; left: 12px;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      padding: 0 4px;
+      color: var(--color-warning-primary);
+    }
+    .tf-l--disabled      .tf-l__label { color: var(--color-primary-transparent-32); }
+    .tf-l--disabled-text .tf-l__label { color: var(--color-primary-transparent-60); }
+
+    .tf-l__text {
+      flex: 1; min-width: 0;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      margin: 0; padding: 2px 0;
+    }
+    .tf-l__caret { color: var(--color-primary-transparent-87); font-weight: 300; }
+
+    .tf-l__input {
+      flex: 1; min-width: 0;
+      border: none; outline: none; background: transparent;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 2px 0; margin: 0;
+    }
+
+    .tf-l__icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
+
+    .tf-l__eye-btn {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; flex-shrink: 0;
+      cursor: pointer; opacity: 0.87; transition: opacity 0.15s;
+    }
+    .tf-l__eye-btn:hover { opacity: 1; }
+    .tf-l__eye-btn img { width: 24px; height: 24px; display: block; }
+    .tf-l--disabled .tf-l__eye-btn,
+    .tf-l--disabled-text .tf-l__eye-btn { opacity: 0.32; cursor: default; pointer-events: none; }
+
+    .tf-l__supporting {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      padding: 0 4px 0 16px; margin: 0;
+    }
+    .tf-l--error        .tf-l__supporting { color: var(--color-warning-primary); }
+    .tf-l--disabled     .tf-l__supporting { color: var(--color-primary-transparent-32); }
+    .tf-l--disabled-text .tf-l__supporting { color: var(--color-primary-transparent-48); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar">
+    <a class="sidebar__logo" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
+        <a class="sidebar__link" href="index.html#preview">Preview</a>
+        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
+        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
+        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
+        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
+        <a class="sidebar__link" href="index.html#chip-live">ChipLive</a>
+      </div>
+    </div>
+
+    <div class="nav-group nav-group--active" id="nav-molecules">
+      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
+        Molecules
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link sidebar__link--active" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
+        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
+        <a class="sidebar__link" href="molecules.html#text-fields">TextFields</a>
+        <a class="sidebar__link" href="molecules.html#search-field">SearchField</a>
+        <a class="sidebar__link" href="molecules.html#tf-s">TextFields.S</a>
+        <a class="sidebar__link" href="molecules.html#tf-l">TextFields.L</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <h1 class="page-title">Molecules</h1>
+    <p class="page-subtitle">Комбинации атомов. Токены only — без новых цветов и шрифтов.</p>
+
+    <div class="section-divider"></div>
+
+    <!-- PhotoPlaceholder -->
+    <div id="photo-placeholder" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">PhotoPlaceholder</div>
+          <button class="code-toggle-btn" onclick="toggleCode('photo-placeholder')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Photo</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select photo" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <span class="state-label">Unchecked</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select photo" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <span class="state-label">Checked</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select video" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
+            </div>
+            <span class="state-label">Unchecked</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select video" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
+            </div>
+            <span class="state-label">Checked</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Add Media</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder" role="button" aria-label="Add media" tabindex="0" style="cursor:pointer;">
+              <!-- Icon: camera-fill from icons/general -->
+              <img class="photo-placeholder__camera" src="icons/general/camera-fill.svg" alt="" aria-hidden="true" />
+            </div>
+            <span class="state-label">addMedia</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">PhotoPlaceholder</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">134 × 134px · r 4px · bg primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">24 × 24px · top-right 8px · photo &amp; video only</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">px 8 py 4 · r 60px · bottom-right 8px · video only</span></div>
+          <div class="docs__row"><span class="docs__row-label">Camera icon</span><span class="docs__row-value">32 × 32px · centered · addMedia only</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Checkbox top-right, no chip</span></div>
+          <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Checkbox top-right + duration chip bottom-right</span></div>
+          <div class="docs__row"><span class="docs__row-label">addMedia</span><span class="docs__row-value">Camera icon centered, no checkbox</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">unchecked</span><span class="docs__row-value">Circle stroke · primary-transparent-32</span></div>
+          <div class="docs__row"><span class="docs__row-label">checked</span><span class="docs__row-value">Yellow fill + white checkmark</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-constant-transparent-60</span>
+          <span class="docs__token">--text-label-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-photo-placeholder">
+        <button class="copy-code-btn" onclick="copyCode('photo-placeholder')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Photo — uses Toggle / Checkbox atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Video — Toggle / Checkbox + VideoChip / Playing atoms --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing"</span><span class="tok-tag">&gt;&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Add Media — icon: camera-fill from icons/general --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span> <span class="tok-attr">role</span>=<span class="tok-str">"button"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder__camera"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/camera-fill.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /PhotoPlaceholder -->
+
+    <div class="section-divider"></div>
+
+    <!-- Gallery -->
+    <div id="gallery" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Gallery</div>
+          <button class="code-toggle-btn" onclick="toggleCode('gallery')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- VIDEO -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Atom: VideoChip / Not loaded -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--not-loaded">
+                  <div class="chip__icon"><img src="assets/chip-ic-download.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Download</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Atom: VideoChip / Loading -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--loading">
+                  <div class="chip__icon"><img src="assets/chip-ic-loading.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- Atom: VideoChip / Regular -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--regular">
+                  <div class="chip__icon"><img src="assets/chip-ic-play.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing gallery__chip-playing">
+                <span class="chip__duration">0:32</span>
+              </div>
+            </div>
+            <span class="state-label">Playing</span>
+          </div>
+
+        </div>
+
+        <!-- IMAGE -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Image</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Icon: download from icons/general -->
+              <img class="gallery__icon" src="icons/general/download.svg" alt="" aria-hidden="true"/>
+            </div>
+            <span class="state-label">Download</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Asset: chip-ic-loading.svg (loading spinner) -->
+              <img class="gallery__icon" src="assets/chip-ic-loading.svg" alt="" aria-hidden="true"/>
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- clean card -->
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+
+        </div>
+
+        <!-- MORE -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">More</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <span class="gallery__more">+67</span>
+            </div>
+            <span class="state-label">+N</span>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Gallery</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">189 × 189px · r 8px · bg primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">Overlay</span><span class="docs__row-value">rgba(0,0,0,0.4) · blur 2px · download/loading/more</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center или bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32×32px · центр · image download/loading</span></div>
+          <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · белый · центр</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Atoms used</div>
+          <div class="docs__row"><span class="docs__row-label">VideoChip</span><span class="docs__row-value">Not loaded · Loading · Regular · Playing</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icons</span><span class="docs__row-value">download.svg · chip-ic-loading.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">video/download</span><span class="docs__row-value">Overlay + chip not-loaded, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/loading</span><span class="docs__row-value">Overlay + chip loading, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/regular</span><span class="docs__row-value">Chip regular, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/playing</span><span class="docs__row-value">Chip playing, bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/download</span><span class="docs__row-value">Overlay + иконка download, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/loading</span><span class="docs__row-value">Overlay + спиннер, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/regular</span><span class="docs__row-value">Чистая карточка</span></div>
+          <div class="docs__row"><span class="docs__row-label">more/regular</span><span class="docs__row-value">Overlay + "+N" текст, центр</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-headline-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-gallery">
+        <button class="copy-code-btn" onclick="copyCode('gallery')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- video/playing — VideoChip / Playing atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing gallery__chip-playing"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- video/regular — VideoChip / Regular atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__chip-anchor"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--regular"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- image/download — icon: download from icons/general --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/download.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- more/regular --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__more"</span><span class="tok-tag">&gt;</span>+67<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Gallery -->
+
+    <div class="section-divider"></div>
+
+    <!-- CardProfileText -->
+    <div id="card-profile-text" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CardProfileText</div>
+          <button class="code-toggle-btn" onclick="toggleCode('card-profile-text')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+
+          <!-- private + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--private card-profile-text--with-bio">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+                <div class="card-profile-text__private">
+                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                  <span class="card-profile-text__private-label">Private</span>
+                </div>
+              </div>
+              <div class="card-profile-text__bio">
+                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+              </div>
+            </div>
+            <span class="state-label">private + bio</span>
+          </div>
+
+          <!-- private, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--private">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+                <div class="card-profile-text__private">
+                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                  <span class="card-profile-text__private-label">Private</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">private, no bio</span>
+          </div>
+
+          <!-- public + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--with-bio">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+              </div>
+              <div class="card-profile-text__bio">
+                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+              </div>
+            </div>
+            <span class="state-label">public + bio</span>
+          </div>
+
+          <!-- public, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">public, no bio</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">CardProfileText</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">Title/Large · primary-87</span></div>
+          <div class="docs__row"><span class="docs__row-label">subtitle</span><span class="docs__row-value">Body/Medium · primary-60</span></div>
+          <div class="docs__row"><span class="docs__row-label">private</span><span class="docs__row-value">ic16_lock + «Private» · gap 2px</span></div>
+          <div class="docs__row"><span class="docs__row-label">bio</span><span class="docs__row-value">Body/Large · primary-87 · опционально</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
+          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только title + subtitle</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--text-title-large-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+          <span class="docs__token">--text-body-large-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons used</div>
+          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · 16×16px</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-card-profile-text">
+        <button class="copy-code-btn" onclick="copyCode('card-profile-text')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- private + bio --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text card-profile-text--private card-profile-text--with-bio"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__top"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title-group"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__lock"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/lock.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private-label"</span><span class="tok-tag">&gt;</span>Private<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio-text"</span><span class="tok-tag">&gt;</span>Bio text<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /CardProfileText -->
+
+    <!-- TextFields -->
+    <div id="text-fields" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TextFields</div>
+          <button class="code-toggle-btn" onclick="toggleCode('text-fields')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Playground -->
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div class="text-field tf-pg" id="tf-pg">
+            <button class="text-field__btn-add" type="button" aria-label="Add">
+              <img src="icons/small/add.svg" alt="" aria-hidden="true">
+            </button>
+            <div class="text-field__field">
+              <div class="text-field__text">
+                <textarea class="text-field__textarea" id="tf-textarea" rows="1" placeholder="Message..." aria-label="Message"></textarea>
+              </div>
+              <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+            </div>
+          </div>
+          <p style="margin:8px 0 0 40px;font-size:12px;color:var(--color-primary-transparent-48);">Enter — send · Shift+Enter — new line</p>
+        </div>
+
+        <!-- States -->
+        <div class="if-playground__title">States</div>
+
+        <!-- Row 1 states -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Row 1</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+
+          <!-- enabled -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value">Message...</p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">enabled</span>
+          </div>
+
+          <!-- focused -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value"><span class="text-field__caret">|</span> <span style="color:var(--color-primary-transparent-32,#c2c2c2)">Message...</span></p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">focused</span>
+          </div>
+
+          <!-- typing -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value text-field__value--typed">Message<span class="text-field__caret">|</span></p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">typing</span>
+          </div>
+
+          <!-- typed -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value text-field__value--typed">Message</p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">typed</span>
+          </div>
+
+        </div>
+
+        <!-- Row 2 -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Row 2</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field text-field--row-2">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value">Message</p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">enabled</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field text-field--row-2">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value text-field__value--typed">A message is more than just words on a screen or<span class="text-field__caret">|</span></p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">typing</span>
+          </div>
+
+        </div>
+
+        <!-- Row 3 -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Row 3</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field text-field--row-3">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value">Message</p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">enabled</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="text-field text-field--row-3">
+              <button class="text-field__btn-add" aria-label="Add">
+                <img src="icons/small/add.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="text-field__field">
+                <div class="text-field__text">
+                  <p class="text-field__value text-field__value--typed">A message is more than just words on a screen or a piece of paper. It's a<span class="text-field__caret">|</span></p>
+                </div>
+                <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+              </div>
+            </div>
+            <span class="state-label">typing</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TextFields</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">btn-add</span><span class="docs__row-value">36×36px · circle · border primary-24</span></div>
+          <div class="docs__row"><span class="docs__row-label">field</span><span class="docs__row-value">flex 1 · r 20px · border primary-24 · p 6/12px</span></div>
+          <div class="docs__row"><span class="docs__row-label">value</span><span class="docs__row-value">Body/Large · 16/20 · ls 0.5px</span></div>
+          <div class="docs__row"><span class="docs__row-label">emoji icon</span><span class="docs__row-value">24px · icons/general/emoji.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">Placeholder primary-60</span></div>
+          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">Курсор + приглушённый placeholder</span></div>
+          <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">Текст primary-87 + курсор</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">Текст primary-87, без курсора</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">row 1</span><span class="docs__row-value">Однострочный ввод</span></div>
+          <div class="docs__row"><span class="docs__row-label">row 2</span><span class="docs__row-value">min-height 56px, текст переносится</span></div>
+          <div class="docs__row"><span class="docs__row-label">row 3</span><span class="docs__row-value">min-height 76px, текст переносится</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--text-body-large-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons used</div>
+          <div class="docs__row"><span class="docs__row-label">ic16_add</span><span class="docs__row-value">icons/small/add.svg · 16×16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">ic24_emoji</span><span class="docs__row-value">icons/general/emoji.svg · 24×24px</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-text-fields">
+        <button class="copy-code-btn" onclick="copyCode('text-fields')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- enabled --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field__btn-add"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Add"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/add.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field__field"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field__text"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field__value"</span><span class="tok-tag">&gt;</span>Message...<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field__emoji"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/emoji.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- row 2 --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field text-field--row-2"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- row 3 --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field text-field--row-3"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /TextFields -->
+
+    <div class="section-divider"></div>
+
+    <!-- SearchField -->
+    <div id="search-field" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">SearchField</div>
+          <button class="code-toggle-btn" onclick="toggleCode('search-field')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Playground -->
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div style="display:flex;gap:16px;flex-direction:column;">
+
+            <div style="display:flex;gap:32px;align-items:flex-start;">
+              <!-- S -->
+              <div>
+                <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Size S</div>
+                <div class="search-field sf-pg" id="sf-s-pg">
+                  <div class="search-field__inner">
+                    <img class="search-field__icon" id="sf-s-icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                    <input class="search-field__input" id="sf-s-input" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                  </div>
+                  <button class="search-field__cancel" id="sf-s-cancel" type="button" aria-label="Clear search">
+                    <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+                  </button>
+                </div>
+                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to simulate search</p>
+              </div>
+              <!-- M -->
+              <div>
+                <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Size M</div>
+                <div class="search-field search-field--m sf-pg" id="sf-m-pg">
+                  <div class="search-field__inner">
+                    <img class="search-field__icon" id="sf-m-icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                    <input class="search-field__input" id="sf-m-input" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                  </div>
+                  <button class="search-field__cancel" id="sf-m-cancel" type="button" aria-label="Clear search">
+                    <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+                  </button>
+                </div>
+                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to simulate search</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- States -->
+        <div class="if-playground__title">States</div>
+
+        <!-- Size S -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Size S</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value">Search</p>
+              </div>
+            </div>
+            <span class="state-label">placeholder</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--focused">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active"><span class="search-field__caret">|</span></p>
+              </div>
+            </div>
+            <span class="state-label">focused</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--typed">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active">Search<span class="search-field__caret">|</span></p>
+              </div>
+              <button class="search-field__cancel" aria-label="Clear search">
+                <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <span class="state-label">typed</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--progressing">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/loader/loader-medium.svg" width="24" height="24" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active">Search<span class="search-field__caret">|</span></p>
+              </div>
+              <button class="search-field__cancel" aria-label="Clear search">
+                <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <span class="state-label">progressing</span>
+          </div>
+
+        </div>
+
+        <!-- Size M -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Size M</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--m">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value">Search</p>
+              </div>
+            </div>
+            <span class="state-label">placeholder</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--m search-field--focused">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active"><span class="search-field__caret">|</span></p>
+              </div>
+              <button class="search-field__cancel" aria-label="Clear search">
+                <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <span class="state-label">focused</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--m search-field--typed">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active">Search<span class="search-field__caret">|</span></p>
+              </div>
+              <button class="search-field__cancel" aria-label="Clear search">
+                <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <span class="state-label">typed</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="search-field search-field--m search-field--progressing">
+              <div class="search-field__inner">
+                <img class="search-field__icon" src="icons/loader/loader-medium.svg" width="24" height="24" alt="" aria-hidden="true">
+                <p class="search-field__value search-field__value--active">Search<span class="search-field__caret">|</span></p>
+              </div>
+              <button class="search-field__cancel" aria-label="Clear search">
+                <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <span class="state-label">progressing</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">SearchField</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">318px · pill · border · white bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · search или loader</span></div>
+          <div class="docs__row"><span class="docs__row-label">value</span><span class="docs__row-value">Body/Large · flex 1</span></div>
+          <div class="docs__row"><span class="docs__row-label">cancel</span><span class="docs__row-value">24×24px · только typed/progressing (+ M focused)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">S</span><span class="docs__row-value">py 4px · r 20px</span></div>
+          <div class="docs__row"><span class="docs__row-label">M</span><span class="docs__row-value">py 10px · r 25px</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">placeholder</span><span class="docs__row-value">border primary-24 · text primary-48</span></div>
+          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">border primary-87 1.5px · caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">border primary-87 1.5px · text + caret + cancel</span></div>
+          <div class="docs__row"><span class="docs__row-label">progressing</span><span class="docs__row-value">loader icon · text + caret + cancel</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-48</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--text-body-large-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons used</div>
+          <div class="docs__row"><span class="docs__row-label">ic24_search</span><span class="docs__row-value">icons/general/search.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">ic24_cancel</span><span class="docs__row-value">icons/general/cancel.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">loader</span><span class="docs__row-value">icons/loader/loader-medium.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-search-field">
+        <button class="copy-code-btn" onclick="copyCode('search-field')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- S placeholder --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__inner"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__value"</span><span class="tok-tag">&gt;</span>Search<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- S typed --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field search-field--typed"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__inner"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__value search-field__value--active"</span><span class="tok-tag">&gt;</span>Search<span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__caret"</span><span class="tok-tag">&gt;</span>|<span class="tok-tag">&lt;/span&gt;&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__cancel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Clear search"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/cancel.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- M focused --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field search-field--m search-field--focused"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__inner"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__value search-field__value--active"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__caret"</span><span class="tok-tag">&gt;</span>|<span class="tok-tag">&lt;/span&gt;&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__cancel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Clear search"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/cancel.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /SearchField -->
+
+    <div class="section-divider"></div>
+
+    <!-- TextFields.S -->
+    <div id="tf-s" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TextFields.S</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tf-s')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Playground -->
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;">
+            <div class="tf-s" id="tfs-pg">
+              <div class="tf-s__control">
+                <input class="tf-s__input" type="text" id="tfs-input" placeholder="Label" autocomplete="off">
+                <img class="tf-s__icon" id="tfs-err-icon" src="icons/general/error.svg" alt="" aria-hidden="true" style="display:none">
+              </div>
+              <p class="tf-s__supporting" id="tfs-supporting">Enter some text (min 3 chars)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static states -->
+        <div class="if-playground__title">States</div>
+        <div style="display:flex;gap:24px;flex-direction:column;">
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s">
+              <div class="tf-s__control">
+                <p class="tf-s__text tf-s__text--placeholder">Label</p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">enabled</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--focused">
+              <div class="tf-s__control">
+                <p class="tf-s__text"><span class="tf-s__caret">|</span></p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">focused</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--typing">
+              <div class="tf-s__control">
+                <p class="tf-s__text">Placeh<span class="tf-s__caret">|</span></p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">typing</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--typed">
+              <div class="tf-s__control">
+                <p class="tf-s__text">Placeholder</p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">typed</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--error">
+              <div class="tf-s__control">
+                <p class="tf-s__text">Placeholder</p>
+                <img class="tf-s__icon" src="icons/general/error.svg" alt="" aria-hidden="true">
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">error</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--disabled">
+              <div class="tf-s__control">
+                <p class="tf-s__text tf-s__text--muted">Label</p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">disabled</span>
+          </div>
+
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tf-s tf-s--disabled-text">
+              <div class="tf-s__control">
+                <p class="tf-s__text tf-s__text--placeholder">Label</p>
+              </div>
+              <p class="tf-s__supporting">Supporting text</p>
+            </div>
+            <span class="state-label">disabled + text</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TextFields.S</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">control</span><span class="docs__row-value">318px · r 30px · py 6px · pl 16px · pr 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">text</span><span class="docs__row-value">Body/Large · placeholder or value</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · error.svg (error only)</span></div>
+          <div class="docs__row"><span class="docs__row-label">supporting</span><span class="docs__row-value">Body/Medium · pl 16px · below control</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">1px · primary-24 · label primary-60</span></div>
+          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">1.5px · primary-87 · caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">1.5px · primary-87 · text + caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">1px · primary-24 · text primary-87</span></div>
+          <div class="docs__row"><span class="docs__row-label">error</span><span class="docs__row-value">1.5px · warning · error.svg · red supporting</span></div>
+          <div class="docs__row"><span class="docs__row-label">disabled</span><span class="docs__row-value">1.5px · primary-32 · text primary-32 · px 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">disabled+text</span><span class="docs__row-value">1.5px · primary-32 · text primary-60 · supporting primary-48</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Differences from TextFields.L</div>
+          <div class="docs__row"><span class="docs__row-label">background</span><span class="docs__row-value">white (#FFF)</span></div>
+          <div class="docs__row"><span class="docs__row-label">height</span><span class="docs__row-value">32px (py 6px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">static placeholder — no float</span></div>
+          <div class="docs__row"><span class="docs__row-label">password</span><span class="docs__row-value">not supported</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-primary-transparent-48</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-warning-primary</span>
+          <span class="docs__token">--text-body-large-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-tf-s">
+        <button class="copy-code-btn" onclick="copyCode('tf-s')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- enabled --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__control"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"text"</span> <span class="tok-attr">placeholder</span>=<span class="tok-str">"Label"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__supporting"</span><span class="tok-tag">&gt;</span>Supporting text<span class="tok-tag">&lt;/p&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- error --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s tf-s--error"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__control"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"text"</span> <span class="tok-attr">placeholder</span>=<span class="tok-str">"Label"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/error.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-s__supporting"</span><span class="tok-tag">&gt;</span>Error message<span class="tok-tag">&lt;/p&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /TextFields.S -->
+
+    <div class="section-divider"></div>
+
+    <!-- TextFields.L -->
+    <div id="tf-l" class="component-block">
+      <div class="component-block__preview" style="background: var(--color-brand-yellow-4);">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TextFields.L</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tf-l')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Playground -->
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div style="display:flex;flex-direction:column;gap:20px;align-items:flex-start;">
+
+            <!-- Text field with email validation -->
+            <div class="tf-l" id="tfl-text">
+              <div class="tf-l__control">
+                <label class="tf-l__label" for="tfl-text-input">Email</label>
+                <input class="tf-l__input" type="text" id="tfl-text-input" autocomplete="off">
+                <img class="tf-l__icon" id="tfl-text-err-icon" src="icons/general/error.svg" alt="" aria-hidden="true" style="display:none">
+              </div>
+              <p class="tf-l__supporting" id="tfl-text-supporting">Enter your email address</p>
+            </div>
+
+            <!-- Password field -->
+            <div class="tf-l" id="tfl-pw">
+              <div class="tf-l__control">
+                <label class="tf-l__label" for="tfl-pw-input">Password</label>
+                <input class="tf-l__input" type="password" id="tfl-pw-input" autocomplete="off">
+                <button class="tf-l__eye-btn" id="tfl-eye-btn" type="button" aria-label="Show password">
+                  <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" id="tfl-eye-icon" width="24" height="24">
+                </button>
+              </div>
+              <p class="tf-l__supporting" id="tfl-pw-supporting">At least 8 characters</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Static states -->
+        <div class="if-playground__title">States</div>
+        <div style="display:flex;gap:24px;flex-direction:column;">
+
+          <!-- enabled -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text" style="visibility:hidden">·</p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text" style="visibility:hidden">·</p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">enabled</span>
+          </div>
+
+          <!-- focused -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--focused">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text"><span class="tf-l__caret">|</span></p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--focused">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text"><span class="tf-l__caret">|</span></p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">focused</span>
+          </div>
+
+          <!-- typing -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--typing">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text">Placeh<span class="tf-l__caret">|</span></p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--typing">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text">••••••<span class="tf-l__caret">|</span></p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">typing</span>
+          </div>
+
+          <!-- typed -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--typed">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text">Placeholder</p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--typed">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text">••••••••</p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">typed</span>
+          </div>
+
+          <!-- error -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--error">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text">Placeholder</p>
+                  <img class="tf-l__icon" src="icons/general/error.svg" alt="" aria-hidden="true">
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--error">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text">••••••••</p>
+                  <img class="tf-l__icon" src="icons/general/error.svg" alt="" aria-hidden="true">
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">error</span>
+          </div>
+
+          <!-- disabled -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--disabled">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text" style="visibility:hidden">·</p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--disabled">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text" style="visibility:hidden">·</p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">disabled</span>
+          </div>
+
+          <!-- disabled + text -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div style="display:flex;gap:16px;">
+              <div class="tf-l tf-l--disabled-text">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Label</span>
+                  <p class="tf-l__text" style="visibility:hidden">·</p>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+              <div class="tf-l tf-l--disabled-text">
+                <div class="tf-l__control">
+                  <span class="tf-l__label">Password</span>
+                  <p class="tf-l__text">••••••••</p>
+                  <button class="tf-l__eye-btn" type="button" aria-label="Show password" tabindex="-1">
+                    <img src="icons/general/eye-close.svg" alt="" aria-hidden="true" width="24" height="24">
+                  </button>
+                </div>
+                <p class="tf-l__supporting">Supporting text</p>
+              </div>
+            </div>
+            <span class="state-label">disabled + text</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TextFields.L</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">control</span><span class="docs__row-value">318px · r 30px · p 16px all sides</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — Body/Large inside → Body/Medium at border</span></div>
+          <div class="docs__row"><span class="docs__row-label">input</span><span class="docs__row-value">Body/Large · text or password</span></div>
+          <div class="docs__row"><span class="docs__row-label">eye-btn</span><span class="docs__row-value">24×24px · toggles password visibility</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · error.svg (error only)</span></div>
+          <div class="docs__row"><span class="docs__row-label">supporting</span><span class="docs__row-value">Body/Medium · pl 16px · below control</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">1px · primary-24 · label inside (primary-87)</span></div>
+          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">1.5px · primary-87 · label ↑ (primary-48)</span></div>
+          <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">1.5px · primary-87 · label ↑ · text + caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">1px · primary-48 · label ↑</span></div>
+          <div class="docs__row"><span class="docs__row-label">error</span><span class="docs__row-value">1.5px · warning · label ↑ red · error.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">disabled</span><span class="docs__row-value">1.5px · primary-32 · label inside (primary-32)</span></div>
+          <div class="docs__row"><span class="docs__row-label">disabled+text</span><span class="docs__row-value">1.5px · primary-32 · label inside (primary-60)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Differences from TextFields.S</div>
+          <div class="docs__row"><span class="docs__row-label">background</span><span class="docs__row-value">brand-yellow-4 (#FFFCF6)</span></div>
+          <div class="docs__row"><span class="docs__row-label">height</span><span class="docs__row-value">52px (p 16px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — rises to border on focus</span></div>
+          <div class="docs__row"><span class="docs__row-label">border typed</span><span class="docs__row-value">primary-48 (not primary-24)</span></div>
+          <div class="docs__row"><span class="docs__row-label">password</span><span class="docs__row-value">supported (eye toggle)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-4</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-primary-transparent-48</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-warning-primary</span>
+          <span class="docs__token">--text-body-large-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-tf-l">
+        <button class="copy-code-btn" onclick="copyCode('tf-l')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- enabled --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__control"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;label</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__label"</span> <span class="tok-attr">for</span>=<span class="tok-str">"my-input"</span><span class="tok-tag">&gt;</span>Label<span class="tok-tag">&lt;/label&gt;</span>
+    <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"text"</span> <span class="tok-attr">id</span>=<span class="tok-str">"my-input"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__supporting"</span><span class="tok-tag">&gt;</span>Supporting text<span class="tok-tag">&lt;/p&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- password --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__control"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;label</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__label"</span> <span class="tok-attr">for</span>=<span class="tok-str">"pw"</span><span class="tok-tag">&gt;</span>Password<span class="tok-tag">&lt;/label&gt;</span>
+    <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"password"</span> <span class="tok-attr">id</span>=<span class="tok-str">"pw"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__eye-btn"</span> <span class="tok-attr">type</span>=<span class="tok-str">"button"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Show password"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/eye-close.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"tf-l__supporting"</span><span class="tok-tag">&gt;</span>At least 8 characters<span class="tok-tag">&lt;/p&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /TextFields.L -->
+
+  </main>
+
+  <script src="scripts/nav.js"></script>
+
+
+  <script>
+    document.querySelectorAll('.toggle-cb').forEach(function(el) {
+      function toggle() {
+        var checked = el.getAttribute('aria-checked') === 'true';
+        el.setAttribute('aria-checked', String(!checked));
+      }
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+    });
+  </script>
+
+  <script>
+    function toggleCode(id) {
+      var btn   = document.querySelector('#' + id + ' .code-toggle-btn');
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var open = panel.classList.toggle('is-open');
+      if (btn) btn.classList.toggle('is-active', open);
+    }
+    function copyCode(id) {
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var text = panel.querySelector('code').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        var btn = panel.querySelector('.copy-code-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('aside.docs').forEach(function (aside) {
+        var sections = aside.querySelectorAll('.docs__section');
+        sections.forEach(function (sec, i) {
+          if (i > 0) sec.classList.add('docs__section--collapsible');
+        });
+        var btn = document.createElement('button');
+        btn.className = 'docs__toggle';
+        btn.setAttribute('type', 'button');
+        btn.innerHTML =
+          '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+          '<path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg><span>Show all</span>';
+        btn.addEventListener('click', function () {
+          var expanded = aside.classList.toggle('is-expanded');
+          btn.querySelector('span').textContent = expanded ? 'Collapse' : 'Show all';
+        });
+        aside.appendChild(btn);
+      });
+    });
+  </script>
+
+  <!-- TextFields interactivity -->
+  <script>
+    (function () {
+      var wrap = document.getElementById('tf-pg');
+      var ta   = document.getElementById('tf-textarea');
+      if (!wrap || !ta) return;
+
+      function autoGrow() {
+        ta.style.height = 'auto';
+        var h = Math.min(ta.scrollHeight, 64);
+        ta.style.height = h + 'px';
+        ta.style.overflowY = ta.scrollHeight > 64 ? 'auto' : 'hidden';
+      }
+
+      ta.addEventListener('focus', function () {
+        wrap.classList.remove('tf--typed');
+        wrap.classList.add('tf--focused');
+      });
+
+      ta.addEventListener('input', function () {
+        autoGrow();
+        if (ta.value) {
+          wrap.classList.remove('tf--focused');
+          wrap.classList.add('tf--typing');
+        } else {
+          wrap.classList.remove('tf--typing');
+          wrap.classList.add('tf--focused');
+        }
+      });
+
+      ta.addEventListener('blur', function () {
+        wrap.classList.remove('tf--focused', 'tf--typing');
+        if (ta.value) wrap.classList.add('tf--typed');
+      });
+
+      ta.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          ta.value = '';
+          ta.style.height = 'auto';
+          ta.style.overflowY = 'hidden';
+          wrap.classList.remove('tf--typing', 'tf--typed');
+          wrap.classList.add('tf--focused');
+        }
+      });
+    })();
+  </script>
+
+  <!-- SearchField interactivity -->
+  <script>
+    (function () {
+      var SEARCH_ICON = 'icons/general/search.svg';
+      var LOADER_ICON = 'icons/loader/loader-medium.svg';
+
+      function initSearchField(wrapId, inputId, iconId, cancelId) {
+        var wrap   = document.getElementById(wrapId);
+        var input  = document.getElementById(inputId);
+        var icon   = document.getElementById(iconId);
+        var cancel = document.getElementById(cancelId);
+        var timer  = null;
+
+        function setState(state) {
+          wrap.classList.remove('search-field--focused', 'search-field--typed', 'search-field--progressing');
+          if (state) wrap.classList.add('search-field--' + state);
+          icon.src = (state === 'progressing') ? LOADER_ICON : SEARCH_ICON;
+        }
+
+        input.addEventListener('focus', function () {
+          if (wrap.classList.contains('search-field--progressing')) return;
+          setState(input.value ? 'typed' : 'focused');
+        });
+
+        input.addEventListener('input', function () {
+          if (wrap.classList.contains('search-field--progressing')) return;
+          setState(input.value ? 'typed' : 'focused');
+        });
+
+        input.addEventListener('blur', function () {
+          if (wrap.classList.contains('search-field--progressing')) return;
+          if (!input.value) setState(null);
+        });
+
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && input.value) {
+            e.preventDefault();
+            if (timer) clearTimeout(timer);
+            setState('progressing');
+            timer = setTimeout(function () {
+              setState('typed');
+              input.focus();
+            }, 1500);
+          }
+        });
+
+        cancel.addEventListener('click', function () {
+          if (timer) clearTimeout(timer);
+          input.value = '';
+          setState('focused');
+          input.focus();
+        });
+      }
+
+      initSearchField('sf-s-pg', 'sf-s-input', 'sf-s-icon', 'sf-s-cancel');
+      initSearchField('sf-m-pg', 'sf-m-input', 'sf-m-icon', 'sf-m-cancel');
+    })();
+  </script>
+
+  <!-- TextFields.S interactivity -->
+  <script>
+    (function () {
+      var wrap = document.getElementById('tfs-pg');
+      var input = document.getElementById('tfs-input');
+      var errIcon = document.getElementById('tfs-err-icon');
+      var supporting = document.getElementById('tfs-supporting');
+      var origSupport = supporting.textContent;
+
+      function clearError() {
+        wrap.classList.remove('tf-s--error');
+        errIcon.style.display = 'none';
+        supporting.textContent = origSupport;
+        supporting.removeAttribute('style');
+      }
+
+      input.addEventListener('focus', function () {
+        clearError();
+        wrap.classList.add('tf-s--focused');
+        wrap.classList.remove('tf-s--typed');
+      });
+
+      input.addEventListener('input', function () {
+        clearError();
+        wrap.classList.remove('tf-s--focused');
+        if (input.value.length > 0) {
+          wrap.classList.add('tf-s--typing');
+        } else {
+          wrap.classList.remove('tf-s--typing');
+        }
+      });
+
+      input.addEventListener('blur', function () {
+        wrap.classList.remove('tf-s--focused', 'tf-s--typing');
+        if (input.value.length === 0) return;
+        if (input.value.length < 3) {
+          wrap.classList.add('tf-s--error');
+          errIcon.style.display = '';
+          supporting.textContent = 'Must be at least 3 characters';
+          supporting.style.color = 'var(--color-warning-primary)';
+        } else {
+          wrap.classList.add('tf-s--typed');
+        }
+      });
+    })();
+  </script>
+
+  <!-- TextFields.L interactivity -->
+  <script>
+    (function () {
+      /* — email field — */
+      var textWrap = document.getElementById('tfl-text');
+      var textInput = document.getElementById('tfl-text-input');
+      var textErrIcon = document.getElementById('tfl-text-err-icon');
+      var textSupport = document.getElementById('tfl-text-supporting');
+      var textOrigSupport = textSupport.textContent;
+
+      function clearTextError() {
+        textWrap.classList.remove('tf-l--error');
+        textErrIcon.style.display = 'none';
+        textSupport.textContent = textOrigSupport;
+        textSupport.removeAttribute('style');
+      }
+
+      textInput.addEventListener('focus', function () {
+        clearTextError();
+        textWrap.classList.add('tf-l--focused');
+        textWrap.classList.remove('tf-l--typed');
+      });
+
+      textInput.addEventListener('input', function () {
+        clearTextError();
+        textWrap.classList.remove('tf-l--focused');
+        if (textInput.value.length > 0) {
+          textWrap.classList.add('tf-l--typing');
+          textWrap.classList.add('tf-l--has-value');
+        } else {
+          textWrap.classList.remove('tf-l--typing', 'tf-l--has-value');
+        }
+      });
+
+      textInput.addEventListener('blur', function () {
+        textWrap.classList.remove('tf-l--focused', 'tf-l--typing');
+        if (textInput.value.length === 0) {
+          textWrap.classList.remove('tf-l--has-value');
+          return;
+        }
+        var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(textInput.value);
+        if (!isEmail) {
+          textWrap.classList.remove('tf-l--typed');
+          textWrap.classList.add('tf-l--error', 'tf-l--has-value');
+          textErrIcon.style.display = '';
+          textSupport.textContent = 'Enter a valid email address';
+          textSupport.style.color = 'var(--color-warning-primary)';
+        } else {
+          textWrap.classList.remove('tf-l--error');
+          textWrap.classList.add('tf-l--typed', 'tf-l--has-value');
+        }
+      });
+
+      /* — password field — */
+      var pwWrap = document.getElementById('tfl-pw');
+      var pwInput = document.getElementById('tfl-pw-input');
+      var pwSupport = document.getElementById('tfl-pw-supporting');
+      var eyeBtn = document.getElementById('tfl-eye-btn');
+      var eyeIcon = document.getElementById('tfl-eye-icon');
+
+      pwInput.addEventListener('focus', function () {
+        pwWrap.classList.add('tf-l--focused');
+        pwWrap.classList.remove('tf-l--typed');
+      });
+
+      pwInput.addEventListener('input', function () {
+        pwWrap.classList.remove('tf-l--focused');
+        if (pwInput.value.length > 0) {
+          pwWrap.classList.add('tf-l--typing', 'tf-l--has-value');
+        } else {
+          pwWrap.classList.remove('tf-l--typing', 'tf-l--has-value');
+        }
+      });
+
+      pwInput.addEventListener('blur', function () {
+        pwWrap.classList.remove('tf-l--focused', 'tf-l--typing');
+        if (pwInput.value.length === 0) {
+          pwWrap.classList.remove('tf-l--has-value');
+        } else {
+          pwWrap.classList.add('tf-l--typed', 'tf-l--has-value');
+        }
+      });
+
+      eyeBtn.addEventListener('click', function () {
+        var hidden = pwInput.type === 'password';
+        pwInput.type = hidden ? 'text' : 'password';
+        eyeIcon.src = hidden ? 'icons/general/eye.svg' : 'icons/general/eye-close.svg';
+        eyeBtn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
+        pwInput.focus();
+      });
+    })();
+  </script>
+
+</body>
+</html>

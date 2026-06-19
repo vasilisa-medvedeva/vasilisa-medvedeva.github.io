@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast UI</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .home-placeholder {
+      text-align: center;
+      color: var(--color-primary-transparent-48);
+    }
+
+    .home-placeholder__title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+
+    .home-placeholder__sub {
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-60);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <a class="sidebar__logo sidebar__logo--active" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#tab-bar-item">TabBarItem</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#tab-item-bottom">TabItem</a>
+        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
+        <a class="sidebar__link" href="index.html#preview">Preview</a>
+        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
+        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
+        <a class="sidebar__link" href="index.html#chat-right">ChatRight</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-molecules">
+      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
+        Molecules
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
+        <a class="sidebar__link" href="molecules.html#text-fields">TextFields</a>
+        <a class="sidebar__link" href="molecules.html#search-field">SearchField</a>
+        <a class="sidebar__link" href="molecules.html#tf-s">TextFields.S</a>
+        <a class="sidebar__link" href="molecules.html#tf-l">TextFields.L</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="home-placeholder">
+      <div class="home-placeholder__title">Pyroblast UI</div>
+      <div class="home-placeholder__sub">Home page — coming soon</div>
+    </div>
+  </main>
+
+  <script src="scripts/nav.js"></script>
+</body>
+</html>

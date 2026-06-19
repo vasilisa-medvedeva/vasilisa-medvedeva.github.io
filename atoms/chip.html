@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom: Chip</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 40px;
+      background: var(--color-primary-transparent-04);
+      align-items: flex-start;
+    }
+
+    /* ── Chip ── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 12px 0 6px;
+      border-radius: 9999px;
+      background: var(--color-primary-transparent-08);
+      cursor: pointer;
+      user-select: none;
+      border: none;
+      outline: none;
+    }
+
+    .chip__icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      margin-left: -6px;
+    }
+
+    .chip__label {
+      font-family: var(--text-label-large-font-family);
+      font-size: var(--text-label-large-font-size);
+      font-weight: var(--text-label-large-font-weight);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: var(--text-label-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+
+    /* -- Variants -- */
+    .chip--play   { background: var(--color-primary-transparent-08); }
+    .chip--download { background: var(--color-primary-transparent-08); }
+    .chip--loading { background: var(--color-primary-transparent-08); }
+
+    /* -- States -- */
+    .chip:hover { background: var(--color-primary-transparent-16); }
+    .chip:active { background: var(--color-primary-transparent-24); }
+    .chip--disabled {
+      opacity: 0.38;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Play -->
+  <button class="chip chip--play" type="button" aria-label="Play">
+    <img class="chip__icon" src="../assets/chip-ic-play.svg" alt="" aria-hidden="true" />
+    <span class="chip__label">Play</span>
+  </button>
+
+  <!-- Download -->
+  <button class="chip chip--download" type="button" aria-label="Download">
+    <img class="chip__icon" src="../assets/chip-ic-download.svg" alt="" aria-hidden="true" />
+    <span class="chip__label">Download</span>
+  </button>
+
+  <!-- Loading / Cancel -->
+  <button class="chip chip--loading" type="button" aria-label="Cancel download">
+    <img class="chip__icon" src="../assets/chip-ic-loading.svg" alt="" aria-hidden="true" />
+    <span class="chip__label">Loading</span>
+  </button>
+
+  <!-- Disabled -->
+  <button class="chip chip--download chip--disabled" type="button" aria-label="Download" disabled>
+    <img class="chip__icon" src="../assets/chip-ic-download.svg" alt="" aria-hidden="true" />
+    <span class="chip__label">Disabled</span>
+  </button>
+
+</body>
+</html>

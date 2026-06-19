@@ -1,0 +1,8 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="medium (48px)">
+<g id="type=channal, status=active, theme=light">
+<path id="avatar-channal" d="M44 12.0002C44 7.58185 40.4181 4.0001 35.9998 4.00022L11.9998 4.00087C7.58159 4.00099 4 7.58267 4 12.0009V36C4 40.4183 7.58172 44 12 44H36C40.4183 44 44 40.4183 44 36V12.0002Z" fill="#FFF4DD"/>
+<path id="avatar-channal_2" d="M36 1L12 1.00098C5.92499 1.00114 1 5.92596 1 12.001V36C1.00001 42.0751 5.92487 47 12 47H36C42.0751 47 47 42.0751 47 36V12L46.9854 11.4346C46.6909 5.62235 41.8854 0.999996 36 1Z" stroke="#FFB928" stroke-width="2"/>
+</g>
+</g>
+</svg>

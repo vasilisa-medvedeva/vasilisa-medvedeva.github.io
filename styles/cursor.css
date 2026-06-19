@@ -1,0 +1,70 @@
+/* ── Fire cursor (Pyroblast flame) ──
+   Статичен по умолчанию. Анимация включается только на интерактивных элементах.
+   Только для устройств с точным указателем (мышь/трекпад). */
+
+@media (hover: hover) and (pointer: fine) {
+  html.fire-cursor-on,
+  html.fire-cursor-on * {
+    cursor: none !important;
+  }
+
+  .fire-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    color: var(--color-brand-yellow-secondary);
+    pointer-events: none;
+    z-index: 99999;
+    will-change: transform;
+    transform: translate3d(-100px, -100px, 0);
+    filter: drop-shadow(0 0 4px rgba(255, 185, 40, 0.55));
+    transition: width 0.15s ease, opacity 0.2s ease;
+  }
+
+  .fire-cursor svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 80%;
+    /* по умолчанию — без анимации */
+    animation: none;
+  }
+
+  /* анимация включается только при наведении на интерактивный элемент */
+  .fire-cursor--hover svg {
+    animation: fire-flicker 0.45s ease-in-out infinite alternate;
+  }
+
+  /* при нажатии — вспышка быстрее */
+  .fire-cursor--press svg {
+    animation: fire-flicker 0.18s ease-in-out infinite alternate;
+  }
+
+  /* над интерактивными элементами пламя чуть крупнее */
+  .fire-cursor--hover {
+    width: 26px;
+  }
+}
+
+@keyframes fire-flicker {
+  0% {
+    transform: scale(1, 1) rotate(-2deg) skewX(0deg);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.01, 0.99) rotate(1deg) skewX(2deg);
+    filter: brightness(1.04);
+  }
+  100% {
+    transform: scale(0.99, 1.01) rotate(2deg) skewX(-2deg);
+    filter: brightness(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fire-cursor--hover svg,
+  .fire-cursor--press svg {
+    animation: none;
+  }
+}

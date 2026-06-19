@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — UI Library</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    /* sidebar styles live in styles/nav.css */
+
+    /* ── Main content ── */
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px;
+    }
+
+    .page-title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 40px;
+    }
+
+    /* ── Component block ── */
+    .component-block {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .component-block__preview {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 40px;
+    }
+
+    .component-block__preview-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .component-block__states {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .state-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .state-label {
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Docs panel ── */
+    .docs {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 24px;
+      align-self: start;
+    }
+
+    .docs__name {
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      margin-bottom: 4px;
+    }
+
+    .docs__type {
+      display: inline-block;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      line-height: var(--text-label-small-line-height);
+      color: var(--color-brand-red-tertiary);
+      background: var(--color-brand-red-transparent-4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .docs__section {
+      margin-bottom: 16px;
+    }
+
+    .docs__section-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .docs__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+    }
+
+    .docs__row:last-child { border-bottom: none; }
+
+    .docs__row-label { color: var(--color-primary-transparent-60); }
+
+    .docs__row-value {
+      font-weight: var(--text-label-medium-font-weight);
+      color: var(--color-primary);
+      text-align: right;
+    }
+
+    .docs__states {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .docs__state-chip {
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--color-primary-transparent-08);
+      color: var(--color-primary);
+    }
+
+    .docs__token {
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: monospace;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .docs__tokens { display: flex; flex-direction: column; gap: 4px; }
+
+    /* ── Docs collapsible ── */
+    .docs__section--collapsible {
+      display: none;
+    }
+    .docs.is-expanded .docs__section--collapsible {
+      display: block;
+    }
+    .docs__toggle {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      margin-top: 8px;
+      padding: 8px 0;
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      cursor: pointer;
+      border-top: 1px solid var(--color-primary-transparent-16);
+      transition: color 0.15s;
+    }
+    .docs__toggle:hover { color: var(--color-primary); }
+    .docs__toggle svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .docs.is-expanded .docs__toggle svg { transform: rotate(180deg); }
+
+    /* divider */
+
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-spinner {
+      display: inline-block;
+      animation: spin 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .btn-spinner svg { display: block; }
+
+
+
+
+
+
+
+    /* ── Code panel ── */
+    .component-block__preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .component-block__preview-header .component-block__preview-title {
+      margin-bottom: 0;
+    }
+    .code-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Roboto", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .code-toggle-btn:hover {
+      background: var(--color-primary-transparent-08);
+      color: var(--color-primary-transparent-87);
+    }
+    .code-toggle-btn.is-active {
+      background: var(--color-primary-transparent-87);
+      color: var(--color-constant-primary);
+      border-color: transparent;
+    }
+    .code-panel {
+      grid-column: 1 / -1;
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px 24px 20px 24px;
+      position: relative;
+      display: none;
+      margin-top: -24px;
+    }
+    .code-panel.is-open { display: block; }
+    .code-panel pre {
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #d4d4d4;
+      white-space: pre;
+      overflow-x: auto;
+      padding-right: 80px;
+    }
+    .code-panel pre .tok-tag   { color: #569cd6; }
+    .code-panel pre .tok-attr  { color: #9cdcfe; }
+    .code-panel pre .tok-str   { color: #ce9178; }
+    .code-panel pre .tok-cmt   { color: #6a9955; }
+    .copy-code-btn {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-family: "Roboto", sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60);
+      background: #2d2d2d;
+      border: 1px solid #3d3d3d;
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .copy-code-btn:hover  { background: #3a3a3a; color: #fff; }
+    .copy-code-btn.copied { color: #4ec9b0; border-color: #4ec9b0; }
+
+
+
+
+
+    @keyframes chip-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .chip__icon--spin img {
+      animation: none;
+    }
+
+    /* ── ATOM: VideoChip ── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px 4px 4px;
+      gap: 4px;
+      border-radius: 60px;
+      background: var(--color-constant-transparent-48);
+    }
+    .chip--playing {
+      padding: 4px 8px;
+      background: var(--color-constant-transparent-60);
+      gap: 0;
+    }
+    .chip__icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chip__icon img { width: 32px; height: 32px; display: block; }
+    .chip__icon svg { width: 32px; height: 32px; display: block; }
+    .chip__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .chip__duration {
+      font-family: var(--text-label-medium-font-family), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .chip__size {
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+    }
+    .chip-demo-bg {
+      background: #b0b0b0;
+      border-radius: 12px;
+      padding: 16px;
+      display: inline-flex;
+      width: 160px;
+      height: 80px;
+      align-items: center;
+      justify-content: center;
+    }
+    .chip-demo-bg--playing {
+      width: 160px;
+      height: 80px;
+      padding: 0;
+      position: relative;
+    }
+    .chip-demo-bg--playing .chip--playing {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+    }
+
+    /* ── ATOM: Button ── */
+    .btn-demo-section { margin-bottom: 56px; }
+
+    .btn-size-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
+    .btn-size-tab {
+      all: unset; box-sizing: border-box;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-size-tab.is-active,
+    .btn-size-tab:hover {
+      background: var(--color-brand-yellow-4);
+      color: var(--color-primary);
+    }
+
+.btn-all-sizes { display: flex; flex-direction: column; gap: 0; }
+    .btn-size-group { display: flex; flex-direction: column; gap: 10px; padding: 16px 0; border-top: 1px solid var(--color-primary-transparent-16); }
+    .btn-size-group:first-child { border-top: none; padding-top: 0; }
+    .btn-size-label { font-size: var(--text-label-medium-font-size); font-weight: var(--text-label-medium-font-weight); letter-spacing: var(--text-label-medium-letter-spacing); color: var(--color-primary-transparent-48); text-transform: uppercase; margin-bottom: 4px; }
+
+    .btn-matrix__row { display: flex; gap: 12px; align-items: center; }
+    .btn-matrix__row-label {
+      width: 72px;
+      flex-shrink: 0;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+    }
+
+    .btn-col-headers { display: flex; gap: 12px; padding-left: 84px; margin-bottom: 4px; }
+    .btn-col-header {
+      flex: 1;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+    }
+
+    /* ── Base button ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      border: 1.5px solid transparent;
+      white-space: nowrap;
+      cursor: default;
+      flex: 1;
+      font-family: var(--text-title-small-font-family, "Roboto"), sans-serif;
+    }
+
+    /* Sizes */
+    .btn--xs {
+      padding: 5px 12px;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+    }
+    .btn--sm {
+      padding: 9px 12px;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+    }
+    .btn--md {
+      padding: 8px 16px;
+      height: 48px;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+    .btn--lg {
+      padding: 18px 16px;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+
+    /* Primary */
+    .btn--primary           { background: var(--color-brand-yellow-primary); border-color: var(--color-primary-transparent-87); color: var(--color-primary-transparent-87); }
+    .btn--primary.s-pressed  { background: var(--color-brand-yellow-60); }
+    .btn--primary.s-disabled { background: var(--color-brand-yellow-32); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .btn--primary.s-process  { background: var(--color-brand-yellow-32); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+
+    /* Secondary */
+    .btn--secondary           { background: var(--color-constant-primary); border-color: var(--color-primary-transparent-87); color: var(--color-primary-transparent-87); }
+    .btn--secondary.s-pressed  { background: var(--color-primary-transparent-04); }
+    .btn--secondary.s-disabled { background: var(--color-primary-transparent-04); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .btn--secondary.s-process  { background: var(--color-primary-transparent-04); border-color: var(--color-primary-transparent-32); color: var(--color-primary-transparent-32); }
+
+    /* Only Text */
+    .btn--only-text           { background: transparent; border-color: transparent; color: var(--color-primary-transparent-87); font-weight: var(--text-body-medium-font-weight); }
+    .btn--only-text.s-pressed  { background: var(--color-primary-transparent-04); }
+    .btn--only-text.s-disabled { background: var(--color-primary-transparent-04); color: var(--color-primary-transparent-48); }
+    .btn--only-text.s-process  { background: var(--color-primary-transparent-04); color: var(--color-primary-transparent-48); }
+
+    /* Accent */
+    .btn--accent           { background: var(--color-brand-red-quaternary); border-color: var(--color-primary-transparent-87); color: var(--color-constant-primary); }
+    .btn--accent.s-pressed  { background: var(--color-warning-transparent-60); }
+    .btn--accent.s-disabled { background: var(--color-warning-transparent-48); border-color: var(--color-primary-transparent-48); color: var(--color-constant-primary); }
+    .btn--accent.s-process  { background: var(--color-warning-transparent-48); border-color: var(--color-primary-transparent-48); color: var(--color-constant-primary); }
+
+    .s-process { flex: 1; }
+    .btn--xs.s-process { padding-top: 1px;  padding-bottom: 1px;  }
+    .btn--sm.s-process { padding-top: 8px;  padding-bottom: 8px;  }
+    .btn--lg.s-process { padding-top: 13px; padding-bottom: 13px; }
+
+    /* ── ATOM: Preview ── */
+    .preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .preview__thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .preview__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+    }
+    .preview__doc-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .preview__doc-svg {
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+    .preview__doc-label {
+      position: absolute;
+      top: 11px;
+      bottom: 11px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--text-title-small-font-family), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+      color: var(--color-constant-primary);
+    }
+
+    /* ── ATOM: PreviewDocChat ── */
+    .pdc {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .pdc__thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pdc__doc-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .pdc__doc-svg {
+      width: 56px;
+      height: 56px;
+      display: block;
+    }
+    .pdc__doc-label {
+      position: absolute;
+      top: 18px;
+      bottom: 18px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--text-title-medium-font-family), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-constant-primary);
+    }
+    .pdc--doc .pdc__overlay {
+      display: none;
+    }
+    .pdc__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.20);
+      backdrop-filter: blur(2px);
+    }
+    .pdc__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      z-index: 1;
+    }
+
+    /* ── ATOM: TabItem ── */
+    .tab-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 8px;
+      border-radius: 16px;
+      background: var(--color-brand-yellow-4);
+      border: 1.5px solid var(--color-primary-transparent-32);
+      cursor: pointer;
+      user-select: none;
+    }
+    .tab-item--active {
+      background: var(--color-brand-red-secondary);
+      border-color: transparent;
+    }
+    .tab-item__icon {
+      width: 24px;
+      height: 24px;
+      display: block;
+      flex-shrink: 0;
+    }
+    .tab-item--active .tab-item__icon {
+      filter: brightness(0) invert(1);
+    }
+    .tab-item__label {
+      font-family: var(--text-title-small-font-family), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .tab-item--active .tab-item__label {
+      color: var(--color-constant-primary);
+    }
+
+    /* ── ATOM: TabProfile ── */
+    .tab-profile {
+      all: unset;
+      box-sizing: border-box;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 0.5px solid var(--color-primary-transparent-24);
+      background: var(--color-brand-yellow-4);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .tab-profile.s-pressed {
+      background: var(--color-brand-yellow-16);
+    }
+    .tab-profile__icon {
+      width: 24px;
+      height: 24px;
+      display: block;
+      flex-shrink: 0;
+    }
+    .tab-profile__label {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--color-primary-transparent-16);
+      margin: 0 0 48px;
+    }
+
+    /* ── PhotoPlaceholder ── */
+    .photo-placeholder {
+      position: relative;
+      width: 134px;
+      height: 134px;
+      border-radius: 4px;
+      background: var(--color-primary-transparent-16);
+      flex-shrink: 0;
+    }
+
+    .photo-placeholder__checkbox {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .photo-placeholder__checkbox:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 2px;
+      border-radius: 50%;
+    }
+
+    .photo-placeholder__checkbox .cb-ring  { display: block; }
+    .photo-placeholder__checkbox .cb-fill  { display: none; }
+    .photo-placeholder__checkbox .cb-check { display: none; }
+
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-ring  { display: none; }
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-fill  { display: block; }
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-check { display: block; }
+
+    .photo-placeholder__chip {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 60px;
+      background: var(--color-constant-transparent-60);
+    }
+
+    .photo-placeholder__chip-label {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+
+    .photo-placeholder__camera {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+    }
+
+    /* ── Toggle ── */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 26px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .switch__track {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--color-primary-transparent-08);
+      border: 2px solid var(--color-primary-transparent-32);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .switch__thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-32);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .switch[aria-checked="true"] .switch__track {
+      background: var(--color-brand-yellow-secondary);
+      border-color: var(--color-primary-transparent-87);
+    }
+    .switch[aria-checked="true"] .switch__thumb {
+      transform: translateX(18px);
+      background: var(--color-primary-transparent-87);
+    }
+    .switch:focus-visible { outline: 2px solid var(--color-brand-yellow-secondary); outline-offset: 3px; border-radius: 9999px; }
+
+    .toggle-cb,
+    .toggle-radio {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .toggle-cb:focus-visible,
+    .toggle-radio:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 3px;
+      border-radius: 50%;
+    }
+
+    .toggle-cb   .t-ring,
+    .toggle-radio .t-ring   { display: block; }
+    .toggle-cb   .t-fill,
+    .toggle-radio .t-fill   { display: none; }
+    .toggle-cb   .t-border,
+    .toggle-radio .t-border { display: none; }
+    .toggle-cb   .t-mark,
+    .toggle-radio .t-mark   { display: none; }
+
+    .toggle-cb[aria-checked="true"]    .t-ring,
+    .toggle-radio[aria-checked="true"] .t-ring   { display: none; }
+    .toggle-cb[aria-checked="true"]    .t-fill,
+    .toggle-radio[aria-checked="true"] .t-fill   { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-border,
+    .toggle-radio[aria-checked="true"] .t-border { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-mark,
+    .toggle-radio[aria-checked="true"] .t-mark   { display: block; }
+
+    /* ── Atom: Avatar ── */
+    .avatar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-brand-yellow-16);
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    /* Types */
+    .avatar--channel { border-radius: 16px; }
+
+    /* Sizes */
+    .avatar--sm  { width: 32px;  height: 32px; }
+    .avatar--md  { width: 48px;  height: 48px; }
+    .avatar--lg  { width: 72px;  height: 72px; }
+    .avatar--xl  { width: 122px; height: 122px; }
+
+    .avatar--xl.avatar--channel { border-radius: 20px; }
+    .avatar--sm.avatar--channel { border-radius: 8px; }
+    .avatar--md.avatar--channel { border-radius: 12px; }
+
+    /* Folder shape */
+    .avatar--folder {
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .avatar--folder::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 44%; height: 17%;
+      background: var(--color-brand-yellow-16);
+      border-radius: 4px 4px 0 0;
+    }
+    .avatar--folder::after {
+      content: '';
+      position: absolute;
+      top: 17%; left: 0; right: 0; bottom: 0;
+      background: var(--color-brand-yellow-16);
+      border-radius: 0 12px 12px 12px;
+    }
+    .avatar--folder .avatar__initials {
+      position: relative;
+      z-index: 1;
+      padding-top: 17%;
+    }
+    .avatar--folder.avatar--active  { box-shadow: none; }
+    .avatar--folder.avatar--active::after  { box-shadow: 0 0 0 2px var(--color-brand-yellow-secondary); }
+    .avatar--folder.avatar--live    { box-shadow: none; }
+    .avatar--folder.avatar--live::after    { box-shadow: 0 0 0 2px var(--color-warning-secondary); }
+    .avatar--folder .avatar__live-chip { bottom: -5px; }
+
+    /* Initials */
+    .avatar__initials {
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-weight: 500;
+      color: var(--color-primary-transparent-70);
+      text-align: center;
+      user-select: none;
+      line-height: 1;
+    }
+    .avatar--sm .avatar__initials { font-size: 16px; letter-spacing: 0.15px; }
+    .avatar--md .avatar__initials { font-size: 20px; font-weight: 600; }
+    .avatar--lg .avatar__initials { font-size: 28px; }
+    .avatar--xl .avatar__initials { font-size: 62px; }
+
+    /* Photo */
+    .avatar__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    /* Statuses (medium) — border via box-shadow to not affect layout */
+    .avatar--active    { box-shadow: 0 0 0 2px var(--color-brand-yellow-secondary); }
+    .avatar--not-active { opacity: 0.38; }
+    .avatar--live      { box-shadow: 0 0 0 2px var(--color-warning-secondary); }
+
+    /* ── Atom: ChipLive ── */
+    .chip-live {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-constant-primary);
+      border: 1.5px solid var(--color-warning-secondary);
+      border-radius: 4px;
+      padding: 3px 5px;
+      white-space: nowrap;
+    }
+
+    .chip-live__label {
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 12px;
+      letter-spacing: 0.4px;
+      color: var(--color-warning-primary);
+    }
+
+    /* Avatar positions chip-live absolutely */
+    .avatar__live-chip {
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ── Atom: ChannelAvatar (Medium 48px) ── */
+    .channel-avatar {
+      display: inline-block;
+      width: 48px;
+      flex-shrink: 0;
+    }
+    .channel-avatar__img {
+      display: block;
+      width: 48px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar">
+    <a class="sidebar__logo" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <!-- Icons -->
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <!-- Atoms -->
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
+        <a class="sidebar__link" href="index.html#preview">Preview</a>
+        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
+        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
+        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
+        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
+        <a class="sidebar__link" href="index.html#channel-avatar">ChannelAvatar</a>
+      </div>
+    </div>
+
+
+    <!-- Molecules -->
+    <div class="nav-group" id="nav-molecules">
+      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
+        Molecules
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
+      </div>
+    </div>
+
+    <!-- Organisms -->
+    <div class="nav-group" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <h1 class="page-title">UI Library</h1>
+    <p class="page-subtitle">All atoms and components. Tokens only — no new colors or fonts.</p>
+
+    <div class="section-divider"></div>
+
+    <!-- ── SECTION: Atoms ── -->
+
+
+
+    <div class="section-divider"></div>
+
+    <!-- Chips -->
+    <div id="chips" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">VideoChip</div>
+          <button class="code-toggle-btn" onclick="toggleCode('chips')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+        <div style="display:flex; gap:24px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="chip-demo-bg">
+              <div class="chip chip--loading">
+                <div class="chip__icon chip__icon--spin"><img src="assets/chip-ic-loading.svg" alt="" /></div>
+                <div class="chip__text">
+                  <span class="chip__duration">0:32</span>
+                  <span class="chip__size">102.6 MB</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="chip-demo-bg">
+              <div class="chip chip--not-loaded">
+                <div class="chip__icon"><img src="assets/chip-ic-download.svg" alt="" /></div>
+                <div class="chip__text">
+                  <span class="chip__duration">0:32</span>
+                  <span class="chip__size">102.6 MB</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Not loaded</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="chip-demo-bg">
+              <div class="chip chip--regular">
+                <div class="chip__icon"><img src="assets/chip-ic-play.svg" alt="" /></div>
+                <div class="chip__text">
+                  <span class="chip__duration">0:32</span>
+                  <span class="chip__size">102.6 MB</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="chip-demo-bg chip-demo-bg--playing">
+              <div class="chip chip--playing">
+                <span class="chip__duration">0:32</span>
+              </div>
+            </div>
+            <span class="state-label">Playing</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="chip-demo-bg">
+              <div class="chip chip--error">
+                <div class="chip__icon">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="15" fill="white" fill-opacity="0.6"/>
+                    <rect x="14.25" y="8" width="3.5" height="11" rx="1.75" fill="#E93F2B"/>
+                    <rect x="14.25" y="22" width="3.5" height="3.5" rx="1.75" fill="#E93F2B"/>
+                  </svg>
+                </div>
+                <div class="chip__text">
+                  <span class="chip__duration" style="color: var(--color-warning-primary);">Failed</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Error</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">VideoChip</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">pill · r 60px · pad 4 / 4 8</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Icon</span>
+            <span class="docs__row-value">32 × 32px · white circle built-in</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Icon ↔ Text gap</span>
+            <span class="docs__row-value">4px</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Duration</span>
+            <span class="docs__row-value">label-medium · 12/14</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Filesize</span>
+            <span class="docs__row-value">body-small · 12/12</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__states">
+            <span class="docs__state-chip">Regular</span>
+            <span class="docs__state-chip">Playing</span>
+            <span class="docs__state-chip">Not loaded</span>
+            <span class="docs__state-chip">Loading</span>
+            <span class="docs__state-chip">Error</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__states">
+            <span class="docs__state-chip">Default</span>
+            <span class="docs__state-chip">Hover</span>
+            <span class="docs__state-chip">Pressed</span>
+            <span class="docs__state-chip">Disabled</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__tokens">
+            <span class="docs__token">--color-constant-transparent-48</span>
+            <span class="docs__token">--color-constant-transparent-60</span>
+            <span class="docs__token">--color-primary-transparent-87</span>
+            <span class="docs__token">--color-primary-transparent-60</span>
+            <span class="docs__token">--color-warning-primary</span>
+            <span class="docs__token">--text-label-medium-*</span>
+            <span class="docs__token">--text-body-small-*</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Do / Don't</div>
+          <div class="docs__row" style="flex-direction:column; align-items:flex-start; gap:6px; border-bottom:none;">
+            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-87);">✅ Always show duration + filesize together</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Accessibility</div>
+          <div class="docs__row" style="flex-direction:column; align-items:flex-start; gap:4px; border-bottom:none;">
+            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">Touch target min 44 × 44pt</span>
+            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">aria-label includes action + duration + size</span>
+            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">Error: "Download failed. Tap to retry"</span>
+          </div>
+        </div>
+
+        <div class="docs__section" style="margin-bottom:0;">
+          <div class="docs__section-title">Status</div>
+          <div class="docs__row" style="border-bottom:none;">
+            <span class="docs__row-label">Version 1.0</span>
+            <span style="font-size:var(--text-label-small-font-size); font-weight:var(--text-label-small-font-weight); padding:2px 8px; border-radius:4px; background:var(--color-brand-yellow-8); color:var(--color-brand-yellow-quaternary);">draft</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="code-panel" id="code-chips">
+      <button class="copy-code-btn" onclick="copyCode('chips')">Copy</button>
+      <pre><code>&lt;div class=&quot;chip chip--regular&quot;&gt;
+  &lt;div class=&quot;chip__icon&quot;&gt;&lt;img src=&quot;assets/chip-ic-play.svg&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;
+  &lt;div class=&quot;chip__text&quot;&gt;
+    &lt;span class=&quot;chip__duration&quot;&gt;0:32&lt;/span&gt;
+    &lt;span class=&quot;chip__size&quot;&gt;102.6 MB&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+    <!-- /Chips -->
+
+    <div class="section-divider"></div>
+
+    <!-- Button -->
+    <div id="button" class="component-block btn-demo-section">
+
+      <!-- Preview -->
+      <div class="component-block__preview" style="overflow-x:auto;">
+        <div class="component-block__preview-header">
+        <div class="component-block__preview-title">Button</div>
+        <button class="code-toggle-btn" onclick="toggleCode('button')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+      </div>
+        <!-- Column headers -->
+        <div class="btn-col-headers">
+          <span class="btn-col-header">Primary</span>
+          <span class="btn-col-header">Secondary</span>
+          <span class="btn-col-header">Only Text</span>
+          <span class="btn-col-header">Accent</span>
+        </div>
+
+        <div class="btn-all-sizes">
+
+          <!-- xSmall -->
+          <div class="btn-size-group">
+            <div class="btn-size-label">xSmall</div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Enabled</span>
+              <span class="btn btn--xs btn--primary">Button</span>
+              <span class="btn btn--xs btn--secondary">Button</span>
+              <span class="btn btn--xs btn--only-text">Button</span>
+              <span class="btn btn--xs btn--accent">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Pressed</span>
+              <span class="btn btn--xs btn--primary s-pressed">Button</span>
+              <span class="btn btn--xs btn--secondary s-pressed">Button</span>
+              <span class="btn btn--xs btn--only-text s-pressed">Button</span>
+              <span class="btn btn--xs btn--accent s-pressed">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Disabled</span>
+              <span class="btn btn--xs btn--primary s-disabled">Button</span>
+              <span class="btn btn--xs btn--secondary s-disabled">Button</span>
+              <span class="btn btn--xs btn--only-text s-disabled">Button</span>
+              <span class="btn btn--xs btn--accent s-disabled">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Process</span>
+              <span class="btn btn--xs btn--primary s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--xs btn--secondary s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--xs btn--only-text s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--xs btn--accent s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+            </div>
+          </div>
+
+          <!-- Small -->
+          <div class="btn-size-group">
+            <div class="btn-size-label">Small</div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Enabled</span>
+              <span class="btn btn--sm btn--primary">Button</span>
+              <span class="btn btn--sm btn--secondary">Button</span>
+              <span class="btn btn--sm btn--only-text">Button</span>
+              <span class="btn btn--sm btn--accent">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Pressed</span>
+              <span class="btn btn--sm btn--primary s-pressed">Button</span>
+              <span class="btn btn--sm btn--secondary s-pressed">Button</span>
+              <span class="btn btn--sm btn--only-text s-pressed">Button</span>
+              <span class="btn btn--sm btn--accent s-pressed">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Disabled</span>
+              <span class="btn btn--sm btn--primary s-disabled">Button</span>
+              <span class="btn btn--sm btn--secondary s-disabled">Button</span>
+              <span class="btn btn--sm btn--only-text s-disabled">Button</span>
+              <span class="btn btn--sm btn--accent s-disabled">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Process</span>
+              <span class="btn btn--sm btn--primary s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--sm btn--secondary s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--sm btn--only-text s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--sm btn--accent s-process"><span class="btn-spinner" style="width:20px;height:20px"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C11.9778 2.35852e-08 13.9112 0.58649 15.5557 1.6853C17.2002 2.78412 18.4819 4.3459 19.2388 6.17317C19.9957 8.00043 20.1937 10.0111 19.8079 11.9509C19.422 13.8907 18.4696 15.6725 17.0711 17.0711C15.6725 18.4696 13.8907 19.422 11.9509 19.8079C10.0111 20.1937 8.00043 19.9957 6.17317 19.2388C4.3459 18.4819 2.78412 17.2002 1.6853 15.5557C0.58649 13.9112 -4.71704e-08 11.9778 0 10L2.2 10C2.2 11.5427 2.65746 13.0507 3.51454 14.3334C4.37161 15.6162 5.58981 16.6159 7.01507 17.2063C8.44033 17.7966 10.0087 17.9511 11.5217 17.6501C13.0348 17.3492 14.4246 16.6063 15.5154 15.5154C16.6063 14.4246 17.3492 13.0348 17.6501 11.5217C17.9511 10.0087 17.7966 8.44033 17.2063 7.01507C16.6159 5.58981 15.6162 4.37161 14.3334 3.51454C13.0507 2.65746 11.5427 2.2 10 2.2L10 0Z" fill="currentColor"/></svg></span></span>
+            </div>
+          </div>
+
+          <!-- Medium -->
+          <div class="btn-size-group">
+            <div class="btn-size-label">Medium</div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Enabled</span>
+              <span class="btn btn--md btn--primary">Button</span>
+              <span class="btn btn--md btn--secondary">Button</span>
+              <span class="btn btn--md btn--only-text">Button</span>
+              <span class="btn btn--md btn--accent">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Pressed</span>
+              <span class="btn btn--md btn--primary s-pressed">Button</span>
+              <span class="btn btn--md btn--secondary s-pressed">Button</span>
+              <span class="btn btn--md btn--only-text s-pressed">Button</span>
+              <span class="btn btn--md btn--accent s-pressed">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Disabled</span>
+              <span class="btn btn--md btn--primary s-disabled">Button</span>
+              <span class="btn btn--md btn--secondary s-disabled">Button</span>
+              <span class="btn btn--md btn--only-text s-disabled">Button</span>
+              <span class="btn btn--md btn--accent s-disabled">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Process</span>
+              <span class="btn btn--md btn--primary s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--md btn--secondary s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--md btn--only-text s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--md btn--accent s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+            </div>
+          </div>
+
+          <!-- Large -->
+          <div class="btn-size-group">
+            <div class="btn-size-label">Large</div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Enabled</span>
+              <span class="btn btn--lg btn--primary">Button</span>
+              <span class="btn btn--lg btn--secondary">Button</span>
+              <span class="btn btn--lg btn--only-text">Button</span>
+              <span class="btn btn--lg btn--accent">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Pressed</span>
+              <span class="btn btn--lg btn--primary s-pressed">Button</span>
+              <span class="btn btn--lg btn--secondary s-pressed">Button</span>
+              <span class="btn btn--lg btn--only-text s-pressed">Button</span>
+              <span class="btn btn--lg btn--accent s-pressed">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Disabled</span>
+              <span class="btn btn--lg btn--primary s-disabled">Button</span>
+              <span class="btn btn--lg btn--secondary s-disabled">Button</span>
+              <span class="btn btn--lg btn--only-text s-disabled">Button</span>
+              <span class="btn btn--lg btn--accent s-disabled">Button</span>
+            </div>
+            <div class="btn-matrix__row">
+              <span class="btn-matrix__row-label">Process</span>
+              <span class="btn btn--lg btn--primary s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--lg btn--secondary s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--lg btn--only-text s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+              <span class="btn btn--lg btn--accent s-process"><span class="btn-spinner" style="width:30px;height:30px"><svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C17.9667 3.53778e-08 20.8668 0.879735 23.3336 2.52796C25.8003 4.17618 27.7229 6.51886 28.8582 9.25975C29.9935 12.0006 30.2906 15.0166 29.7118 17.9264C29.133 20.8361 27.7044 23.5088 25.6066 25.6066C23.5088 27.7044 20.8361 29.133 17.9264 29.7118C15.0166 30.2906 12.0006 29.9935 9.25975 28.8582C6.51886 27.7229 4.17618 25.8003 2.52796 23.3336C0.879734 20.8668 -7.07556e-08 17.9667 0 15L3.3 15C3.3 17.314 3.98619 19.5761 5.27181 21.5002C6.55742 23.4242 8.38471 24.9238 10.5226 25.8094C12.6605 26.6949 15.013 26.9266 17.2826 26.4752C19.5521 26.0237 21.6369 24.9094 23.2731 23.2731C24.9094 21.6369 26.0237 19.5521 26.4752 17.2826C26.9266 15.013 26.6949 12.6605 25.8094 10.5226C24.9238 8.38471 23.4242 6.55742 21.5002 5.27181C19.5761 3.98619 17.314 3.3 15 3.3L15 0Z" fill="currentColor"/></svg></span></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">Button</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">inline-flex · r 30px · border 1.5px</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Label</span>
+            <span class="docs__row-value">text token per size (see Variants)</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Spinner</span>
+            <span class="docs__row-value">centered · Process state only</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">primary</span><span class="docs__row-value">Yellow bg · dark border &amp; text</span></div>
+          <div class="docs__row"><span class="docs__row-label">secondary</span><span class="docs__row-value">White bg · dark border &amp; text</span></div>
+          <div class="docs__row"><span class="docs__row-label">only-text</span><span class="docs__row-value">No bg/border · dark text · body-medium weight</span></div>
+          <div class="docs__row"><span class="docs__row-label">accent</span><span class="docs__row-value">Red bg · dark border · white text</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">xs</span><span class="docs__row-value">pad 5/12 · body-small</span></div>
+          <div class="docs__row"><span class="docs__row-label">sm</span><span class="docs__row-value">pad 9/12 · title-small</span></div>
+          <div class="docs__row"><span class="docs__row-label">md</span><span class="docs__row-value">48px height · pad 8/16 · title-medium</span></div>
+          <div class="docs__row"><span class="docs__row-label">lg</span><span class="docs__row-value">pad 18/16 · title-medium</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">Enabled</span><span class="docs__row-value">Default appearance</span></div>
+          <div class="docs__row"><span class="docs__row-label">Pressed</span><span class="docs__row-value">Darker bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">Disabled</span><span class="docs__row-value">Muted bg · 48% opacity text/border</span></div>
+          <div class="docs__row"><span class="docs__row-label">Process</span><span class="docs__row-value">Muted bg · spinner replaces label</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-primary</span>
+          <span class="docs__token">--color-brand-yellow-60</span>
+          <span class="docs__token">--color-brand-yellow-32</span>
+          <span class="docs__token">--color-brand-red-quaternary</span>
+          <span class="docs__token">--color-warning-transparent-60</span>
+          <span class="docs__token">--color-warning-transparent-48</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-48</span>
+          <span class="docs__token">--color-primary-transparent-04</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-body-small-*</span>
+          <span class="docs__token">--text-title-small-*</span>
+          <span class="docs__token">--text-title-medium-*</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="code-panel" id="code-button">
+      <button class="copy-code-btn" onclick="copyCode('button')">Copy</button>
+      <pre><code>&lt;!-- Sizes: xs | sm | md | lg --&gt;
+&lt;!-- Types: btn--primary | btn--secondary | btn--only-text | btn--accent --&gt;
+&lt;!-- States: (none) | s-pressed | s-disabled | s-process --&gt;
+
+&lt;span class=&quot;btn btn--md btn--primary&quot;&gt;Button&lt;/span&gt;
+&lt;span class=&quot;btn btn--md btn--secondary&quot;&gt;Button&lt;/span&gt;
+&lt;span class=&quot;btn btn--md btn--only-text&quot;&gt;Button&lt;/span&gt;
+&lt;span class=&quot;btn btn--md btn--accent&quot;&gt;Button&lt;/span&gt;
+
+&lt;!-- Process state (with spinner) --&gt;
+&lt;span class=&quot;btn btn--md btn--primary s-process&quot;&gt;
+  &lt;span class=&quot;btn-spinner&quot; style=&quot;width:30px;height:30px&quot;&gt;
+    &lt;!-- loader SVG --&gt;
+  &lt;/span&gt;
+&lt;/span&gt;</code></pre>
+    </div>
+    <!-- /Button -->
+
+    <div class="section-divider"></div>
+
+
+
+
+    <div class="section-divider"></div>
+
+    <!-- Preview -->
+    <div id="preview" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Preview</div>
+          <button class="code-toggle-btn" onclick="toggleCode('preview')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+        <div style="display:flex; gap:24px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="preview preview--photo" style="background: var(--color-primary-transparent-08);">
+              <img class="preview__thumb" src="https://picsum.photos/seed/photo1/40/40" alt="">
+            </div>
+            <span class="state-label">Photo</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="preview preview--video" style="background: var(--color-primary-transparent-08);">
+              <img class="preview__thumb" src="https://picsum.photos/seed/video1/40/40" alt="">
+            </div>
+            <span class="state-label">Video</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="preview preview--doc">
+              <div class="preview__doc-bg">
+                <img class="preview__doc-svg" src="assets/pdc-doc-file.svg" alt="">
+                <span class="preview__doc-label">zip</span>
+              </div>
+            </div>
+            <span class="state-label">Doc</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Preview</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">40 × 40px · r 8px · overflow hidden</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Thumb</span>
+            <span class="docs__row-value">100% cover · object-fit cover</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Doc label</span>
+            <span class="docs__row-value">title-small · 14/18 · doc Regular only</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Thumbnail image</span></div>
+          <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Thumbnail image</span></div>
+          <div class="docs__row"><span class="docs__row-label">doc</span><span class="docs__row-value">SVG file icon + filename label</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-title-small-*</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-preview">
+        <button class="copy-code-btn" onclick="copyCode('preview')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Photo --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview preview--photo"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__thumb"</span> <span class="tok-attr">src</span>=<span class="tok-str">"photo.jpg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Video --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview preview--video"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__thumb"</span> <span class="tok-attr">src</span>=<span class="tok-str">"thumb.jpg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/chip-ic-play.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Doc --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview preview--doc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__doc-bg"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__doc-svg"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/pdc-doc-file.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"preview__doc-label"</span><span class="tok-tag">&gt;</span>zip<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Preview -->
+
+    <div class="section-divider"></div>
+
+    <!-- PreviewDocChat -->
+    <div id="preview-doc-chat" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">PreviewDocChat</div>
+          <button class="code-toggle-btn" onclick="toggleCode('preview-doc-chat')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Photo row -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Photo</div>
+        <div style="display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/p1/56/56" alt="">
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/p1/56/56" alt="">
+              <div class="pdc__overlay"></div>
+              <img class="pdc__icon" src="assets/chip-ic-download.svg" alt="">
+            </div>
+            <span class="state-label">Not loaded</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/p1/56/56" alt="">
+              <div class="pdc__overlay"></div>
+              <img class="pdc__icon" src="assets/chip-ic-loading.svg" alt="">
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+        </div>
+
+        <!-- Video row -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
+        <div style="display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/v1/56/56" alt="">
+              <img class="pdc__icon" src="assets/chip-ic-play.svg" alt="">
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/v1/56/56" alt="">
+              <div class="pdc__overlay"></div>
+              <img class="pdc__icon" src="assets/chip-ic-download.svg" alt="">
+            </div>
+            <span class="state-label">Not loaded</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc">
+              <img class="pdc__thumb" src="https://picsum.photos/seed/v1/56/56" alt="">
+              <div class="pdc__overlay"></div>
+              <img class="pdc__icon" src="assets/chip-ic-loading.svg" alt="">
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+        </div>
+
+        <!-- Doc row -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Doc</div>
+        <div style="display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="pdc pdc--doc">
+              <div class="pdc__doc-bg">
+                <img class="pdc__doc-svg" src="assets/pdc-doc-file.svg" alt="">
+                <span class="pdc__doc-label">zip</span>
+              </div>
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc pdc--doc">
+              <div class="pdc__doc-bg">
+                <img class="pdc__doc-svg" src="assets/pdc-doc-file.svg" alt="">
+              </div>
+              <img class="pdc__icon" src="assets/chip-ic-download.svg" alt="">
+            </div>
+            <span class="state-label">Not loaded</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="pdc pdc--doc">
+              <div class="pdc__doc-bg">
+                <img class="pdc__doc-svg" src="assets/pdc-doc-file.svg" alt="">
+              </div>
+              <img class="pdc__icon" src="assets/chip-ic-loading.svg" alt="">
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">PreviewDocChat</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">56 × 56px · r 8px · overflow hidden</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Thumb</span>
+            <span class="docs__row-value">100% cover · object-fit cover</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Overlay</span>
+            <span class="docs__row-value">rgba(0,0,0,0.2) · blur 2px · photo/video only</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Icon</span>
+            <span class="docs__row-value">32 × 32px · centered · z 1</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Doc label</span>
+            <span class="docs__row-value">title-medium · 16/20 · Regular only</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Thumbnail image</span></div>
+          <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Thumbnail + play icon</span></div>
+          <div class="docs__row"><span class="docs__row-label">doc</span><span class="docs__row-value">SVG file icon + filename label (Regular only)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">Regular</span><span class="docs__row-value">No overlay</span></div>
+          <div class="docs__row"><span class="docs__row-label">Not loaded</span><span class="docs__row-value">Overlay + download icon (photo/video) · icon only (doc)</span></div>
+          <div class="docs__row"><span class="docs__row-label">Loading</span><span class="docs__row-value">Overlay + close icon (photo/video) · icon only (doc)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-title-medium-*</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-preview-doc-chat">
+        <button class="copy-code-btn" onclick="copyCode('preview-doc-chat')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Photo / regular --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__thumb"</span> <span class="tok-attr">src</span>=<span class="tok-str">"photo.jpg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Photo / not-loaded --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__thumb"</span> <span class="tok-attr">src</span>=<span class="tok-str">"photo.jpg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/chip-ic-download.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Doc / regular --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc pdc--doc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-bg"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-svg"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/pdc-doc-file.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-label"</span><span class="tok-tag">&gt;</span>zip<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Doc / not-loaded --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc pdc--doc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-bg"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-svg"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/pdc-doc-file.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/chip-ic-download.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Doc / loading --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc pdc--doc"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-bg"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__doc-svg"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/pdc-doc-file.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"pdc__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/chip-ic-loading.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /PreviewDocChat -->
+
+
+    <div class="section-divider"></div>
+
+    <!-- Toggle -->
+    <div id="toggle" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Toggle</div>
+          <button class="code-toggle-btn" onclick="toggleCode('toggle')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; gap:40px; align-items:flex-start; flex-wrap:wrap;">
+
+          <!-- Switch -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <div style="font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Switch</div>
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+              <div class="state-wrapper">
+                <button class="switch" role="switch" aria-checked="true" aria-label="Switch on" tabindex="0">
+                  <span class="switch__track"></span><span class="switch__thumb"></span>
+                </button>
+                <span class="state-label">On</span>
+              </div>
+              <div class="state-wrapper">
+                <button class="switch" role="switch" aria-checked="false" aria-label="Switch off" tabindex="0">
+                  <span class="switch__track"></span><span class="switch__thumb"></span>
+                </button>
+                <span class="state-label">Off</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checkbox -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <div style="font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Checkbox</div>
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+              <div class="state-wrapper">
+                <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox unchecked" tabindex="0">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                    <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                    <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                    <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <span class="state-label">Unchecked</span>
+              </div>
+              <div class="state-wrapper">
+                <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox checked" tabindex="0">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                    <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                    <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                    <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <span class="state-label">Checked</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radio -->
+          <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+            <div style="font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Radio</div>
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:center;">
+              <div class="state-wrapper">
+                <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio unchecked" tabindex="0">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                    <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                    <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                    <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                  </svg>
+                </button>
+                <span class="state-label">Unchecked</span>
+              </div>
+              <div class="state-wrapper">
+                <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio checked" tabindex="0">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                    <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                    <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                    <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                  </svg>
+                </button>
+                <span class="state-label">Checked</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Toggle</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">Switch</span><span class="docs__row-value">40 × 24px pill — on/off</span></div>
+          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">24 × 24px circle — multi-select</span></div>
+          <div class="docs__row"><span class="docs__row-label">Radio</span><span class="docs__row-value">24 × 24px circle — single-select</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">off / unchecked</span><span class="docs__row-value">Gray stroke circle or gray pill</span></div>
+          <div class="docs__row"><span class="docs__row-label">on / checked</span><span class="docs__row-value">Yellow fill + white indicator</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-constant-primary</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-toggle">
+        <button class="copy-code-btn" onclick="copyCode('toggle')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Switch --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"switch"</span> <span class="tok-attr">role</span>=<span class="tok-str">"switch"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"switch__track"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"switch__thumb"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Checkbox --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-mark --&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Radio --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-radio"</span> <span class="tok-attr">role</span>=<span class="tok-str">"radio"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-mark (circle dot) --&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+</code></pre>
+      </div>
+    </div>
+    <!-- /Toggle -->
+
+    <div class="section-divider"></div>
+
+    <!-- TabProfile -->
+    <div id="tab-profile" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TabProfile</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tab-profile')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end;">
+
+          <div class="state-wrapper">
+            <button class="tab-profile" type="button" aria-label="Invite">
+              <img class="tab-profile__icon" src="icons/menu/person-add.svg" alt="" aria-hidden="true" />
+              <span class="tab-profile__label">Invite</span>
+            </button>
+            <span class="state-label">Regular</span>
+          </div>
+
+          <div class="state-wrapper">
+            <button class="tab-profile s-pressed" type="button" aria-label="Invite">
+              <img class="tab-profile__icon" src="icons/menu/person-add.svg" alt="" aria-hidden="true" />
+              <span class="tab-profile__label">Invite</span>
+            </button>
+            <span class="state-label">Pressed</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TabProfile</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">pill · r 16px · border 0.5px · pad 6/12</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Icon</span>
+            <span class="docs__row-value">24 × 24px · из icons/</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Label</span>
+            <span class="docs__row-value">body-medium · 14/18 · tracking 0.25px</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Gap icon↔label</span>
+            <span class="docs__row-value">2px</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">default</span><span class="docs__row-value">Yellow-4 bg · border primary-24</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">Regular</span><span class="docs__row-value">bg brand-yellow-4</span></div>
+          <div class="docs__row"><span class="docs__row-label">Pressed</span><span class="docs__row-value">bg brand-yellow-16</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-4</span>
+          <span class="docs__token">--color-brand-yellow-16</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--text-body-medium-*</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="code-panel" id="code-tab-profile">
+      <button class="copy-code-btn" onclick="copyCode('tab-profile')">Copy</button>
+      <pre><code><span class="tok-cmt">&lt;!-- Regular --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile"</span> <span class="tok-attr">type</span>=<span class="tok-str">"button"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Invite"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/person-add.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile__label"</span><span class="tok-tag">&gt;</span>Invite<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Pressed --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile s-pressed"</span> <span class="tok-attr">type</span>=<span class="tok-str">"button"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Invite"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/person-add.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-profile__label"</span><span class="tok-tag">&gt;</span>Invite<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span></code></pre>
+    </div>
+    <!-- /TabProfile -->
+
+    <div class="section-divider"></div>
+
+    <!-- TabItem -->
+    <div id="tab-item" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TabItem</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tab-item')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+
+          <div class="state-wrapper">
+            <button class="tab-item tab-item--active" type="button" aria-label="Gallery">
+              <img class="tab-item__icon" src="icons/menu/photo.svg" alt="" aria-hidden="true" />
+              <span class="tab-item__label">Gallery</span>
+            </button>
+            <span class="state-label">Active</span>
+          </div>
+
+          <div class="state-wrapper">
+            <button class="tab-item" type="button" aria-label="Gallery">
+              <img class="tab-item__icon" src="icons/menu/photo.svg" alt="" aria-hidden="true" />
+              <span class="tab-item__label">Gallery</span>
+            </button>
+            <span class="state-label">Inactive</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TabItem</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row">
+            <span class="docs__row-label">Container</span>
+            <span class="docs__row-value">r 16px · pad 6/8</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Icon</span>
+            <span class="docs__row-value">24 × 24px · из icons/</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Label</span>
+            <span class="docs__row-value">title-small · 14/18 · tracking 0.1px</span>
+          </div>
+          <div class="docs__row">
+            <span class="docs__row-label">Gap icon↔label</span>
+            <span class="docs__row-value">2px</span>
+          </div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">Active</span><span class="docs__row-value">bg brand-red-secondary · белые иконка и текст</span></div>
+          <div class="docs__row"><span class="docs__row-label">Inactive</span><span class="docs__row-value">bg brand-yellow-4 · border 1.5px primary-32 · серый текст</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-red-secondary</span>
+          <span class="docs__token">--color-brand-yellow-4</span>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-title-small-*</span>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="code-panel" id="code-tab-item">
+      <button class="copy-code-btn" onclick="copyCode('tab-item')">Copy</button>
+      <pre><code><span class="tok-cmt">&lt;!-- Active --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item tab-item--active"</span> <span class="tok-attr">type</span>=<span class="tok-str">"button"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/photo.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item__label"</span><span class="tok-tag">&gt;</span>Gallery<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Inactive --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item"</span> <span class="tok-attr">type</span>=<span class="tok-str">"button"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/photo.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-item__label"</span><span class="tok-tag">&gt;</span>Gallery<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span></code></pre>
+    </div>
+    <!-- /TabItem -->
+
+    <div class="section-divider"></div>
+
+    <!-- Avatar -->
+    <div id="avatar" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Avatar</div>
+          <button class="code-toggle-btn" onclick="toggleCode('avatar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- XL 122px -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">XLarge · 122px</div>
+        <div style="display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:28px;">
+          <div class="state-wrapper">
+            <div class="avatar avatar--xl" aria-label="LJ"><span class="avatar__initials" aria-hidden="true">LJ</span></div>
+            <span class="state-label">direct</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="avatar avatar--xl avatar--channel" aria-label="L"><span class="avatar__initials" aria-hidden="true">L</span></div>
+            <span class="state-label">channel</span>
+          </div>
+        </div>
+
+        <!-- L 72px -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Large · 72px</div>
+        <div style="display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:28px;">
+          <div class="state-wrapper">
+            <div class="avatar avatar--lg" aria-label="LJ"><span class="avatar__initials" aria-hidden="true">LJ</span></div>
+            <span class="state-label">direct</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="avatar avatar--lg avatar--channel" aria-label="L"><span class="avatar__initials" aria-hidden="true">L</span></div>
+            <span class="state-label">channel</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="avatar avatar--lg" aria-label="L"><span class="avatar__initials" aria-hidden="true">L</span></div>
+            <span class="state-label">subchannel</span>
+          </div>
+        </div>
+
+        <!-- S 32px -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">Small · 32px</div>
+        <div style="display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="avatar avatar--sm" aria-label="ML"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <span class="state-label">direct</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="avatar avatar--sm avatar--channel" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <span class="state-label">channel</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="avatar avatar--sm" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <span class="state-label">subchannel</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Avatar</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">avatar--xl</span><span class="docs__row-value">122×122px</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatar--lg</span><span class="docs__row-value">72×72px</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatar--md</span><span class="docs__row-value">48×48px</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatar--sm</span><span class="docs__row-value">32×32px</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Types</div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">border-radius: 50%</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">avatar--channel · rounded square</span></div>
+          <div class="docs__row"><span class="docs__row-label">subchannel</span><span class="docs__row-value">circle · 1 initial</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Statuses</div>
+          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">без модификатора</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">avatar--active · yellow ring</span></div>
+          <div class="docs__row"><span class="docs__row-label">not active</span><span class="docs__row-value">avatar--not-active · opacity 0.38</span></div>
+          <div class="docs__row"><span class="docs__row-label">live</span><span class="docs__row-value">avatar--live · red ring + chip</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-16</span>
+          <span class="docs__token">--color-primary-transparent-70</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-warning-secondary</span>
+          <span class="docs__token">--text-headline-medium-font-family</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-avatar">
+        <button class="copy-code-btn" onclick="copyCode('avatar')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- direct / large --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--lg"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"LJ"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>LJ<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- channel / medium / active --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--md avatar--channel avatar--active"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"M"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- direct / medium / live --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--md avatar--live"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"M"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__live-chip"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Live"</span><span class="tok-tag">&gt;</span>Live<span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- with photo --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--lg"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Name Surname"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__photo"</span> <span class="tok-attr">src</span>=<span class="tok-str">"..."</span> <span class="tok-attr">alt</span>=<span class="tok-str">"Name Surname"</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Avatar -->
+
+    <div class="section-divider"></div>
+
+
+
+    <!-- ChannelAvatar -->
+    <div id="channel-avatar" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">ChannelAvatar</div>
+          <button class="code-toggle-btn" onclick="toggleCode('channel-avatar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- channel -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">channel</div>
+        <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:28px;">
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/channel-regular.svg" alt="Channel avatar"></span>
+            <span class="state-label">regular</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/channel-not-active.svg" alt="Channel avatar, inactive"></span>
+            <span class="state-label">not active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/channel-active.svg" alt="Channel avatar, active"></span>
+            <span class="state-label">active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/channel-live.svg" alt="Channel avatar, live"></span>
+            <span class="state-label">live</span>
+          </div>
+        </div>
+
+        <!-- folder -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">folder</div>
+        <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:28px;">
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/folder-regular.svg" alt="Folder avatar"></span>
+            <span class="state-label">regular</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/folder-not-active.svg" alt="Folder avatar, inactive"></span>
+            <span class="state-label">not active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/folder-active.svg" alt="Folder avatar, active"></span>
+            <span class="state-label">active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/folder-live.svg" alt="Folder avatar, live"></span>
+            <span class="state-label">live</span>
+          </div>
+        </div>
+
+        <!-- direct -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">direct</div>
+        <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/direct-regular.svg" alt="Direct avatar"></span>
+            <span class="state-label">regular</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/direct-not-active.svg" alt="Direct avatar, inactive"></span>
+            <span class="state-label">not active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/direct-active.svg" alt="Direct avatar, active"></span>
+            <span class="state-label">active</span>
+          </div>
+          <div class="state-wrapper">
+            <span class="channel-avatar"><img class="channel-avatar__img" src="assets/channel-avatar/direct-live.svg" alt="Direct avatar, live"></span>
+            <span class="state-label">live</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">ChannelAvatar</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">channel-avatar</span><span class="docs__row-value">48×48px · форма зависит от type</span></div>
+          <div class="docs__row"><span class="docs__row-label">shape</span><span class="docs__row-value">channel: squircle r12 · folder: tab+body · direct: circle</span></div>
+          <div class="docs__row"><span class="docs__row-label">Live chip</span><span class="docs__row-value">запечён в SVG для live (48×52px)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Types</div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">скруглённый квадрат</span></div>
+          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">форма папки с выступом</span></div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">круг</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">bg brand-yellow-16 + инициал</span></div>
+          <div class="docs__row"><span class="docs__row-label">not active</span><span class="docs__row-value">приглушённый</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">обводка brand-yellow-secondary</span></div>
+          <div class="docs__row"><span class="docs__row-label">live</span><span class="docs__row-value">обводка warning-secondary + Live чип</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-16</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-warning-secondary</span>
+          <span class="docs__token">--color-primary-transparent-70</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-channel-avatar">
+        <button class="copy-code-btn" onclick="copyCode('channel-avatar')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- channel · regular --&gt;</span>
+<span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"channel-avatar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"channel-avatar__img"</span> <span class="tok-attr">src</span>=<span class="tok-str">"assets/channel-avatar/channel-regular.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">"Channel avatar"</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/span&gt;</span>
+
+<span class="tok-cmt">&lt;!-- type: channel | folder | direct --&gt;</span>
+<span class="tok-cmt">&lt;!-- state: regular | not-active | active | live --&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /ChannelAvatar -->
+
+
+  </main>
+
+  <script src="scripts/nav.js"></script>
+  <script>
+    // Toggle interactivity (Switch, Checkbox, Radio, PhotoPlaceholder checkbox)
+    document.querySelectorAll('.switch, .toggle-cb, .toggle-radio, .photo-placeholder__checkbox').forEach(function(el) {
+      function toggle() {
+        var checked = el.getAttribute('aria-checked') === 'true';
+        el.setAttribute('aria-checked', String(!checked));
+      }
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+    });
+  </script>
+
+  <script>
+    function toggleCode(id) {
+      var btn   = document.querySelector('#' + id + ' .code-toggle-btn');
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var open = panel.classList.toggle('is-open');
+      if (btn) btn.classList.toggle('is-active', open);
+    }
+    function copyCode(id) {
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var text = panel.querySelector('code').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        var btn = panel.querySelector('.copy-code-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('aside.docs').forEach(function (aside) {
+        var sections = aside.querySelectorAll('.docs__section');
+        sections.forEach(function (sec, i) {
+          if (i > 0) sec.classList.add('docs__section--collapsible');
+        });
+
+        var btn = document.createElement('button');
+        btn.className = 'docs__toggle';
+        btn.setAttribute('type', 'button');
+        btn.innerHTML =
+          '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+          '<path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg>' +
+          '<span>Show all</span>';
+
+        btn.addEventListener('click', function () {
+          var expanded = aside.classList.toggle('is-expanded');
+          btn.querySelector('span').textContent = expanded ? 'Collapse' : 'Show all';
+        });
+
+        aside.appendChild(btn);
+      });
+    });
+  </script>
+
+</body>
+</html>

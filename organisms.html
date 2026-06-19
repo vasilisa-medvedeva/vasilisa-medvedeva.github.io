@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Organisms</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px;
+    }
+
+    .page-title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 40px;
+    }
+
+    /* ── Component block ── */
+    .component-block {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .component-block__preview {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 40px;
+    }
+
+    .component-block__preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .component-block__preview-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+    }
+
+    .state-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .state-label {
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Docs panel ── */
+    .docs {
+      background: #fff;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 24px;
+      align-self: start;
+    }
+
+    .docs__name {
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      margin-bottom: 4px;
+    }
+
+    .docs__type {
+      display: inline-block;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      line-height: var(--text-label-small-line-height);
+      color: var(--color-success-secondary, #2d7a4f);
+      background: var(--color-success-transparent-8, #e8f5ee);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .docs__section { margin-bottom: 16px; }
+
+    .docs__section-title {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      line-height: var(--text-label-medium-line-height);
+      color: var(--color-primary-transparent-60);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .docs__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+    }
+
+    .docs__row:last-child { border-bottom: none; }
+    .docs__row-label { color: var(--color-primary-transparent-60); }
+    .docs__row-value { font-weight: var(--text-label-medium-font-weight); color: var(--color-primary); text-align: right; }
+
+    .docs__token {
+      font-size: var(--text-body-small-font-size);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: monospace;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .docs__status {
+      display: inline-block;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .docs__status--draft {
+      background: var(--color-primary-transparent-08);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Docs collapsible ── */
+    .docs__section--collapsible { display: none; }
+    .docs.is-expanded .docs__section--collapsible { display: block; }
+    .docs__toggle {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; gap: 6px;
+      width: 100%; margin-top: 8px; padding: 8px 0;
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      cursor: pointer;
+      border-top: 1px solid var(--color-primary-transparent-16);
+      transition: color 0.15s;
+    }
+    .docs__toggle:hover { color: var(--color-primary); }
+    .docs__toggle svg { width: 14px; height: 14px; flex-shrink: 0; transition: transform 0.2s ease; }
+    .docs.is-expanded .docs__toggle svg { transform: rotate(180deg); }
+
+    /* ── Code panel ── */
+    .code-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: "Roboto", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 6px; padding: 4px 10px; cursor: pointer;
+      transition: background 0.15s, color 0.15s; white-space: nowrap;
+    }
+    .code-toggle-btn:hover { background: var(--color-primary-transparent-08); color: var(--color-primary-transparent-87); }
+    .code-toggle-btn.is-active { background: var(--color-primary-transparent-87); color: var(--color-constant-primary); border-color: transparent; }
+
+    .code-panel {
+      grid-column: 1 / -1; background: #1a1a1a; border-radius: 10px;
+      padding: 20px 24px; position: relative; display: none; margin-top: -24px;
+    }
+    .code-panel.is-open { display: block; }
+    .code-panel pre {
+      font-family: "Roboto Mono", "Fira Code", monospace; font-size: 12.5px;
+      line-height: 1.7; color: #d4d4d4; white-space: pre; overflow-x: auto; padding-right: 80px;
+    }
+    .code-panel pre .tok-tag  { color: #569cd6; }
+    .code-panel pre .tok-attr { color: #9cdcfe; }
+    .code-panel pre .tok-str  { color: #ce9178; }
+    .code-panel pre .tok-cmt  { color: #6a9955; }
+
+    .copy-code-btn {
+      position: absolute; top: 14px; right: 16px;
+      font-family: "Roboto", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
+      border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .copy-code-btn:hover  { background: #3a3a3a; color: #fff; }
+    .copy-code-btn.copied { color: #4ec9b0; border-color: #4ec9b0; }
+
+    .section-divider {
+      height: 1px; background: var(--color-primary-transparent-16); margin: 0 0 48px;
+    }
+
+    /* ── Atom: Avatar (from index.html) ── */
+    .avatar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-brand-yellow-16);
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .avatar--channel { border-radius: 16px; }
+    .avatar--lg { width: 72px; height: 72px; }
+    .avatar__initials {
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-weight: 500;
+      color: var(--color-primary-transparent-70);
+      text-align: center;
+      user-select: none;
+      line-height: 1;
+    }
+    .avatar--lg .avatar__initials { font-size: 28px; }
+    .avatar__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    /* ── Molecule: CardProfileText (reused) ── */
+    .card-profile-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 356px;
+    }
+    .card-profile-text--with-bio { gap: 12px; }
+    .card-profile-text__top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .card-profile-text--private .card-profile-text__top { gap: 4px; }
+    .card-profile-text__title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+    .card-profile-text__title {
+      font-family: var(--text-title-large-font-family), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      width: 100%;
+    }
+    .card-profile-text__subtitle {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      width: 100%;
+    }
+    .card-profile-text__private {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      width: 100%;
+    }
+    .card-profile-text__lock {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex-shrink: 0;
+    }
+    .card-profile-text__private-label {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .card-profile-text__bio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .card-profile-text__bio-text {
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-align: center;
+      flex: 1;
+    }
+
+    /* ── Organism: CardProfile ── */
+    .card-profile {
+      width: 380px;
+      border-radius: 20px;
+      background: var(--color-brand-yellow-4);
+      border: 0.5px solid var(--color-primary-transparent-24);
+      padding: 24px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .card-profile__container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 240px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .card-profile__ava {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 64px 40px;
+      border: 1px dashed var(--color-primary-transparent-32);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--color-primary-transparent-60);
+    }
+
+    .empty-state__title {
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      color: var(--color-primary-transparent-87);
+    }
+
+    .empty-state__text {
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      max-width: 480px;
+    }
+
+    .empty-state__process {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+    }
+
+    .empty-state__step {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .empty-state__step-num {
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      min-width: 16px;
+      padding-top: 2px;
+    }
+
+    .empty-state__step-text strong {
+      color: var(--color-primary-transparent-87);
+      font-weight: var(--text-label-large-font-weight);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar">
+    <a class="sidebar__logo" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
+        <a class="sidebar__link" href="index.html#preview">Preview</a>
+        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
+        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
+        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
+        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
+        <a class="sidebar__link" href="index.html#chip-live">ChipLive</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-molecules">
+      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
+        Molecules
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
+        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
+      </div>
+    </div>
+
+    <div class="nav-group nav-group--active" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link sidebar__link--active" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <h1 class="page-title">Organisms</h1>
+    <p class="page-subtitle">Сложные UI-блоки, собранные из атомов и молекул. Принцип: Reuse → Compose → Create.</p>
+
+    <div class="section-divider"></div>
+
+    <!-- CardProfile -->
+    <div id="card-profile" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CardProfile</div>
+          <button class="code-toggle-btn" onclick="toggleCode('card-profile')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+
+          <!-- private + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile">
+              <div class="card-profile__container">
+                <div class="card-profile__ava">
+                  <div class="avatar avatar--lg" aria-label="LJ">
+                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  </div>
+                </div>
+                <div class="card-profile-text card-profile-text--private card-profile-text--with-bio">
+                  <div class="card-profile-text__top">
+                    <div class="card-profile-text__title-group">
+                      <p class="card-profile-text__title">Title</p>
+                      <p class="card-profile-text__subtitle">Subtitle</p>
+                    </div>
+                    <div class="card-profile-text__private">
+                      <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                      <span class="card-profile-text__private-label">Private</span>
+                    </div>
+                  </div>
+                  <div class="card-profile-text__bio">
+                    <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. Subscribe for epic content! 🎲✨ #DnD #TabletopGaming</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">private + bio</span>
+          </div>
+
+          <!-- public + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile">
+              <div class="card-profile__container">
+                <div class="card-profile__ava">
+                  <div class="avatar avatar--lg" aria-label="LJ">
+                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  </div>
+                </div>
+                <div class="card-profile-text card-profile-text--with-bio">
+                  <div class="card-profile-text__top">
+                    <div class="card-profile-text__title-group">
+                      <p class="card-profile-text__title">Title</p>
+                      <p class="card-profile-text__subtitle">Subtitle</p>
+                    </div>
+                  </div>
+                  <div class="card-profile-text__bio">
+                    <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. Subscribe for epic content! 🎲✨ #DnD #TabletopGaming</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">public + bio</span>
+          </div>
+
+          <!-- private, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile">
+              <div class="card-profile__container">
+                <div class="card-profile__ava">
+                  <div class="avatar avatar--lg" aria-label="LJ">
+                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  </div>
+                </div>
+                <div class="card-profile-text card-profile-text--private">
+                  <div class="card-profile-text__top">
+                    <div class="card-profile-text__title-group">
+                      <p class="card-profile-text__title">Title</p>
+                      <p class="card-profile-text__subtitle">Subtitle</p>
+                    </div>
+                    <div class="card-profile-text__private">
+                      <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                      <span class="card-profile-text__private-label">Private</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">private, no bio</span>
+          </div>
+
+          <!-- public, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile">
+              <div class="card-profile__container">
+                <div class="card-profile__ava">
+                  <div class="avatar avatar--lg" aria-label="LJ">
+                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  </div>
+                </div>
+                <div class="card-profile-text">
+                  <div class="card-profile-text__top">
+                    <div class="card-profile-text__title-group">
+                      <p class="card-profile-text__title">Title</p>
+                      <p class="card-profile-text__subtitle">Subtitle</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">public, no bio</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">CardProfile</div>
+        <span class="docs__type">Organism</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Composition</div>
+          <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">новый атом · 72×72px</span></div>
+          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">молекула · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · через молекулу</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">card</span><span class="docs__row-value">380px · r 20px · bg brand-yellow-4 · border 0.5px</span></div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">h 240px · flex-col · gap 12px · centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">ava slot</span><span class="docs__row-value">flex: 1 · centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">72px · circle · brand-yellow-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">356px · варианты: private/public × bio/no bio</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только имя и подпись</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-4</span>
+          <span class="docs__token">--color-brand-yellow-16</span>
+          <span class="docs__token">--color-primary-transparent-24</span>
+          <span class="docs__token">--color-primary-transparent-70</span>
+          <span class="docs__token">--text-headline-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-card-profile">
+        <button class="copy-code-btn" onclick="copyCode('card-profile')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile__container"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile__ava"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--lg"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"LJ"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>LJ<span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-cmt">&lt;!-- Molecule: CardProfileText --&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text card-profile-text--private card-profile-text--with-bio"</span><span class="tok-tag">&gt;</span>
+      ...
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /CardProfile -->
+
+  </main>
+
+  <script src="scripts/nav.js"></script>
+
+  <script>
+    function toggleCode(id) {
+      var btn   = document.querySelector('#' + id + ' .code-toggle-btn');
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var open = panel.classList.toggle('is-open');
+      if (btn) btn.classList.toggle('is-active', open);
+    }
+    function copyCode(id) {
+      var panel = document.getElementById('code-' + id);
+      if (!panel) return;
+      var text = panel.querySelector('code').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        var btn = panel.querySelector('.copy-code-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('aside.docs').forEach(function (aside) {
+        var sections = aside.querySelectorAll('.docs__section');
+        sections.forEach(function (sec, i) {
+          if (i > 0) sec.classList.add('docs__section--collapsible');
+        });
+        var btn = document.createElement('button');
+        btn.className = 'docs__toggle';
+        btn.setAttribute('type', 'button');
+        btn.innerHTML =
+          '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+          '<path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg><span>Show all</span>';
+        btn.addEventListener('click', function () {
+          var expanded = aside.classList.toggle('is-expanded');
+          btn.querySelector('span').textContent = expanded ? 'Collapse' : 'Show all';
+        });
+        aside.appendChild(btn);
+      });
+    });
+  </script>
+
+</body>
+</html>

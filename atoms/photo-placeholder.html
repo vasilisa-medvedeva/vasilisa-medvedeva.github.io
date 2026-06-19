@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom: PhotoPlaceholder</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 32px;
+      padding: 40px;
+      background: var(--color-primary-transparent-04);
+      align-items: flex-start;
+      min-width: 900px;
+    }
+
+    /* ── PhotoPlaceholder ── */
+    .photo-placeholder {
+      position: relative;
+      width: 134px;
+      height: 134px;
+      border-radius: 4px;
+      background: var(--color-primary-transparent-16);
+      flex-shrink: 0;
+    }
+
+    /* Checkbox toggle — top-right corner */
+    .photo-placeholder__checkbox {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .photo-placeholder__checkbox:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 2px;
+      border-radius: 50%;
+    }
+
+    .photo-placeholder__checkbox .cb-ring { display: block; }
+    .photo-placeholder__checkbox .cb-fill { display: none; }
+    .photo-placeholder__checkbox .cb-check { display: none; }
+
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-ring  { display: none; }
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-fill  { display: block; }
+    .photo-placeholder__checkbox[aria-checked="true"] .cb-check { display: block; }
+
+    /* Video timeline chip — bottom-right corner */
+    .photo-placeholder__chip {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 60px;
+      background: var(--color-constant-transparent-60);
+    }
+
+    .photo-placeholder__chip-label {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+
+    /* Camera icon — centered for addMedia variant */
+    .photo-placeholder__camera {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Photo (starts unchecked) -->
+  <div class="photo-placeholder">
+    <button class="photo-placeholder__checkbox" role="checkbox" aria-checked="false" aria-label="Select photo" tabindex="0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="cb-ring"  cx="12" cy="12" r="10"  stroke="var(--color-primary-transparent-32)" stroke-width="1.5"/>
+        <circle class="cb-fill"  cx="12" cy="12" r="11"  fill="var(--color-brand-yellow-secondary)"/>
+        <path   class="cb-check" d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Photo (starts checked) -->
+  <div class="photo-placeholder">
+    <button class="photo-placeholder__checkbox" role="checkbox" aria-checked="true" aria-label="Select photo" tabindex="0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="cb-ring"  cx="12" cy="12" r="10"  stroke="var(--color-primary-transparent-32)" stroke-width="1.5"/>
+        <circle class="cb-fill"  cx="12" cy="12" r="11"  fill="var(--color-brand-yellow-secondary)"/>
+        <path   class="cb-check" d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Video (starts unchecked) -->
+  <div class="photo-placeholder">
+    <button class="photo-placeholder__checkbox" role="checkbox" aria-checked="false" aria-label="Select video" tabindex="0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="cb-ring"  cx="12" cy="12" r="10"  stroke="var(--color-primary-transparent-32)" stroke-width="1.5"/>
+        <circle class="cb-fill"  cx="12" cy="12" r="11"  fill="var(--color-brand-yellow-secondary)"/>
+        <path   class="cb-check" d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="photo-placeholder__chip" aria-label="Duration: 0:32">
+      <span class="photo-placeholder__chip-label">0:32</span>
+    </div>
+  </div>
+
+  <!-- Video (starts checked) -->
+  <div class="photo-placeholder">
+    <button class="photo-placeholder__checkbox" role="checkbox" aria-checked="true" aria-label="Select video" tabindex="0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="cb-ring"  cx="12" cy="12" r="10"  stroke="var(--color-primary-transparent-32)" stroke-width="1.5"/>
+        <circle class="cb-fill"  cx="12" cy="12" r="11"  fill="var(--color-brand-yellow-secondary)"/>
+        <path   class="cb-check" d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="photo-placeholder__chip" aria-label="Duration: 0:32">
+      <span class="photo-placeholder__chip-label">0:32</span>
+    </div>
+  </div>
+
+  <!-- Add Media -->
+  <div class="photo-placeholder" role="button" aria-label="Add media" tabindex="0" style="cursor:pointer;">
+    <img class="photo-placeholder__camera" src="../icons/general/camera-fill.svg" alt="" aria-hidden="true" />
+  </div>
+
+  <script>
+    document.querySelectorAll('.photo-placeholder__checkbox').forEach(function(btn) {
+      function toggle() {
+        var checked = btn.getAttribute('aria-checked') === 'true';
+        btn.setAttribute('aria-checked', String(!checked));
+      }
+      btn.addEventListener('click', toggle);
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+    });
+  </script>
+
+</body>
+</html>

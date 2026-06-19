@@ -1,0 +1,25 @@
+:root {
+  /* Base scale — 4px grid */
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-5:  20px;
+  --spacing-6:  24px;
+  --spacing-8:  32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* Named aliases */
+  --spacing-none: 0px;
+  --spacing-xs:   var(--spacing-1);   /* 4px  — icon gap, tight inset */
+  --spacing-sm:   var(--spacing-2);   /* 8px  — list item gap */
+  --spacing-md:   var(--spacing-4);   /* 16px — standard component padding */
+  --spacing-lg:   var(--spacing-6);   /* 24px — section gap */
+  --spacing-xl:   var(--spacing-8);   /* 32px — large section gap */
+  --spacing-2xl:  var(--spacing-12);  /* 48px — screen-level padding */
+  --spacing-3xl:  var(--spacing-16);  /* 64px — hero / top-of-screen spacing */
+}

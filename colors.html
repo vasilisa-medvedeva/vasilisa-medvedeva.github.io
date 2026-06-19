@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Colors</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px 80px;
+    }
+
+    .page-title {
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      color: var(--color-primary);
+      margin-bottom: 40px;
+    }
+
+    .color-group {
+      margin-bottom: 48px;
+    }
+
+    .color-group__label {
+      font-family: "Roboto", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 80px;
+    }
+
+    .swatch__tile {
+      width: 80px;
+      height: 56px;
+      border-radius: 8px;
+      border: 1px solid var(--color-primary-transparent-08);
+    }
+
+    .swatch__name {
+      font-family: "Roboto", sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: var(--color-primary-transparent-60);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <a class="sidebar__logo" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#tab-bar-item">TabBarItem</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#tab-item-bottom">TabItem</a>
+        <a class="sidebar__link" href="index.html#chips">Chips</a>
+        <a class="sidebar__link" href="index.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="index.html#chat-right">ChatRight</a>
+      </div>
+    </div>
+
+
+    <div class="nav-group" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="page-title">Colors</div>
+
+    <!-- Primary -->
+    <div class="color-group">
+      <div class="color-group__label">Primary</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-87)"></div><div class="swatch__name">transparent‑87</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-70)"></div><div class="swatch__name">transparent‑70</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-60)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-48)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-32)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-24)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-08)"></div><div class="swatch__name">transparent‑08</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-04)"></div><div class="swatch__name">transparent‑04</div></div>
+      </div>
+    </div>
+
+    <!-- Constant -->
+    <div class="color-group">
+      <div class="color-group__label">Constant</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-primary);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-87);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑87</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-70);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑70</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-60);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-48);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-32);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-24);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-16);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-8);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑8</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-4);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑4</div></div>
+      </div>
+    </div>
+
+    <!-- Brand Red -->
+    <div class="color-group">
+      <div class="color-group__label">Brand Red</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-primary)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-secondary)"></div><div class="swatch__name">secondary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-tertiary)"></div><div class="swatch__name">tertiary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-quaternary)"></div><div class="swatch__name">quaternary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-60)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-48)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-32)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-24)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-8)"></div><div class="swatch__name">transparent‑8</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-transparent-4)"></div><div class="swatch__name">transparent‑4</div></div>
+      </div>
+    </div>
+
+    <!-- Brand Yellow -->
+    <div class="color-group">
+      <div class="color-group__label">Brand Yellow</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-primary)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-secondary)"></div><div class="swatch__name">secondary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-tertiary)"></div><div class="swatch__name">tertiary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-quaternary)"></div><div class="swatch__name">quaternary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-60)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-48)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-32)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-24)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-8)"></div><div class="swatch__name">transparent‑8</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-4)"></div><div class="swatch__name">transparent‑4</div></div>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="color-group">
+      <div class="color-group__label">Warning</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-primary)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-secondary)"></div><div class="swatch__name">secondary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-tertiary)"></div><div class="swatch__name">tertiary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-quaternary)"></div><div class="swatch__name">quaternary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-60)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-48)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-32)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-24)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-8)"></div><div class="swatch__name">transparent‑8</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-transparent-4)"></div><div class="swatch__name">transparent‑4</div></div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="color-group">
+      <div class="color-group__label">Info</div>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-primary)"></div><div class="swatch__name">primary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-secondary)"></div><div class="swatch__name">secondary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-tertiary)"></div><div class="swatch__name">tertiary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-quaternary)"></div><div class="swatch__name">quaternary</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-60)"></div><div class="swatch__name">transparent‑60</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-48)"></div><div class="swatch__name">transparent‑48</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-32)"></div><div class="swatch__name">transparent‑32</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-24)"></div><div class="swatch__name">transparent‑24</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-16)"></div><div class="swatch__name">transparent‑16</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-8)"></div><div class="swatch__name">transparent‑8</div></div>
+        <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-transparent-4)"></div><div class="swatch__name">transparent‑4</div></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="scripts/nav.js"></script>
+</body>
+</html>

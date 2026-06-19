@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom: TabProfile</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 40px;
+      background: var(--color-primary-transparent-04);
+      align-items: flex-start;
+    }
+
+    /* ── TabProfile ── */
+    .tab-profile {
+      all: unset;
+      box-sizing: border-box;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 0.5px solid var(--color-primary-transparent-24);
+      background: var(--color-brand-yellow-4);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .tab-profile.s-pressed {
+      background: var(--color-brand-yellow-16);
+    }
+
+    .tab-profile__icon {
+      width: 24px;
+      height: 24px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .tab-profile__label {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Regular -->
+  <button class="tab-profile" type="button" aria-label="Invite">
+    <img class="tab-profile__icon" src="../icons/menu/person-add.svg" alt="" aria-hidden="true" />
+    <span class="tab-profile__label">Invite</span>
+  </button>
+
+  <button class="tab-profile" type="button" aria-label="Share">
+    <img class="tab-profile__icon" src="../icons/general/share.svg" alt="" aria-hidden="true" />
+    <span class="tab-profile__label">Share</span>
+  </button>
+
+  <button class="tab-profile" type="button" aria-label="Mute">
+    <img class="tab-profile__icon" src="../icons/general/muted.svg" alt="" aria-hidden="true" />
+    <span class="tab-profile__label">Mute</span>
+  </button>
+
+  <!-- Pressed -->
+  <button class="tab-profile s-pressed" type="button" aria-label="Invite">
+    <img class="tab-profile__icon" src="../icons/menu/person-add.svg" alt="" aria-hidden="true" />
+    <span class="tab-profile__label">Invite</span>
+  </button>
+
+</body>
+</html>

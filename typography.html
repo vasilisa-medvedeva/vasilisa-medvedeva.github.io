@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Typography</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px 80px;
+    }
+
+    .page-title {
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      color: var(--color-primary);
+      margin-bottom: 40px;
+    }
+
+    .type-group {
+      margin-bottom: 48px;
+    }
+
+    .type-group__label {
+      font-family: "Roboto", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+    }
+
+    .type-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-primary-transparent-08);
+    }
+
+    .type-row:last-child {
+      border-bottom: none;
+    }
+
+    .type-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .type-meta__name {
+      font-family: "Roboto", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      color: var(--color-primary-transparent-60);
+    }
+
+    .type-meta__specs {
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: 11px;
+      color: var(--color-primary-transparent-32);
+      letter-spacing: 0;
+    }
+
+    /* ── Text style classes ── */
+    .ts-headline-medium {
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: var(--text-headline-medium-letter-spacing);
+    }
+    .ts-headline-small {
+      font-family: var(--text-headline-small-font-family), sans-serif;
+      font-size: var(--text-headline-small-font-size);
+      font-weight: var(--text-headline-small-font-weight);
+      line-height: var(--text-headline-small-line-height);
+      letter-spacing: var(--text-headline-small-letter-spacing);
+    }
+    .ts-title-large {
+      font-family: var(--text-title-large-font-family), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+    }
+    .ts-title-medium {
+      font-family: var(--text-title-medium-font-family), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+    .ts-title-small {
+      font-family: var(--text-title-small-font-family), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+    }
+    .ts-label-large {
+      font-family: var(--text-label-large-font-family), sans-serif;
+      font-size: var(--text-label-large-font-size);
+      font-weight: var(--text-label-large-font-weight);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: var(--text-label-large-letter-spacing);
+    }
+    .ts-label-medium {
+      font-family: var(--text-label-medium-font-family), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+    }
+    .ts-label-small {
+      font-family: var(--text-label-small-font-family), sans-serif;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      line-height: var(--text-label-small-line-height);
+      letter-spacing: var(--text-label-small-letter-spacing);
+    }
+    .ts-body-large {
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+    }
+    .ts-body-medium {
+      font-family: var(--text-body-medium-font-family), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+    }
+    .ts-body-small {
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+    }
+    .ts-link-large {
+      font-family: var(--text-link-large-font-family), sans-serif;
+      font-size: var(--text-link-large-font-size);
+      font-weight: var(--text-link-large-font-weight);
+      line-height: var(--text-link-large-line-height);
+      letter-spacing: var(--text-link-large-letter-spacing);
+      color: var(--color-info-primary);
+      text-decoration: underline;
+    }
+    .ts-link-medium {
+      font-family: var(--text-link-medium-font-family), sans-serif;
+      font-size: var(--text-link-medium-font-size);
+      font-weight: var(--text-link-medium-font-weight);
+      line-height: var(--text-link-medium-line-height);
+      letter-spacing: var(--text-link-medium-letter-spacing);
+      color: var(--color-info-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <a class="sidebar__logo" href="home.html">
+      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
+    </a>
+
+    <div class="nav-group" id="nav-styles">
+      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
+        Styles
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="typography.html">Typography</a>
+        <a class="sidebar__link" href="colors.html">Colors</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-icons">
+      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
+        Icons
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="icons.html">Tab bar</a>
+        <a class="sidebar__link" href="icons.html#chats">Chats</a>
+        <a class="sidebar__link" href="icons.html#menu">Menu</a>
+        <a class="sidebar__link" href="icons.html#general">General</a>
+        <a class="sidebar__link" href="icons.html#small">Small</a>
+        <a class="sidebar__link" href="icons.html#loader">Loader</a>
+      </div>
+    </div>
+
+    <div class="nav-group" id="nav-atoms">
+      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
+        Atoms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="index.html#tab-bar-item">TabBarItem</a>
+        <a class="sidebar__link" href="index.html#button">Button</a>
+        <a class="sidebar__link" href="index.html#tab-item-bottom">TabItem</a>
+        <a class="sidebar__link" href="index.html#chips">Chips</a>
+        <a class="sidebar__link" href="index.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="index.html#chat-right">ChatRight</a>
+      </div>
+    </div>
+
+
+    <div class="nav-group" id="nav-components">
+      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
+        Organisms
+        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-group__items">
+        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="page-title">Typography</div>
+
+    <!-- Headline -->
+    <div class="type-group">
+      <div class="type-group__label">Headline</div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Headline Medium</div>
+          <div class="type-meta__specs">28px / 36px · W500 · LS 0</div>
+        </div>
+        <div class="ts-headline-medium">The quick brown fox</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Headline Small</div>
+          <div class="type-meta__specs">24px / 32px · W500 · LS 0</div>
+        </div>
+        <div class="ts-headline-small">The quick brown fox</div>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="type-group">
+      <div class="type-group__label">Title</div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Title Large</div>
+          <div class="type-meta__specs">22px / 26px · W500 · LS 0</div>
+        </div>
+        <div class="ts-title-large">The quick brown fox</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Title Medium</div>
+          <div class="type-meta__specs">16px / 20px · W500 · LS 0.15</div>
+        </div>
+        <div class="ts-title-medium">The quick brown fox jumps over the lazy dog</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Title Small</div>
+          <div class="type-meta__specs">14px / 18px · W500 · LS 0.1</div>
+        </div>
+        <div class="ts-title-small">The quick brown fox jumps over the lazy dog</div>
+      </div>
+    </div>
+
+    <!-- Label -->
+    <div class="type-group">
+      <div class="type-group__label">Label</div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Label Large</div>
+          <div class="type-meta__specs">14px / 18px · W500 · LS 0.1</div>
+        </div>
+        <div class="ts-label-large">The quick brown fox jumps over the lazy dog</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Label Medium</div>
+          <div class="type-meta__specs">12px / 14px · W500 · LS 0.5</div>
+        </div>
+        <div class="ts-label-medium">The quick brown fox jumps over the lazy dog</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Label Small</div>
+          <div class="type-meta__specs">11px / 14px · W500 · LS 0.5</div>
+        </div>
+        <div class="ts-label-small">The quick brown fox jumps over the lazy dog</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="type-group">
+      <div class="type-group__label">Body</div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Body Large</div>
+          <div class="type-meta__specs">16px / 20px · W400 · LS 0.5</div>
+        </div>
+        <div class="ts-body-large">The quick brown fox jumps over the lazy dog</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Body Medium</div>
+          <div class="type-meta__specs">14px / 18px · W400 · LS 0.25</div>
+        </div>
+        <div class="ts-body-medium">The quick brown fox jumps over the lazy dog</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Body Small</div>
+          <div class="type-meta__specs">12px / 12px · W400 · LS 0.4</div>
+        </div>
+        <div class="ts-body-small">The quick brown fox jumps over the lazy dog</div>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="type-group">
+      <div class="type-group__label">Link</div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Link Large</div>
+          <div class="type-meta__specs">16px / 20px · W500 · LS 0.5</div>
+        </div>
+        <a class="ts-link-large" href="#">Open link example</a>
+      </div>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-meta__name">Link Medium</div>
+          <div class="type-meta__specs">14px / 18px · W500 · LS 0.25</div>
+        </div>
+        <a class="ts-link-medium" href="#">Open link example</a>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="scripts/nav.js"></script>
+</body>
+</html>
