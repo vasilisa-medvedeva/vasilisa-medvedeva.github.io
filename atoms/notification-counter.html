@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom: Notification Counter</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding: 40px;
+      background: var(--color-primary-transparent-04);
+    }
+
+    /* ── Notification Counter ── */
+    .notification-counter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 6px;
+      border-radius: 12px;
+      background: var(--color-brand-yellow-secondary);
+      border: 1.5px solid var(--color-primary-transparent-87);
+    }
+    .notification-counter--cell {
+      background: var(--color-brand-red-secondary);
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+    .notification-counter__number {
+      font-family: var(--text-label-medium-bold-font-family);
+      font-size: var(--text-label-medium-bold-font-size);
+      font-weight: var(--text-label-medium-bold-font-weight);
+      line-height: var(--text-label-medium-bold-line-height);
+      letter-spacing: var(--text-label-medium-bold-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .notification-counter--cell .notification-counter__number {
+      color: var(--color-constant-primary);
+    }
+
+    /* ── Playground ── */
+    .playground {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .number-input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .number-input {
+      font-family: var(--text-body-large-font-family);
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      color: var(--color-primary-transparent-87);
+      background: var(--color-constant-primary);
+      border: 1.5px solid var(--color-primary-transparent-24);
+      border-radius: 8px;
+      padding: 8px 12px;
+      width: 120px;
+      outline: none;
+    }
+    .number-input:focus {
+      border-color: var(--color-primary-transparent-87);
+    }
+
+    .variants-row {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .variant-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .variant-label {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* context previews */
+    .context-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--color-brand-red-secondary);
+      padding: 10px 12px;
+    }
+    .context-tab__label {
+      font-family: var(--text-body-large-font-family);
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-constant-transparent-87);
+      white-space: nowrap;
+    }
+
+    .context-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--color-constant-primary);
+      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1px solid var(--color-primary-transparent-16);
+      min-width: 240px;
+    }
+    .context-row__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-brand-red-transparent-16);
+      flex-shrink: 0;
+    }
+    .context-row__body {
+      flex: 1;
+      min-width: 0;
+    }
+    .context-row__name {
+      font-family: var(--text-title-medium-font-family);
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      color: var(--color-primary-transparent-87);
+    }
+    .context-row__preview {
+      font-family: var(--text-body-medium-font-family);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="playground">
+
+    <div class="number-input-row">
+      <input
+        class="number-input"
+        id="counter-input"
+        type="number"
+        min="0"
+        max="9999"
+        value="26"
+        aria-label="Counter value"
+      />
+    </div>
+
+    <div class="variants-row">
+
+      <!-- Yellow: top tabs -->
+      <div class="variant-group">
+        <span class="variant-label">Tab counter</span>
+        <span class="notification-counter" id="badge-tab" role="status" aria-live="polite">
+          <span class="notification-counter__number" id="num-tab">26</span>
+        </span>
+      </div>
+
+      <!-- Red: chat list row -->
+      <div class="variant-group">
+        <span class="variant-label">Chat row counter</span>
+        <span class="notification-counter notification-counter--cell" id="badge-cell" role="status" aria-live="polite">
+          <span class="notification-counter__number" id="num-cell">26</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    var input = document.getElementById('counter-input');
+    var numTab  = document.getElementById('num-tab');
+    var numCell = document.getElementById('num-cell');
+    var badgeTab  = document.getElementById('badge-tab');
+    var badgeCell = document.getElementById('badge-cell');
+
+    function update() {
+      var raw = parseInt(input.value, 10);
+      if (isNaN(raw) || raw < 0) raw = 0;
+      var display = raw > 999 ? raw.toLocaleString('en-US') : String(raw);
+      numTab.textContent  = display;
+      numCell.textContent = display;
+      badgeTab.setAttribute('aria-label',  raw + ' new messages');
+      badgeCell.setAttribute('aria-label', raw + ' new messages');
+      var hidden = raw === 0;
+      badgeTab.style.display  = hidden ? 'none' : '';
+      badgeCell.style.display = hidden ? 'none' : '';
+    }
+
+    input.addEventListener('input', update);
+    update();
+  </script>
+
+</body>
+</html>

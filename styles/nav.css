@@ -83,7 +83,7 @@
 }
 
 .nav-group.is-open .nav-group__items {
-  max-height: 600px;
+  max-height: 2000px;
 }
 
 .sidebar__link {

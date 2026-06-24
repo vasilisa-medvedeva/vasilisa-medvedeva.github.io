@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 :root {
   /* Headline */
   --text-headline-medium-font-family: "Roboto";
@@ -43,6 +45,12 @@
   --text-label-medium-font-size: 12px;
   --text-label-medium-line-height: 14px;
   --text-label-medium-letter-spacing: 0.5px;
+
+  --text-label-medium-bold-font-family: "Roboto";
+  --text-label-medium-bold-font-weight: 700;
+  --text-label-medium-bold-font-size: 12px;
+  --text-label-medium-bold-line-height: 12px;
+  --text-label-medium-bold-letter-spacing: 0.5px;
 
   --text-label-small-font-family: "Roboto";
   --text-label-small-font-weight: 500;

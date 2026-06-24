@@ -74,4 +74,7 @@
   --color-info-transparent-16: #D9E2F1;
   --color-info-transparent-8: #E8ECF3;
   --color-info-transparent-4: #EEF0F4;
+
+  /* Viewer / Documentation */
+  --color-state-label: var(--color-primary-transparent-48);
 }

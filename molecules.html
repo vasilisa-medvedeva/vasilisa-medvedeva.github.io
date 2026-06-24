@@ -76,10 +76,13 @@
     }
 
     .state-label {
-      font-size: var(--text-label-small-font-size);
-      font-weight: var(--text-label-small-font-weight);
-      letter-spacing: var(--text-label-small-letter-spacing);
-      color: var(--color-primary-transparent-60);
+      font-family: var(--text-body-small-font-family);
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: -0.2px;
+      color: var(--color-state-label);
+      text-transform: uppercase;
     }
 
     /* ── Docs panel ── */
@@ -962,6 +965,559 @@
     .tf-l--disabled     .tf-l__supporting { color: var(--color-primary-transparent-32); }
     .tf-l--disabled-text .tf-l__supporting { color: var(--color-primary-transparent-48); }
 
+    /* ── Molecule: TabBar ── */
+    .tab-bar {
+      display: flex;
+      flex-direction: column;
+      width: 318px;
+      background: var(--color-brand-yellow-8);
+      border-top: 0.5px solid var(--color-primary-transparent-16);
+    }
+
+    .tab-bar__tabs {
+      display: flex;
+      align-items: center;
+    }
+
+    .tab-bar__tab-btn {
+      flex: 1;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .tab-bar__tab-icon { width: 24px; height: 24px; display: block; }
+
+    .tab-bar__text-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 4px 10px;
+    }
+
+    .tab-bar__text-row .text-field { flex: 1; width: auto; min-width: 0; }
+    .tab-bar__text-row .text-field__field { flex: 1; }
+
+    .tab-bar__send {
+      all: unset;
+      box-sizing: border-box;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--color-info-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: scale(0.6);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .tab-bar__send.is-visible { opacity: 1; transform: scale(1); pointer-events: auto; }
+    .tab-bar__send img { width: 24px; height: 24px; display: block; filter: brightness(0) invert(1); }
+
+    .tab-bar__indicator {
+      display: flex;
+      justify-content: center;
+      padding: 5px 0 7px;
+      background: var(--color-brand-yellow-8);
+    }
+
+    .tab-bar__indicator-pill {
+      width: 72px; height: 2px;
+      background: var(--color-primary-transparent-87);
+      border-radius: 1.5px;
+    }
+
+    /* ── Atom: Avatar (shared) ──────────────────────────────────────────── */
+    .avatar {
+      position: relative; display: flex; align-items: center;
+      justify-content: center; background: var(--color-brand-yellow-16);
+      border-radius: 50%; flex-shrink: 0; overflow: hidden;
+    }
+    .avatar--channel { border-radius: 16px; }
+    .avatar--sm  { width: 32px;  height: 32px; }
+    .avatar--md  { width: 48px;  height: 48px; }
+    .avatar--lg  { width: 72px;  height: 72px; }
+    .avatar--xl  { width: 122px; height: 122px; }
+    .avatar--sm.avatar--channel { border-radius: 8px; }
+    .avatar--md.avatar--channel { border-radius: 12px; }
+    .avatar--xl.avatar--channel { border-radius: 20px; }
+    .avatar__initials {
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-weight: 500; font-size: 16px;
+      color: var(--color-primary-transparent-70);
+      text-align: center; user-select: none; line-height: 1;
+    }
+    .avatar--sm .avatar__initials { font-size: 16px; letter-spacing: 0.15px; }
+    .avatar__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── TopBar ─────────────────────────────────────────────────────────── */
+    .top-bar {
+      display: flex; align-items: center;
+      height: 56px; width: 412px;
+      background: var(--color-brand-red-secondary);
+      padding: 4px; gap: 8px; box-sizing: border-box;
+    }
+    .top-bar__back {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 100px; cursor: pointer;
+    }
+    .top-bar__back:hover { background: rgba(255,255,255,0.12); }
+    .top-bar__back img { width: 24px; height: 24px; display: block;
+      filter: brightness(0) invert(1); }
+
+    .top-bar__body {
+      flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0;
+    }
+    .top-bar__title {
+      flex: 1; min-width: 0;
+      font-family: var(--text-title-large-font-family), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+      color: var(--color-constant-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .top-bar__title--center { text-align: center; }
+    .top-bar__title--md {
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+
+    .top-bar__channel-name {
+      display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+    }
+    .top-bar__chevron { width: 24px; height: 24px; display: block;
+      filter: brightness(0) invert(1); }
+
+    .top-bar__right {
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    .top-bar__icon-btn {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 100px; cursor: pointer;
+    }
+    .top-bar__icon-btn:hover { background: rgba(255,255,255,0.12); }
+    .top-bar__icon-btn img { width: 24px; height: 24px; display: block;
+      filter: brightness(0) invert(1); }
+
+    .top-bar__text-btn {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      padding: 8px 12px; border-radius: 30px; cursor: pointer; height: 48px;
+      font-family: var(--text-title-medium-font-family), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-constant-primary); white-space: nowrap;
+    }
+    .top-bar__text-btn:hover { background: rgba(255,255,255,0.12); }
+
+    /* Avatar inside TopBar — white tinted bg to contrast against red */
+    .top-bar .avatar {
+      background: rgba(255, 255, 255, 0.20);
+    }
+    .top-bar .avatar__initials {
+      color: var(--color-constant-primary);
+    }
+
+    /* only-arrow: no gap, no padding-right */
+    .top-bar--only-arrow { gap: 0; background: transparent; }
+
+    /* medium title: back is absolutely positioned, title centered */
+    .top-bar--medium { position: relative; }
+    .top-bar--medium .top-bar__back { position: absolute; left: 2px; top: 4px; }
+    .top-bar--medium .top-bar__title--center { position: absolute; left: 58px; right: 60px; }
+    .top-bar--medium .top-bar__right { position: absolute; right: 4px; top: 4px; }
+
+    /* ── Molecule: SwipeTabItem ── */
+    .swipe-tab {
+      all: unset; box-sizing: border-box;
+      display: inline-flex; align-items: center; justify-content: center;
+      position: relative; cursor: pointer; user-select: none;
+      flex-direction: column;
+      padding: 12px;
+    }
+    /* Color themes */
+    .swipe-tab--dark  { background: var(--color-brand-red-secondary); }
+    .swipe-tab--light { background: transparent; }
+    .swipe-tab--dark.swipe-tab--pressed  { background: var(--color-brand-red-primary); }
+    .swipe-tab--light.swipe-tab--pressed { background: var(--color-constant-transparent-60); }
+
+    /* Active without badge: no bottom padding (indicator is flush to bottom) */
+    .swipe-tab--active:not(.swipe-tab--has-badge) { padding: 12px 12px 0; }
+
+    /* With-badge variants have explicit widths from Figma */
+    .swipe-tab--has-badge:not(.swipe-tab--active) { width: 104px; padding: 10px 12px; flex-direction: row; gap: 4px; }
+    .swipe-tab--has-badge.swipe-tab--active        { width: 103px; padding: 10px 12px 0; align-items: flex-start; }
+
+    /* Add-button type */
+    .swipe-tab--type-add { flex-direction: row; padding: 10px; }
+
+    /* Label */
+    .swipe-tab__label {
+      white-space: nowrap;
+      font-family: var(--text-body-large-font-family);
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+    }
+    .swipe-tab--active .swipe-tab__label {
+      font-family: var(--text-title-medium-font-family);
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+    /* Label colors */
+    .swipe-tab--dark  .swipe-tab__label { color: var(--color-constant-transparent-87); }
+    .swipe-tab--dark.swipe-tab--active  .swipe-tab__label { color: var(--color-constant-primary); }
+    .swipe-tab--light .swipe-tab__label { color: var(--color-primary-transparent-87); }
+
+    /* Header row: label + badge side by side */
+    .swipe-tab__header { display: flex; align-items: center; gap: 4px; }
+
+    /* Active indicator bar */
+    .swipe-tab__indicator {
+      display: block; height: 5px; width: 100%;
+      border-radius: 3px 3px 0 0; margin-top: 7px;
+      background: var(--color-constant-primary);
+    }
+    .swipe-tab--has-badge .swipe-tab__indicator { margin-top: 5px; }
+    .swipe-tab--light .swipe-tab__indicator { background: var(--color-primary-transparent-87); }
+
+    /* Add icon: library asset */
+    .swipe-tab__add-icon {
+      width: 24px; height: 24px; flex-shrink: 0; display: block;
+    }
+
+    /* Notification counter (shared with atom) */
+    .notification-counter {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 4px 6px; border-radius: 12px;
+      background: var(--color-brand-yellow-secondary);
+      border: 1.5px solid var(--color-primary-transparent-87);
+    }
+    .notification-counter--cell {
+      background: var(--color-brand-red-secondary);
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+    .notification-counter__number {
+      font-family: var(--text-label-medium-bold-font-family);
+      font-size: var(--text-label-medium-bold-font-size);
+      font-weight: var(--text-label-medium-bold-font-weight);
+      line-height: var(--text-label-medium-bold-line-height);
+      letter-spacing: var(--text-label-medium-bold-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .notification-counter--cell .notification-counter__number {
+      color: var(--color-constant-primary);
+    }
+
+    /* ── Molecule: TopSearchBar ── */
+    .top-search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--color-brand-red-secondary);
+      padding: 10px 16px;
+      width: 350px;
+      box-sizing: border-box;
+    }
+    /* SearchField overrides inside TopSearchBar */
+    .top-search-bar .search-field {
+      flex: 1;
+      width: auto;
+      min-width: 0;
+      border: none;
+    }
+    .top-search-bar .search-field--typed { border: none; }
+
+    /* ── Atom: InfoTitle (dependency) ── */
+    .info-title {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+    }
+    .info-title__icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      display: block;
+    }
+    .info-title__label {
+      font-family: var(--text-body-small-font-family);
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-info-secondary);
+      white-space: nowrap;
+    }
+    .info-title__name {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .info-title__name--secondary { color: var(--color-info-secondary); }
+    .info-title__icon--secondary {
+      filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(491%) hue-rotate(205deg) brightness(97%) contrast(93%);
+    }
+
+    /* ── Molecule: AboveTheTextField ── */
+    .above-text-field {
+      width: 390px;
+      background: var(--color-brand-yellow-8);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.15), 0 -1px 2px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .above-text-field__row {
+      display: flex;
+      align-items: center;
+      border-bottom: 0.5px solid var(--color-primary-transparent-16);
+    }
+    .above-text-field__content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px 12px;
+      box-sizing: border-box;
+    }
+    .above-text-field__body {
+      position: relative;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+    }
+    .above-text-field--editing .above-text-field__body {
+      padding-left: 0;
+    }
+    .above-text-field__text {
+      font-family: var(--text-body-medium-font-family);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+    .above-text-field__line {
+      position: absolute;
+      left: 0;
+      top: 3px;
+      bottom: 4px;
+      width: 2px;
+      border-radius: 1px;
+      background: var(--color-primary-transparent-87);
+    }
+    .above-text-field__line--forward {
+      background: var(--color-info-tertiary);
+    }
+    .above-text-field__cancel {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 0.87;
+      transition: opacity 0.15s;
+    }
+    .above-text-field__cancel:hover { opacity: 1; }
+    .above-text-field__cancel img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    /* ── Molecule: TextReply ── */
+    .text-reply {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 334px;
+      height: 66px;
+      border-radius: 16px 16px 0 0;
+      border-bottom: 0.5px solid var(--color-brand-yellow-secondary);
+      padding: 4px 12px;
+      box-sizing: border-box;
+    }
+    .text-reply__inner {
+      position: relative;
+      padding-left: 10px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .text-reply__text {
+      font-family: var(--text-body-medium-font-family);
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .text-reply__line {
+      position: absolute;
+      left: 0;
+      top: 3px;
+      bottom: 4px;
+      width: 2px;
+      background: var(--color-primary-transparent-87);
+    }
+
+
+    /* ── Atoms reused by BubbleBottom 2.0 (copies from index.html) ── */
+
+    .send-time { display: inline-flex; align-items: flex-end; gap: 2px; padding: 1px 4px; }
+    .send-time__label, .send-time__time {
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-weight: var(--text-body-small-font-weight);
+      font-size: var(--text-body-small-font-size);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      white-space: nowrap;
+    }
+
+    .reaction {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 10px;
+      border-radius: 18px;
+      background: var(--color-brand-yellow-16);
+    }
+    .reaction--sender { background: var(--color-brand-yellow-32); }
+    .reaction--me     { background: var(--color-info-secondary); }
+    .reaction__emoji  { display: flex; align-items: center; padding: 2px 0; font-size: 16px; line-height: 12px; }
+    .reaction__count  {
+      font-family: var(--text-label-medium-bold-font-family), sans-serif;
+      font-weight: var(--text-label-medium-bold-font-weight);
+      font-size: var(--text-label-medium-bold-font-size);
+      line-height: var(--text-label-medium-bold-line-height);
+      letter-spacing: var(--text-label-medium-bold-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .reaction--me .reaction__count { color: var(--color-constant-primary); }
+
+    .reaction-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: none;
+      border-radius: 18px;
+      background: var(--color-brand-yellow-16);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .reaction-arrow--sender { background: var(--color-brand-yellow-32); }
+    .reaction-arrow__icon { display: block; width: 16px; height: 16px; color: var(--color-primary-transparent-87); }
+    .reaction-arrow--open .reaction-arrow__icon { transform: rotate(180deg); }
+
+    .bubble-comments {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      padding: 8px 0;
+      border-top: 1px solid var(--color-brand-yellow-32);
+    }
+    .bubble-comments__icon  { flex-shrink: 0; display: block; width: 20px; height: 20px; }
+    .bubble-comments__label {
+      flex: 1 0 0;
+      min-width: 0;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-weight: var(--text-body-large-font-weight);
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .bubble-comments__arrow { flex-shrink: 0; display: block; width: 16px; height: 16px; }
+
+    /* ── Molecule: BubbleBottom 2.0 ── */
+    /* Transparent bottom strip of a chat bubble: reactions + time (+ comments
+       for recipient). No bubble chrome of its own — only the atoms carry colour. */
+    .bubble-bottom-2 {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;            /* 8px above the comments divider (matches Figma gap-8) */
+      width: 360px;
+    }
+
+    /* Reactions area — one row of pills (+ optional arrow) + time. */
+    .bubble-bottom-2__reactions {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    /* Expanded (2-row) layout: pills wrap onto stacked rows. */
+    .bubble-bottom-2__reactions--stacked {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;            /* 4px between stacked rows of reactions */
+    }
+
+    /* A single row inside a stacked reactions area. */
+    .bubble-bottom-2__row {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      width: 100%;
+    }
+
+    /* SendTime wrapper — pushed to the right edge of its row. */
+    .bubble-bottom-2__time {
+      margin-left: auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
   </style>
 </head>
 <body>
@@ -1037,6 +1593,14 @@
         <a class="sidebar__link" href="molecules.html#search-field">SearchField</a>
         <a class="sidebar__link" href="molecules.html#tf-s">TextFields.S</a>
         <a class="sidebar__link" href="molecules.html#tf-l">TextFields.L</a>
+        <a class="sidebar__link" href="molecules.html#tabs">Tabs</a>
+        <a class="sidebar__link" href="molecules.html#tf-bar">TextFields</a>
+        <a class="sidebar__link" href="molecules.html#top-bar">TopBar</a>
+        <a class="sidebar__link" href="molecules.html#swipe-tab-item">SwipeTabItem</a>
+        <a class="sidebar__link" href="molecules.html#top-search-bar">TopSearchBar</a>
+        <a class="sidebar__link" href="molecules.html#text-reply">TextReply</a>
+        <a class="sidebar__link" href="molecules.html#above-text-field">AboveTheTextField</a>
+        <a class="sidebar__link" href="molecules.html#bubble-bottom-2">BubbleBottom 2.0</a>
       </div>
     </div>
 
@@ -2504,6 +3068,1329 @@
     </div>
     <!-- /TextFields.L -->
 
+    <div class="section-divider"></div>
+
+    <!-- Tabs -->
+    <div id="tabs" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Tabs</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tabs')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div class="tab-bar" id="tb-tabs-pg">
+            <div class="tab-bar__tabs">
+              <button class="tab-bar__tab-btn tab-bar__tab-btn--active" data-tab="chats" aria-label="Chats" aria-current="page">
+                <img class="tab-bar__tab-icon" id="tb-icon-chats" src="icons/tabbar/chats-active.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="friends" aria-label="Friends">
+                <img class="tab-bar__tab-icon" id="tb-icon-friends" src="icons/tabbar/friends-default.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="bell" aria-label="Notifications">
+                <img class="tab-bar__tab-icon" id="tb-icon-bell" src="icons/tabbar/bell-default.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="settings" aria-label="Settings">
+                <img class="tab-bar__tab-icon" id="tb-icon-settings" src="icons/tabbar/settings-default.svg" alt="">
+              </button>
+            </div>
+            <div class="tab-bar__indicator">
+              <div class="tab-bar__indicator-pill"></div>
+            </div>
+          </div>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Нажми на иконку — она станет активной</p>
+        </div>
+
+        <div class="if-playground__title">States</div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs + home indicator</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__tabs">
+                <button class="tab-bar__tab-btn" aria-label="Chats">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Friends">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Notifications">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Settings">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
+                </button>
+              </div>
+              <div class="tab-bar__indicator">
+                <div class="tab-bar__indicator-pill"></div>
+              </div>
+            </div>
+            <span class="state-label">tabs + indicator</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__tabs">
+                <button class="tab-bar__tab-btn" aria-label="Chats">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Friends">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Notifications">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Settings">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">tabs</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Tabs</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg · border-top 0.5px primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">tab-btn</span><span class="docs__row-value">flex: 1 · height 48px · icon 24×24px</span></div>
+          <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">default</span><span class="docs__row-value">icon *-default.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">icon *-active.svg · aria-current="page"</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-8</span>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons</div>
+          <div class="docs__row"><span class="docs__row-label">source</span><span class="docs__row-value">icons/tabbar/*.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-tabs">
+        <button class="copy-code-btn" onclick="copyCode('tabs')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tabs"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-btn"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Chats"</span> <span class="tok-attr">aria-current</span>=<span class="tok-str">"page"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/tabbar/chats-active.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-cmt">&lt;!-- ... 3 more tab-btn ... --&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator"</span><span class="tok-tag">&gt;&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator-pill"</span><span class="tok-tag">&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Tabs -->
+
+    <div class="section-divider"></div>
+
+    <!-- TextFields (bar) -->
+    <div id="tf-bar" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TextFields</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tf-bar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div class="tab-bar" id="tb-pg">
+            <div class="tab-bar__text-row">
+              <div class="text-field tf-pg" id="tb-text-field">
+                <button class="text-field__btn-add" type="button" aria-label="Add">
+                  <img src="icons/small/add.svg" alt="" aria-hidden="true">
+                </button>
+                <div class="text-field__field">
+                  <div class="text-field__text">
+                    <textarea class="text-field__textarea" id="tb-textarea" rows="1" placeholder="Message..." aria-label="Message"></textarea>
+                  </div>
+                  <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+                </div>
+              </div>
+              <button class="tab-bar__send" id="tb-send" type="button" aria-label="Send message">
+                <img src="icons/general/arrow-up-send.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <div class="tab-bar__indicator">
+              <div class="tab-bar__indicator-pill"></div>
+            </div>
+          </div>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Начни вводить текст — появится кнопка Send</p>
+        </div>
+
+        <div class="if-playground__title">States</div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">textFields + home indicator</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__text-row">
+                <div class="text-field">
+                  <button class="text-field__btn-add" type="button" aria-label="Add">
+                    <img src="icons/small/add.svg" alt="" aria-hidden="true">
+                  </button>
+                  <div class="text-field__field">
+                    <div class="text-field__text">
+                      <p class="text-field__value">Message...</p>
+                    </div>
+                    <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+                  </div>
+                </div>
+              </div>
+              <div class="tab-bar__indicator">
+                <div class="tab-bar__indicator-pill"></div>
+              </div>
+            </div>
+            <span class="state-label">textFields + indicator</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">textFields + send</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__text-row">
+                <div class="text-field">
+                  <button class="text-field__btn-add" type="button" aria-label="Add">
+                    <img src="icons/small/add.svg" alt="" aria-hidden="true">
+                  </button>
+                  <div class="text-field__field">
+                    <div class="text-field__text">
+                      <p class="text-field__value text-field__value--typed">Message</p>
+                    </div>
+                    <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
+                  </div>
+                </div>
+                <button class="tab-bar__send is-visible" type="button" aria-label="Send message">
+                  <img src="icons/general/arrow-up-send.svg" alt="" aria-hidden="true">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">textFields + send</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TextFields</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg · border-top 0.5px primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">text-row</span><span class="docs__row-value">text-field + optional send · py 4px · px 10px</span></div>
+          <div class="docs__row"><span class="docs__row-label">send</span><span class="docs__row-value">36×36px circle · info-primary bg · white icon</span></div>
+          <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Send button</div>
+          <div class="docs__row"><span class="docs__row-label">hidden</span><span class="docs__row-value">opacity 0 · scale 0.6 · pointer-events none</span></div>
+          <div class="docs__row"><span class="docs__row-label">visible</span><span class="docs__row-value">.is-visible · opacity 1 · scale 1 · 0.15s ease</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-8</span>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-info-primary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons</div>
+          <div class="docs__row"><span class="docs__row-label">send</span><span class="docs__row-value">icons/general/arrow-up-send.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-tf-bar">
+        <button class="copy-code-btn" onclick="copyCode('tf-bar')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__text-row"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-field"</span><span class="tok-tag">&gt;</span><span class="tok-cmt">&lt;!-- see TextFields --&gt;</span><span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__send is-visible"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Send message"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-up-send.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /TextFields (bar) -->
+
+    <div class="section-divider"></div>
+
+    <!-- TopBar -->
+    <div id="top-bar" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TopBar</div>
+          <button class="code-toggle-btn" onclick="toggleCode('top-bar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="if-playground__title">States</div>
+
+        <!-- 1. regular + button -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">regular · left title · button</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <div class="top-bar__body">
+                <div class="avatar avatar--sm" aria-label="ML"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+                <span class="top-bar__title">Title</span>
+              </div>
+              <div class="top-bar__right">
+                <button class="top-bar__text-btn">Button</button>
+              </div>
+            </div>
+            <span class="state-label">regular + button</span>
+          </div>
+        </div>
+
+        <!-- 2. regular + icon -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">regular · left title · icon</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <div class="top-bar__body">
+                <span class="top-bar__title">Title</span>
+              </div>
+              <div class="top-bar__right">
+                <button class="top-bar__icon-btn" aria-label="Edit">
+                  <img src="icons/general/edit-square.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">regular + icon</span>
+          </div>
+        </div>
+
+        <!-- 3. onlyArrow -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">only arrow</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar top-bar--only-arrow" style="background:var(--color-primary-transparent-04);">
+              <button class="top-bar__back" aria-label="Back" style="color:var(--color-primary-transparent-87);">
+                <img src="icons/general/arrow-back.svg" alt="" style="filter:none;opacity:0.87;">
+              </button>
+            </div>
+            <span class="state-label">onlyArrow</span>
+          </div>
+        </div>
+
+        <!-- 4. medium + 2 icons -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">medium title · 2 icons</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar top-bar--medium">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <span class="top-bar__title top-bar__title--center">Title</span>
+              <div class="top-bar__right" style="gap:6px;">
+                <button class="top-bar__icon-btn" aria-label="Search">
+                  <img src="icons/general/search.svg" alt="">
+                </button>
+                <button class="top-bar__icon-btn" aria-label="Edit">
+                  <img src="icons/general/edit-square.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">medium + 2icon</span>
+          </div>
+        </div>
+
+        <!-- 5. medium + 1 icon -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">medium title · 1 icon</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar top-bar--medium">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <span class="top-bar__title top-bar__title--center">Title</span>
+              <div class="top-bar__right">
+                <button class="top-bar__icon-btn" aria-label="Search">
+                  <img src="icons/general/search.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">medium + icon</span>
+          </div>
+        </div>
+
+        <!-- 6. no arrowBack + icon -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">no back · left title · icon</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar" style="padding-left:16px;padding-right:4px;">
+              <div class="top-bar__body">
+                <span class="top-bar__title">Title</span>
+              </div>
+              <div class="top-bar__right">
+                <button class="top-bar__icon-btn" aria-label="Edit">
+                  <img src="icons/general/edit-square.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">no arrow + icon</span>
+          </div>
+        </div>
+
+        <!-- 7. search -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">search</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar" style="padding-right:16px;">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <div class="search-field" style="width:auto;flex:1;border-color:transparent;">
+                <div class="search-field__inner">
+                  <img class="search-field__icon" src="icons/general/search.svg" alt="" aria-hidden="true">
+                  <input class="search-field__input" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <span class="state-label">search</span>
+          </div>
+        </div>
+
+        <!-- 8a. direct -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">direct · avatar · pin</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar" style="padding-right:12px;">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <div class="top-bar__body">
+                <div class="avatar avatar--sm" aria-label="ML"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+                <span class="top-bar__title top-bar__title--md">Title</span>
+              </div>
+              <div class="top-bar__right">
+                <button class="top-bar__icon-btn" aria-label="Pin">
+                  <img src="icons/general/pin.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">direct</span>
+          </div>
+        </div>
+
+        <!-- 8b. channel -->
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">channel · avatar · pin + avatar</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="top-bar" style="gap:8px;padding-right:12px;">
+              <button class="top-bar__back" aria-label="Back">
+                <img src="icons/general/arrow-back.svg" alt="">
+              </button>
+              <div class="top-bar__body">
+                <div class="avatar avatar--sm avatar--channel" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+                <div class="top-bar__channel-name">
+                  <span class="top-bar__title top-bar__title--md" style="flex:none;">Title</span>
+                  <img class="top-bar__chevron" src="icons/general/arrow-down.svg" alt="">
+                </div>
+              </div>
+              <div class="top-bar__right">
+                <button class="top-bar__icon-btn" aria-label="Pin">
+                  <img src="icons/general/pin.svg" alt="">
+                </button>
+                <div style="padding:4px;">
+                  <div class="avatar avatar--sm avatar--channel" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">channel</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">TopBar</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">top-bar</span><span class="docs__row-value">412px · h:56px · red-secondary bg · p:4px · gap:8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">back</span><span class="docs__row-value">48×48px · arrow-back.svg white · rounded ripple</span></div>
+          <div class="docs__row"><span class="docs__row-label">body</span><span class="docs__row-value">flex:1 · avatar + title (left) or title (centered)</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatar</span><span class="docs__row-value">32×32px · circle · direct / channel types</span></div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">title-large 22px/500 · white · left or center</span></div>
+          <div class="docs__row"><span class="docs__row-label">right</span><span class="docs__row-value">icon-btn 48×48 · or text-btn px:12 · or 2×icon-btn</span></div>
+          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">white pill · radius:20px · search icon + placeholder</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Types</div>
+          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">стандартный экран</span></div>
+          <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">центрированный заголовок</span></div>
+          <div class="docs__row"><span class="docs__row-label">onlyArrow</span><span class="docs__row-value">только кнопка назад</span></div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">личный чат с аватаром</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">канал с аватаром и chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">строка поиска вместо заголовка</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-red-secondary</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-title-large-*</span>
+          <span class="docs__token">--text-title-medium-*</span>
+          <span class="docs__token">--text-body-large-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons</div>
+          <div class="docs__row"><span class="docs__row-label">back</span><span class="docs__row-value">icons/general/arrow-back.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">edit</span><span class="docs__row-value">icons/general/edit-square.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">icons/general/search.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">pin</span><span class="docs__row-value">icons/general/pin.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">chevron</span><span class="docs__row-value">icons/general/arrow-down.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-top-bar">
+        <button class="copy-code-btn" onclick="copyCode('top-bar')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- regular + button --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__back"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Back"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-back.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__body"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__right"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__text-btn"</span><span class="tok-tag">&gt;</span>Button<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- search --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar"</span> <span class="tok-attr">style</span>=<span class="tok-str">"padding-right:16px"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__back"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Back"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-back.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__search"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-bar__search-placeholder"</span><span class="tok-tag">&gt;</span>Search<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /TopBar -->
+
+    <div id="swipe-tab-item" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">SwipeTabItem</div>
+          <button class="code-toggle-btn" onclick="toggleCode('swipe-tab-item')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- variant column headers -->
+        <div style="display:grid; grid-template-columns: 80px repeat(5, auto); gap:0; align-items:end; margin-bottom:4px;">
+          <span></span>
+          <span class="state-label" style="text-align:center; padding:0 4px;">inactive<br>+ badge</span>
+          <span class="state-label" style="text-align:center; padding:0 4px;">active</span>
+          <span class="state-label" style="text-align:center; padding:0 4px;">add</span>
+          <span class="state-label" style="text-align:center; padding:0 4px;">active<br>+ badge</span>
+          <span class="state-label" style="text-align:center; padding:0 4px;">inactive</span>
+        </div>
+
+        <!-- Dark · Enabled -->
+        <div style="display:grid; grid-template-columns: 80px repeat(5, auto); gap:0; align-items:stretch; margin-bottom:2px;">
+          <span class="state-label" style="display:flex; align-items:center;">Dark<br>Enabled</span>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--has-badge" role="tab" aria-selected="false" aria-label="Direct, 26 new messages">
+            <span class="swipe-tab__label">Direct</span>
+            <span class="notification-counter" role="status" aria-label="26 new messages"><span class="notification-counter__number">26</span></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--active" role="tab" aria-selected="true" aria-label="Chats">
+            <span class="swipe-tab__label">Chats</span>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--type-add" aria-label="Add tab">
+            <img class="swipe-tab__add-icon" src="icons/general/add-circle.svg" width="24" height="24" aria-hidden="true">
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--active swipe-tab--has-badge" role="tab" aria-selected="true" aria-label="Groups, 53 new messages">
+            <div class="swipe-tab__header">
+              <span class="swipe-tab__label">Groups</span>
+              <span class="notification-counter" role="status" aria-label="53 new messages"><span class="notification-counter__number">53</span></span>
+            </div>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark" role="tab" aria-selected="false" aria-label="Saved">
+            <span class="swipe-tab__label">Saved</span>
+          </button>
+        </div>
+
+        <!-- Dark · Pressed -->
+        <div style="display:grid; grid-template-columns: 80px repeat(5, auto); gap:0; align-items:stretch; margin-bottom:16px;">
+          <span class="state-label" style="display:flex; align-items:center;">Dark<br>Pressed</span>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--pressed swipe-tab--has-badge" role="tab" aria-selected="false" aria-label="Direct, 26 new messages">
+            <span class="swipe-tab__label">Direct</span>
+            <span class="notification-counter" role="status" aria-label="26 new messages"><span class="notification-counter__number">26</span></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--pressed swipe-tab--active" role="tab" aria-selected="true" aria-label="Chats">
+            <span class="swipe-tab__label">Chats</span>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--pressed swipe-tab--type-add" aria-label="Add tab">
+            <img class="swipe-tab__add-icon" src="icons/general/add-circle.svg" width="24" height="24" aria-hidden="true">
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--pressed swipe-tab--active swipe-tab--has-badge" role="tab" aria-selected="true" aria-label="Groups, 53 new messages">
+            <div class="swipe-tab__header">
+              <span class="swipe-tab__label">Groups</span>
+              <span class="notification-counter" role="status" aria-label="53 new messages"><span class="notification-counter__number">53</span></span>
+            </div>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--dark swipe-tab--pressed" role="tab" aria-selected="false" aria-label="Saved">
+            <span class="swipe-tab__label">Saved</span>
+          </button>
+        </div>
+
+        <!-- Light · Enabled -->
+        <div style="display:grid; grid-template-columns: 80px repeat(5, auto); gap:0; align-items:stretch; margin-bottom:2px; border-bottom:1px solid var(--color-primary-transparent-16);">
+          <span class="state-label" style="display:flex; align-items:center;">Light<br>Enabled</span>
+          <button class="swipe-tab swipe-tab--light swipe-tab--has-badge" role="tab" aria-selected="false" aria-label="Direct, 26 new messages">
+            <span class="swipe-tab__label">Direct</span>
+            <span class="notification-counter" role="status" aria-label="26 new messages"><span class="notification-counter__number">26</span></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--active" role="tab" aria-selected="true" aria-label="Chats">
+            <span class="swipe-tab__label">Chats</span>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--type-add" aria-label="Add tab">
+            <img class="swipe-tab__add-icon" src="icons/general/add-circle.svg" width="24" height="24" aria-hidden="true">
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--active swipe-tab--has-badge" role="tab" aria-selected="true" aria-label="Groups, 53 new messages">
+            <div class="swipe-tab__header">
+              <span class="swipe-tab__label">Groups</span>
+              <span class="notification-counter" role="status" aria-label="53 new messages"><span class="notification-counter__number">53</span></span>
+            </div>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light" role="tab" aria-selected="false" aria-label="Saved">
+            <span class="swipe-tab__label">Saved</span>
+          </button>
+        </div>
+
+        <!-- Light · Pressed -->
+        <div style="display:grid; grid-template-columns: 80px repeat(5, auto); gap:0; align-items:stretch; border-bottom:1px solid var(--color-primary-transparent-16);">
+          <span class="state-label" style="display:flex; align-items:center;">Light<br>Pressed</span>
+          <button class="swipe-tab swipe-tab--light swipe-tab--pressed swipe-tab--has-badge" role="tab" aria-selected="false" aria-label="Direct, 26 new messages">
+            <span class="swipe-tab__label">Direct</span>
+            <span class="notification-counter" role="status" aria-label="26 new messages"><span class="notification-counter__number">26</span></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--pressed swipe-tab--active" role="tab" aria-selected="true" aria-label="Chats">
+            <span class="swipe-tab__label">Chats</span>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--pressed swipe-tab--type-add" aria-label="Add tab">
+            <img class="swipe-tab__add-icon" src="icons/general/add-circle.svg" width="24" height="24" aria-hidden="true">
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--pressed swipe-tab--active swipe-tab--has-badge" role="tab" aria-selected="true" aria-label="Groups, 53 new messages">
+            <div class="swipe-tab__header">
+              <span class="swipe-tab__label">Groups</span>
+              <span class="notification-counter" role="status" aria-label="53 new messages"><span class="notification-counter__number">53</span></span>
+            </div>
+            <span class="swipe-tab__indicator" aria-hidden="true"></span>
+          </button>
+          <button class="swipe-tab swipe-tab--light swipe-tab--pressed" role="tab" aria-selected="false" aria-label="Saved">
+            <span class="swipe-tab__label">Saved</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">SwipeTabItem</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">swipe-tab</span><span class="docs__row-value">button · flex-col · padding 12px</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">Body/Large (inactive) · Title/Medium (active)</span></div>
+          <div class="docs__row"><span class="docs__row-label">badge</span><span class="docs__row-value">NotificationCounter atom · optional</span></div>
+          <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">5px bar · full width · visible when active</span></div>
+          <div class="docs__row"><span class="docs__row-label">add-icon</span><span class="docs__row-value">24×24 circle + plus · type=add only</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Modifiers</div>
+          <div class="docs__row"><span class="docs__row-label">--dark / --light</span><span class="docs__row-value">color theme</span></div>
+          <div class="docs__row"><span class="docs__row-label">--active</span><span class="docs__row-value">Title/Medium label + indicator bar</span></div>
+          <div class="docs__row"><span class="docs__row-label">--has-badge</span><span class="docs__row-value">shows NotificationCounter · adjusts width</span></div>
+          <div class="docs__row"><span class="docs__row-label">--pressed</span><span class="docs__row-value">darker background</span></div>
+          <div class="docs__row"><span class="docs__row-label">--type-add</span><span class="docs__row-value">⊕ icon instead of label</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-red-secondary</span>
+          <span class="docs__token">--color-brand-red-primary</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--color-constant-transparent-87</span>
+          <span class="docs__token">--color-constant-transparent-60</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--text-body-large-*</span>
+          <span class="docs__token">--text-title-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-swipe-tab-item">
+        <button class="copy-code-btn" onclick="copyCode('swipe-tab-item')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- inactive + badge --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab swipe-tab--dark swipe-tab--has-badge"</span>
+        <span class="tok-attr">role</span>=<span class="tok-str">"tab"</span> <span class="tok-attr">aria-selected</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__label"</span><span class="tok-tag">&gt;</span>Direct<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter"</span> <span class="tok-attr">role</span>=<span class="tok-str">"status"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"26 new messages"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter__number"</span><span class="tok-tag">&gt;</span>26<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- active, no badge --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab swipe-tab--dark swipe-tab--active"</span>
+        <span class="tok-attr">role</span>=<span class="tok-str">"tab"</span> <span class="tok-attr">aria-selected</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__label"</span><span class="tok-tag">&gt;</span>Chats<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__indicator"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- active + badge --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab swipe-tab--dark swipe-tab--active swipe-tab--has-badge"</span>
+        <span class="tok-attr">role</span>=<span class="tok-str">"tab"</span> <span class="tok-attr">aria-selected</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__header"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__label"</span><span class="tok-tag">&gt;</span>Groups<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter"</span> <span class="tok-attr">role</span>=<span class="tok-str">"status"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"53 new messages"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter__number"</span><span class="tok-tag">&gt;</span>53<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__indicator"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-cmt">&lt;!-- add button --&gt;</span>
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab swipe-tab--dark swipe-tab--type-add"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Add tab"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"swipe-tab__add-icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/add-circle.svg"</span> <span class="tok-attr">width</span>=<span class="tok-str">"24"</span> <span class="tok-attr">height</span>=<span class="tok-str">"24"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/button&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /SwipeTabItem -->
+
+    <div class="section-divider"></div>
+
+    <!-- TopSearchBar -->
+    <div id="top-search-bar" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TopSearchBar</div>
+          <button class="code-toggle-btn" onclick="toggleCode('top-search-bar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Playground -->
+        <div class="top-search-bar" id="tsb-pg" role="search">
+          <div class="search-field" id="tsb-field">
+            <div class="search-field__inner">
+              <img class="search-field__icon" src="icons/general/search.svg" aria-hidden="true">
+              <input class="search-field__input sf-pg" id="tsb-input" type="search" placeholder="Search" aria-label="Search">
+            </div>
+            <button class="search-field__cancel" id="tsb-clear" aria-label="Clear search" style="display:none">
+              <img src="icons/general/cancel.svg" aria-hidden="true">
+            </button>
+          </div>
+        </div>
+
+        <script>
+          (function() {
+            var input = document.getElementById('tsb-input');
+            var field = document.getElementById('tsb-field');
+            var clear = document.getElementById('tsb-clear');
+            function update() {
+              var active = input.value.length > 0;
+              field.classList.toggle('search-field--typed', active);
+              clear.style.display = active ? '' : 'none';
+            }
+            input.addEventListener('input', update);
+            clear.addEventListener('click', function() {
+              input.value = ''; update(); input.focus();
+            });
+            input.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape') { input.value = ''; update(); input.blur(); }
+            });
+          })();
+        </script>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">TopSearchBar</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">red bg · py 10 · px 16 · w 350</span></div>
+          <div class="docs__row"><span class="docs__row-label">field</span><span class="docs__row-value">white pill · SearchField · flex 1</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">search.svg · 18×18 · opacity 48%</span></div>
+          <div class="docs__row"><span class="docs__row-label">placeholder</span><span class="docs__row-value">Body/Large · transparent-48</span></div>
+          <div class="docs__row"><span class="docs__row-label">clear btn</span><span class="docs__row-value">cancel.svg · 24×24 · visible when typed</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Modifiers</div>
+          <div class="docs__row"><span class="docs__row-label">—</span><span class="docs__row-value">disabled (default) — field only</span></div>
+          <div class="docs__row"><span class="docs__row-label">--active</span><span class="docs__row-value">cursor + clear icon + Cancel button</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-red-secondary</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-48</span>
+          <span class="docs__token">--text-body-large-*</span>
+          <span class="docs__token">--text-title-medium-*</span>
+        </div>
+
+        <button class="docs__toggle" onclick="this.closest('.docs').classList.toggle('is-expanded')">
+          <svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          More
+        </button>
+
+        <div class="docs__section" style="margin-top:16px;">
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-top-search-bar">
+        <button class="copy-code-btn" onclick="copyCode('top-search-bar')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- empty --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-search-bar"</span> <span class="tok-attr">role</span>=<span class="tok-str">"search"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__inner"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"search"</span> <span class="tok-attr">placeholder</span>=<span class="tok-str">"Search"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Search"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- typed --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"top-search-bar"</span> <span class="tok-attr">role</span>=<span class="tok-str">"search"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field search-field--typed"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__inner"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/search.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;input</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__input"</span> <span class="tok-attr">type</span>=<span class="tok-str">"search"</span> <span class="tok-attr">value</span>=<span class="tok-str">"Direct"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Search"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"search-field__cancel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Clear search"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/cancel.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /TopSearchBar -->
+
+    <!-- TextReply -->
+    <div id="text-reply" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TextReply</div>
+          <button class="code-toggle-btn" onclick="toggleCode('text-reply')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="text-reply">
+          <div class="text-reply__inner">
+            <div class="info-title">
+              <img class="info-title__icon" src="icons/small/reply.svg" aria-hidden="true">
+              <span class="info-title__name">Abram</span>
+            </div>
+            <p class="text-reply__text">Plus, there are some unique RPG elements I've never seen before.</p>
+            <div class="text-reply__line"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">TextReply</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">334×66 · border-radius:16 16 0 0 · border-bottom:0.5px yellow · py:4 px:12</span></div>
+          <div class="docs__row"><span class="docs__row-label">inner</span><span class="docs__row-value">relative · pl:10px — anchor for the left line</span></div>
+          <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">reply variant · icon + sender name</span></div>
+          <div class="docs__row"><span class="docs__row-label">text</span><span class="docs__row-value">Body/Medium · transparent-60 · single line, ellipsis</span></div>
+          <div class="docs__row"><span class="docs__row-label">line</span><span class="docs__row-value">absolute · left:0 · top:3px bottom:4px · w:2px · transparent-87</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--text-body-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-text-reply">
+        <button class="copy-code-btn" onclick="copyCode('text-reply')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-reply"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-reply__inner"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/reply.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title__name"</span><span class="tok-tag">&gt;</span>Abram<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-reply__text"</span><span class="tok-tag">&gt;</span>Message text...<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"text-reply__line"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /TextReply -->
+
+    <div class="section-divider"></div>
+
+    <!-- AboveTheTextField -->
+    <div id="above-text-field" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">AboveTheTextField</div>
+          <button class="code-toggle-btn" onclick="toggleCode('above-text-field')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:24px; align-items:flex-start;">
+
+          <!-- Reply -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">Reply</span>
+            <div class="above-text-field">
+              <div class="above-text-field__row">
+                <div class="above-text-field__content">
+                  <div class="above-text-field__body">
+                    <div class="info-title">
+                      <img class="info-title__icon" src="icons/small/reply.svg" aria-hidden="true">
+                      <span class="info-title__name">Abram</span>
+                    </div>
+                    <p class="above-text-field__text">Plus, there are some unique RPG elements I've never seen before.</p>
+                    <div class="above-text-field__line"></div>
+                  </div>
+                </div>
+                <button class="above-text-field__cancel" aria-label="Dismiss reply">
+                  <img src="icons/general/cancel.svg" aria-hidden="true">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Forward -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">Forward</span>
+            <div class="above-text-field">
+              <div class="above-text-field__row">
+                <div class="above-text-field__content">
+                  <div class="above-text-field__body">
+                    <div class="info-title">
+                      <img class="info-title__icon info-title__icon--secondary" src="icons/small/forward.svg" aria-hidden="true">
+                      <span class="info-title__label">Forwarded from</span>
+                      <span class="info-title__name info-title__name--secondary">Abram</span>
+                    </div>
+                    <p class="above-text-field__text">Plus, there are some unique RPG elements I've never seen before.</p>
+                    <div class="above-text-field__line above-text-field__line--forward"></div>
+                  </div>
+                </div>
+                <button class="above-text-field__cancel" aria-label="Dismiss forward">
+                  <img src="icons/general/cancel.svg" aria-hidden="true">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editing -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">Editing</span>
+            <div class="above-text-field above-text-field--editing">
+              <div class="above-text-field__row">
+                <div class="above-text-field__content">
+                  <div class="above-text-field__body">
+                    <div class="info-title">
+                      <img class="info-title__icon" src="icons/small/edit.svg" aria-hidden="true">
+                      <span class="info-title__name">Edit Message</span>
+                    </div>
+                    <p class="above-text-field__text">Plus, there are some unique RPG elements I've never seen before.</p>
+                  </div>
+                </div>
+                <button class="above-text-field__cancel" aria-label="Dismiss editing">
+                  <img src="icons/general/cancel.svg" aria-hidden="true">
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-above-text-field">
+        <div class="docs__name">AboveTheTextField</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">reply</span><span class="docs__row-value">Reply to a message</span></div>
+          <div class="docs__row"><span class="docs__row-label">forward</span><span class="docs__row-value">Forwarded message</span></div>
+          <div class="docs__row"><span class="docs__row-label">editing</span><span class="docs__row-value">Edit existing message</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Background</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-16</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Line · reply</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Line · forward</span><span class="docs__row-value"><code class="docs__token">--color-info-tertiary</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Message text</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">reply / forward / editing</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-above-text-field">
+        <button class="copy-code-btn" onclick="copyCode('above-text-field')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Reply variant --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__row"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__content"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__body"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title"</span><span class="tok-tag">&gt;</span>
+          <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/reply.svg"</span><span class="tok-tag">&gt;</span>
+          <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"info-title__name"</span><span class="tok-tag">&gt;</span>Abram<span class="tok-tag">&lt;/span&gt;</span>
+        <span class="tok-tag">&lt;/div&gt;</span>
+        <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__text"</span><span class="tok-tag">&gt;</span>Message text...<span class="tok-tag">&lt;/p&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__line"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"above-text-field__cancel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Dismiss"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/cancel.svg"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /AboveTheTextField -->
+
+    <div class="section-divider"></div>
+
+
+    <!-- BubbleBottom 2.0 -->
+    <div id="bubble-bottom-2" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">BubbleBottom 2.0</div>
+          <button class="code-toggle-btn" onclick="toggleCode('bubble-bottom-2')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:32px; align-items:flex-start;">
+
+          <!-- 1 · type=sender, emoji=on, row=1, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=sender, emoji=on, row=1, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions">
+                <div class="reaction reaction--sender"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                <div class="bubble-bottom-2__time">
+                  <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 · type=sender, emoji=off, row=1, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=sender, emoji=off, row=1, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__time">
+                <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 · type=sender, emoji=on, row=2, open=no -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=sender, emoji=on, row=2, open=no</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions">
+                <div class="reaction reaction--sender"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                <div class="reaction reaction--sender"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                <div class="reaction reaction--sender"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                <div class="reaction reaction--sender"><span class="reaction__emoji">👽</span><span class="reaction__count">1</span></div>
+                <button type="button" class="reaction-arrow reaction-arrow--sender" aria-expanded="false" aria-label="Show all reactions">
+                  <svg class="reaction-arrow__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="bubble-bottom-2__time">
+                  <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 · type=sender, emoji=on, row=2, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=sender, emoji=on, row=2, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions bubble-bottom-2__reactions--stacked">
+                <div class="bubble-bottom-2__row">
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">👽</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                </div>
+                <div class="bubble-bottom-2__row">
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--sender"><span class="reaction__emoji">👽</span><span class="reaction__count">1</span></div>
+                  <button type="button" class="reaction-arrow reaction-arrow--sender reaction-arrow--open" aria-expanded="true" aria-label="Collapse reactions">
+                    <svg class="reaction-arrow__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <div class="bubble-bottom-2__time">
+                    <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 · type=recipient, emoji=on, row=1, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=recipient, emoji=on, row=1, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions">
+                <div class="reaction reaction--me"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                <div class="bubble-bottom-2__time">
+                  <div class="send-time"><span class="send-time__time">8:30 pm</span></div>
+                </div>
+              </div>
+              <div class="bubble-comments">
+                <img class="bubble-comments__icon" src="icons/tabbar/chats-default.svg" alt="">
+                <span class="bubble-comments__label">2 Comments</span>
+                <img class="bubble-comments__arrow" src="icons/small/arrow-right.svg" alt="">
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 · type=recipient, emoji=off, row=1, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=recipient, emoji=off, row=1, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__time">
+                <div class="send-time"><span class="send-time__time">8:30 pm</span></div>
+              </div>
+              <div class="bubble-comments">
+                <img class="bubble-comments__icon" src="icons/tabbar/chats-default.svg" alt="">
+                <span class="bubble-comments__label">2 Comments</span>
+                <img class="bubble-comments__arrow" src="icons/small/arrow-right.svg" alt="">
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 · type=recipient, emoji=on, row=2, open=yes -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=recipient, emoji=on, row=2, open=yes</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions bubble-bottom-2__reactions--stacked">
+                <div class="bubble-bottom-2__row">
+                  <div class="reaction"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                  <div class="reaction reaction--me"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <div class="reaction"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                  <div class="reaction"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <div class="reaction"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                  <div class="reaction"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                </div>
+                <div class="bubble-bottom-2__row">
+                  <div class="reaction"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                  <button type="button" class="reaction-arrow" aria-expanded="true" aria-label="Collapse reactions">
+                    <svg class="reaction-arrow__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <div class="bubble-bottom-2__time">
+                    <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="bubble-comments">
+                <img class="bubble-comments__icon" src="icons/tabbar/chats-default.svg" alt="">
+                <span class="bubble-comments__label">2 Comments</span>
+                <img class="bubble-comments__arrow" src="icons/small/arrow-right.svg" alt="">
+              </div>
+            </div>
+          </div>
+
+          <!-- 8 · type=recipient, emoji=on, row=2, open=no -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">type=recipient, emoji=on, row=2, open=no</span>
+            <div class="bubble-bottom-2">
+              <div class="bubble-bottom-2__reactions">
+                <div class="reaction"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                <div class="reaction reaction--me"><span class="reaction__emoji">😯</span><span class="reaction__count">1</span></div>
+                <div class="reaction"><span class="reaction__emoji">🤮</span><span class="reaction__count">1</span></div>
+                <div class="reaction"><span class="reaction__emoji">😂</span><span class="reaction__count">1</span></div>
+                <button type="button" class="reaction-arrow" aria-expanded="false" aria-label="Show all reactions">
+                  <svg class="reaction-arrow__icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="bubble-bottom-2__time">
+                  <div class="send-time"><span class="send-time__label">Read</span><span class="send-time__time">8:30 pm</span></div>
+                </div>
+              </div>
+              <div class="bubble-comments">
+                <img class="bubble-comments__icon" src="icons/tabbar/chats-default.svg" alt="">
+                <span class="bubble-comments__label">2 Comments</span>
+                <img class="bubble-comments__arrow" src="icons/small/arrow-right.svg" alt="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-bubble-bottom-2">
+        <div class="docs__name">BubbleBottom 2.0</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants (type · emoji · row · open)</div>
+          <div class="docs__row"><span class="docs__row-label">sender · on · 1 · yes</span><span class="docs__row-value">pills + time</span></div>
+          <div class="docs__row"><span class="docs__row-label">sender · off · 1 · yes</span><span class="docs__row-value">time only</span></div>
+          <div class="docs__row"><span class="docs__row-label">sender · on · 2 · no</span><span class="docs__row-value">pills + arrow⌄ + time</span></div>
+          <div class="docs__row"><span class="docs__row-label">sender · on · 2 · yes</span><span class="docs__row-value">2 rows + arrow⌃ + time</span></div>
+          <div class="docs__row"><span class="docs__row-label">recipient · on · 1 · yes</span><span class="docs__row-value">pills + time + comments</span></div>
+          <div class="docs__row"><span class="docs__row-label">recipient · off · 1 · yes</span><span class="docs__row-value">time + comments</span></div>
+          <div class="docs__row"><span class="docs__row-label">recipient · on · 2 · yes</span><span class="docs__row-value">2 rows + arrow⌃ + time + comments</span></div>
+          <div class="docs__row"><span class="docs__row-label">recipient · on · 2 · no</span><span class="docs__row-value">pills + arrow⌄ + time + comments</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Reaction</span><span class="docs__row-value">sender / recipient / me</span></div>
+          <div class="docs__row"><span class="docs__row-label">ReactionArrow</span><span class="docs__row-value">collapse / expand</span></div>
+          <div class="docs__row"><span class="docs__row-label">SendTime</span><span class="docs__row-value">time + status</span></div>
+          <div class="docs__row"><span class="docs__row-label">BubbleComments</span><span class="docs__row-value">recipient only</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Surface</span><span class="docs__row-value">transparent (no fill)</span></div>
+          <div class="docs__row"><span class="docs__row-label">Colour / type</span><span class="docs__row-value">delegated to atoms</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-bubble-bottom-2">
+        <button class="copy-code-btn" onclick="copyCode('bubble-bottom-2')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- sender · emoji on · row 2 · collapsed --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-bottom-2"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-bottom-2__reactions"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"reaction reaction--sender"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"reaction__emoji"</span><span class="tok-tag">&gt;</span>😯<span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"reaction__count"</span><span class="tok-tag">&gt;</span>1<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-cmt">&lt;!-- …more reaction pills… --&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"reaction-arrow reaction-arrow--sender"</span> <span class="tok-attr">aria-expanded</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;svg</span> <span class="tok-attr">class</span>=<span class="tok-str">"reaction-arrow__icon"</span> <span class="tok-attr">viewBox</span>=<span class="tok-str">"0 0 16 16"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/svg&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-bottom-2__time"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"send-time"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"send-time__label"</span><span class="tok-tag">&gt;</span>Read<span class="tok-tag">&lt;/span&gt;</span>
+        <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"send-time__time"</span><span class="tok-tag">&gt;</span>8:30 pm<span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- recipient adds BubbleComments after the reactions row --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-comments"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-comments__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/tabbar/chats-default.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-comments__label"</span><span class="tok-tag">&gt;</span>2 Comments<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-comments__arrow"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/arrow-right.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /BubbleBottom 2.0 -->
+
+
   </main>
 
   <script src="scripts/nav.js"></script>
@@ -2809,6 +4696,77 @@
         eyeIcon.src = hidden ? 'icons/general/eye.svg' : 'icons/general/eye-close.svg';
         eyeBtn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
         pwInput.focus();
+      });
+    })();
+  </script>
+
+  <!-- TabBar playground -->
+  <script>
+    (function () {
+      var tabs = ['chats', 'friends', 'bell', 'settings'];
+      var tabsPg = document.getElementById('tb-tabs-pg');
+      if (tabsPg) {
+        tabsPg.querySelectorAll('.tab-bar__tab-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var name = btn.getAttribute('data-tab');
+            tabs.forEach(function (t) {
+              var b = tabsPg.querySelector('[data-tab="' + t + '"]');
+              var img = document.getElementById('tb-icon-' + t);
+              var isActive = t === name;
+              b.classList.toggle('tab-bar__tab-btn--active', isActive);
+              b.setAttribute('aria-current', isActive ? 'page' : 'false');
+              img.src = 'icons/tabbar/' + t + (isActive ? '-active' : '-default') + '.svg';
+            });
+          });
+        });
+      }
+    })();
+
+    (function () {
+      var ta = document.getElementById('tb-textarea');
+      var send = document.getElementById('tb-send');
+      var wrap = document.getElementById('tb-text-field');
+      if (!ta || !send) return;
+
+      function autoGrow() {
+        ta.style.height = 'auto';
+        var h = Math.min(ta.scrollHeight, 64);
+        ta.style.height = h + 'px';
+        ta.style.overflowY = ta.scrollHeight > 64 ? 'auto' : 'hidden';
+      }
+
+      function updateSend() {
+        if (ta.value.trim()) {
+          send.classList.add('is-visible');
+        } else {
+          send.classList.remove('is-visible');
+        }
+      }
+
+      ta.addEventListener('input', function () {
+        autoGrow();
+        updateSend();
+      });
+
+      ta.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (ta.value.trim()) {
+            ta.value = '';
+            ta.style.height = 'auto';
+            ta.style.overflowY = 'hidden';
+            send.classList.remove('is-visible');
+            ta.focus();
+          }
+        }
+      });
+
+      send.addEventListener('click', function () {
+        ta.value = '';
+        ta.style.height = 'auto';
+        ta.style.overflowY = 'hidden';
+        send.classList.remove('is-visible');
+        ta.focus();
       });
     })();
   </script>

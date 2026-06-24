@@ -10,8 +10,10 @@
     var hash = location.hash; // e.g. "#tab-bar-item" or ""
 
     // Auto-open the group that owns the current page
-    var groupId = page === 'icons.html' ? 'nav-icons'
-                : page === 'index.html' ? 'nav-atoms'
+    var groupId = page === 'icons.html'    ? 'nav-icons'
+                : page === 'index.html'    ? 'nav-atoms'
+                : page === 'molecules.html' ? 'nav-molecules'
+                : page === 'organisms.html' ? 'nav-components'
                 : null;
     if (groupId) {
       var openGroup = document.getElementById(groupId);
