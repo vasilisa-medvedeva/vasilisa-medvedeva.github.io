@@ -649,6 +649,63 @@
       background: var(--color-primary-transparent-08);
     }
 
+    /* ── ATOM: CellMenu ── */
+    .cell-menu {
+      display: flex;
+      width: 100%;
+      background: transparent;
+      transition: background 0.15s;
+    }
+    .cell-menu--hover   { background: var(--color-brand-yellow-4); }
+    .cell-menu--pressed { background: var(--color-brand-yellow-8); }
+
+    .cell-menu__base {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 16px;
+      min-width: 0;
+    }
+    .cell-menu__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-menu__icon img { width: 24px; height: 24px; }
+    .cell-menu__text { flex: 1; min-width: 0; }
+    .cell-menu__title {
+      font-family: var(--text-body-large-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-menu__avatars {
+      position: relative;
+      flex-shrink: 0;
+      width: 36px;
+      height: 20px;
+    }
+    .cell-menu__avatar-pip {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-08);
+      border: 1.5px solid var(--color-constant-primary);
+    }
+    .cell-menu__avatar-pip:nth-child(1) { left: 0;    z-index: 2; }
+    .cell-menu__avatar-pip:nth-child(2) { left: 16px; z-index: 1; }
+
     /* ── ATOM: SeparatorMessage ── */
     .separator-message {
       display: flex;
@@ -1375,6 +1432,7 @@
         <a class="sidebar__link" href="index.html#reaction-arrow">ReactionArrow</a>
         <a class="sidebar__link" href="index.html#bubble-comments">BubbleComments</a>
         <a class="sidebar__link" href="index.html#avatar-placeholder">AvatarPlaceholder</a>
+        <a class="sidebar__link" href="index.html#cell-menu">CellMenu</a>
       </div>
     </div>
 
@@ -3723,6 +3781,124 @@
 
     </div>
     <!-- /AvatarPlaceholder -->
+
+    <div class="section-divider"></div>
+
+    <!-- CellMenu -->
+    <div id="cell-menu" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellMenu</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:280px; gap:4px;">
+
+          <div class="btn-size-label" style="margin-bottom:8px;">States</div>
+
+          <!-- enabled · avatars -->
+          <div class="state-wrapper" style="align-items:flex-start; margin-bottom:4px;">
+            <span class="state-label">enabled · avatars</span>
+            <div class="cell-menu">
+              <div class="cell-menu__base">
+                <div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div>
+                <div class="cell-menu__text"><p class="cell-menu__title">Title</p></div>
+                <div class="cell-menu__avatars">
+                  <div class="cell-menu__avatar-pip"></div>
+                  <div class="cell-menu__avatar-pip"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- enabled -->
+          <div class="state-wrapper" style="align-items:flex-start; margin-bottom:4px;">
+            <span class="state-label">enabled</span>
+            <div class="cell-menu">
+              <div class="cell-menu__base">
+                <div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div>
+                <div class="cell-menu__text"><p class="cell-menu__title">Title</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- hover -->
+          <div class="state-wrapper" style="align-items:flex-start; margin-bottom:4px;">
+            <span class="state-label">hover</span>
+            <div class="cell-menu cell-menu--hover">
+              <div class="cell-menu__base">
+                <div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div>
+                <div class="cell-menu__text"><p class="cell-menu__title">Title</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- pressed -->
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <span class="state-label">pressed</span>
+            <div class="cell-menu cell-menu--pressed">
+              <div class="cell-menu__base">
+                <div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div>
+                <div class="cell-menu__text"><p class="cell-menu__title">Title</p></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">CellMenu</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24 icon slot · cellLeft</span></div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">Body/Large · flex:1</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatars</span><span class="docs__row-value">optional 2-pip cluster · 36×20px</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants / States</div>
+          <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">transparent bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">hover</span><span class="docs__row-value">brandYellow/4 bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">pressed</span><span class="docs__row-value">brandYellow/8 bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">avatars</span><span class="docs__row-value">on · off</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <!-- Code -->
+      <div class="code-panel" id="code-cell-menu">
+        <button class="copy-code-btn" onclick="copyCode('cell-menu')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- enabled · avatars --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__base"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__icon"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/reply.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatars"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatar-pip"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatar-pip"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- hover --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu cell-menu--hover"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- pressed --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu cell-menu--pressed"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellMenu -->
 
   </main>
 
