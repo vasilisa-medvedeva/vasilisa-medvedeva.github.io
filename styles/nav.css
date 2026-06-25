@@ -104,3 +104,59 @@
   background: var(--color-brand-yellow-4);
   color: var(--color-primary);
 }
+
+/* ── Level 2.5: nested subgroup (e.g. Cell) inside a nav-group ── */
+.nav-subgroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-subgroup__header {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 20px 8px 12px;
+  font-family: var(--text-title-small-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-title-small-font-size);
+  font-weight: var(--text-title-small-font-weight);
+  line-height: var(--text-title-small-line-height);
+  letter-spacing: var(--text-title-small-letter-spacing);
+  color: var(--color-primary-transparent-70);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.nav-subgroup__header:hover {
+  color: var(--color-primary);
+}
+
+.nav-subgroup__chevron {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  color: var(--color-primary-transparent-48);
+}
+
+.nav-subgroup.is-open .nav-subgroup__chevron {
+  transform: rotate(90deg);
+}
+
+.nav-subgroup__items {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+.nav-subgroup.is-open .nav-subgroup__items {
+  max-height: 600px;
+}
+
+/* Level-3 links sit deeper than their sibling molecules */
+.nav-subgroup__items .sidebar__link {
+  padding-left: 40px;
+}

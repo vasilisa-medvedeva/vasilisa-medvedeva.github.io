@@ -5,6 +5,12 @@
     });
   };
 
+  // Nested subgroup (e.g. Cell) — toggles independently, doesn't touch the top-level accordion
+  window.toggleSubgroup = function (id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('is-open');
+  };
+
   document.addEventListener('DOMContentLoaded', function () {
     var page = location.pathname.split('/').pop() || 'index.html';
     var hash = location.hash; // e.g. "#tab-bar-item" or ""
@@ -35,6 +41,15 @@
       if (score > bestScore) { bestScore = score; bestLink = a; }
     });
 
-    if (bestLink && bestScore > 0) bestLink.classList.add('sidebar__link--active');
+    if (bestLink && bestScore > 0) {
+      // Clear any pre-set active (e.g. hardcoded default) so only one link highlights
+      document.querySelectorAll('.sidebar__link--active').forEach(function (el) {
+        el.classList.remove('sidebar__link--active');
+      });
+      bestLink.classList.add('sidebar__link--active');
+      // If the active link sits inside a collapsible subgroup, open it
+      var sub = bestLink.closest('.nav-subgroup');
+      if (sub) sub.classList.add('is-open');
+    }
   });
 })();
