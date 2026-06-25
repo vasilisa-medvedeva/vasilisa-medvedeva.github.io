@@ -320,6 +320,62 @@
       color: var(--color-primary-transparent-87);
     }
 
+    /* ── Molecule: CellContact ── */
+    .cell-contact {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: 56px;
+      padding: 0 16px;
+      background: var(--color-constant-primary);
+    }
+    .cell-contact--open { background: var(--color-brand-yellow-8); }
+    .cell-contact--toggle { gap: 16px; }
+
+    .cell-contact__avatar { flex-shrink: 0; }
+    /* Folder avatar initials are dimmed in the design */
+    .cell-contact .avatar--folder .avatar__initials { color: var(--color-primary-transparent-48); }
+
+    .cell-contact__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cell-contact__title {
+      font-family: var(--text-title-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-contact__subtitle {
+      font-family: var(--text-body-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-contact__chevron {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-contact__chevron img { width: 24px; height: 24px; }
+
     /* ── Atom: VideoChip (reused) ── */
     .chip {
       display: inline-flex;
@@ -1114,6 +1170,33 @@
     .avatar--sm .avatar__initials { font-size: 16px; letter-spacing: 0.15px; }
     .avatar__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
+    /* Folder shape (copy from index.html — must follow base .avatar to win) */
+    .avatar--folder {
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .avatar--folder::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 44%; height: 17%;
+      background: var(--color-brand-yellow-16);
+      border-radius: 4px 4px 0 0;
+    }
+    .avatar--folder::after {
+      content: '';
+      position: absolute;
+      top: 17%; left: 0; right: 0; bottom: 0;
+      background: var(--color-brand-yellow-16);
+      border-radius: 0 12px 12px 12px;
+    }
+    .avatar--folder .avatar__initials {
+      position: relative;
+      z-index: 1;
+      padding-top: 17%;
+    }
+
     /* ── TopBar ─────────────────────────────────────────────────────────── */
     .top-bar {
       display: flex; align-items: center;
@@ -1786,6 +1869,7 @@
         <a class="sidebar__link" href="molecules.html#bubble-bottom-2">BubbleBottom 2.0</a>
         <a class="sidebar__link" href="molecules.html#message">Message</a>
         <a class="sidebar__link" href="molecules.html#cell-toggle">CellToggle</a>
+        <a class="sidebar__link" href="molecules.html#cell-contact">CellContact</a>
       </div>
     </div>
 
@@ -1824,10 +1908,10 @@
               <!-- Atom: Toggle / Checkbox -->
               <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select photo" tabindex="0">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                   <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
@@ -1838,10 +1922,10 @@
               <!-- Atom: Toggle / Checkbox -->
               <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select photo" tabindex="0">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                   <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
@@ -1856,10 +1940,10 @@
               <!-- Atom: Toggle / Checkbox -->
               <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select video" tabindex="0">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                   <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
               <!-- Atom: VideoChip / Playing -->
@@ -1872,10 +1956,10 @@
               <!-- Atom: Toggle / Checkbox -->
               <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select video" tabindex="0">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                   <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
               <!-- Atom: VideoChip / Playing -->
@@ -4676,9 +4760,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4689,9 +4773,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4706,9 +4790,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4719,9 +4803,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4736,9 +4820,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4749,9 +4833,9 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
                       <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
                     </svg>
                   </button>
@@ -4771,10 +4855,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4784,10 +4868,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4801,10 +4885,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4814,10 +4898,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4831,10 +4915,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4844,10 +4928,10 @@
                   <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
                   <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2.5"/>
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
                       <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -4918,6 +5002,145 @@
 
     </div>
     <!-- /CellToggle -->
+
+    <div class="section-divider"></div>
+
+    <!-- CellContact -->
+    <div id="cell-contact" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellContact</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-contact')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
+
+          <!-- direct -->
+          <span class="state-label" style="margin:4px 0;">direct</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
+          </div>
+
+          <!-- direct + toggle -->
+          <span class="state-label" style="margin:8px 0 4px;">direct · toggle</span>
+          <div class="cell-contact cell-contact--toggle">
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
+            <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select contact" tabindex="0">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- channel -->
+          <span class="state-label" style="margin:8px 0 4px;">channel</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
+            </div>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+
+          <!-- channel + open -->
+          <span class="state-label" style="margin:8px 0 4px;">channel · open</span>
+          <div class="cell-contact cell-contact--open">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
+            </div>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
+          </div>
+
+          <!-- folder -->
+          <span class="state-label" style="margin:8px 0 4px;">folder</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
+            </div>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+
+          <!-- folder + open -->
+          <span class="state-label" style="margin:8px 0 4px;">folder · open</span>
+          <div class="cell-contact cell-contact--open">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
+            </div>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-contact">
+        <div class="docs__name">CellContact</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">circle avatar · title only</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">rounded-sq avatar · title + subtitle · chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder avatar · title + subtitle · chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">chevron ↓ + brandYellow/8 bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">toggle</span><span class="docs__row-value">direct only · checkbox on right</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Open bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle / channel / folder</span></div>
+          <div class="docs__row"><span class="docs__row-label">Toggle</span><span class="docs__row-value">checkbox (toggle variant)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-contact">
+        <button class="copy-code-btn" onclick="copyCode('cell-contact')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- channel · title + subtitle + chevron --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__avatar avatar avatar--sm avatar--channel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__chevron"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-right.svg"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- open: add --open + arrow-down.svg --&gt;</span>
+<span class="tok-cmt">&lt;!-- folder: avatar--folder · direct: avatar--sm only, no subtitle/chevron --&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellContact -->
 
   </main>
 
