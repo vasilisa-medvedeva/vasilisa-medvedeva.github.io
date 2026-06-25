@@ -491,6 +491,97 @@
       text-overflow: ellipsis;
     }
 
+    /* ── Molecule: CellBase ── */
+    /* Foundational list-cell layout: left slot · text (Title + opt. Subtitle ×1–2) ·
+       right slot · bottom divider. size sets the row height; the number of text lines
+       sets the row. Interactive states mirror CellMenu's yellow ramp. */
+    .cell-base {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 0 16px;
+      background: var(--color-constant-primary);
+      transition: background 0.15s;
+    }
+
+    /* Interactive states — same yellow ramp as CellMenu */
+    .cell-base--hover    { background: var(--color-brand-yellow-4); }
+    .cell-base--pressed  { background: var(--color-brand-yellow-8); }
+    .cell-base--selected { background: var(--color-brand-yellow-16); }
+
+    /* Sizes — fixed row heights (match Figma) */
+    .cell-base--xsmall { min-height: 36px; }
+    .cell-base--small  { min-height: 48px; }
+    .cell-base--medium { min-height: 56px; }
+    .cell-base--large  { min-height: 64px; }
+    .cell-base--xlarge { min-height: 72px; }
+
+    .cell-base__left,
+    .cell-base__right {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+    .cell-base__right { justify-content: flex-end; }
+
+    .cell-base__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cell-base__title {
+      font-family: var(--text-title-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-base__subtitle {
+      font-family: var(--text-body-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Row 3 (Title + 2 subtitles) — top-align the slots and text */
+    .cell-base--row-3 { align-items: flex-start; }
+    .cell-base--row-3 .cell-base__left,
+    .cell-base--row-3 .cell-base__right { align-items: flex-start; padding-top: 8px; }
+    .cell-base--row-3 .cell-base__text  { padding-top: 8px; }
+
+    /* Bottom hairline divider — inset 48px (16 px + 24 slot + 8 gap) to align under the text */
+    .cell-base__divider {
+      position: absolute;
+      left: 48px; right: 0; bottom: 0;
+      height: 0;
+      border-top: 0.5px solid var(--color-primary-transparent-16);
+    }
+    .cell-base--no-divider .cell-base__divider { display: none; }
+
+    /* ── Atom: AvatarPlaceholder (reused) — neutral slot filler ── */
+    .avatar-ph {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-08);
+    }
+    .avatar-ph--s { width: 24px; height: 24px; }
+
     /* ── Atom: VideoChip (reused) ── */
     .chip {
       display: inline-flex;
@@ -1975,6 +2066,7 @@
             Cell
           </button>
           <div class="nav-subgroup__items">
+            <a class="sidebar__link" href="molecules.html#cell-base">CellBase</a>
             <a class="sidebar__link" href="molecules.html#cell-toggle">CellToggle</a>
             <a class="sidebar__link" href="molecules.html#cell-contact">CellContact</a>
             <a class="sidebar__link" href="molecules.html#cell-activity">CellActivity</a>
@@ -2027,6 +2119,201 @@
   <main class="main">
     <h1 class="page-title">Molecules</h1>
     <p class="page-subtitle">Комбинации атомов. Токены only — без новых цветов и шрифтов.</p>
+
+    <div class="section-divider"></div>
+
+    <!-- CellBase -->
+    <div id="cell-base" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellBase</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-base')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:0;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Sizes × rows</div>
+
+          <span class="state-label" style="margin:4px 0 4px;">xSmall · 1 row</span>
+          <div class="cell-base cell-base--xsmall">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">small · 1 row</span>
+          <div class="cell-base cell-base--small">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">medium · 1 row</span>
+          <div class="cell-base cell-base--medium">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">medium · 2 rows</span>
+          <div class="cell-base cell-base--medium">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+            </div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">large · 1 row</span>
+          <div class="cell-base cell-base--large">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">large · 2 rows</span>
+          <div class="cell-base cell-base--large">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+            </div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">xLarge · 1 row</span>
+          <div class="cell-base cell-base--xlarge">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">xLarge · 2 rows</span>
+          <div class="cell-base cell-base--xlarge">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+            </div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">xLarge · 3 rows</span>
+          <div class="cell-base cell-base--xlarge cell-base--row-3">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+            </div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">States (medium · 1 row)</div>
+
+          <span class="state-label" style="margin:4px 0 4px;">default</span>
+          <div class="cell-base cell-base--medium">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">hover</span>
+          <div class="cell-base cell-base--medium cell-base--hover">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">pressed</span>
+          <div class="cell-base cell-base--medium cell-base--pressed">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">selected</span>
+          <div class="cell-base cell-base--medium cell-base--selected">
+            <div class="cell-base__left"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
+            <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
+            <div class="cell-base__divider"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-base">
+        <div class="docs__name">CellBase</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">xSmall</span><span class="docs__row-value">36px · 1 row</span></div>
+          <div class="docs__row"><span class="docs__row-label">small</span><span class="docs__row-value">48px · 1 row</span></div>
+          <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">56px · 1–2 rows</span></div>
+          <div class="docs__row"><span class="docs__row-label">large</span><span class="docs__row-value">64px · 1–2 rows</span></div>
+          <div class="docs__row"><span class="docs__row-label">xLarge</span><span class="docs__row-value">72px · 1–3 rows</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">hover</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">pressed</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">selected</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-16</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-16</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Slots</span><span class="docs__row-value">AvatarPlaceholder (24px)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-base">
+        <button class="copy-code-btn" onclick="copyCode('cell-base')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- size: xsmall | small | medium | large | xlarge --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base cell-base--medium"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__left"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>   <span class="tok-cmt">&lt;!-- optional slot --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>  <span class="tok-cmt">&lt;!-- row 2/3 --&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__right"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>  <span class="tok-cmt">&lt;!-- optional slot --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__divider"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- 3 rows: add cell-base--row-3 (top-aligns slots) --&gt;</span>
+<span class="tok-cmt">&lt;!-- states: --hover / --pressed / --selected --&gt;</span>
+<span class="tok-cmt">&lt;!-- no divider: --no-divider --&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellBase -->
 
     <div class="section-divider"></div>
 
