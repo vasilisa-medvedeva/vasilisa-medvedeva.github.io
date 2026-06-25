@@ -1981,9 +1981,6 @@
             <a class="sidebar__link" href="molecules.html#cell-separator">CellSeparator</a>
           </div>
         </div>
-        <a class="sidebar__link sidebar__link--active" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
-        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
-        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
         <div class="nav-subgroup" id="sub-field">
           <button class="nav-subgroup__header" onclick="toggleSubgroup('sub-field')">
             <svg class="nav-subgroup__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1999,6 +1996,9 @@
             <a class="sidebar__link" href="molecules.html#tf-bar">TextFieldsBar</a>
           </div>
         </div>
+        <a class="sidebar__link sidebar__link--active" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
+        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
+        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
         <a class="sidebar__link" href="molecules.html#tabs">Tabs</a>
         <a class="sidebar__link" href="molecules.html#top-bar">TopBar</a>
         <a class="sidebar__link" href="molecules.html#swipe-tab-item">SwipeTabItem</a>
@@ -2030,493 +2030,616 @@
 
     <div class="section-divider"></div>
 
-    <!-- PhotoPlaceholder -->
-    <div id="photo-placeholder" class="component-block">
+    <!-- CellToggle -->
+    <div id="cell-toggle" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">PhotoPlaceholder</div>
-          <button class="code-toggle-btn" onclick="toggleCode('photo-placeholder')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+          <div class="component-block__preview-title">CellToggle</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-toggle')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Photo</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
-          <div class="state-wrapper">
-            <div class="photo-placeholder">
-              <!-- Atom: Toggle / Checkbox -->
-              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select photo" tabindex="0">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-            <span class="state-label">Unchecked</span>
-          </div>
-          <div class="state-wrapper">
-            <div class="photo-placeholder">
-              <!-- Atom: Toggle / Checkbox -->
-              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select photo" tabindex="0">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-            <span class="state-label">Checked</span>
-          </div>
-        </div>
+        <div style="display:flex; gap:32px; align-items:flex-start;">
 
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
-          <div class="state-wrapper">
-            <div class="photo-placeholder">
-              <!-- Atom: Toggle / Checkbox -->
-              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select video" tabindex="0">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <!-- Atom: VideoChip / Playing -->
-              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
-            </div>
-            <span class="state-label">Unchecked</span>
-          </div>
-          <div class="state-wrapper">
-            <div class="photo-placeholder">
-              <!-- Atom: Toggle / Checkbox -->
-              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select video" tabindex="0">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <!-- Atom: VideoChip / Playing -->
-              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
-            </div>
-            <span class="state-label">Checked</span>
-          </div>
-        </div>
+          <!-- Radio column -->
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:16px;">
+            <div class="btn-size-label">Radio</div>
 
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Add Media</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-          <div class="state-wrapper">
-            <div class="photo-placeholder" role="button" aria-label="Add media" tabindex="0" style="cursor:pointer;">
-              <!-- Icon: camera-fill from icons/general -->
-              <img class="photo-placeholder__camera" src="icons/general/camera-fill.svg" alt="" aria-hidden="true" />
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">xSmall</span>
+              <div class="cell-toggle">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
-            <span class="state-label">addMedia</span>
+
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">Small</span>
+              <div class="cell-toggle cell-toggle--small">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle cell-toggle--small" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">Medium</span>
+              <div class="cell-toggle cell-toggle--medium">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle cell-toggle--medium" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <!-- Checkbox column -->
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:16px;">
+            <div class="btn-size-label">Checkbox</div>
+
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">xSmall</span>
+              <div class="cell-toggle">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">Small</span>
+              <div class="cell-toggle cell-toggle--small">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle cell-toggle--small" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="state-label" style="display:block; margin-bottom:4px;">Medium</span>
+              <div class="cell-toggle cell-toggle--medium">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="cell-toggle cell-toggle--medium" style="margin-top:1px;">
+                <div class="cell-toggle__base">
+                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <aside class="docs">
-        <div class="docs__name">PhotoPlaceholder</div>
-        <span class="docs__type">Molecule</span>
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-toggle">
+        <div class="docs__name">CellToggle</div>
+        <span class="docs__type">molecule</span>
 
         <div class="docs__section">
-          <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">134 × 134px · r 4px · bg primary-16</span></div>
-          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">24 × 24px · top-right 8px · photo &amp; video only</span></div>
-          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">px 8 py 4 · r 60px · bottom-right 8px · video only</span></div>
-          <div class="docs__row"><span class="docs__row-label">Camera icon</span><span class="docs__row-value">32 × 32px · centered · addMedia only</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Checkbox top-right, no chip</span></div>
-          <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Checkbox top-right + duration chip bottom-right</span></div>
-          <div class="docs__row"><span class="docs__row-label">addMedia</span><span class="docs__row-value">Camera icon centered, no checkbox</span></div>
+          <div class="docs__row"><span class="docs__row-label">type</span><span class="docs__row-value">radio · checkbox</span></div>
+          <div class="docs__row"><span class="docs__row-label">size</span><span class="docs__row-value">xSmall (36px) · Small (48px) · Medium (56px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">on · off</span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">States</div>
-          <div class="docs__row"><span class="docs__row-label">unchecked</span><span class="docs__row-value">Circle stroke · primary-transparent-32</span></div>
-          <div class="docs__row"><span class="docs__row-label">checked</span><span class="docs__row-value">Yellow fill + white checkmark</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
           <div class="docs__section-title">Tokens</div>
-          <span class="docs__token">--color-primary-transparent-16</span>
-          <span class="docs__token">--color-primary-transparent-32</span>
-          <span class="docs__token">--color-brand-yellow-secondary</span>
-          <span class="docs__token">--color-constant-transparent-60</span>
-          <span class="docs__token">--text-label-medium-*</span>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-body-large-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Text colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Cell bg</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Toggle</span><span class="docs__row-value">.toggle-radio / .toggle-cb</span></div>
+        </div>
+
+        <div class="docs__section">
           <div class="docs__section-title">Status</div>
           <span class="docs__status docs__status--draft">draft</span>
         </div>
-      </aside>
+      </div>
 
-      <div class="code-panel" id="code-photo-placeholder">
-        <button class="copy-code-btn" onclick="copyCode('photo-placeholder')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- Photo — uses Toggle / Checkbox atom --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-toggle">
+        <button class="copy-code-btn" onclick="copyCode('cell-toggle')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Radio · xSmall · on --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-radio"</span> <span class="tok-attr">role</span>=<span class="tok-str">"radio"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-border / .t-mark (circle dot) --&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
 <span class="tok-tag">&lt;/div&gt;</span>
 
-<span class="tok-cmt">&lt;!-- Video — Toggle / Checkbox + VideoChip / Playing atoms --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing"</span><span class="tok-tag">&gt;&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- Add Media — icon: camera-fill from icons/general --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span> <span class="tok-attr">role</span>=<span class="tok-str">"button"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder__camera"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/camera-fill.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-cmt">&lt;!-- Checkbox · Small · off --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle cell-toggle--small"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-border / .t-mark (checkmark) --&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
 <span class="tok-tag">&lt;/div&gt;</span></code></pre>
       </div>
+
     </div>
-    <!-- /PhotoPlaceholder -->
+    <!-- /CellToggle -->
 
     <div class="section-divider"></div>
 
-    <!-- Gallery -->
-    <div id="gallery" class="component-block">
+    <!-- CellContact -->
+    <div id="cell-contact" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">Gallery</div>
-          <button class="code-toggle-btn" onclick="toggleCode('gallery')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+          <div class="component-block__preview-title">CellContact</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-contact')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
-        <!-- VIDEO -->
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
+        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
 
-          <div class="state-wrapper">
-            <div class="gallery">
-              <div class="gallery__overlay"></div>
-              <!-- Atom: VideoChip / Not loaded -->
-              <div class="gallery__chip-anchor">
-                <div class="chip chip--not-loaded">
-                  <div class="chip__icon"><img src="assets/chip-ic-download.svg" alt=""/></div>
-                  <div class="chip__text">
-                    <span class="chip__duration">0:32</span>
-                    <span class="chip__size">102.6 MB</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="state-label">Download</span>
+          <!-- direct -->
+          <span class="state-label" style="margin:4px 0;">direct</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
           </div>
 
-          <div class="state-wrapper">
-            <div class="gallery">
-              <div class="gallery__overlay"></div>
-              <!-- Atom: VideoChip / Loading -->
-              <div class="gallery__chip-anchor">
-                <div class="chip chip--loading">
-                  <div class="chip__icon"><img src="assets/chip-ic-loading.svg" alt=""/></div>
-                  <div class="chip__text">
-                    <span class="chip__duration">0:32</span>
-                    <span class="chip__size">102.6 MB</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="state-label">Loading</span>
+          <!-- direct + toggle -->
+          <span class="state-label" style="margin:8px 0 4px;">direct · toggle</span>
+          <div class="cell-contact cell-contact--toggle">
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
+            <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select contact" tabindex="0">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
 
-          <div class="state-wrapper">
-            <div class="gallery">
-              <!-- Atom: VideoChip / Regular -->
-              <div class="gallery__chip-anchor">
-                <div class="chip chip--regular">
-                  <div class="chip__icon"><img src="assets/chip-ic-play.svg" alt=""/></div>
-                  <div class="chip__text">
-                    <span class="chip__duration">0:32</span>
-                    <span class="chip__size">102.6 MB</span>
-                  </div>
-                </div>
-              </div>
+          <!-- channel -->
+          <span class="state-label" style="margin:8px 0 4px;">channel</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
             </div>
-            <span class="state-label">Regular</span>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
           </div>
 
-          <div class="state-wrapper">
-            <div class="gallery">
-              <!-- Atom: VideoChip / Playing -->
-              <div class="chip chip--playing gallery__chip-playing">
-                <span class="chip__duration">0:32</span>
-              </div>
+          <!-- channel + open -->
+          <span class="state-label" style="margin:8px 0 4px;">channel · open</span>
+          <div class="cell-contact cell-contact--open">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
             </div>
-            <span class="state-label">Playing</span>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
           </div>
 
-        </div>
-
-        <!-- IMAGE -->
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Image</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
-
-          <div class="state-wrapper">
-            <div class="gallery">
-              <div class="gallery__overlay"></div>
-              <!-- Icon: download from icons/general -->
-              <img class="gallery__icon" src="icons/general/download.svg" alt="" aria-hidden="true"/>
+          <!-- folder -->
+          <span class="state-label" style="margin:8px 0 4px;">folder</span>
+          <div class="cell-contact">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
             </div>
-            <span class="state-label">Download</span>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
           </div>
 
-          <div class="state-wrapper">
-            <div class="gallery">
-              <div class="gallery__overlay"></div>
-              <!-- Asset: chip-ic-loading.svg (loading spinner) -->
-              <img class="gallery__icon" src="assets/chip-ic-loading.svg" alt="" aria-hidden="true"/>
+          <!-- folder + open -->
+          <span class="state-label" style="margin:8px 0 4px;">folder · open</span>
+          <div class="cell-contact cell-contact--open">
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__text">
+              <p class="cell-contact__title">Title</p>
+              <p class="cell-contact__subtitle">Subtitle</p>
             </div>
-            <span class="state-label">Loading</span>
-          </div>
-
-          <div class="state-wrapper">
-            <div class="gallery">
-              <!-- clean card -->
-            </div>
-            <span class="state-label">Regular</span>
+            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
           </div>
 
         </div>
-
-        <!-- MORE -->
-        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">More</div>
-        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-          <div class="state-wrapper">
-            <div class="gallery">
-              <div class="gallery__overlay"></div>
-              <span class="gallery__more">+67</span>
-            </div>
-            <span class="state-label">+N</span>
-          </div>
-        </div>
-
       </div>
 
-      <aside class="docs">
-        <div class="docs__name">Gallery</div>
-        <span class="docs__type">Molecule</span>
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-contact">
+        <div class="docs__name">CellContact</div>
+        <span class="docs__type">molecule</span>
 
         <div class="docs__section">
-          <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">189 × 189px · r 8px · bg primary-16</span></div>
-          <div class="docs__row"><span class="docs__row-label">Overlay</span><span class="docs__row-value">rgba(0,0,0,0.4) · blur 2px · download/loading/more</span></div>
-          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center или bottom-right 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32×32px · центр · image download/loading</span></div>
-          <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · белый · центр</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Atoms used</div>
-          <div class="docs__row"><span class="docs__row-label">VideoChip</span><span class="docs__row-value">Not loaded · Loading · Regular · Playing</span></div>
-          <div class="docs__row"><span class="docs__row-label">Icons</span><span class="docs__row-value">download.svg · chip-ic-loading.svg</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">video/download</span><span class="docs__row-value">Overlay + chip not-loaded, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">video/loading</span><span class="docs__row-value">Overlay + chip loading, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">video/regular</span><span class="docs__row-value">Chip regular, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">video/playing</span><span class="docs__row-value">Chip playing, bottom-right 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/download</span><span class="docs__row-value">Overlay + иконка download, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/loading</span><span class="docs__row-value">Overlay + спиннер, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/regular</span><span class="docs__row-value">Чистая карточка</span></div>
-          <div class="docs__row"><span class="docs__row-label">more/regular</span><span class="docs__row-value">Overlay + "+N" текст, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">circle avatar · title only</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">rounded-sq avatar · title + subtitle · chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder avatar · title + subtitle · chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">chevron ↓ + brandYellow/8 bg</span></div>
+          <div class="docs__row"><span class="docs__row-label">toggle</span><span class="docs__row-value">direct only · checkbox on right</span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
           <div class="docs__section-title">Tokens</div>
-          <span class="docs__token">--color-primary-transparent-16</span>
-          <span class="docs__token">--color-constant-primary</span>
-          <span class="docs__token">--text-headline-medium-*</span>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Open bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle / channel / folder</span></div>
+          <div class="docs__row"><span class="docs__row-label">Toggle</span><span class="docs__row-value">checkbox (toggle variant)</span></div>
+        </div>
+
+        <div class="docs__section">
           <div class="docs__section-title">Status</div>
           <span class="docs__status docs__status--draft">draft</span>
         </div>
-      </aside>
-
-      <div class="code-panel" id="code-gallery">
-        <button class="copy-code-btn" onclick="copyCode('gallery')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- video/playing — VideoChip / Playing atom --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing gallery__chip-playing"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- video/regular — VideoChip / Regular atom --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__chip-anchor"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--regular"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- image/download — icon: download from icons/general --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/download.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- more/regular --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__more"</span><span class="tok-tag">&gt;</span>+67<span class="tok-tag">&lt;/span&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span></code></pre>
       </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-contact">
+        <button class="copy-code-btn" onclick="copyCode('cell-contact')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- channel · title + subtitle + chevron --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__avatar avatar avatar--sm avatar--channel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__chevron"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-right.svg"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- open: add --open + arrow-down.svg --&gt;</span>
+<span class="tok-cmt">&lt;!-- folder: avatar--folder · direct: avatar--sm only, no subtitle/chevron --&gt;</span></code></pre>
+      </div>
+
     </div>
-    <!-- /Gallery -->
+    <!-- /CellContact -->
 
     <div class="section-divider"></div>
 
-    <!-- CardProfileText -->
-    <div id="card-profile-text" class="component-block">
+    <!-- CellActivity -->
+    <div id="cell-activity" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">CardProfileText</div>
-          <button class="code-toggle-btn" onclick="toggleCode('card-profile-text')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+          <div class="component-block__preview-title">CellActivity</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-activity')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
-        <div style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
 
-          <!-- private + bio -->
-          <div class="state-wrapper">
-            <div class="card-profile-text card-profile-text--private card-profile-text--with-bio">
-              <div class="card-profile-text__top">
-                <div class="card-profile-text__title-group">
-                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
-                  <p class="card-profile-text__subtitle">@dnd_universe</p>
-                </div>
-                <div class="card-profile-text__private">
-                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
-                  <span class="card-profile-text__private-label">Private</span>
-                </div>
-              </div>
-              <div class="card-profile-text__bio">
-                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
-              </div>
+          <!-- reacted -->
+          <span class="state-label" style="margin:4px 0;">reacted</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
             </div>
-            <span class="state-label">private + bio</span>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
+              <p class="cell-activity__subtitle">Subtitle</p>
+            </div>
           </div>
 
-          <!-- private, no bio -->
-          <div class="state-wrapper">
-            <div class="card-profile-text card-profile-text--private">
-              <div class="card-profile-text__top">
-                <div class="card-profile-text__title-group">
-                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
-                  <p class="card-profile-text__subtitle">@dnd_universe</p>
-                </div>
-                <div class="card-profile-text__private">
-                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
-                  <span class="card-profile-text__private-label">Private</span>
-                </div>
-              </div>
+          <!-- read -->
+          <span class="state-label" style="margin:8px 0 4px;">read</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
             </div>
-            <span class="state-label">private, no bio</span>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
+              <p class="cell-activity__subtitle">Subtitle</p>
+            </div>
           </div>
 
-          <!-- public + bio -->
-          <div class="state-wrapper">
-            <div class="card-profile-text card-profile-text--with-bio">
-              <div class="card-profile-text__top">
-                <div class="card-profile-text__title-group">
-                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
-                  <p class="card-profile-text__subtitle">@dnd_universe</p>
-                </div>
-              </div>
-              <div class="card-profile-text__bio">
-                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
-              </div>
+          <!-- emoji -->
+          <span class="state-label" style="margin:8px 0 4px;">emoji</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
             </div>
-            <span class="state-label">public + bio</span>
-          </div>
-
-          <!-- public, no bio -->
-          <div class="state-wrapper">
-            <div class="card-profile-text">
-              <div class="card-profile-text__top">
-                <div class="card-profile-text__title-group">
-                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
-                  <p class="card-profile-text__subtitle">@dnd_universe</p>
-                </div>
-              </div>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
             </div>
-            <span class="state-label">public, no bio</span>
           </div>
 
         </div>
       </div>
 
-      <aside class="docs">
-        <div class="docs__name">CardProfileText</div>
-        <span class="docs__type">Molecule</span>
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-activity">
+        <div class="docs__name">CellActivity</div>
+        <span class="docs__type">molecule</span>
 
         <div class="docs__section">
-          <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">Title/Large · primary-87</span></div>
-          <div class="docs__row"><span class="docs__row-label">subtitle</span><span class="docs__row-value">Body/Medium · primary-60</span></div>
-          <div class="docs__row"><span class="docs__row-label">private</span><span class="docs__row-value">ic16_lock + «Private» · gap 2px</span></div>
-          <div class="docs__row"><span class="docs__row-label">bio</span><span class="docs__row-value">Body/Large · primary-87 · опционально</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
-          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только title + subtitle</span></div>
+          <div class="docs__row"><span class="docs__row-label">reacted</span><span class="docs__row-value">avatar · title + subtitle · emoji badge</span></div>
+          <div class="docs__row"><span class="docs__row-label">read</span><span class="docs__row-value">avatar · title + subtitle</span></div>
+          <div class="docs__row"><span class="docs__row-label">emoji</span><span class="docs__row-value">avatar · title only · emoji badge</span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
           <div class="docs__section-title">Tokens</div>
-          <span class="docs__token">--color-primary-transparent-87</span>
-          <span class="docs__token">--color-primary-transparent-60</span>
-          <span class="docs__token">--text-title-large-*</span>
-          <span class="docs__token">--text-body-medium-*</span>
-          <span class="docs__token">--text-body-large-*</span>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Icons used</div>
-          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · 16×16px</span></div>
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle · initials</span></div>
+          <div class="docs__row"><span class="docs__row-label">EmojiBadge</span><span class="docs__row-value">sm · overlay (reacted / emoji)</span></div>
         </div>
 
-        <div class="docs__section docs__section--collapsible">
+        <div class="docs__section">
           <div class="docs__section-title">Status</div>
           <span class="docs__status docs__status--draft">draft</span>
         </div>
-      </aside>
-
-      <div class="code-panel" id="code-card-profile-text">
-        <button class="copy-code-btn" onclick="copyCode('card-profile-text')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- private + bio --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text card-profile-text--private card-profile-text--with-bio"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__top"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title-group"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
-    <span class="tok-tag">&lt;/div&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__lock"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/lock.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private-label"</span><span class="tok-tag">&gt;</span>Private<span class="tok-tag">&lt;/span&gt;</span>
-    <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio-text"</span><span class="tok-tag">&gt;</span>Bio text<span class="tok-tag">&lt;/p&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span></code></pre>
       </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-activity">
+        <button class="copy-code-btn" onclick="copyCode('cell-activity')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- reacted · avatar + title + subtitle + emoji badge --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__avatar"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--sm"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>ML<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__emoji emoji-badge emoji-badge--sm"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge__glyph"</span><span class="tok-tag">&gt;</span>😂<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- read: drop the emoji span · emoji: drop the subtitle --&gt;</span></code></pre>
+      </div>
+
     </div>
-    <!-- /CardProfileText -->
+    <!-- /CellActivity -->
+
+    <div class="section-divider"></div>
+
+    <!-- CellSeparator -->
+    <div id="cell-separator" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellSeparator</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-separator')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:0;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Sizes</div>
+
+          <span class="state-label" style="margin:4px 0 4px;">xS</span>
+          <div class="cell-separator">
+            <p class="cell-separator__title">Title</p>
+            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">s</span>
+          <div class="cell-separator cell-separator--s">
+            <p class="cell-separator__title">Title</p>
+            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">m</span>
+          <div class="cell-separator cell-separator--m">
+            <p class="cell-separator__title">Title</p>
+            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">No arrow</div>
+          <div class="cell-separator">
+            <p class="cell-separator__title">Title</p>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">No dividers</div>
+          <div class="cell-separator cell-separator--no-divider-top cell-separator--no-divider-bottom">
+            <p class="cell-separator__title">Title</p>
+            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-separator">
+        <div class="docs__name">CellSeparator</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">xS</span><span class="docs__row-value">pt 10 / pb 8</span></div>
+          <div class="docs__row"><span class="docs__row-label">s</span><span class="docs__row-value">pt 18 / pb 12</span></div>
+          <div class="docs__row"><span class="docs__row-label">m</span><span class="docs__row-value">pt 26 / pb 12</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-small-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-16</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Arrow</span><span class="docs__row-value">icons/small/arrow-right.svg · 16px</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-separator">
+        <button class="copy-code-btn" onclick="copyCode('cell-separator')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- xS (default) · with arrow + dividers --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator__arrow"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/arrow-right.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- s / m: add modifier class --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator cell-separator--s"</span><span class="tok-tag">&gt;</span> … <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator cell-separator--m"</span><span class="tok-tag">&gt;</span> … <span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- no arrow: omit the span --&gt;</span>
+<span class="tok-cmt">&lt;!-- no dividers: --no-divider-top / --no-divider-bottom --&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellSeparator -->
+
+    <div class="section-divider"></div>
 
     <!-- TextFields -->
     <div id="text-fields" class="component-block">
@@ -3476,143 +3599,7 @@
 
     <div class="section-divider"></div>
 
-    <!-- Tabs -->
-    <div id="tabs" class="component-block">
-      <div class="component-block__preview">
-        <div class="component-block__preview-header">
-          <div class="component-block__preview-title">Tabs</div>
-          <button class="code-toggle-btn" onclick="toggleCode('tabs')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
-        </div>
-
-        <div class="if-playground">
-          <div class="if-playground__title">Playground</div>
-          <div class="tab-bar" id="tb-tabs-pg">
-            <div class="tab-bar__tabs">
-              <button class="tab-bar__tab-btn tab-bar__tab-btn--active" data-tab="chats" aria-label="Chats" aria-current="page">
-                <img class="tab-bar__tab-icon" id="tb-icon-chats" src="icons/tabbar/chats-active.svg" alt="">
-              </button>
-              <button class="tab-bar__tab-btn" data-tab="friends" aria-label="Friends">
-                <img class="tab-bar__tab-icon" id="tb-icon-friends" src="icons/tabbar/friends-default.svg" alt="">
-              </button>
-              <button class="tab-bar__tab-btn" data-tab="bell" aria-label="Notifications">
-                <img class="tab-bar__tab-icon" id="tb-icon-bell" src="icons/tabbar/bell-default.svg" alt="">
-              </button>
-              <button class="tab-bar__tab-btn" data-tab="settings" aria-label="Settings">
-                <img class="tab-bar__tab-icon" id="tb-icon-settings" src="icons/tabbar/settings-default.svg" alt="">
-              </button>
-            </div>
-            <div class="tab-bar__indicator">
-              <div class="tab-bar__indicator-pill"></div>
-            </div>
-          </div>
-          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Нажми на иконку — она станет активной</p>
-        </div>
-
-        <div class="if-playground__title">States</div>
-
-        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs + home indicator</div>
-        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
-          <div class="state-wrapper" style="align-items:flex-start;">
-            <div class="tab-bar">
-              <div class="tab-bar__tabs">
-                <button class="tab-bar__tab-btn" aria-label="Chats">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Friends">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Notifications">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Settings">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
-                </button>
-              </div>
-              <div class="tab-bar__indicator">
-                <div class="tab-bar__indicator-pill"></div>
-              </div>
-            </div>
-            <span class="state-label">tabs + indicator</span>
-          </div>
-        </div>
-
-        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs</div>
-        <div style="display:flex;gap:16px;flex-direction:column;">
-          <div class="state-wrapper" style="align-items:flex-start;">
-            <div class="tab-bar">
-              <div class="tab-bar__tabs">
-                <button class="tab-bar__tab-btn" aria-label="Chats">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Friends">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Notifications">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
-                </button>
-                <button class="tab-bar__tab-btn" aria-label="Settings">
-                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
-                </button>
-              </div>
-            </div>
-            <span class="state-label">tabs</span>
-          </div>
-        </div>
-      </div>
-
-      <aside class="docs">
-        <div class="docs__name">Tabs</div>
-        <span class="docs__type">Molecule</span>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg · border-top 0.5px primary-16</span></div>
-          <div class="docs__row"><span class="docs__row-label">tab-btn</span><span class="docs__row-value">flex: 1 · height 48px · icon 24×24px</span></div>
-          <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">States</div>
-          <div class="docs__row"><span class="docs__row-label">default</span><span class="docs__row-value">icon *-default.svg</span></div>
-          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">icon *-active.svg · aria-current="page"</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Tokens</div>
-          <span class="docs__token">--color-brand-yellow-8</span>
-          <span class="docs__token">--color-primary-transparent-16</span>
-          <span class="docs__token">--color-primary-transparent-87</span>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Icons</div>
-          <div class="docs__row"><span class="docs__row-label">source</span><span class="docs__row-value">icons/tabbar/*.svg</span></div>
-        </div>
-
-        <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Status</div>
-          <span class="docs__status docs__status--draft">draft</span>
-        </div>
-      </aside>
-
-      <div class="code-panel" id="code-tabs">
-        <button class="copy-code-btn" onclick="copyCode('tabs')">Copy</button>
-        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tabs"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-btn"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Chats"</span> <span class="tok-attr">aria-current</span>=<span class="tok-str">"page"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/tabbar/chats-active.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;/button&gt;</span>
-    <span class="tok-cmt">&lt;!-- ... 3 more tab-btn ... --&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator"</span><span class="tok-tag">&gt;&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator-pill"</span><span class="tok-tag">&gt;&lt;/div&gt;&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span></code></pre>
-      </div>
-    </div>
-    <!-- /Tabs -->
-
-    <div class="section-divider"></div>
-
-    <!-- TextFields (bar) -->
+    <!-- TextFieldsBar -->
     <div id="tf-bar" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
@@ -3748,7 +3735,633 @@
 <span class="tok-tag">&lt;/div&gt;</span></code></pre>
       </div>
     </div>
-    <!-- /TextFields (bar) -->
+    <!-- /TextFieldsBar -->
+
+    <div class="section-divider"></div>
+
+    <!-- PhotoPlaceholder -->
+    <div id="photo-placeholder" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">PhotoPlaceholder</div>
+          <button class="code-toggle-btn" onclick="toggleCode('photo-placeholder')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Photo</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select photo" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <span class="state-label">Unchecked</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select photo" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <span class="state-label">Checked</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select video" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
+            </div>
+            <span class="state-label">Unchecked</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="photo-placeholder">
+              <!-- Atom: Toggle / Checkbox -->
+              <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Select video" tabindex="0">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                  <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                  <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                  <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing"><span class="chip__duration">0:32</span></div>
+            </div>
+            <span class="state-label">Checked</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Add Media</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="photo-placeholder" role="button" aria-label="Add media" tabindex="0" style="cursor:pointer;">
+              <!-- Icon: camera-fill from icons/general -->
+              <img class="photo-placeholder__camera" src="icons/general/camera-fill.svg" alt="" aria-hidden="true" />
+            </div>
+            <span class="state-label">addMedia</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">PhotoPlaceholder</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">134 × 134px · r 4px · bg primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">24 × 24px · top-right 8px · photo &amp; video only</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">px 8 py 4 · r 60px · bottom-right 8px · video only</span></div>
+          <div class="docs__row"><span class="docs__row-label">Camera icon</span><span class="docs__row-value">32 × 32px · centered · addMedia only</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Checkbox top-right, no chip</span></div>
+          <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Checkbox top-right + duration chip bottom-right</span></div>
+          <div class="docs__row"><span class="docs__row-label">addMedia</span><span class="docs__row-value">Camera icon centered, no checkbox</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">unchecked</span><span class="docs__row-value">Circle stroke · primary-transparent-32</span></div>
+          <div class="docs__row"><span class="docs__row-label">checked</span><span class="docs__row-value">Yellow fill + white checkmark</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-primary-transparent-32</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-constant-transparent-60</span>
+          <span class="docs__token">--text-label-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-photo-placeholder">
+        <button class="copy-code-btn" onclick="copyCode('photo-placeholder')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- Photo — uses Toggle / Checkbox atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Video — Toggle / Checkbox + VideoChip / Playing atoms --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>...svg...<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing"</span><span class="tok-tag">&gt;&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- Add Media — icon: camera-fill from icons/general --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder"</span> <span class="tok-attr">role</span>=<span class="tok-str">"button"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"photo-placeholder__camera"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/camera-fill.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /PhotoPlaceholder -->
+
+    <div class="section-divider"></div>
+
+    <!-- Gallery -->
+    <div id="gallery" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Gallery</div>
+          <button class="code-toggle-btn" onclick="toggleCode('gallery')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- VIDEO -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Video</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Atom: VideoChip / Not loaded -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--not-loaded">
+                  <div class="chip__icon"><img src="assets/chip-ic-download.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Download</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Atom: VideoChip / Loading -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--loading">
+                  <div class="chip__icon"><img src="assets/chip-ic-loading.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- Atom: VideoChip / Regular -->
+              <div class="gallery__chip-anchor">
+                <div class="chip chip--regular">
+                  <div class="chip__icon"><img src="assets/chip-ic-play.svg" alt=""/></div>
+                  <div class="chip__text">
+                    <span class="chip__duration">0:32</span>
+                    <span class="chip__size">102.6 MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- Atom: VideoChip / Playing -->
+              <div class="chip chip--playing gallery__chip-playing">
+                <span class="chip__duration">0:32</span>
+              </div>
+            </div>
+            <span class="state-label">Playing</span>
+          </div>
+
+        </div>
+
+        <!-- IMAGE -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">Image</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin-bottom:28px;">
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Icon: download from icons/general -->
+              <img class="gallery__icon" src="icons/general/download.svg" alt="" aria-hidden="true"/>
+            </div>
+            <span class="state-label">Download</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <!-- Asset: chip-ic-loading.svg (loading spinner) -->
+              <img class="gallery__icon" src="assets/chip-ic-loading.svg" alt="" aria-hidden="true"/>
+            </div>
+            <span class="state-label">Loading</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="gallery">
+              <!-- clean card -->
+            </div>
+            <span class="state-label">Regular</span>
+          </div>
+
+        </div>
+
+        <!-- MORE -->
+        <div style="margin-bottom:8px; font-size:11px; color:var(--color-primary-transparent-60); letter-spacing:0.4px; text-transform:uppercase;">More</div>
+        <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+          <div class="state-wrapper">
+            <div class="gallery">
+              <div class="gallery__overlay"></div>
+              <span class="gallery__more">+67</span>
+            </div>
+            <span class="state-label">+N</span>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Gallery</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">189 × 189px · r 8px · bg primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">Overlay</span><span class="docs__row-value">rgba(0,0,0,0.4) · blur 2px · download/loading/more</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center или bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32×32px · центр · image download/loading</span></div>
+          <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · белый · центр</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Atoms used</div>
+          <div class="docs__row"><span class="docs__row-label">VideoChip</span><span class="docs__row-value">Not loaded · Loading · Regular · Playing</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icons</span><span class="docs__row-value">download.svg · chip-ic-loading.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">video/download</span><span class="docs__row-value">Overlay + chip not-loaded, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/loading</span><span class="docs__row-value">Overlay + chip loading, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/regular</span><span class="docs__row-value">Chip regular, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/playing</span><span class="docs__row-value">Chip playing, bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/download</span><span class="docs__row-value">Overlay + иконка download, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/loading</span><span class="docs__row-value">Overlay + спиннер, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/regular</span><span class="docs__row-value">Чистая карточка</span></div>
+          <div class="docs__row"><span class="docs__row-label">more/regular</span><span class="docs__row-value">Overlay + "+N" текст, центр</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--text-headline-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-gallery">
+        <button class="copy-code-btn" onclick="copyCode('gallery')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- video/playing — VideoChip / Playing atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--playing gallery__chip-playing"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip__duration"</span><span class="tok-tag">&gt;</span>0:32<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- video/regular — VideoChip / Regular atom --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__chip-anchor"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chip chip--regular"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- image/download — icon: download from icons/general --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/download.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- more/regular --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__overlay"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"gallery__more"</span><span class="tok-tag">&gt;</span>+67<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Gallery -->
+
+    <div class="section-divider"></div>
+
+    <!-- CardProfileText -->
+    <div id="card-profile-text" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CardProfileText</div>
+          <button class="code-toggle-btn" onclick="toggleCode('card-profile-text')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; gap:32px; flex-wrap:wrap; align-items:flex-start;">
+
+          <!-- private + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--private card-profile-text--with-bio">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+                <div class="card-profile-text__private">
+                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                  <span class="card-profile-text__private-label">Private</span>
+                </div>
+              </div>
+              <div class="card-profile-text__bio">
+                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+              </div>
+            </div>
+            <span class="state-label">private + bio</span>
+          </div>
+
+          <!-- private, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--private">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+                <div class="card-profile-text__private">
+                  <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
+                  <span class="card-profile-text__private-label">Private</span>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">private, no bio</span>
+          </div>
+
+          <!-- public + bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text card-profile-text--with-bio">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+              </div>
+              <div class="card-profile-text__bio">
+                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+              </div>
+            </div>
+            <span class="state-label">public + bio</span>
+          </div>
+
+          <!-- public, no bio -->
+          <div class="state-wrapper">
+            <div class="card-profile-text">
+              <div class="card-profile-text__top">
+                <div class="card-profile-text__title-group">
+                  <p class="card-profile-text__title">Dungeons &amp; Dragons</p>
+                  <p class="card-profile-text__subtitle">@dnd_universe</p>
+                </div>
+              </div>
+            </div>
+            <span class="state-label">public, no bio</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">CardProfileText</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">Title/Large · primary-87</span></div>
+          <div class="docs__row"><span class="docs__row-label">subtitle</span><span class="docs__row-value">Body/Medium · primary-60</span></div>
+          <div class="docs__row"><span class="docs__row-label">private</span><span class="docs__row-value">ic16_lock + «Private» · gap 2px</span></div>
+          <div class="docs__row"><span class="docs__row-label">bio</span><span class="docs__row-value">Body/Large · primary-87 · опционально</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
+          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только title + subtitle</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--text-title-large-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+          <span class="docs__token">--text-body-large-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons used</div>
+          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · 16×16px</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-card-profile-text">
+        <button class="copy-code-btn" onclick="copyCode('card-profile-text')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- private + bio --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text card-profile-text--private card-profile-text--with-bio"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__top"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title-group"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__lock"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/lock.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__private-label"</span><span class="tok-tag">&gt;</span>Private<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-profile-text__bio-text"</span><span class="tok-tag">&gt;</span>Bio text<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /CardProfileText -->
+
+    <div class="section-divider"></div>
+
+    <!-- Tabs -->
+    <div id="tabs" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Tabs</div>
+          <button class="code-toggle-btn" onclick="toggleCode('tabs')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="if-playground">
+          <div class="if-playground__title">Playground</div>
+          <div class="tab-bar" id="tb-tabs-pg">
+            <div class="tab-bar__tabs">
+              <button class="tab-bar__tab-btn tab-bar__tab-btn--active" data-tab="chats" aria-label="Chats" aria-current="page">
+                <img class="tab-bar__tab-icon" id="tb-icon-chats" src="icons/tabbar/chats-active.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="friends" aria-label="Friends">
+                <img class="tab-bar__tab-icon" id="tb-icon-friends" src="icons/tabbar/friends-default.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="bell" aria-label="Notifications">
+                <img class="tab-bar__tab-icon" id="tb-icon-bell" src="icons/tabbar/bell-default.svg" alt="">
+              </button>
+              <button class="tab-bar__tab-btn" data-tab="settings" aria-label="Settings">
+                <img class="tab-bar__tab-icon" id="tb-icon-settings" src="icons/tabbar/settings-default.svg" alt="">
+              </button>
+            </div>
+            <div class="tab-bar__indicator">
+              <div class="tab-bar__indicator-pill"></div>
+            </div>
+          </div>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Нажми на иконку — она станет активной</p>
+        </div>
+
+        <div class="if-playground__title">States</div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs + home indicator</div>
+        <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__tabs">
+                <button class="tab-bar__tab-btn" aria-label="Chats">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Friends">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Notifications">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Settings">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
+                </button>
+              </div>
+              <div class="tab-bar__indicator">
+                <div class="tab-bar__indicator-pill"></div>
+              </div>
+            </div>
+            <span class="state-label">tabs + indicator</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">tabs</div>
+        <div style="display:flex;gap:16px;flex-direction:column;">
+          <div class="state-wrapper" style="align-items:flex-start;">
+            <div class="tab-bar">
+              <div class="tab-bar__tabs">
+                <button class="tab-bar__tab-btn" aria-label="Chats">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/chats-active.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Friends">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/friends-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Notifications">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/bell-default.svg" alt="">
+                </button>
+                <button class="tab-bar__tab-btn" aria-label="Settings">
+                  <img class="tab-bar__tab-icon" src="icons/tabbar/settings-default.svg" alt="">
+                </button>
+              </div>
+            </div>
+            <span class="state-label">tabs</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">Tabs</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg · border-top 0.5px primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">tab-btn</span><span class="docs__row-value">flex: 1 · height 48px · icon 24×24px</span></div>
+          <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">default</span><span class="docs__row-value">icon *-default.svg</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">icon *-active.svg · aria-current="page"</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-8</span>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Icons</div>
+          <div class="docs__row"><span class="docs__row-label">source</span><span class="docs__row-value">icons/tabbar/*.svg</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-tabs">
+        <button class="copy-code-btn" onclick="copyCode('tabs')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tabs"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-btn"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Chats"</span> <span class="tok-attr">aria-current</span>=<span class="tok-str">"page"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__tab-icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/tabbar/chats-active.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-cmt">&lt;!-- ... 3 more tab-btn ... --&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator"</span><span class="tok-tag">&gt;&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tab-bar__indicator-pill"</span><span class="tok-tag">&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /Tabs -->
 
     <div class="section-divider"></div>
 
@@ -4023,6 +4636,9 @@
     </div>
     <!-- /TopBar -->
 
+    <div class="section-divider"></div>
+
+    <!-- SwipeTabItem -->
     <div id="swipe-tab-item" class="component-block">
 
       <!-- Preview -->
@@ -4343,6 +4959,8 @@
     </div>
     <!-- /TopSearchBar -->
 
+    <div class="section-divider"></div>
+
     <!-- TextReply -->
     <div id="text-reply" class="component-block">
 
@@ -4551,7 +5169,6 @@
     <!-- /AboveTheTextField -->
 
     <div class="section-divider"></div>
-
 
     <!-- BubbleBottom 2.0 -->
     <div id="bubble-bottom-2" class="component-block">
@@ -4796,6 +5413,7 @@
     </div>
     <!-- /BubbleBottom 2.0 -->
 
+    <div class="section-divider"></div>
 
     <!-- Message -->
     <div id="message" class="component-block">
@@ -4872,612 +5490,6 @@
 
     </div>
     <!-- /Message -->
-
-
-    <div class="section-divider"></div>
-
-    <!-- CellToggle -->
-    <div id="cell-toggle" class="component-block">
-      <div class="component-block__preview">
-        <div class="component-block__preview-header">
-          <div class="component-block__preview-title">CellToggle</div>
-          <button class="code-toggle-btn" onclick="toggleCode('cell-toggle')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
-        </div>
-
-        <div style="display:flex; gap:32px; align-items:flex-start;">
-
-          <!-- Radio column -->
-          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:16px;">
-            <div class="btn-size-label">Radio</div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">xSmall</span>
-              <div class="cell-toggle">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">Small</span>
-              <div class="cell-toggle cell-toggle--small">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle cell-toggle--small" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">Medium</span>
-              <div class="cell-toggle cell-toggle--medium">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle cell-toggle--medium" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Checkbox column -->
-          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:16px;">
-            <div class="btn-size-label">Checkbox</div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">xSmall</span>
-              <div class="cell-toggle">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">Small</span>
-              <div class="cell-toggle cell-toggle--small">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle cell-toggle--small" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <span class="state-label" style="display:block; margin-bottom:4px;">Medium</span>
-              <div class="cell-toggle cell-toggle--medium">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="true" aria-label="Checkbox on" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="cell-toggle cell-toggle--medium" style="margin-top:1px;">
-                <div class="cell-toggle__base">
-                  <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
-                  <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Checkbox off" tabindex="0">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                      <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                      <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                      <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                      <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Docs panel -->
-      <div class="docs" id="docs-cell-toggle">
-        <div class="docs__name">CellToggle</div>
-        <span class="docs__type">molecule</span>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">type</span><span class="docs__row-value">radio · checkbox</span></div>
-          <div class="docs__row"><span class="docs__row-label">size</span><span class="docs__row-value">xSmall (36px) · Small (48px) · Medium (56px)</span></div>
-          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">on · off</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Tokens</div>
-          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-body-large-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Text colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Cell bg</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Uses atoms</div>
-          <div class="docs__row"><span class="docs__row-label">Toggle</span><span class="docs__row-value">.toggle-radio / .toggle-cb</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Status</div>
-          <span class="docs__status docs__status--draft">draft</span>
-        </div>
-      </div>
-
-      <!-- Code panel -->
-      <div class="code-panel" id="code-cell-toggle">
-        <button class="copy-code-btn" onclick="copyCode('cell-toggle')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- Radio · xSmall · on --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-    <span class="tok-tag">&lt;/div&gt;</span>
-    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-radio"</span> <span class="tok-attr">role</span>=<span class="tok-str">"radio"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-border / .t-mark (circle dot) --&gt;</span>
-    <span class="tok-tag">&lt;/button&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- Checkbox · Small · off --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle cell-toggle--small"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-    <span class="tok-tag">&lt;/div&gt;</span>
-    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-cb"</span> <span class="tok-attr">role</span>=<span class="tok-str">"checkbox"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-cmt">&lt;!-- svg with .t-ring / .t-fill / .t-border / .t-mark (checkmark) --&gt;</span>
-    <span class="tok-tag">&lt;/button&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span></code></pre>
-      </div>
-
-    </div>
-    <!-- /CellToggle -->
-
-    <div class="section-divider"></div>
-
-    <!-- CellContact -->
-    <div id="cell-contact" class="component-block">
-      <div class="component-block__preview">
-        <div class="component-block__preview-header">
-          <div class="component-block__preview-title">CellContact</div>
-          <button class="code-toggle-btn" onclick="toggleCode('cell-contact')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
-        </div>
-
-        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
-          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
-
-          <!-- direct -->
-          <span class="state-label" style="margin:4px 0;">direct</span>
-          <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
-            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
-          </div>
-
-          <!-- direct + toggle -->
-          <span class="state-label" style="margin:8px 0 4px;">direct · toggle</span>
-          <div class="cell-contact cell-contact--toggle">
-            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
-            <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
-            <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select contact" tabindex="0">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
-                <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
-                <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
-                <path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-
-          <!-- channel -->
-          <span class="state-label" style="margin:8px 0 4px;">channel</span>
-          <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
-            <div class="cell-contact__text">
-              <p class="cell-contact__title">Title</p>
-              <p class="cell-contact__subtitle">Subtitle</p>
-            </div>
-            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-
-          <!-- channel + open -->
-          <span class="state-label" style="margin:8px 0 4px;">channel · open</span>
-          <div class="cell-contact cell-contact--open">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
-            <div class="cell-contact__text">
-              <p class="cell-contact__title">Title</p>
-              <p class="cell-contact__subtitle">Subtitle</p>
-            </div>
-            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
-          </div>
-
-          <!-- folder -->
-          <span class="state-label" style="margin:8px 0 4px;">folder</span>
-          <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
-            <div class="cell-contact__text">
-              <p class="cell-contact__title">Title</p>
-              <p class="cell-contact__subtitle">Subtitle</p>
-            </div>
-            <span class="cell-contact__chevron"><img src="icons/general/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-
-          <!-- folder + open -->
-          <span class="state-label" style="margin:8px 0 4px;">folder · open</span>
-          <div class="cell-contact cell-contact--open">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
-            <div class="cell-contact__text">
-              <p class="cell-contact__title">Title</p>
-              <p class="cell-contact__subtitle">Subtitle</p>
-            </div>
-            <span class="cell-contact__chevron"><img src="icons/general/arrow-down.svg" aria-hidden="true"></span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Docs panel -->
-      <div class="docs" id="docs-cell-contact">
-        <div class="docs__name">CellContact</div>
-        <span class="docs__type">molecule</span>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">circle avatar · title only</span></div>
-          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">rounded-sq avatar · title + subtitle · chevron</span></div>
-          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder avatar · title + subtitle · chevron</span></div>
-          <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">chevron ↓ + brandYellow/8 bg</span></div>
-          <div class="docs__row"><span class="docs__row-label">toggle</span><span class="docs__row-value">direct only · checkbox on right</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Tokens</div>
-          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Open bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Uses atoms</div>
-          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle / channel / folder</span></div>
-          <div class="docs__row"><span class="docs__row-label">Toggle</span><span class="docs__row-value">checkbox (toggle variant)</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Status</div>
-          <span class="docs__status docs__status--draft">draft</span>
-        </div>
-      </div>
-
-      <!-- Code panel -->
-      <div class="code-panel" id="code-cell-contact">
-        <button class="copy-code-btn" onclick="copyCode('cell-contact')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- channel · title + subtitle + chevron --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__avatar avatar avatar--sm avatar--channel"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__text"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-contact__chevron"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/arrow-right.svg"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- open: add --open + arrow-down.svg --&gt;</span>
-<span class="tok-cmt">&lt;!-- folder: avatar--folder · direct: avatar--sm only, no subtitle/chevron --&gt;</span></code></pre>
-      </div>
-
-    </div>
-    <!-- /CellContact -->
-
-    <div id="cell-activity" class="component-block">
-      <div class="component-block__preview">
-        <div class="component-block__preview-header">
-          <div class="component-block__preview-title">CellActivity</div>
-          <button class="code-toggle-btn" onclick="toggleCode('cell-activity')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
-        </div>
-
-        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
-          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
-
-          <!-- reacted -->
-          <span class="state-label" style="margin:4px 0;">reacted</span>
-          <div class="cell-activity">
-            <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
-              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
-            </div>
-            <div class="cell-activity__text">
-              <p class="cell-activity__title">Title</p>
-              <p class="cell-activity__subtitle">Subtitle</p>
-            </div>
-          </div>
-
-          <!-- read -->
-          <span class="state-label" style="margin:8px 0 4px;">read</span>
-          <div class="cell-activity">
-            <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
-            </div>
-            <div class="cell-activity__text">
-              <p class="cell-activity__title">Title</p>
-              <p class="cell-activity__subtitle">Subtitle</p>
-            </div>
-          </div>
-
-          <!-- emoji -->
-          <span class="state-label" style="margin:8px 0 4px;">emoji</span>
-          <div class="cell-activity">
-            <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
-              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
-            </div>
-            <div class="cell-activity__text">
-              <p class="cell-activity__title">Title</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Docs panel -->
-      <div class="docs" id="docs-cell-activity">
-        <div class="docs__name">CellActivity</div>
-        <span class="docs__type">molecule</span>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">reacted</span><span class="docs__row-value">avatar · title + subtitle · emoji badge</span></div>
-          <div class="docs__row"><span class="docs__row-label">read</span><span class="docs__row-value">avatar · title + subtitle</span></div>
-          <div class="docs__row"><span class="docs__row-label">emoji</span><span class="docs__row-value">avatar · title only · emoji badge</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Tokens</div>
-          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Uses atoms</div>
-          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle · initials</span></div>
-          <div class="docs__row"><span class="docs__row-label">EmojiBadge</span><span class="docs__row-value">sm · overlay (reacted / emoji)</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Status</div>
-          <span class="docs__status docs__status--draft">draft</span>
-        </div>
-      </div>
-
-      <!-- Code panel -->
-      <div class="code-panel" id="code-cell-activity">
-        <button class="copy-code-btn" onclick="copyCode('cell-activity')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- reacted · avatar + title + subtitle + emoji badge --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__avatar"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--sm"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>ML<span class="tok-tag">&lt;/span&gt;</span>
-    <span class="tok-tag">&lt;/div&gt;</span>
-    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__emoji emoji-badge emoji-badge--sm"</span><span class="tok-tag">&gt;</span>
-      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge__glyph"</span><span class="tok-tag">&gt;</span>😂<span class="tok-tag">&lt;/span&gt;</span>
-    <span class="tok-tag">&lt;/span&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__text"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
-  <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- read: drop the emoji span · emoji: drop the subtitle --&gt;</span></code></pre>
-      </div>
-
-    </div>
-    <!-- /CellActivity -->
-
-    <div id="cell-separator" class="component-block">
-      <div class="component-block__preview">
-        <div class="component-block__preview-header">
-          <div class="component-block__preview-title">CellSeparator</div>
-          <button class="code-toggle-btn" onclick="toggleCode('cell-separator')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
-        </div>
-
-        <div style="display:flex; flex-direction:column; width:320px; gap:0;">
-          <div class="btn-size-label" style="margin-bottom:8px;">Sizes</div>
-
-          <span class="state-label" style="margin:4px 0 4px;">xS</span>
-          <div class="cell-separator">
-            <p class="cell-separator__title">Title</p>
-            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-
-          <span class="state-label" style="margin:8px 0 4px;">s</span>
-          <div class="cell-separator cell-separator--s">
-            <p class="cell-separator__title">Title</p>
-            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-
-          <span class="state-label" style="margin:8px 0 4px;">m</span>
-          <div class="cell-separator cell-separator--m">
-            <p class="cell-separator__title">Title</p>
-            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-
-          <div class="btn-size-label" style="margin:16px 0 8px;">No arrow</div>
-          <div class="cell-separator">
-            <p class="cell-separator__title">Title</p>
-          </div>
-
-          <div class="btn-size-label" style="margin:16px 0 8px;">No dividers</div>
-          <div class="cell-separator cell-separator--no-divider-top cell-separator--no-divider-bottom">
-            <p class="cell-separator__title">Title</p>
-            <span class="cell-separator__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Docs panel -->
-      <div class="docs" id="docs-cell-separator">
-        <div class="docs__name">CellSeparator</div>
-        <span class="docs__type">molecule</span>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Sizes</div>
-          <div class="docs__row"><span class="docs__row-label">xS</span><span class="docs__row-value">pt 10 / pb 8</span></div>
-          <div class="docs__row"><span class="docs__row-label">s</span><span class="docs__row-value">pt 18 / pb 12</span></div>
-          <div class="docs__row"><span class="docs__row-label">m</span><span class="docs__row-value">pt 26 / pb 12</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Tokens</div>
-          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-small-*</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
-          <div class="docs__row"><span class="docs__row-label">Divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-16</code></span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Uses</div>
-          <div class="docs__row"><span class="docs__row-label">Arrow</span><span class="docs__row-value">icons/small/arrow-right.svg · 16px</span></div>
-        </div>
-
-        <div class="docs__section">
-          <div class="docs__section-title">Status</div>
-          <span class="docs__status docs__status--draft">draft</span>
-        </div>
-      </div>
-
-      <!-- Code panel -->
-      <div class="code-panel" id="code-cell-separator">
-        <button class="copy-code-btn" onclick="copyCode('cell-separator')">Copy</button>
-        <pre><code><span class="tok-cmt">&lt;!-- xS (default) · with arrow + dividers --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
-  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator__arrow"</span><span class="tok-tag">&gt;</span>
-    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/arrow-right.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
-  <span class="tok-tag">&lt;/span&gt;</span>
-<span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- s / m: add modifier class --&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator cell-separator--s"</span><span class="tok-tag">&gt;</span> … <span class="tok-tag">&lt;/div&gt;</span>
-<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-separator cell-separator--m"</span><span class="tok-tag">&gt;</span> … <span class="tok-tag">&lt;/div&gt;</span>
-
-<span class="tok-cmt">&lt;!-- no arrow: omit the span --&gt;</span>
-<span class="tok-cmt">&lt;!-- no dividers: --no-divider-top / --no-divider-bottom --&gt;</span></code></pre>
-      </div>
-
-    </div>
-    <!-- /CellSeparator -->
 
   </main>
 
