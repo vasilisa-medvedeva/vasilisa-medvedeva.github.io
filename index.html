@@ -706,6 +706,18 @@
     .cell-menu__avatar-pip:nth-child(1) { left: 0;    z-index: 2; }
     .cell-menu__avatar-pip:nth-child(2) { left: 16px; z-index: 1; }
 
+    /* ── ATOM: EmojiBadge ── */
+    .emoji-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 26px;
+      background: var(--color-constant-primary);
+    }
+    .emoji-badge__glyph { font-size: 16px; line-height: 16px; }
+    .emoji-badge--sm .emoji-badge__glyph { font-size: 12px; line-height: 12px; }
+
     /* ── ATOM: SeparatorMessage ── */
     .separator-message {
       display: flex;
@@ -1433,6 +1445,7 @@
         <a class="sidebar__link" href="index.html#bubble-comments">BubbleComments</a>
         <a class="sidebar__link" href="index.html#avatar-placeholder">AvatarPlaceholder</a>
         <a class="sidebar__link" href="index.html#cell-menu">CellMenu</a>
+        <a class="sidebar__link" href="index.html#emoji-badge">EmojiBadge</a>
       </div>
     </div>
 
@@ -3899,6 +3912,74 @@
 
     </div>
     <!-- /CellMenu -->
+
+    <div class="section-divider"></div>
+
+    <div id="emoji-badge" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">EmojiBadge</div>
+          <button class="code-toggle-btn" onclick="toggleCode('emoji-badge')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div>
+          <div class="btn-size-label">Sizes</div>
+          <div class="component-block__states" style="align-items:flex-end;">
+            <div class="state-wrapper">
+              <span class="emoji-badge"><span class="emoji-badge__glyph">😂</span></span>
+              <span class="state-label">medium · 16px</span>
+            </div>
+            <div class="state-wrapper">
+              <span class="emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
+              <span class="state-label">small · 12px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">EmojiBadge</div>
+        <span class="docs__type">Atom</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">white circle · pad 4px · radius 26px</span></div>
+          <div class="docs__row"><span class="docs__row-label">glyph</span><span class="docs__row-value">single emoji · 16px (sm 12px)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Sizes</div>
+          <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">16px glyph</span></div>
+          <div class="docs__row"><span class="docs__row-label">small</span><span class="docs__row-value">12px glyph · overlay on avatars</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-emoji-badge">
+        <button class="copy-code-btn" onclick="copyCode('emoji-badge')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- medium (default) --&gt;</span>
+<span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge__glyph"</span><span class="tok-tag">&gt;</span>😂<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/span&gt;</span>
+
+<span class="tok-cmt">&lt;!-- small (overlay) --&gt;</span>
+<span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge emoji-badge--sm"</span><span class="tok-tag">&gt;</span> … <span class="tok-tag">&lt;/span&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /EmojiBadge -->
 
   </main>
 

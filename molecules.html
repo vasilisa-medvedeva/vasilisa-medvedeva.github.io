@@ -376,6 +376,71 @@
     }
     .cell-contact__chevron img { width: 24px; height: 24px; }
 
+    /* ── Atom: EmojiBadge (reused) ── */
+    .emoji-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 26px;
+      background: var(--color-constant-primary);
+    }
+    .emoji-badge__glyph { font-size: 16px; line-height: 16px; }
+    .emoji-badge--sm .emoji-badge__glyph { font-size: 12px; line-height: 12px; }
+
+    /* ── Molecule: CellActivity ── */
+    .cell-activity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: 56px;
+      padding: 0 16px;
+      background: var(--color-constant-primary);
+    }
+    .cell-activity__avatar {
+      position: relative;
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+    }
+    /* EmojiBadge overlays the avatar: 16px from top & left of the 32px avatar (per Figma),
+       so the 20px badge overflows 4px bottom-right. Sits outside avatar's overflow:hidden. */
+    .cell-activity__emoji {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+    }
+    .cell-activity__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cell-activity__title {
+      font-family: var(--text-title-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-activity__subtitle {
+      font-family: var(--text-body-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     /* ── Atom: VideoChip (reused) ── */
     .chip {
       display: inline-flex;
@@ -1870,6 +1935,7 @@
         <a class="sidebar__link" href="molecules.html#message">Message</a>
         <a class="sidebar__link" href="molecules.html#cell-toggle">CellToggle</a>
         <a class="sidebar__link" href="molecules.html#cell-contact">CellContact</a>
+        <a class="sidebar__link" href="molecules.html#cell-activity">CellActivity</a>
       </div>
     </div>
 
@@ -5141,6 +5207,113 @@
 
     </div>
     <!-- /CellContact -->
+
+    <div id="cell-activity" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellActivity</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-activity')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:4px;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
+
+          <!-- reacted -->
+          <span class="state-label" style="margin:4px 0;">reacted</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
+            </div>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
+              <p class="cell-activity__subtitle">Subtitle</p>
+            </div>
+          </div>
+
+          <!-- read -->
+          <span class="state-label" style="margin:8px 0 4px;">read</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            </div>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
+              <p class="cell-activity__subtitle">Subtitle</p>
+            </div>
+          </div>
+
+          <!-- emoji -->
+          <span class="state-label" style="margin:8px 0 4px;">emoji</span>
+          <div class="cell-activity">
+            <div class="cell-activity__avatar">
+              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
+            </div>
+            <div class="cell-activity__text">
+              <p class="cell-activity__title">Title</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-activity">
+        <div class="docs__name">CellActivity</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">reacted</span><span class="docs__row-value">avatar · title + subtitle · emoji badge</span></div>
+          <div class="docs__row"><span class="docs__row-label">read</span><span class="docs__row-value">avatar · title + subtitle</span></div>
+          <div class="docs__row"><span class="docs__row-label">emoji</span><span class="docs__row-value">avatar · title only · emoji badge</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle</span><span class="docs__row-value"><code class="docs__token">--text-body-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Subtitle colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-60</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms</div>
+          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">sm · circle · initials</span></div>
+          <div class="docs__row"><span class="docs__row-label">EmojiBadge</span><span class="docs__row-value">sm · overlay (reacted / emoji)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-activity">
+        <button class="copy-code-btn" onclick="copyCode('cell-activity')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- reacted · avatar + title + subtitle + emoji badge --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__avatar"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--sm"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"…"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>ML<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__emoji emoji-badge emoji-badge--sm"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"emoji-badge__glyph"</span><span class="tok-tag">&gt;</span>😂<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-activity__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- read: drop the emoji span · emoji: drop the subtitle --&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellActivity -->
 
   </main>
 
