@@ -1423,7 +1423,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
-      padding: 8px 10px;
+      padding: 3px 6px;
       border-radius: 18px;
       background: var(--color-brand-yellow-16);
     }
@@ -1431,14 +1431,14 @@
     .reaction--me     { background: var(--color-info-secondary); }
     .reaction__emoji  { display: flex; align-items: center; padding: 2px 0; font-size: 16px; line-height: 12px; }
     .reaction__count  {
-      font-family: var(--text-label-medium-bold-font-family), sans-serif;
-      font-weight: var(--text-label-medium-bold-font-weight);
-      font-size: var(--text-label-medium-bold-font-size);
-      line-height: var(--text-label-medium-bold-line-height);
-      letter-spacing: var(--text-label-medium-bold-letter-spacing);
-      color: var(--color-primary-transparent-87);
+      font-family: var(--text-label-small-font-family), sans-serif;
+      font-weight: var(--text-label-small-font-weight);
+      font-size: var(--text-label-small-font-size);
+      line-height: var(--text-label-small-line-height);
+      letter-spacing: var(--text-label-small-letter-spacing);
+      color: var(--color-primary-transparent-70);          /* dark on yellow */
     }
-    .reaction--me .reaction__count { color: var(--color-constant-primary); }
+    .reaction--me .reaction__count { color: var(--color-constant-transparent-70); }  /* white on blue */
 
     .reaction-arrow {
       display: inline-flex;
@@ -1516,6 +1516,134 @@
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
+    }
+
+    /* ── Atoms reused by Message (copies from index.html) ── */
+
+    /* Bubble2.0 — shape (single dynamic SVG path); positions/left are JS-driven. */
+    .bubble2 {
+      --b2-fill: var(--color-brand-yellow-16);
+      --b2-stroke: var(--color-brand-yellow-32);
+      position: relative;
+      display: inline-flex;
+      max-width: 320px;
+      vertical-align: top;
+    }
+    .bubble2__shape { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+    .bubble2__shape path { fill: var(--b2-fill); stroke: var(--b2-stroke); stroke-width: 1.5; stroke-linejoin: round; }
+    .bubble2__content {
+      position: relative;
+      z-index: 1;
+      min-width: 24px;
+      padding: 10px 16px;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-weight: var(--text-body-large-font-weight);
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      overflow-wrap: anywhere;
+    }
+    .bubble2--white { --b2-fill: var(--color-constant-primary); --b2-stroke: var(--color-brand-yellow-24); }
+
+    /* InfoTitle — forward variant used for "Forwarded from". */
+    .info-title { display: flex; align-items: center; gap: 4px; width: 318px; }
+    .info-title__icon { width: 16px; height: 16px; flex-shrink: 0; display: block; }
+    .info-title__label {
+      font-family: var(--text-body-small-font-family);
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-info-secondary);
+      white-space: nowrap;
+    }
+    .info-title__name {
+      font-family: var(--text-label-medium-font-family);
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .info-title__name--secondary { color: var(--color-info-secondary); }
+    .info-title__icon--secondary {
+      filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(491%) hue-rotate(205deg) brightness(97%) contrast(93%);
+    }
+
+    /* AvatarPlaceholder — S size used for channel avatars. */
+    .avatar-ph {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-08);
+    }
+    .avatar-ph--s { width: 24px; height: 24px; }
+    .avatar-ph__initials {
+      font-family: var(--text-label-medium-font-family), sans-serif;
+      font-weight: var(--text-label-medium-font-weight);
+      font-size: var(--text-label-medium-font-size);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      text-align: center;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── Molecule: Message ── */
+    /* A full chat message: Bubble2.0 shape filled with [name][forward]text +
+       BubbleBottom 2.0, plus an AvatarPlaceholder for channel messages. */
+    .message {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      width: 414px;
+    }
+    .message--sender    { justify-content: flex-end;   padding-right: 8px; }
+    .message--recipient { justify-content: flex-start; padding-left: 8px; }
+    .message--channel   { padding-left: 0; }
+
+    /* Avatar column (channel) — reserves space so grouped bubbles align. */
+    .message__avatar { flex-shrink: 0; width: 24px; }
+
+    /* Bubble hugs its text (adaptive width); long text wraps at the cap. */
+    .message .bubble2 { flex: 0 1 auto; min-width: 0; max-width: 360px; }
+    .message .bubble2__content {
+      padding: 8px 12px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: stretch;
+    }
+
+    /* Sender name (Title/Small) — channel, first in group. */
+    .message__name {
+      font-family: var(--text-title-small-font-family), sans-serif;
+      font-weight: var(--text-title-small-font-weight);
+      font-size: var(--text-title-small-font-size);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+
+    /* Forward header + bottom strip fill the bubble width inside Message. */
+    .message .info-title { width: 100%; }
+    .message .bubble-bottom-2 { width: 100%; }
+
+    /* Collapsible preview body for the 36-variant grid. */
+    .message-grid { display: flex; flex-direction: column; gap: 28px; }
+    .message-grid.is-collapsed { display: none; }
+    .btn-size-label {
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
   </style>
@@ -1601,6 +1729,7 @@
         <a class="sidebar__link" href="molecules.html#text-reply">TextReply</a>
         <a class="sidebar__link" href="molecules.html#above-text-field">AboveTheTextField</a>
         <a class="sidebar__link" href="molecules.html#bubble-bottom-2">BubbleBottom 2.0</a>
+        <a class="sidebar__link" href="molecules.html#message">Message</a>
       </div>
     </div>
 
@@ -4391,6 +4520,83 @@
     <!-- /BubbleBottom 2.0 -->
 
 
+    <!-- Message -->
+    <div id="message" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">Message</div>
+          <button class="code-toggle-btn" onclick="toggleCode('message')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div id="message-thread" style="margin-bottom:24px;"></div>
+        <button type="button" class="code-toggle-btn" id="message-toggle" style="margin-bottom:20px;">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="message-toggle-label">Show all variants</span>
+        </button>
+        <div class="message-grid is-collapsed" id="message-preview" style="margin-bottom:24px;"></div>
+        <div class="message-grid is-collapsed" id="message-grid"></div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-message">
+        <div class="docs__name">Message</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Axes (Figma matrix · 36)</div>
+          <div class="docs__row"><span class="docs__row-label">type</span><span class="docs__row-value">sender / recipient</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">avatar + sender name (recipient)</span></div>
+          <div class="docs__row"><span class="docs__row-label">position</span><span class="docs__row-value">top / middle / bottom / alone</span></div>
+          <div class="docs__row"><span class="docs__row-label">reactions</span><span class="docs__row-value">on / off</span></div>
+          <div class="docs__row"><span class="docs__row-label">link</span><span class="docs__row-value">Forwarded-from header</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses atoms / molecules</div>
+          <div class="docs__row"><span class="docs__row-label">Bubble2.0</span><span class="docs__row-value">shape · white/left · top/mid/last</span></div>
+          <div class="docs__row"><span class="docs__row-label">BubbleBottom 2.0</span><span class="docs__row-value">time / reactions strip</span></div>
+          <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">forward variant (link)</span></div>
+          <div class="docs__row"><span class="docs__row-label">AvatarPlaceholder</span><span class="docs__row-value">S · channel avatar</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Sender fill / stroke</span><span class="docs__row-value">yellow/16 · yellow/32</span></div>
+          <div class="docs__row"><span class="docs__row-label">Recipient fill / stroke</span><span class="docs__row-value">white · yellow/24</span></div>
+          <div class="docs__row"><span class="docs__row-label">Sender name</span><span class="docs__row-value">title-small · primary/87</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-message">
+        <button class="copy-code-btn" onclick="copyCode('message')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- recipient · channel · alone --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"message message--recipient message--channel"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"message__avatar"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar-ph avatar-ph--s"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"R"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar-ph__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>R<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble2 bubble2--white bubble2--left"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;svg</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble2__shape"</span><span class="tok-tag">&gt;&lt;path/&gt;&lt;/svg&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble2__content"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"message__name"</span><span class="tok-tag">&gt;</span>Abram<span class="tok-tag">&lt;/p&gt;</span>
+      <span class="tok-tag">&lt;p&gt;</span>Hey Riley, have you tried the new "Shadow Kingdom" game yet?<span class="tok-tag">&lt;/p&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"bubble-bottom-2"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /Message -->
+
+
   </main>
 
   <script src="scripts/nav.js"></script>
@@ -4771,5 +4977,291 @@
     })();
   </script>
 
+  <!-- Message: data-driven 36-variant builder + Bubble2.0 shape drawing -->
+  <script>
+  (function () {
+    // ---- Bubble2.0 shape (ported from index.html) ----
+    var R = 16, R4 = 4;
+    var TAIL = "c0 0.162 -0.003 0.323 -0.008 0.483c-0.073 3.301 -0.678 10.185 4.683 14.938c0.127 0.112 0.069 0.325 -0.098 0.352c-6.699 1.085 -9.605 -2.288 -10.916 -3.018c-0.008 0.006 -0.017 0.011 -0.025 0.018c-0.143 0.108 -0.288 0.212 -0.434 0.315c-0.04 0.028 -0.08 0.056 -0.12 0.084c-0.306 0.211 -0.619 0.412 -0.94 0.603c-0.036 0.021 -0.072 0.043 -0.108 0.064c-0.164 0.095 -0.329 0.188 -0.497 0.277c-0.008 0.005 -0.016 0.01 -0.024 0.014c-0.164 0.087 -0.329 0.171 -0.496 0.253c-0.027 0.013 -0.053 0.026 -0.079 0.039c-0.163 0.078 -0.327 0.154 -0.493 0.226c-0.042 0.019 -0.085 0.038 -0.128 0.056c-0.168 0.072 -0.337 0.143 -0.507 0.209c-0.025 0.01 -0.05 0.018 -0.075 0.027c-0.15 0.058 -0.302 0.114 -0.455 0.167c-0.045 0.016 -0.09 0.033 -0.135 0.048c-0.162 0.055 -0.325 0.106 -0.489 0.156c-0.057 0.017 -0.114 0.034 -0.171 0.05c-0.175 0.051 -0.351 0.101 -0.529 0.146c-0.016 0.004 -0.031 0.008 -0.047 0.012c-0.18 0.045 -0.361 0.087 -0.543 0.126c-0.028 0.006 -0.056 0.012 -0.085 0.018c-0.186 0.039 -0.373 0.073 -0.561 0.106c-0.043 0.007 -0.085 0.014 -0.128 0.021c-0.186 0.03 -0.373 0.058 -0.562 0.082c-0.03 0.004 -0.061 0.007 -0.092 0.011c-0.163 0.02 -0.328 0.037 -0.493 0.052c-0.051 0.004 -0.103 0.009 -0.155 0.013c-0.187 0.015 -0.374 0.027 -0.562 0.035c-0.041 0.002 -0.081 0.004 -0.122 0.005c-0.201 0.008 -0.403 0.013 -0.606 0.013";
+
+    // Shrink-wrap the content to its longest rendered line so a wrapped bubble
+    // hugs the text instead of sitting at the max-width cap (no trailing gap).
+    function fitContent(content) {
+      content.style.width = '';
+      var need = 0;
+      content.querySelectorAll('p').forEach(function (p) {
+        var range = document.createRange();
+        range.selectNodeContents(p);
+        var rects = range.getClientRects();
+        for (var i = 0; i < rects.length; i++) if (rects[i].width > need) need = rects[i].width;
+      });
+      ['.info-title', '.bubble-bottom-2'].forEach(function (sel) {
+        var el = content.querySelector(sel);
+        if (!el) return;
+        var prev = el.style.width;
+        el.style.width = 'max-content';
+        var w = el.getBoundingClientRect().width;
+        el.style.width = prev;
+        if (w > need) need = w;
+      });
+      if (need <= 0) return;
+      var ccs = getComputedStyle(content);
+      var padX = parseFloat(ccs.paddingLeft) + parseFloat(ccs.paddingRight);
+      var maxCW = parseFloat(getComputedStyle(content.parentNode).maxWidth) || 360;
+      content.style.width = Math.min(Math.ceil(need) + padX + 1, maxCW) + 'px';
+    }
+    function draw(bubble) {
+      var content = bubble.querySelector('.bubble2__content');
+      var svg = bubble.querySelector('.bubble2__shape');
+      var path = svg && svg.querySelector('path');
+      if (!content || !svg || !path) return;
+      fitContent(content);
+      var left = bubble.classList.contains('bubble2--left');
+      var top = bubble.classList.contains('bubble2--top');
+      var mid = bubble.classList.contains('bubble2--mid');
+      var last = bubble.classList.contains('bubble2--last');
+      var hasTail = !top && !mid;
+      var rTR = (mid || last) ? R4 : R;
+      var rBR = R4;
+      var W = Math.round(content.offsetWidth);
+      var H = Math.round(content.offsetHeight);
+      if (W < 2 * R) W = 2 * R;
+      if (H < 2 * R) H = 2 * R;
+      var d = "M" + R + " 0" +
+              "H" + (W - rTR) +
+              "A" + rTR + " " + rTR + " 0 0 1 " + W + " " + rTR +
+              "V" + (H - (hasTail ? 16 : rBR)) +
+              (hasTail ? TAIL : "A" + rBR + " " + rBR + " 0 0 1 " + (W - rBR) + " " + H) +
+              "H" + R +
+              "A" + R + " " + R + " 0 0 1 0 " + (H - R) +
+              "V" + R +
+              "A" + R + " " + R + " 0 0 1 " + R + " 0" +
+              "Z";
+      path.setAttribute('d', d);
+      if (left) path.setAttribute('transform', 'translate(' + W + ',0) scale(-1,1)');
+      else path.removeAttribute('transform');
+      var padIn = 2, padOut = hasTail ? 7 : 2;
+      var padL = left ? padOut : padIn;
+      var padR = left ? padIn : padOut;
+      var vbW = W + padL + padR, vbH = H + padIn + padIn;
+      svg.setAttribute('viewBox', (-padL) + ' ' + (-padIn) + ' ' + vbW + ' ' + vbH);
+      svg.setAttribute('width', vbW);
+      svg.setAttribute('height', vbH);
+      svg.style.left = (-padL) + 'px';
+      svg.style.top = (-padIn) + 'px';
+    }
+    function drawAll() {
+      [].slice.call(document.querySelectorAll('#message .bubble2')).forEach(draw);
+    }
+
+    // ---- Message builder ----
+    var TEXT = 'Hey Riley, have you tried the new "Shadow Kingdom" game yet?';
+    var GROUPS = [
+      { type: 'sender',    channel: true,  reactions: false, label: 'Sender · reactions off' },
+      { type: 'sender',    channel: true,  reactions: true,  label: 'Sender · reactions on' },
+      { type: 'recipient', channel: false, reactions: false, label: 'Recipient · reactions off' },
+      { type: 'recipient', channel: false, reactions: true,  label: 'Recipient · reactions on' },
+      { type: 'recipient', channel: true,  reactions: false, label: 'Recipient · channel · reactions off' },
+      { type: 'recipient', channel: true,  reactions: true,  label: 'Recipient · channel · reactions on' }
+    ];
+    var COMBOS = [
+      { position: 'top',    link: false },
+      { position: 'top',    link: true  },
+      { position: 'middle', link: false },
+      { position: 'bottom', link: false },
+      { position: 'alone',  link: false },
+      { position: 'alone',  link: true  }
+    ];
+    var POSMOD = { top: 'bubble2--top', middle: 'bubble2--mid', bottom: 'bubble2--last', alone: '' };
+
+    function pill(emoji, mod) {
+      return '<div class="reaction' + (mod ? ' ' + mod : '') + '">' +
+             '<span class="reaction__emoji">' + emoji + '</span>' +
+             '<span class="reaction__count">1</span></div>';
+    }
+    function sendTime(withLabel) {
+      return '<div class="send-time">' +
+             (withLabel ? '<span class="send-time__label">Read</span>' : '') +
+             '<span class="send-time__time">8:30 pm</span></div>';
+    }
+    function bottomHTML(type, reactions) {
+      var withLabel = (type === 'sender') || reactions;
+      var timeBox = '<div class="bubble-bottom-2__time">' + sendTime(withLabel) + '</div>';
+      if (!reactions) return '<div class="bubble-bottom-2">' + timeBox + '</div>';
+      var pills = (type === 'sender')
+        ? pill('😂', 'reaction--sender') + pill('😯', 'reaction--sender') + pill('🤮', 'reaction--sender')
+        : pill('😂', '') + pill('😯', 'reaction--me') + pill('🤮', '');
+      return '<div class="bubble-bottom-2"><div class="bubble-bottom-2__reactions">' + pills + timeBox + '</div></div>';
+    }
+    var FORWARD = '<div class="info-title">' +
+      '<img class="info-title__icon info-title__icon--secondary" src="icons/small/forward.svg" alt="">' +
+      '<span class="info-title__label">Forwarded from</span>' +
+      '<span class="info-title__name info-title__name--secondary">Abram</span></div>';
+
+    function messageHTML(g, c) {
+      var isRecip = g.type === 'recipient';
+      var bubbleCls = 'bubble2' + (isRecip ? ' bubble2--white bubble2--left' : '') +
+                      (POSMOD[c.position] ? ' ' + POSMOD[c.position] : '');
+      var chan = g.channel && isRecip;
+      var nameVis = chan && (c.position === 'top' || c.position === 'alone');
+      var avatarVis = chan && (c.position === 'bottom' || c.position === 'alone');
+      var inner = '';
+      if (nameVis) inner += '<p class="message__name">Abram</p>';
+      if (c.link) inner += FORWARD;
+      inner += '<p>' + TEXT + '</p>';
+      inner += bottomHTML(g.type, g.reactions);
+      var bubble = '<div class="' + bubbleCls + '"><svg class="bubble2__shape" aria-hidden="true"><path/></svg>' +
+                   '<div class="bubble2__content">' + inner + '</div></div>';
+      var avatar = chan
+        ? '<div class="message__avatar">' +
+          (avatarVis ? '<div class="avatar-ph avatar-ph--s" aria-label="R"><span class="avatar-ph__initials" aria-hidden="true">R</span></div>' : '') +
+          '</div>'
+        : '';
+      var msgCls = 'message message--' + g.type + (chan ? ' message--channel' : '');
+      return '<div class="' + msgCls + '">' + avatar + bubble + '</div>';
+    }
+
+    var built = false;
+    function buildGrid() {
+      var grid = document.getElementById('message-grid');
+      var html = '';
+      GROUPS.forEach(function (g) {
+        html += '<div><div class="btn-size-label">' + g.label + '</div>';
+        html += '<div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start;">';
+        COMBOS.forEach(function (c) {
+          var lbl = 'position=' + c.position + ', link=' + (c.link ? 'yes' : 'no');
+          html += '<div class="state-wrapper" style="align-items:flex-start;">' +
+                  messageHTML(g, c) +
+                  '<span class="state-label">' + lbl + '</span></div>';
+        });
+        html += '</div></div>';
+      });
+      grid.innerHTML = html;
+      built = true;
+    }
+
+    // A few representative states always shown above the toggle.
+    var PREVIEW = [
+      { g: { type: 'sender',    channel: true,  reactions: false }, c: { position: 'alone', link: false }, label: 'Sender · alone' },
+      { g: { type: 'sender',    channel: true,  reactions: true  }, c: { position: 'alone', link: false }, label: 'Sender · reactions' },
+      { g: { type: 'recipient', channel: false, reactions: false }, c: { position: 'alone', link: true  }, label: 'Recipient · forwarded' },
+      { g: { type: 'recipient', channel: true,  reactions: false }, c: { position: 'alone', link: false }, label: 'Recipient · channel' }
+    ];
+    function buildPreview() {
+      var prev = document.getElementById('message-preview');
+      if (!prev) return;
+      var html = '<div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start;">';
+      PREVIEW.forEach(function (it) {
+        html += '<div class="state-wrapper" style="align-items:flex-start;">' +
+                messageHTML(it.g, it.c) +
+                '<span class="state-label">' + it.label + '</span></div>';
+      });
+      html += '</div>';
+      prev.innerHTML = html;
+    }
+
+    // ---- Example thread: gamers planning a D&D session ----
+    function pillC(emoji, count, variant) {
+      return '<div class="reaction' + (variant ? ' ' + variant : '') + '">' +
+             '<span class="reaction__emoji">' + emoji + '</span>' +
+             '<span class="reaction__count">' + count + '</span></div>';
+    }
+    function bottomFor(m) {
+      var withLabel = m.type === 'sender';
+      var timeBox = '<div class="bubble-bottom-2__time"><div class="send-time">' +
+        (withLabel ? '<span class="send-time__label">Read</span>' : '') +
+        '<span class="send-time__time">' + (m.time || '8:30 pm') + '</span></div></div>';
+      if (!m.reactions || !m.reactions.length) return '<div class="bubble-bottom-2">' + timeBox + '</div>';
+      var pills = m.reactions.map(function (r) {
+        var variant = r.me ? 'reaction--me' : (m.type === 'sender' ? 'reaction--sender' : '');
+        return pillC(r.emoji, r.count || 1, variant);
+      }).join('');
+      return '<div class="bubble-bottom-2"><div class="bubble-bottom-2__reactions">' + pills + timeBox + '</div></div>';
+    }
+    function msgHTML(m) {
+      var isRecip = m.type === 'recipient';
+      var bubbleCls = 'bubble2' + (isRecip ? ' bubble2--white bubble2--left' : '') +
+                      (POSMOD[m.position] ? ' ' + POSMOD[m.position] : '');
+      var chan = !!m.channel && isRecip;
+      var nameVis = chan && (m.position === 'top' || m.position === 'alone');
+      var avatarVis = chan && (m.position === 'bottom' || m.position === 'alone');
+      var inner = '';
+      if (nameVis) inner += '<p class="message__name">' + m.name + '</p>';
+      if (m.forward) inner += '<div class="info-title">' +
+        '<img class="info-title__icon info-title__icon--secondary" src="icons/small/forward.svg" alt="">' +
+        '<span class="info-title__label">Forwarded from</span>' +
+        '<span class="info-title__name info-title__name--secondary">' + m.forward + '</span></div>';
+      inner += '<p>' + m.text + '</p>';
+      inner += bottomFor(m);
+      var bubble = '<div class="' + bubbleCls + '"><svg class="bubble2__shape" aria-hidden="true"><path/></svg>' +
+                   '<div class="bubble2__content">' + inner + '</div></div>';
+      var avatar = chan
+        ? '<div class="message__avatar">' +
+          (avatarVis ? '<div class="avatar-ph avatar-ph--s" aria-label="' + m.initial + '"><span class="avatar-ph__initials" aria-hidden="true">' + m.initial + '</span></div>' : '') +
+          '</div>'
+        : '';
+      return '<div class="message message--' + m.type + (chan ? ' message--channel' : '') + '">' + avatar + bubble + '</div>';
+    }
+    var THREAD = [
+      { type: 'recipient', channel: true, name: 'Abram', initial: 'A', position: 'top',    text: "Party meeting! Who's up for a session this weekend? 🐉" },
+      { type: 'recipient', channel: true, name: 'Abram', initial: 'A', position: 'bottom', text: "I'm thinking Saturday around 7.", reactions: [{ emoji: '👍', count: 2 }] },
+      { type: 'sender', position: 'top',    text: "Saturday works for me" },
+      { type: 'sender', position: 'bottom', text: "Could we push it to 7:30 though? Still finishing dinner 🎲" },
+      { type: 'recipient', channel: true, name: 'Riley', initial: 'R', position: 'alone', text: "Count me in — my rogue still owes the thieves' guild a favor 😏", reactions: [{ emoji: '😂', count: 3 }] },
+      { type: 'recipient', channel: true, name: 'Abram', initial: 'A', position: 'alone', text: "7:30 it is. We pick up right after the dragon ambush." },
+      { type: 'sender', position: 'top',    text: "Perfect. Bringing snacks and my new dice set ✨" },
+      { type: 'sender', position: 'bottom', text: "Should I reroll my cleric or keep her for the boss fight?", reactions: [{ emoji: '🎲', count: 1 }, { emoji: '🔥', count: 2 }] },
+      { type: 'recipient', channel: true, name: 'Abram', initial: 'A', position: 'alone', forward: 'Mapsmith', text: "Here's the dungeon map for Saturday — study the east wing." }
+    ];
+    function buildThread() {
+      var el = document.getElementById('message-thread');
+      if (!el) return;
+      var html = '<div class="btn-size-label">Example · planning a D&amp;D session</div>';
+      html += '<div style="display:flex; flex-direction:column; width:414px;">';
+      var prevKey = null;
+      THREAD.forEach(function (m) {
+        var key = m.type + '|' + (m.name || '');
+        var mt = (prevKey === null) ? 0 : (key === prevKey ? 4 : 12);
+        prevKey = key;
+        html += '<div style="margin-top:' + mt + 'px;">' + msgHTML(m) + '</div>';
+      });
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    buildThread();
+    buildPreview();
+    drawAll();
+    requestAnimationFrame(drawAll);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
+
+    var toggle = document.getElementById('message-toggle');
+    var grid = document.getElementById('message-grid');
+    var preview = document.getElementById('message-preview');
+    var label = document.getElementById('message-toggle-label');
+    if (toggle && grid) {
+      toggle.addEventListener('click', function () {
+        var collapsed = grid.classList.contains('is-collapsed');
+        if (collapsed) {
+          if (!built) buildGrid();
+          grid.classList.remove('is-collapsed');
+          if (preview) preview.classList.remove('is-collapsed');
+          if (label) label.textContent = 'Hide';
+          toggle.classList.add('is-active');
+          drawAll();
+          requestAnimationFrame(drawAll);
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
+        } else {
+          grid.classList.add('is-collapsed');
+          if (preview) preview.classList.add('is-collapsed');
+          if (label) label.textContent = 'Show all variants';
+          toggle.classList.remove('is-active');
+        }
+      });
+    }
+  })();
+  </script>
+
 </body>
+
 </html>

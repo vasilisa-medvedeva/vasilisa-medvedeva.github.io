@@ -40,7 +40,7 @@
 ❌ **Don't** — hardcode background or text colours.
 
 ## Accessibility
-- Minimum touch target: 44×44pt — pad the surrounding tap area; the pill itself is 32px tall.
+- Minimum touch target: 44×44pt — pad the surrounding tap area; the pill itself is 22px tall.
 - Count text contrast meets WCAG AA on all three backgrounds.
 
 ## Status
