@@ -784,22 +784,24 @@
     .subch-add img { width: 16px; height: 16px; display: block; }
     /* "Add" dropdown menu (Create Subchannel / Create Category) */
     .subch-add-wrap { position: relative; flex-shrink: 0; }
-    .subch-addmenu {
-      position: absolute; bottom: calc(100% - 6px); left: 24px; z-index: 10;
-      min-width: 172px;
+    /* Dropdown menus in the sheet (Add + per-row "⋯") — shared DropdownRow card + open/close motion */
+    .subch-addmenu, .subch-rowmenu {
+      position: absolute; z-index: 10;
       background: var(--color-constant-primary);
       border-radius: 12px; box-shadow: var(--elevation-4);
-      padding: 6px 0;
-      opacity: 0; transform: scale(0.92); transform-origin: bottom left; pointer-events: none;
+      opacity: 0; transform: scale(0.92); pointer-events: none;
       transition: opacity 0.15s var(--m3-emphasized-accelerate), transform 0.15s var(--m3-emphasized-accelerate);
     }
-    .subch-addmenu.is-open {
+    .subch-addmenu.is-open, .subch-rowmenu.is-open {
       opacity: 1; transform: scale(1); pointer-events: auto;
       transition: opacity 0.2s var(--m3-emphasized-decelerate), transform 0.2s var(--m3-emphasized-decelerate);
     }
-    .subch-addmenu__item {
-      all: unset; box-sizing: border-box; cursor: pointer; display: block; width: 100%;
-      padding: 11px 14px; white-space: nowrap;
+    /* Positioning specifics: Add opens upward from its trigger; the row menu is placed by JS */
+    .subch-addmenu { bottom: calc(100% - 6px); left: 24px; min-width: 172px; padding: 6px 0; transform-origin: bottom left; }
+    .subch-rowmenu { top: 0; right: 12px; z-index: 20; min-width: 170px; padding: 8px 0; transform-origin: top right; }
+    /* Shared menu item (title-medium) */
+    .subch-addmenu__item, .subch-rowmenu__item {
+      all: unset; box-sizing: border-box; cursor: pointer; width: 100%; white-space: nowrap;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
       font-size: var(--text-title-medium-font-size);
       font-weight: var(--text-title-medium-font-weight);
@@ -807,33 +809,10 @@
       letter-spacing: var(--text-title-medium-letter-spacing);
       color: var(--color-primary-transparent-87);
     }
-    .subch-addmenu__item:hover  { background: var(--color-brand-yellow-4); }
-    .subch-addmenu__item:active { background: var(--color-brand-yellow-8); }
-    /* Per-row context menu (Profile Subchannel / Create Invite) — DropdownRow card, CellBase items */
-    .subch-rowmenu {
-      position: absolute; z-index: 20; min-width: 170px; top: 0; right: 12px;
-      background: var(--color-constant-primary);
-      border-radius: 12px; box-shadow: var(--elevation-4);
-      padding: 8px 0;
-      opacity: 0; transform: scale(0.92); transform-origin: top right; pointer-events: none;
-      transition: opacity 0.15s var(--m3-emphasized-accelerate), transform 0.15s var(--m3-emphasized-accelerate);
-    }
-    .subch-rowmenu.is-open {
-      opacity: 1; transform: scale(1); pointer-events: auto;
-      transition: opacity 0.2s var(--m3-emphasized-decelerate), transform 0.2s var(--m3-emphasized-decelerate);
-    }
-    .subch-rowmenu__item {
-      all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center;
-      width: 100%; height: 48px; padding: 0 16px; white-space: nowrap;
-      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
-      font-size: var(--text-title-medium-font-size);
-      font-weight: var(--text-title-medium-font-weight);
-      line-height: var(--text-title-medium-line-height);
-      letter-spacing: var(--text-title-medium-letter-spacing);
-      color: var(--color-primary-transparent-87);
-    }
-    .subch-rowmenu__item:hover  { background: var(--color-brand-yellow-4); }
-    .subch-rowmenu__item:active { background: var(--color-brand-yellow-8); }
+    .subch-addmenu__item { display: block; padding: 11px 14px; }
+    .subch-rowmenu__item { display: flex; align-items: center; height: 48px; padding: 0 16px; }
+    .subch-addmenu__item:hover,  .subch-rowmenu__item:hover  { background: var(--color-brand-yellow-4); }
+    .subch-addmenu__item:active, .subch-rowmenu__item:active { background: var(--color-brand-yellow-8); }
     .subch-list { overflow-y: auto; scrollbar-width: none; }
     .subch-list::-webkit-scrollbar { display: none; }
     .subch-empty {
