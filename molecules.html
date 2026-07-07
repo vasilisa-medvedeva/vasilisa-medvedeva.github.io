@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Molecules</title>
   <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-primary-transparent-04);
+      background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -222,7 +225,7 @@
     .copy-code-btn.copied { color: #4ec9b0; border-color: #4ec9b0; }
 
     .section-divider {
-      height: 1px; background: var(--color-primary-transparent-16); margin: 0 0 48px;
+      height: 0; background: transparent; margin: 0 0 48px;
     }
 
     /* ── Molecule: PhotoPlaceholder ── */
@@ -426,6 +429,246 @@
     }
     .cell-separator__arrow img { width: 16px; height: 16px; }
 
+    /* ── Molecule: CellCategory ── */
+    .cell-category {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 26px 12px 12px 16px;
+      background: var(--color-constant-primary);
+    }
+    .cell-category--hover   { background: var(--color-brand-yellow-4); }
+    .cell-category--pressed { background: var(--color-brand-yellow-8); }
+
+    .cell-category__main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cell-category__title-wrap {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cell-category__title {
+      font-family: var(--text-title-small-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+
+    /* White pill badge that carries the lock icon — floats top-right of the title.
+       16×16 per Figma (node 2453:66536); the lock.svg is the full ic16_lock with
+       the 9×11 glyph + padding baked into its 16×16 viewBox — render at natural size. */
+    .cell-category__lock-badge {
+      position: absolute;
+      bottom: 10px;
+      right: -8px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 17px;
+      background: var(--color-constant-primary);
+    }
+    .cell-category__lock-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-category__lock-icon img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cell-category__arrow {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-category__arrow img { width: 16px; height: 16px; }
+
+    .cell-category__right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .cell-category__menu,
+    .cell-category__move {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-category__menu { padding: 6.5px 2px; }
+    .cell-category__move { padding: 5px 2px; }
+    .cell-category__menu img,
+    .cell-category__move img { width: 16px; height: 16px; }
+
+    /* ── Molecule: CellSubchannel ── */
+    .cell-subchannel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 0 12px 0 16px;
+      background: var(--color-constant-primary);
+    }
+    .cell-subchannel--selected { background: var(--color-brand-yellow-16); }
+
+    .cell-subchannel__avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+    }
+
+    /* Lock badge overlays bottom-right corner of avatar */
+    .cell-subchannel__lock-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 17px;
+      background: var(--color-brand-yellow-4);
+      padding: 2px;
+    }
+    /* In selected state badge background matches row, padding grows by 2px each side */
+    .cell-subchannel--selected .cell-subchannel__lock-badge {
+      background: var(--color-brand-yellow-16);
+      padding: 4px;
+      bottom: -4px;
+      right: -4px;
+    }
+    .cell-subchannel__lock-badge img { width: 16px; height: 16px; }
+
+    .cell-subchannel__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 18px 0;
+    }
+    .cell-subchannel--message .cell-subchannel__text { padding: 16px 0; }
+
+    .cell-subchannel__title-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .cell-subchannel__title {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--text-title-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* When there's a message counter the title shrinks to content width so the
+       counter sits immediately after the text (gap: 2px), per Figma */
+    .cell-subchannel--message .cell-subchannel__title {
+      flex: 0 0 auto;
+      overflow: visible;
+    }
+
+    .cell-subchannel__right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .cell-subchannel__menu,
+    .cell-subchannel__move {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-subchannel__menu { padding: 6.5px 2px; }
+    .cell-subchannel__move { padding: 5px 2px; }
+    .cell-subchannel__menu img,
+    .cell-subchannel__move img { width: 16px; height: 16px; }
+
+    /* ── Molecule: CellLinks ── */
+    /* favicon/photo preview slot — 40×40px */
+    .cell-links__preview {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* placeholder: grey bg + letter */
+    .cell-links__favicon {
+      width: 100%;
+      height: 100%;
+      background: var(--color-primary-transparent-16);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-links__favicon-letter {
+      font-family: var(--text-title-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* photo thumbnail */
+    .cell-links__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* link subtitle — underlined, same weight as title */
+    .cell-links__link {
+      font-family: var(--text-link-medium-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-link-medium-font-size);
+      font-weight: var(--text-link-medium-font-weight);
+      line-height: var(--text-link-medium-line-height);
+      letter-spacing: var(--text-link-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-decoration: underline;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     /* ── Atom: EmojiBadge (reused) ── */
     .emoji-badge {
       display: inline-flex;
@@ -571,6 +814,70 @@
     }
     .cell-base--no-divider .cell-base__divider { display: none; }
 
+    /* ── Molecule: TableRows_Chats ─────────────────────────────────────────
+       A Chats-list row. Variants: type (direct/channel) · attached · unread. */
+    .chats-row {
+      position: relative;
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; min-height: 64px; padding: 0 16px;
+      background: var(--color-brand-yellow-4);
+    }
+    .chats-row--attached { background: var(--color-brand-yellow-4); }   /* grouping marker — no colour highlight */
+    .chats-row--pressed  { background: var(--color-brand-yellow-8); }   /* pressed feedback */
+    .chats-row__avatar {
+      position: relative; flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-brand-yellow-16);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .chats-row--channel .chats-row__avatar { border-radius: 12px; }
+    .chats-row__initials {
+      font-family: var(--text-headline-medium-font-family, "Roboto"), sans-serif;
+      font-weight: 600; font-size: 20px; line-height: 24px;
+      color: var(--color-primary-transparent-70); user-select: none;
+    }
+    .chats-row__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .chats-row__text { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; padding: 12px 0; }
+    /* channel: 3 lines (name / sender / message) → tighter vertical padding */
+    .chats-row--channel .chats-row__text { padding: 5px 0; }
+    .chats-row__title {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chats-row__subtitle {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* unread: darker only — message keeps the regular Body/Medium weight */
+    .chats-row--unread .chats-row__subtitle { color: var(--color-primary-transparent-87); }
+    .chats-row__right {
+      flex-shrink: 0; align-self: stretch;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding-top: 8px;
+    }
+    .chats-row__time {
+      font-family: var(--text-body-small-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: 14px; letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+    .chats-row__pin { width: 24px; height: 24px; display: block; }
+    .chats-row__divider {
+      position: absolute; left: 64px; right: 0; bottom: 0; height: 0;
+      border-top: 0.5px solid var(--color-primary-transparent-16);
+    }
+    .chats-row--no-divider .chats-row__divider { display: none; }
+
     /* ── Atom: AvatarPlaceholder (reused) — neutral slot filler ── */
     .avatar-ph {
       display: inline-flex;
@@ -711,7 +1018,7 @@
       font-weight: var(--text-body-large-font-weight);
       line-height: var(--text-body-large-line-height);
       letter-spacing: var(--text-body-large-letter-spacing);
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-48);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -788,7 +1095,7 @@
       padding: 0; margin: 0;
       max-height: 64px;
     }
-    .text-field__textarea::placeholder { color: var(--color-primary-transparent-60); }
+    .text-field__textarea::placeholder { color: var(--color-primary-transparent-48); }
     .tf-pg                    { align-items: flex-end; }
     .tf-pg .text-field__field { align-items: flex-end; }
     .tf-pg .text-field__text  { align-items: flex-start; align-self: stretch; min-height: 20px; }
@@ -1193,11 +1500,12 @@
     .tf-l--disabled      .tf-l__control,
     .tf-l--disabled-text .tf-l__control { border-width: 1.5px; border-color: var(--color-primary-transparent-32); }
 
-    /* Floating label */
+    /* Floating label — smooth transform/scale animation (GPU, no reflow) */
     .tf-l__label {
       position: absolute;
-      left: 16px; top: 50%;
-      transform: translateY(-50%);
+      left: 12px; top: 50%;
+      transform: translateY(-50%) scale(1);
+      transform-origin: left center;
       font-family: var(--text-body-large-font-family), sans-serif;
       font-size: var(--text-body-large-font-size);
       line-height: var(--text-body-large-line-height);
@@ -1205,28 +1513,24 @@
       font-weight: var(--text-body-large-font-weight);
       color: var(--color-primary-transparent-87);
       background: var(--color-brand-yellow-4);
-      padding: 0;
+      padding: 0 4px;
       pointer-events: none; white-space: nowrap;
-      transition: top .14s ease, font-size .14s ease, padding .14s ease,
-                  line-height .14s ease, left .14s ease, color .14s ease;
+      transition: top .18s cubic-bezier(0.2, 0, 0, 1),
+                  transform .18s cubic-bezier(0.2, 0, 0, 1),
+                  color .14s ease;
     }
+    /* Floated: label sits in the notch, shrunk to ~body-medium via scale(0.875) */
     .tf-l--focused   .tf-l__label,
     .tf-l--typing    .tf-l__label,
     .tf-l--typed     .tf-l__label,
     .tf-l--has-value .tf-l__label {
-      top: 0; left: 12px;
-      font-size: var(--text-body-medium-font-size);
-      line-height: var(--text-body-medium-line-height);
-      letter-spacing: var(--text-body-medium-letter-spacing);
-      padding: 0 4px;
+      top: 0;
+      transform: translateY(-50%) scale(0.875);
       color: var(--color-primary-transparent-48);
     }
     .tf-l--error .tf-l__label {
-      top: 0; left: 12px;
-      font-size: var(--text-body-medium-font-size);
-      line-height: var(--text-body-medium-line-height);
-      letter-spacing: var(--text-body-medium-letter-spacing);
-      padding: 0 4px;
+      top: 0;
+      transform: translateY(-50%) scale(0.875);
       color: var(--color-warning-primary);
     }
     .tf-l--disabled      .tf-l__label { color: var(--color-primary-transparent-32); }
@@ -1288,6 +1592,10 @@
       flex-direction: column;
       width: 318px;
       background: var(--color-brand-yellow-8);
+    }
+    /* Composer (TextFieldsBar) keeps a hairline divider above the input;
+       the bottom-nav Tabs is tonal-only (no divider). */
+    .tab-bar:has(.tab-bar__text-row) {
       border-top: 0.5px solid var(--color-primary-transparent-16);
     }
 
@@ -1370,7 +1678,7 @@
     .avatar__initials {
       font-family: var(--text-headline-medium-font-family), sans-serif;
       font-weight: 500; font-size: 16px;
-      color: var(--color-primary-transparent-70);
+      color: var(--color-brand-yellow-quaternary); /* darker shade of the yellow-16 bg */
       text-align: center; user-select: none; line-height: 1;
     }
     .avatar--sm .avatar__initials { font-size: 16px; letter-spacing: 0.15px; }
@@ -1406,7 +1714,7 @@
     /* ── TopBar ─────────────────────────────────────────────────────────── */
     .top-bar {
       display: flex; align-items: center;
-      height: 56px; width: 412px;
+      height: 64px; width: 412px;   /* M3 small top app bar */
       background: var(--color-brand-red-secondary);
       padding: 4px; gap: 8px; box-sizing: border-box;
     }
@@ -1477,7 +1785,7 @@
       background: rgba(255, 255, 255, 0.20);
     }
     .top-bar .avatar__initials {
-      color: var(--color-constant-primary);
+      color: var(--color-primary-transparent-87);
     }
 
     /* only-arrow: no gap, no padding-right */
@@ -1990,130 +2298,137 @@
       margin-bottom: 8px;
     }
 
+    /* ── Atom reused inside DropdownMenu: CellMenu ── */
+    .cell-menu {
+      display: flex;
+      width: 100%;
+      background: transparent;
+      transition: background 0.15s;
+    }
+    .cell-menu--hover   { background: var(--color-brand-yellow-4); }
+    .cell-menu--pressed { background: var(--color-brand-yellow-8); }
+    .cell-menu__base {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 16px;
+      min-width: 0;
+    }
+    .cell-menu__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-menu__icon img { width: 24px; height: 24px; }
+    .cell-menu__icon--danger {
+      background-color: var(--color-warning-primary);
+      -webkit-mask: url("icons/menu/delete.svg") center / 24px 24px no-repeat;
+      mask: url("icons/menu/delete.svg") center / 24px 24px no-repeat;
+    }
+    .cell-menu__icon--danger img { display: none; }
+    .cell-menu__text { flex: 1; min-width: 0; }
+    .cell-menu__title {
+      font-family: var(--text-body-large-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-menu__title--danger { color: var(--color-warning-primary); }
+    .cell-menu__avatars {
+      position: relative;
+      flex-shrink: 0;
+      width: 36px;
+      height: 20px;
+    }
+    .cell-menu__avatar-pip {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-primary-transparent-08);
+      border: 1.5px solid var(--color-constant-primary);
+    }
+    .cell-menu__avatar-pip:nth-child(1) { left: 0;    z-index: 2; }
+    .cell-menu__avatar-pip:nth-child(2) { left: 16px; z-index: 1; }
+
+    /* ── Molecule: DropdownMenu ── */
+    .dropdown-menu {
+      display: flex;
+      flex-direction: column;
+      min-width: 173px;
+      background: var(--color-constant-primary);
+      border-radius: 16px;
+      box-shadow: var(--elevation-4);
+      overflow: hidden;
+    }
+    .dropdown-menu__divider {
+      height: 1px;
+      width: 100%;
+      background: var(--color-primary-transparent-08);
+    }
+    /* Variant layout — rows of three */
+    .dd-variants { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+    .dd-more { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; margin-top: 32px; }
+    .dd-more.is-collapsed { display: none; }
+    .dd-expand {
+      all: unset; box-sizing: border-box;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 24px; padding: 8px 0; cursor: pointer;
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-font-size);
+      font-weight: var(--text-label-medium-font-weight);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      transition: color 0.15s;
+    }
+    .dd-expand:hover { color: var(--color-primary); }
+    .dd-expand svg { width: 14px; height: 14px; flex-shrink: 0; transition: transform 0.2s ease; }
+    .dd-expand.is-open svg { transform: rotate(180deg); }
+
+    /* ── Molecule: MenuCompact ── */
+    .menu-compact {
+      display: inline-flex;
+      align-items: stretch;
+      padding: 0 8px;
+      background: var(--color-constant-primary);
+      border-radius: 16px;
+      box-shadow: var(--elevation-2);
+    }
+    /* MenuCompactItem atom (reused) */
+    .menu-compact-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-compact-item--text { padding: 13px 8px; }
+    .menu-compact-item--icon { padding: 14px 0; }
+    .menu-compact-item__label {
+      font-family: var(--text-label-large-font-family), sans-serif;
+      font-weight: var(--text-label-large-font-weight);
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: var(--text-label-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap;
+    }
+    .menu-compact-item__icon { width: 16px; height: 16px; display: block; }
+
   </style>
 </head>
 <body>
 
   <!-- ── Sidebar ── -->
-  <nav class="sidebar">
-    <a class="sidebar__logo" href="home.html">
-      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
-    </a>
-
-    <div class="nav-group" id="nav-styles">
-      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
-        Styles
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="typography.html">Typography</a>
-        <a class="sidebar__link" href="colors.html">Colors</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-icons">
-      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
-        Icons
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="icons.html">Tab bar</a>
-        <a class="sidebar__link" href="icons.html#chats">Chats</a>
-        <a class="sidebar__link" href="icons.html#menu">Menu</a>
-        <a class="sidebar__link" href="icons.html#general">General</a>
-        <a class="sidebar__link" href="icons.html#small">Small</a>
-        <a class="sidebar__link" href="icons.html#loader">Loader</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-atoms">
-      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
-        Atoms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
-        <a class="sidebar__link" href="index.html#preview">Preview</a>
-        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
-        <a class="sidebar__link" href="index.html#button">Button</a>
-        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
-        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
-        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
-        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
-        <a class="sidebar__link" href="index.html#chip-live">ChipLive</a>
-      </div>
-    </div>
-
-    <div class="nav-group nav-group--active" id="nav-molecules">
-      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
-        Molecules
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <div class="nav-subgroup" id="sub-cell">
-          <button class="nav-subgroup__header" onclick="toggleSubgroup('sub-cell')">
-            <svg class="nav-subgroup__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Cell
-          </button>
-          <div class="nav-subgroup__items">
-            <a class="sidebar__link" href="molecules.html#cell-base">CellBase</a>
-            <a class="sidebar__link" href="molecules.html#cell-toggle">CellToggle</a>
-            <a class="sidebar__link" href="molecules.html#cell-contact">CellContact</a>
-            <a class="sidebar__link" href="molecules.html#cell-activity">CellActivity</a>
-            <a class="sidebar__link" href="molecules.html#cell-separator">CellSeparator</a>
-          </div>
-        </div>
-        <div class="nav-subgroup" id="sub-field">
-          <button class="nav-subgroup__header" onclick="toggleSubgroup('sub-field')">
-            <svg class="nav-subgroup__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Field
-          </button>
-          <div class="nav-subgroup__items">
-            <a class="sidebar__link" href="molecules.html#text-fields">TextFields</a>
-            <a class="sidebar__link" href="molecules.html#search-field">SearchField</a>
-            <a class="sidebar__link" href="molecules.html#tf-s">TextFields.S</a>
-            <a class="sidebar__link" href="molecules.html#tf-l">TextFields.L</a>
-            <a class="sidebar__link" href="molecules.html#tf-bar">TextFieldsBar</a>
-          </div>
-        </div>
-        <a class="sidebar__link sidebar__link--active" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
-        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
-        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
-        <a class="sidebar__link" href="molecules.html#tabs">Tabs</a>
-        <a class="sidebar__link" href="molecules.html#top-bar">TopBar</a>
-        <a class="sidebar__link" href="molecules.html#swipe-tab-item">SwipeTabItem</a>
-        <a class="sidebar__link" href="molecules.html#top-search-bar">TopSearchBar</a>
-        <a class="sidebar__link" href="molecules.html#text-reply">TextReply</a>
-        <a class="sidebar__link" href="molecules.html#above-text-field">AboveTheTextField</a>
-        <a class="sidebar__link" href="molecules.html#bubble-bottom-2">BubbleBottom 2.0</a>
-        <a class="sidebar__link" href="molecules.html#message">Message</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-components">
-      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
-        Organisms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="sidebar"></nav>
 
   <!-- ── Main ── -->
   <main class="main">
@@ -2314,6 +2629,119 @@
 
     </div>
     <!-- /CellBase -->
+
+    <div class="section-divider"></div>
+
+    <!-- TableRows_Chats -->
+    <div id="table-rows-chats" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">TableRowsChats</div>
+          <button class="code-toggle-btn" onclick="toggleCode('table-rows-chats')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:328px; gap:0;">
+          <div class="btn-size-label" style="margin-bottom:8px;">Variants</div>
+
+          <span class="state-label" style="margin:4px 0;">direct · read</span>
+          <div class="chats-row">
+            <div class="chats-row__avatar"><span class="chats-row__initials">M</span></div>
+            <div class="chats-row__text"><span class="chats-row__title">Mana Manor</span><span class="chats-row__subtitle">Hello! what's up, buddy.</span></div>
+            <div class="chats-row__right"><span class="chats-row__time">3:45 PM</span></div>
+            <span class="chats-row__divider"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">direct · pinned</span>
+          <div class="chats-row">
+            <div class="chats-row__avatar"><span class="chats-row__initials">M</span></div>
+            <div class="chats-row__text"><span class="chats-row__title">Mana Manor</span><span class="chats-row__subtitle">Hello! what's up, buddy.</span></div>
+            <div class="chats-row__right"><span class="chats-row__time">3:45 PM</span><img class="chats-row__pin" src="icons/chats/pin.svg" alt="" aria-hidden="true"></div>
+            <span class="chats-row__divider"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">direct · unread</span>
+          <div class="chats-row chats-row--unread">
+            <div class="chats-row__avatar"><span class="chats-row__initials">M</span></div>
+            <div class="chats-row__text"><span class="chats-row__title">Mana Manor</span><span class="chats-row__subtitle">Hello! what's up, buddy.</span></div>
+            <div class="chats-row__right"><span class="chats-row__time">3:45 PM</span><span class="notification-counter notification-counter--cell"><span class="notification-counter__number">34</span></span></div>
+            <span class="chats-row__divider"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">direct · pressed</span>
+          <div class="chats-row chats-row--pressed chats-row--no-divider">
+            <div class="chats-row__avatar"><span class="chats-row__initials">M</span></div>
+            <div class="chats-row__text"><span class="chats-row__title">Mana Manor</span><span class="chats-row__subtitle">Hello! what's up, buddy.</span></div>
+            <div class="chats-row__right"><span class="chats-row__time">3:45 PM</span></div>
+            <span class="chats-row__divider"></span>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">channel · unread</span>
+          <div class="chats-row chats-row--channel chats-row--unread">
+            <div class="chats-row__avatar"><span class="chats-row__initials">M</span></div>
+            <div class="chats-row__text"><span class="chats-row__title">Mana Manor</span><span class="chats-row__subtitle">General:</span><span class="chats-row__subtitle">Hello! what's up, buddy.</span></div>
+            <div class="chats-row__right"><span class="chats-row__time">3:45 PM</span><span class="notification-counter notification-counter--cell"><span class="notification-counter__number">34</span></span></div>
+            <span class="chats-row__divider"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-table-rows-chats">
+        <div class="docs__name">TableRowsChats</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">round avatar</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value"><code class="docs__token">--channel</code> · rounded-square · sender on its own line</span></div>
+          <div class="docs__row"><span class="docs__row-label">attached</span><span class="docs__row-value"><code class="docs__token">--attached</code> · grouped · <code class="docs__token">--color-brand-yellow-8</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">read</span><span class="docs__row-value">subtitle <code class="docs__token">--text-body-medium-*</code> · primary-60</span></div>
+          <div class="docs__row"><span class="docs__row-label">unread</span><span class="docs__row-value"><code class="docs__token">--unread</code> · subtitle <code class="docs__token">--text-body-medium-*</code> · primary-87 + counter</span></div>
+          <div class="docs__row"><span class="docs__row-label">pinned</span><span class="docs__row-value">pin icon instead of counter</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Avatar bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-16</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-16</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Slots</span><span class="docs__row-value">Avatar (48) · NotificationCounter (--cell)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-table-rows-chats">
+        <button class="copy-code-btn" onclick="copyCode('table-rows-chats')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- type: (default) direct | channel · state: unread · grouped: attached --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row chats-row--unread"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__avatar"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__initials"</span><span class="tok-tag">&gt;</span>M<span class="tok-tag">&lt;/span&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__title"</span><span class="tok-tag">&gt;</span>Mana Manor<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__subtitle"</span><span class="tok-tag">&gt;</span>Hello! what's up, buddy.<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__right"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__time"</span><span class="tok-tag">&gt;</span>3:45 PM<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter notification-counter--cell"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"chats-row__divider"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /TableRows_Chats -->
 
     <div class="section-divider"></div>
 
@@ -2597,14 +3025,14 @@
           <!-- direct -->
           <span class="state-label" style="margin:4px 0;">direct</span>
           <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Alex Rivera"><span class="avatar__initials" aria-hidden="true">AR</span></div>
             <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
           </div>
 
           <!-- direct + toggle -->
           <span class="state-label" style="margin:8px 0 4px;">direct · toggle</span>
           <div class="cell-contact cell-contact--toggle">
-            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm" aria-label="Sam Park"><span class="avatar__initials" aria-hidden="true">SP</span></div>
             <div class="cell-contact__text"><p class="cell-contact__title">Title</p></div>
             <button class="toggle-cb" role="checkbox" aria-checked="false" aria-label="Select contact" tabindex="0">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
@@ -2619,7 +3047,7 @@
           <!-- channel -->
           <span class="state-label" style="margin:8px 0 4px;">channel</span>
           <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Design Hub"><span class="avatar__initials" aria-hidden="true">DH</span></div>
             <div class="cell-contact__text">
               <p class="cell-contact__title">Title</p>
               <p class="cell-contact__subtitle">Subtitle</p>
@@ -2630,7 +3058,7 @@
           <!-- channel + open -->
           <span class="state-label" style="margin:8px 0 4px;">channel · open</span>
           <div class="cell-contact cell-contact--open">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Mindfulness channel"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm avatar--channel" aria-label="Design Hub"><span class="avatar__initials" aria-hidden="true">DH</span></div>
             <div class="cell-contact__text">
               <p class="cell-contact__title">Title</p>
               <p class="cell-contact__subtitle">Subtitle</p>
@@ -2641,7 +3069,7 @@
           <!-- folder -->
           <span class="state-label" style="margin:8px 0 4px;">folder</span>
           <div class="cell-contact">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Work Files"><span class="avatar__initials" aria-hidden="true">WF</span></div>
             <div class="cell-contact__text">
               <p class="cell-contact__title">Title</p>
               <p class="cell-contact__subtitle">Subtitle</p>
@@ -2652,7 +3080,7 @@
           <!-- folder + open -->
           <span class="state-label" style="margin:8px 0 4px;">folder · open</span>
           <div class="cell-contact cell-contact--open">
-            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Media folder"><span class="avatar__initials" aria-hidden="true">M</span></div>
+            <div class="cell-contact__avatar avatar avatar--sm avatar--folder" aria-label="Work Files"><span class="avatar__initials" aria-hidden="true">WF</span></div>
             <div class="cell-contact__text">
               <p class="cell-contact__title">Title</p>
               <p class="cell-contact__subtitle">Subtitle</p>
@@ -2737,7 +3165,7 @@
           <span class="state-label" style="margin:4px 0;">reacted</span>
           <div class="cell-activity">
             <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <div class="avatar avatar--sm" aria-label="Lena Katz"><span class="avatar__initials" aria-hidden="true">LK</span></div>
               <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
             </div>
             <div class="cell-activity__text">
@@ -2750,7 +3178,7 @@
           <span class="state-label" style="margin:8px 0 4px;">read</span>
           <div class="cell-activity">
             <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <div class="avatar avatar--sm" aria-label="Tom Burns"><span class="avatar__initials" aria-hidden="true">TB</span></div>
             </div>
             <div class="cell-activity__text">
               <p class="cell-activity__title">Title</p>
@@ -2762,7 +3190,7 @@
           <span class="state-label" style="margin:8px 0 4px;">emoji</span>
           <div class="cell-activity">
             <div class="cell-activity__avatar">
-              <div class="avatar avatar--sm" aria-label="Mary Lane"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+              <div class="avatar avatar--sm" aria-label="Nina Osei"><span class="avatar__initials" aria-hidden="true">NO</span></div>
               <span class="cell-activity__emoji emoji-badge emoji-badge--sm"><span class="emoji-badge__glyph">😂</span></span>
             </div>
             <div class="cell-activity__text">
@@ -2925,6 +3353,591 @@
 
     </div>
     <!-- /CellSeparator -->
+
+    <div class="section-divider"></div>
+
+    <!-- CellCategory -->
+    <div id="cell-category" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellCategory</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-category')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:0;">
+
+          <div class="btn-size-label" style="margin-bottom:8px;">No lock</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner · closed</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-category__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">owner · open</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-down.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-category__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner · closed</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner · open</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-down.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">Lock</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner · closed · lock</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+                <span class="cell-category__lock-badge">
+                  <span class="cell-category__lock-icon"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+                </span>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-category__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">owner · open · lock</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+                <span class="cell-category__lock-badge">
+                  <span class="cell-category__lock-icon"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+                </span>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-down.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-category__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner · closed · lock</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+                <span class="cell-category__lock-badge">
+                  <span class="cell-category__lock-icon"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+                </span>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-right.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner · open · lock</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Title</p>
+                <span class="cell-category__lock-badge">
+                  <span class="cell-category__lock-icon"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+                </span>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/arrow-down.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-category__right">
+              <span class="cell-category__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">Add</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">add · no right block</span>
+          <div class="cell-category">
+            <div class="cell-category__main">
+              <div class="cell-category__title-wrap">
+                <p class="cell-category__title">Add</p>
+              </div>
+              <span class="cell-category__arrow"><img src="icons/small/add.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-category">
+        <div class="docs__name">CellCategory</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Props</div>
+          <div class="docs__row"><span class="docs__row-label">owner</span><span class="docs__row-value">bool · shows drag handle (=)</span></div>
+          <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">bool · chevron down vs right</span></div>
+          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · shows lock badge on title</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-small-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Lock pill bg</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Hover bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Pressed bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Chevron closed</span><span class="docs__row-value">icons/small/arrow-right.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chevron open</span><span class="docs__row-value">icons/small/arrow-down.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Lock badge</span><span class="docs__row-value">icons/small/lock.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Menu (…)</span><span class="docs__row-value">icons/small/menu.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Drag handle</span><span class="docs__row-value">icons/small/moving.svg · 16px</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-category">
+        <button class="copy-code-btn" onclick="copyCode('cell-category')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- owner · closed (default) --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__main"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__title-wrap"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__arrow"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/arrow-right.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__right"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__menu"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/menu.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__move"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/moving.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- open: swap arrow-right → arrow-down --&gt;</span>
+<span class="tok-cmt">&lt;!-- not owner: omit .cell-category__move --&gt;</span>
+<span class="tok-cmt">&lt;!-- lock: add inside .cell-category__title-wrap --&gt;</span>
+<span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__lock-badge"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-category__lock-icon"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/lock.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/span&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellCategory -->
+
+    <div class="section-divider"></div>
+
+    <!-- CellSubchannel -->
+    <div id="cell-subchannel" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellSubchannel</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-subchannel')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; width:320px; gap:0;">
+
+          <div class="btn-size-label" style="margin-bottom:8px;">No lock · no message</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner</span>
+          <div class="cell-subchannel">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Kate Wilson"><span class="avatar__initials" aria-hidden="true">KW</span></div>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner</span>
+          <div class="cell-subchannel">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Diego Mora"><span class="avatar__initials" aria-hidden="true">DM</span></div>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">With message counter</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner · message</span>
+          <div class="cell-subchannel cell-subchannel--message">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Priya Singh"><span class="avatar__initials" aria-hidden="true">PS</span></div>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+                <span class="notification-counter notification-counter--cell" role="status" aria-label="2 new messages"><span class="notification-counter__number">2</span></span>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">not owner · message</span>
+          <div class="cell-subchannel cell-subchannel--message">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Raj Kumar"><span class="avatar__initials" aria-hidden="true">RK</span></div>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+                <span class="notification-counter notification-counter--cell" role="status" aria-label="2 new messages"><span class="notification-counter__number">2</span></span>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">Lock</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner · lock</span>
+          <div class="cell-subchannel">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Sara Chen"><span class="avatar__initials" aria-hidden="true">SC</span></div>
+              <span class="cell-subchannel__lock-badge"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">owner · lock · message</span>
+          <div class="cell-subchannel cell-subchannel--message">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Yuki Tanaka"><span class="avatar__initials" aria-hidden="true">YT</span></div>
+              <span class="cell-subchannel__lock-badge"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+                <span class="notification-counter notification-counter--cell" role="status" aria-label="2 new messages"><span class="notification-counter__number">2</span></span>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="btn-size-label" style="margin:16px 0 8px;">Selected</div>
+
+          <span class="state-label" style="margin:4px 0 2px;">owner · selected</span>
+          <div class="cell-subchannel cell-subchannel--selected">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Ben Foster"><span class="avatar__initials" aria-hidden="true">BF</span></div>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 2px;">owner · selected · lock · message</span>
+          <div class="cell-subchannel cell-subchannel--selected cell-subchannel--message">
+            <div class="cell-subchannel__avatar-wrap">
+              <div class="avatar avatar--sm" aria-label="Maya Patel"><span class="avatar__initials" aria-hidden="true">MP</span></div>
+              <span class="cell-subchannel__lock-badge"><img src="icons/small/lock.svg" aria-hidden="true"></span>
+            </div>
+            <div class="cell-subchannel__text">
+              <div class="cell-subchannel__title-row">
+                <p class="cell-subchannel__title">Title</p>
+                <span class="notification-counter notification-counter--cell" role="status" aria-label="2 new messages"><span class="notification-counter__number">2</span></span>
+              </div>
+            </div>
+            <div class="cell-subchannel__right">
+              <span class="cell-subchannel__menu"><img src="icons/small/menu.svg" aria-hidden="true"></span>
+              <span class="cell-subchannel__move"><img src="icons/small/moving.svg" aria-hidden="true"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-cell-subchannel">
+        <div class="docs__name">CellSubchannel</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Props</div>
+          <div class="docs__row"><span class="docs__row-label">owner</span><span class="docs__row-value">bool · shows menu + drag handle</span></div>
+          <div class="docs__row"><span class="docs__row-label">message</span><span class="docs__row-value">bool · shows NotificationCounter; reduces py to 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · lock badge on avatar bottom-right</span></div>
+          <div class="docs__row"><span class="docs__row-label">state</span><span class="docs__row-value">regular | selected → brandYellow/16 background</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title colour</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-87</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Selected bg</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-16</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Lock badge · regular</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Lock badge · selected</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-16</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Avatar</span><span class="docs__row-value">avatar--sm · circle · initials</span></div>
+          <div class="docs__row"><span class="docs__row-label">NotificationCounter</span><span class="docs__row-value">notification-counter--cell · red pill</span></div>
+          <div class="docs__row"><span class="docs__row-label">Lock badge</span><span class="docs__row-value">icons/small/lock.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Menu (…)</span><span class="docs__row-value">icons/small/menu.svg · 16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Drag handle</span><span class="docs__row-value">icons/small/moving.svg · 16px</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-cell-subchannel">
+        <button class="copy-code-btn" onclick="copyCode('cell-subchannel')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- owner · regular (default) --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__avatar-wrap"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar avatar--sm"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"Channel name"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"avatar__initials"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>ML<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-cmt">&lt;!-- lock: --&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__lock-badge"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/lock.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__title-row"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+      <span class="tok-cmt">&lt;!-- message: --&gt;</span>
+      <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter notification-counter--cell"</span> <span class="tok-attr">role</span>=<span class="tok-str">"status"</span> <span class="tok-attr">aria-label</span>=<span class="tok-str">"2 new messages"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"notification-counter__number"</span><span class="tok-tag">&gt;</span>2<span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__right"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__menu"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/menu.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-subchannel__move"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/moving.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-cmt">&lt;!-- selected: add --selected; not owner: omit .right; message: add --message + counter --&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /CellSubchannel -->
+
+    <!-- CellLinks -->
+    <div id="cell-links" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">CellLinks</div>
+          <button class="code-toggle-btn" onclick="toggleCode('cell-links')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="btn-size-label">Row 3 (title + subtitle + link)</div>
+        <div class="component-block__states" style="flex-direction:column; gap:0; align-items:stretch; width:173px;">
+
+          <!-- row=3, no photo -->
+          <div class="cell-base cell-base--xlarge cell-base--row-3 cell-base--no-divider">
+            <div class="cell-base__left">
+              <div class="cell-links__preview">
+                <div class="cell-links__favicon">
+                  <span class="cell-links__favicon-letter">G</span>
+                </div>
+              </div>
+            </div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+              <p class="cell-links__link">Subtitle</p>
+            </div>
+            <div class="cell-base__right" style="width:24px;"></div>
+          </div>
+
+          <!-- row=3, photo -->
+          <div class="cell-base cell-base--xlarge cell-base--row-3 cell-base--no-divider">
+            <div class="cell-base__left">
+              <div class="cell-links__preview">
+                <img class="cell-links__photo" src="assets/demo-landscape.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-base__subtitle">Subtitle</p>
+              <p class="cell-links__link">Subtitle</p>
+            </div>
+            <div class="cell-base__right" style="width:24px;"></div>
+          </div>
+
+        </div>
+
+        <div class="btn-size-label" style="margin-top:24px;">Row 2 (title + link)</div>
+        <div class="component-block__states" style="flex-direction:column; gap:0; align-items:stretch; width:173px;">
+
+          <!-- row=2, no photo -->
+          <div class="cell-base cell-base--medium cell-base--no-divider">
+            <div class="cell-base__left">
+              <div class="cell-links__preview">
+                <div class="cell-links__favicon">
+                  <span class="cell-links__favicon-letter">G</span>
+                </div>
+              </div>
+            </div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-links__link">Subtitle</p>
+            </div>
+          </div>
+
+          <!-- row=2, photo -->
+          <div class="cell-base cell-base--medium cell-base--no-divider">
+            <div class="cell-base__left">
+              <div class="cell-links__preview">
+                <img class="cell-links__photo" src="assets/demo-landscape.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+            <div class="cell-base__text">
+              <p class="cell-base__title">Title</p>
+              <p class="cell-links__link">Subtitle</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">CellLinks</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Composition</div>
+          <div class="docs__row"><span class="docs__row-label">CellBase</span><span class="docs__row-value">xlarge (72px) · medium (56px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">cell-links__preview</span><span class="docs__row-value">40×40px · r 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">favicon</span><span class="docs__row-value">bg transparent-16 + буква</span></div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">img object-fit: cover</span></div>
+          <div class="docs__row"><span class="docs__row-label">cell-links__link</span><span class="docs__row-value">link-medium · underline</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">row=3 · favicon</span><span class="docs__row-value">title + subtitle + link</span></div>
+          <div class="docs__row"><span class="docs__row-label">row=3 · photo</span><span class="docs__row-value">title + subtitle + link</span></div>
+          <div class="docs__row"><span class="docs__row-label">row=2 · favicon</span><span class="docs__row-value">title + link</span></div>
+          <div class="docs__row"><span class="docs__row-label">row=2 · photo</span><span class="docs__row-value">title + link</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-primary-transparent-16</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--text-title-medium-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+          <span class="docs__token">--text-link-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-cell-links">
+        <button class="copy-code-btn" onclick="copyCode('cell-links')">Copy</button>
+        <pre><code><span class="tok-cmt">&lt;!-- row=3, favicon --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base cell-base--xlarge cell-base--row-3"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__left"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-links__preview"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-links__favicon"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-links__favicon-letter"</span><span class="tok-tag">&gt;</span>G<span class="tok-tag">&lt;/span&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__subtitle"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-links__link"</span><span class="tok-tag">&gt;</span>Subtitle<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__divider"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /CellLinks -->
 
     <div class="section-divider"></div>
 
@@ -4606,7 +5619,7 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg · border-top 0.5px primary-16</span></div>
+          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg (tonal · no divider)</span></div>
           <div class="docs__row"><span class="docs__row-label">tab-btn</span><span class="docs__row-value">flex: 1 · height 48px · icon 24×24px</span></div>
           <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
         </div>
@@ -4620,7 +5633,6 @@
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Tokens</div>
           <span class="docs__token">--color-brand-yellow-8</span>
-          <span class="docs__token">--color-primary-transparent-16</span>
           <span class="docs__token">--color-primary-transparent-87</span>
         </div>
 
@@ -4671,7 +5683,7 @@
                 <img src="icons/general/arrow-back.svg" alt="">
               </button>
               <div class="top-bar__body">
-                <div class="avatar avatar--sm" aria-label="ML"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+                <div class="avatar avatar--sm" aria-label="Alex Rivera"><span class="avatar__initials" aria-hidden="true">AR</span></div>
                 <span class="top-bar__title">Title</span>
               </div>
               <div class="top-bar__right">
@@ -4803,7 +5815,7 @@
                 <img src="icons/general/arrow-back.svg" alt="">
               </button>
               <div class="top-bar__body">
-                <div class="avatar avatar--sm" aria-label="ML"><span class="avatar__initials" aria-hidden="true">ML</span></div>
+                <div class="avatar avatar--sm" aria-label="Sam Park"><span class="avatar__initials" aria-hidden="true">SP</span></div>
                 <span class="top-bar__title top-bar__title--md">Title</span>
               </div>
               <div class="top-bar__right">
@@ -4825,7 +5837,7 @@
                 <img src="icons/general/arrow-back.svg" alt="">
               </button>
               <div class="top-bar__body">
-                <div class="avatar avatar--sm avatar--channel" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+                <div class="avatar avatar--sm" aria-label="Zoe Nash"><span class="avatar__initials" aria-hidden="true">ZN</span></div>
                 <div class="top-bar__channel-name">
                   <span class="top-bar__title top-bar__title--md" style="flex:none;">Title</span>
                   <img class="top-bar__chevron" src="icons/general/arrow-down.svg" alt="">
@@ -4836,7 +5848,7 @@
                   <img src="icons/general/pin.svg" alt="">
                 </button>
                 <div style="padding:4px;">
-                  <div class="avatar avatar--sm avatar--channel" aria-label="M"><span class="avatar__initials" aria-hidden="true">M</span></div>
+                  <div class="avatar avatar--sm avatar--channel" aria-label="Design Hub"><span class="avatar__initials" aria-hidden="true">DH</span></div>
                 </div>
               </div>
             </div>
@@ -5778,6 +6790,278 @@
     </div>
     <!-- /Message -->
 
+    <div class="section-divider"></div>
+
+    <!-- DropdownMenu -->
+    <div id="dropdown-menu" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">DropdownMenu</div>
+          <button class="code-toggle-btn" onclick="toggleCode('dropdown-menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <!-- Two canonical variants -->
+        <div class="dd-variants">
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/visibility.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">2 Read</p></div><div class="cell-menu__avatars"><div class="cell-menu__avatar-pip"></div><div class="cell-menu__avatar-pip"></div></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Reply</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/forward.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Forward</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/edit.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Edit</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/copy.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Copy</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/pin.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Pin</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/photo.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Save image</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/warning.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Report</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/g-translate.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Translate</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/select.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Select</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon cell-menu__icon--danger"><img src="icons/menu/delete.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title cell-menu__title--danger">Delete</p></div></div></div>
+            </div>
+            <span class="state-label">Sender · big</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/general/arrow-left.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Back</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/pin.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Pin</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/copy.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Copy</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/photo.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Save image</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/warning.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Report</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/g-translate.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Translate</p></div></div></div>
+            </div>
+            <span class="state-label">Sender · small2</span>
+          </div>
+        </div>
+
+        <button class="dd-expand" onclick="toggleDdMore(this)">
+          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Show all variants</span>
+        </button>
+
+        <!-- Remaining four variants -->
+        <div class="dd-more is-collapsed">
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/visibility.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">2 Read</p></div><div class="cell-menu__avatars"><div class="cell-menu__avatar-pip"></div><div class="cell-menu__avatar-pip"></div></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Reply</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/forward.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Forward</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/edit.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Edit</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/select.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Select</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon cell-menu__icon--danger"><img src="icons/menu/delete.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title cell-menu__title--danger">Delete</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/more.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">More</p></div></div></div>
+            </div>
+            <span class="state-label">Sender · small1</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Reply</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/forward.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Forward</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/copy.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Copy</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/pin.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Pin</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/photo.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Save image</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/warning.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Report</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/g-translate.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Translate</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/select.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Select</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon cell-menu__icon--danger"><img src="icons/menu/delete.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title cell-menu__title--danger">Delete</p></div></div></div>
+            </div>
+            <span class="state-label">Recipient · big</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/visibility.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">2 Read</p></div><div class="cell-menu__avatars"><div class="cell-menu__avatar-pip"></div><div class="cell-menu__avatar-pip"></div></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/reply.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Reply</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/forward.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Forward</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/select.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Select</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/copy.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Copy</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/pin.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Pin</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/more.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">More</p></div></div></div>
+            </div>
+            <span class="state-label">Recipient · small1</span>
+          </div>
+
+          <div class="state-wrapper">
+            <div class="dropdown-menu">
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/general/arrow-left.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Back</p></div></div></div>
+              <div class="dropdown-menu__divider"></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/photo.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Save image</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/warning.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Report</p></div></div></div>
+              <div class="cell-menu"><div class="cell-menu__base"><div class="cell-menu__icon"><img src="icons/menu/g-translate.svg" aria-hidden="true"></div><div class="cell-menu__text"><p class="cell-menu__title">Translate</p></div></div></div>
+            </div>
+            <span class="state-label">Recipient · small2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-dropdown-menu">
+        <div class="docs__name">DropdownMenu</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">radius 16 · elevation-4</span></div>
+          <div class="docs__row"><span class="docs__row-label">row</span><span class="docs__row-value">CellMenu (48px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">divider</span><span class="docs__row-value">1px separator</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">type</span><span class="docs__row-value">Sender · Recipient</span></div>
+          <div class="docs__row"><span class="docs__row-label">screen</span><span class="docs__row-value">big · small1 · small2</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">hover</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">pressed</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">surface</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">shadow</span><span class="docs__row-value"><code class="docs__token">--elevation-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">divider</span><span class="docs__row-value"><code class="docs__token">--color-primary-transparent-08</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">danger</span><span class="docs__row-value"><code class="docs__token">--color-warning-primary</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Rows</span><span class="docs__row-value">CellMenu</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icons</span><span class="docs__row-value">icons/menu · arrow-left</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-dropdown-menu">
+        <button class="copy-code-btn" onclick="copyCode('dropdown-menu')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"dropdown-menu"</span><span class="tok-tag">&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- row with read-by avatars --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__base"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__icon"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/visibility.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__title"</span><span class="tok-tag">&gt;</span>2 Read<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatars"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatar-pip"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__avatar-pip"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- plain row --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__base"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__icon"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/reply.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__title"</span><span class="tok-tag">&gt;</span>Reply<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- divider --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"dropdown-menu__divider"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- destructive row --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__base"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__icon cell-menu__icon--danger"</span><span class="tok-tag">&gt;&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/menu/delete.svg"</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-menu__title cell-menu__title--danger"</span><span class="tok-tag">&gt;</span>Delete<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /DropdownMenu -->
+
+    <!-- MenuCompact -->
+    <div id="menu-compact" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">MenuCompact</div>
+          <button class="code-toggle-btn" onclick="toggleCode('menu-compact')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="component-block__states" style="align-items:center;">
+          <div class="state-wrapper">
+            <div class="menu-compact">
+              <div class="menu-compact-item menu-compact-item--text"><span class="menu-compact-item__label">Title</span></div>
+              <div class="menu-compact-item menu-compact-item--text"><span class="menu-compact-item__label">Title</span></div>
+              <div class="menu-compact-item menu-compact-item--text"><span class="menu-compact-item__label">Title</span></div>
+              <div class="menu-compact-item menu-compact-item--text"><span class="menu-compact-item__label">Title</span></div>
+              <div class="menu-compact-item menu-compact-item--text"><span class="menu-compact-item__label">Title</span></div>
+              <div class="menu-compact-item menu-compact-item--icon"><img class="menu-compact-item__icon" src="icons/small/arrow-right.svg" alt="" aria-hidden="true"></div>
+            </div>
+            <span class="state-label">Default</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-menu-compact">
+        <div class="docs__name">MenuCompact</div>
+        <span class="docs__type">molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">pill · radius 16 · elevation-2 · pad 0/8</span></div>
+          <div class="docs__row"><span class="docs__row-label">item</span><span class="docs__row-value">MenuCompactItem (text / icon)</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">surface</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">shadow</span><span class="docs__row-value"><code class="docs__token">--elevation-2</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value"><code class="docs__token">--text-label-large-*</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Uses</div>
+          <div class="docs__row"><span class="docs__row-label">Items</span><span class="docs__row-value">MenuCompactItem</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">icons/small/arrow-right</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-menu-compact">
+        <button class="copy-code-btn" onclick="copyCode('menu-compact')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-compact"</span><span class="tok-tag">&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- text items --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-compact-item menu-compact-item--text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-compact-item__label"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/span&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-cmt">&lt;!-- …repeat per action… --&gt;</span>
+
+  <span class="tok-cmt">&lt;!-- trailing icon item --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-compact-item menu-compact-item--icon"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;img</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-compact-item__icon"</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/small/arrow-right.svg"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /MenuCompact -->
+
   </main>
 
   <script src="scripts/nav.js"></script>
@@ -5814,6 +7098,13 @@
       if (!panel) return;
       var open = panel.classList.toggle('is-open');
       if (btn) btn.classList.toggle('is-active', open);
+    }
+    function toggleDdMore(btn) {
+      var more = document.querySelector('.dd-more');
+      if (!more) return;
+      var open = !more.classList.toggle('is-collapsed');
+      btn.classList.toggle('is-open', open);
+      btn.querySelector('span').textContent = open ? 'Hide variants' : 'Show all variants';
     }
     function copyCode(id) {
       var panel = document.getElementById('code-' + id);
@@ -6454,6 +7745,36 @@
   })();
   </script>
 
+  <script>
+  (() => {
+    const AVATAR_COLORS = [
+      '--color-avatar-green',
+      '--color-avatar-purple',
+      '--color-avatar-teal',
+      '--color-avatar-peach',
+      '--color-avatar-rose',
+      '--color-avatar-sky',
+      '--color-avatar-lime',
+      '--color-avatar-lavender',
+      '--color-avatar-mint',
+      '--color-avatar-indigo',
+      '--color-avatar-sand',
+    ];
+
+    function hashName(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) >>> 0;
+      return h;
+    }
+
+    document.querySelectorAll('.avatar:not(.avatar--folder)').forEach(el => {
+      const name = el.getAttribute('aria-label') || el.querySelector('.avatar__initials')?.textContent?.trim() || '';
+      el.style.background = `var(${AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length]})`;
+    });
+  })();
+  </script>
+
+  <script src="scripts/page-transition.js?v=3"></script>
 </body>
 
 </html>

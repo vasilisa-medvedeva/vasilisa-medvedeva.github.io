@@ -75,6 +75,32 @@
   --color-info-transparent-8: #E8ECF3;
   --color-info-transparent-4: #EEF0F4;
 
+  /* Avatar palette — deterministic color by name hash */
+  --color-avatar-green:    #D6EDD9;
+  --color-avatar-purple:   #E4D9F1;
+  --color-avatar-teal:     #D4ECF0;
+  --color-avatar-peach:    #FFE5CC;
+  --color-avatar-rose:     #F7D9E8;
+  --color-avatar-sky:      #DDEAF5;
+  --color-avatar-lime:     #EAF0D9;
+  --color-avatar-lavender: #E8E0F5;
+  --color-avatar-mint:     #D4F0E4;
+  --color-avatar-indigo:   #DAD9F0;
+  --color-avatar-sand:     #EDE8D9;
+
+  /* Avatar initials — a darker shade of each background for tonal contrast */
+  --color-avatar-green-text:    #3F7A50;
+  --color-avatar-purple-text:   #6A50A0;
+  --color-avatar-teal-text:     #2E7C8A;
+  --color-avatar-peach-text:    #B5661E;
+  --color-avatar-rose-text:     #B04A7C;
+  --color-avatar-sky-text:      #3C6FA6;
+  --color-avatar-lime-text:     #6E7C3C;
+  --color-avatar-lavender-text: #6E5AA6;
+  --color-avatar-mint-text:     #35836A;
+  --color-avatar-indigo-text:   #4C49A2;
+  --color-avatar-sand-text:     #8A7748;
+
   /* Viewer / Documentation */
   --color-state-label: var(--color-primary-transparent-48);
 }

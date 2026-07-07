@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Organisms</title>
   <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-primary-transparent-04);
+      background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -222,7 +225,7 @@
     .copy-code-btn.copied { color: #4ec9b0; border-color: #4ec9b0; }
 
     .section-divider {
-      height: 1px; background: var(--color-primary-transparent-16); margin: 0 0 48px;
+      height: 0; background: transparent; margin: 0 0 48px;
     }
 
     /* ── Atom: Avatar (from index.html) ── */
@@ -241,7 +244,7 @@
     .avatar__initials {
       font-family: var(--text-headline-medium-font-family), sans-serif;
       font-weight: 500;
-      color: var(--color-primary-transparent-70);
+      color: var(--color-brand-yellow-quaternary); /* darker shade of the yellow-16 bg */
       text-align: center;
       user-select: none;
       line-height: 1;
@@ -365,6 +368,133 @@
       width: 100%;
     }
 
+    /* ── Organism: ConfirmDialog ── */
+    .confirm-dialog {
+      width: 300px;
+      background: var(--color-constant-primary);
+      border-radius: 16px;
+      box-shadow: var(--elevation-3);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .confirm-dialog__title {
+      font-family: var(--text-title-large-font-family), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-align: center;
+    }
+
+    .confirm-dialog__options {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Reused atom: Toggle (toggle-cb / toggle-radio) ── */
+    .toggle-cb,
+    .toggle-radio {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .toggle-cb:focus-visible,
+    .toggle-radio:focus-visible {
+      outline: 2px solid var(--color-brand-yellow-secondary);
+      outline-offset: 3px;
+      border-radius: 50%;
+    }
+    .toggle-cb   .t-ring,
+    .toggle-radio .t-ring   { display: block; }
+    .toggle-cb   .t-fill,
+    .toggle-radio .t-fill   { display: none; }
+    .toggle-cb   .t-border,
+    .toggle-radio .t-border { display: none; }
+    .toggle-cb   .t-mark,
+    .toggle-radio .t-mark   { display: none; }
+    .toggle-cb[aria-checked="true"]    .t-ring,
+    .toggle-radio[aria-checked="true"] .t-ring   { display: none; }
+    .toggle-cb[aria-checked="true"]    .t-fill,
+    .toggle-radio[aria-checked="true"] .t-fill   { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-border,
+    .toggle-radio[aria-checked="true"] .t-border { display: block; }
+    .toggle-cb[aria-checked="true"]    .t-mark,
+    .toggle-radio[aria-checked="true"] .t-mark   { display: block; }
+
+    /* ── Reused molecule: CellToggle ── */
+    .cell-toggle {
+      display: flex;
+      width: 100%;
+      background: var(--color-constant-primary);
+    }
+    .cell-toggle__base {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      height: 36px;
+    }
+    .cell-toggle__text {
+      flex: 1;
+      min-width: 0;
+    }
+    .cell-toggle__title {
+      font-family: var(--text-body-large-font-family, 'Roboto'), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+
+    /* cells inside the dialog align with the card edges — no side padding */
+    .confirm-dialog .cell-toggle__base {
+      padding: 0;
+    }
+
+    .confirm-dialog__actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .confirm-dialog__btn {
+      flex: 1;
+      height: 48px;
+      border-radius: 30px;
+      border: 1.5px solid var(--color-primary);
+      font-family: var(--text-title-medium-font-family), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-dialog__btn--cancel {
+      background: var(--color-constant-primary);
+      color: var(--color-primary-transparent-87);
+    }
+
+    .confirm-dialog__btn--delete {
+      background: var(--color-brand-red-secondary);
+      color: var(--color-constant-primary);
+    }
+
     /* ── Empty state ── */
     .empty-state {
       display: flex;
@@ -422,92 +552,39 @@
       color: var(--color-primary-transparent-87);
       font-weight: var(--text-label-large-font-weight);
     }
+
+    /* ── Organism: DropdownRow — floating menu that stacks CellBase items ── */
+    .dropdown-row {
+      display: inline-flex; flex-direction: column; align-items: stretch;
+      width: 180px; padding: 8px 0;
+      background: var(--color-constant-primary);
+      border-radius: 16px;
+      box-shadow: var(--elevation-4);   /* M3: dropdown menus sit on the overlay elevation */
+    }
+    /* Molecule · CellBase (title-only) — reused for every menu item */
+    .dropdown-row .cell-base {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 0 16px;
+      background: transparent; cursor: pointer;
+      text-decoration: none; transition: background 0.15s;
+    }
+    .dropdown-row .cell-base:hover  { background: var(--color-brand-yellow-4); }
+    .dropdown-row .cell-base:active { background: var(--color-brand-yellow-8); }
+    .dropdown-row .cell-base__text  { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 14px 0; }
+    .dropdown-row .cell-base__title {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
   </style>
 </head>
 <body>
 
   <!-- ── Sidebar ── -->
-  <nav class="sidebar">
-    <a class="sidebar__logo" href="home.html">
-      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
-    </a>
-
-    <div class="nav-group" id="nav-styles">
-      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
-        Styles
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="typography.html">Typography</a>
-        <a class="sidebar__link" href="colors.html">Colors</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-icons">
-      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
-        Icons
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="icons.html">Tab bar</a>
-        <a class="sidebar__link" href="icons.html#chats">Chats</a>
-        <a class="sidebar__link" href="icons.html#menu">Menu</a>
-        <a class="sidebar__link" href="icons.html#general">General</a>
-        <a class="sidebar__link" href="icons.html#small">Small</a>
-        <a class="sidebar__link" href="icons.html#loader">Loader</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-atoms">
-      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
-        Atoms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
-        <a class="sidebar__link" href="index.html#preview">Preview</a>
-        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
-        <a class="sidebar__link" href="index.html#button">Button</a>
-        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
-        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
-        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
-        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
-        <a class="sidebar__link" href="index.html#chip-live">ChipLive</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-molecules">
-      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
-        Molecules
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
-        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
-        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
-      </div>
-    </div>
-
-    <div class="nav-group nav-group--active" id="nav-components">
-      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
-        Organisms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link sidebar__link--active" href="organisms.html#card-profile">CardProfile</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="sidebar"></nav>
 
   <!-- ── Main ── -->
   <main class="main">
@@ -531,15 +608,15 @@
             <div class="card-profile">
               <div class="card-profile__container">
                 <div class="card-profile__ava">
-                  <div class="avatar avatar--lg" aria-label="LJ">
-                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  <div class="avatar avatar--lg" aria-label="Clara Voss">
+                    <span class="avatar__initials" aria-hidden="true">CV</span>
                   </div>
                 </div>
                 <div class="card-profile-text card-profile-text--private card-profile-text--with-bio">
                   <div class="card-profile-text__top">
                     <div class="card-profile-text__title-group">
-                      <p class="card-profile-text__title">Title</p>
-                      <p class="card-profile-text__subtitle">Subtitle</p>
+                      <p class="card-profile-text__title">Clara Voss</p>
+                      <p class="card-profile-text__subtitle">@claravoss · 312 subscribers</p>
                     </div>
                     <div class="card-profile-text__private">
                       <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
@@ -547,7 +624,7 @@
                     </div>
                   </div>
                   <div class="card-profile-text__bio">
-                    <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. Subscribe for epic content! 🎲✨ #DnD #TabletopGaming</p>
+                    <p class="card-profile-text__bio-text">Product designer based in Berlin. Sharing UX breakdowns, design process, and tools I actually use. DMs open for collabs ✉️</p>
                   </div>
                 </div>
               </div>
@@ -560,19 +637,19 @@
             <div class="card-profile">
               <div class="card-profile__container">
                 <div class="card-profile__ava">
-                  <div class="avatar avatar--lg" aria-label="LJ">
-                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  <div class="avatar avatar--lg" aria-label="Omar Diaz">
+                    <span class="avatar__initials" aria-hidden="true">OD</span>
                   </div>
                 </div>
                 <div class="card-profile-text card-profile-text--with-bio">
                   <div class="card-profile-text__top">
                     <div class="card-profile-text__title-group">
-                      <p class="card-profile-text__title">Title</p>
-                      <p class="card-profile-text__subtitle">Subtitle</p>
+                      <p class="card-profile-text__title">Dev Morning</p>
+                      <p class="card-profile-text__subtitle">@devmorning · 8.4K subscribers</p>
                     </div>
                   </div>
                   <div class="card-profile-text__bio">
-                    <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. Subscribe for epic content! 🎲✨ #DnD #TabletopGaming</p>
+                    <p class="card-profile-text__bio-text">Daily tips on backend dev, system design, and open source. Posts every weekday at 9 AM. Run by Omar Diaz 👨‍💻</p>
                   </div>
                 </div>
               </div>
@@ -585,15 +662,15 @@
             <div class="card-profile">
               <div class="card-profile__container">
                 <div class="card-profile__ava">
-                  <div class="avatar avatar--lg" aria-label="LJ">
-                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  <div class="avatar avatar--lg" aria-label="Fiona Blake">
+                    <span class="avatar__initials" aria-hidden="true">FB</span>
                   </div>
                 </div>
                 <div class="card-profile-text card-profile-text--private">
                   <div class="card-profile-text__top">
                     <div class="card-profile-text__title-group">
-                      <p class="card-profile-text__title">Title</p>
-                      <p class="card-profile-text__subtitle">Subtitle</p>
+                      <p class="card-profile-text__title">Fiona Blake</p>
+                      <p class="card-profile-text__subtitle">@fionab · 57 subscribers</p>
                     </div>
                     <div class="card-profile-text__private">
                       <img class="card-profile-text__lock" src="icons/small/lock.svg" alt="" aria-hidden="true" />
@@ -611,15 +688,15 @@
             <div class="card-profile">
               <div class="card-profile__container">
                 <div class="card-profile__ava">
-                  <div class="avatar avatar--lg" aria-label="LJ">
-                    <span class="avatar__initials" aria-hidden="true">LJ</span>
+                  <div class="avatar avatar--lg" aria-label="Ivan Petrov">
+                    <span class="avatar__initials" aria-hidden="true">IP</span>
                   </div>
                 </div>
                 <div class="card-profile-text">
                   <div class="card-profile-text__top">
                     <div class="card-profile-text__title-group">
-                      <p class="card-profile-text__title">Title</p>
-                      <p class="card-profile-text__subtitle">Subtitle</p>
+                      <p class="card-profile-text__title">Travel & Food</p>
+                      <p class="card-profile-text__subtitle">@travelfood · 21.1K subscribers</p>
                     </div>
                   </div>
                 </div>
@@ -693,6 +770,191 @@
     </div>
     <!-- /CardProfile -->
 
+    <div class="section-divider"></div>
+
+    <!-- ConfirmDialog -->
+    <div id="confirm-dialog" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">ConfirmDialog</div>
+          <button class="code-toggle-btn" onclick="toggleCode('confirm-dialog')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-start;">
+
+          <!-- checkbox + radio -->
+          <div class="state-wrapper">
+            <div class="confirm-dialog">
+              <p class="confirm-dialog__title">Title</p>
+              <div class="confirm-dialog__options">
+                <div class="cell-toggle">
+                  <div class="cell-toggle__base">
+                    <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                    <button class="toggle-radio" role="radio" aria-checked="false" aria-label="Radio unchecked" tabindex="0">
+                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                        <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                        <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                        <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                        <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="cell-toggle">
+                  <div class="cell-toggle__base">
+                    <div class="cell-toggle__text"><p class="cell-toggle__title">Title</p></div>
+                    <button class="toggle-radio" role="radio" aria-checked="true" aria-label="Radio checked" tabindex="0">
+                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                        <circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>
+                        <circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>
+                        <circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>
+                        <circle class="t-mark"   cx="14" cy="14" r="5"    fill="var(--color-primary-transparent-87)"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="confirm-dialog__actions">
+                <button class="confirm-dialog__btn confirm-dialog__btn--cancel">Cancel</button>
+                <button class="confirm-dialog__btn confirm-dialog__btn--delete">Delete</button>
+              </div>
+            </div>
+            <span class="state-label">default</span>
+          </div>
+
+        </div>
+      </div>
+
+      <aside class="docs">
+        <div class="docs__name">ConfirmDialog</div>
+        <span class="docs__type">Organism</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Composition</div>
+          <div class="docs__row"><span class="docs__row-label">CellToggle</span><span class="docs__row-value">молекула · xSmall · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">Toggle (radio)</span><span class="docs__row-value">атом · toggle-radio · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">Button (Cancel)</span><span class="docs__row-value">outlined · pill · flex 1</span></div>
+          <div class="docs__row"><span class="docs__row-label">Button (Delete)</span><span class="docs__row-value">filled red · pill · flex 1</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">300px · r 16 · elevation-4</span></div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">title-large · center</span></div>
+          <div class="docs__row"><span class="docs__row-label">options</span><span class="docs__row-value">flex-col · h 36px rows</span></div>
+          <div class="docs__row"><span class="docs__row-label">actions</span><span class="docs__row-value">flex · gap 12px · 48px tall</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-constant-primary</span>
+          <span class="docs__token">--elevation-3</span>
+          <span class="docs__token">--color-brand-yellow-secondary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-brand-red-secondary</span>
+          <span class="docs__token">--color-primary</span>
+          <span class="docs__token">--text-title-large-*</span>
+          <span class="docs__token">--text-body-large-*</span>
+          <span class="docs__token">--text-title-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-confirm-dialog">
+        <button class="copy-code-btn" onclick="copyCode('confirm-dialog')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-cmt">&lt;!-- options: reused CellToggle molecule + Toggle atoms --&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog__options"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+        <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-radio"</span> <span class="tok-attr">role</span>=<span class="tok-str">"radio"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span> <span class="tok-cmt">&lt;!-- svg .t-ring/.t-fill/.t-mark (dot) --&gt;</span> <span class="tok-tag">&lt;/button&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__base"</span><span class="tok-tag">&gt;</span>
+        <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-toggle__title"</span><span class="tok-tag">&gt;</span>Title<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+        <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle-radio"</span> <span class="tok-attr">role</span>=<span class="tok-str">"radio"</span> <span class="tok-attr">aria-checked</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span> <span class="tok-cmt">&lt;!-- svg .t-ring/.t-fill/.t-mark (dot) --&gt;</span> <span class="tok-tag">&lt;/button&gt;</span>
+      <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog__actions"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog__btn confirm-dialog__btn--cancel"</span><span class="tok-tag">&gt;</span>Cancel<span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"confirm-dialog__btn confirm-dialog__btn--delete"</span><span class="tok-tag">&gt;</span>Delete<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /ConfirmDialog -->
+
+    <div class="section-divider"></div>
+
+    <!-- DropdownRow -->
+    <div id="dropdown-row" class="component-block">
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">DropdownRow</div>
+          <button class="code-toggle-btn" onclick="toggleCode('dropdown-row')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div style="padding:20px 0;">
+          <div class="dropdown-row" role="menu" aria-label="Create">
+            <a class="cell-base" role="menuitem" href="#"><div class="cell-base__text"><p class="cell-base__title">Channel</p></div></a>
+            <a class="cell-base" role="menuitem" href="#"><div class="cell-base__text"><p class="cell-base__title">Chat</p></div></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs panel -->
+      <div class="docs" id="docs-dropdown-row">
+        <div class="docs__name">DropdownRow</div>
+        <span class="docs__type">organism</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Composition</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">white card · radius 16 · <code class="docs__token">--elevation-3</code> · py 8</span></div>
+          <div class="docs__row"><span class="docs__row-label">item</span><span class="docs__row-value">Molecule <code class="docs__token">CellBase</code> (title-only) · px 16 · py 14</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">hover</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-4</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">pressed</span><span class="docs__row-value"><code class="docs__token">--color-brand-yellow-8</code></span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Tokens</div>
+          <div class="docs__row"><span class="docs__row-label">Surface</span><span class="docs__row-value"><code class="docs__token">--color-constant-primary</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Shadow</span><span class="docs__row-value"><code class="docs__token">--elevation-3</code></span></div>
+          <div class="docs__row"><span class="docs__row-label">Title</span><span class="docs__row-value"><code class="docs__token">--text-title-medium-*</code> · primary-87</span></div>
+        </div>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel" id="code-dropdown-row">
+        <button class="copy-code-btn" onclick="copyCode('dropdown-row')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"dropdown-row"</span> <span class="tok-attr">role</span>=<span class="tok-str">"menu"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;a</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base"</span> <span class="tok-attr">role</span>=<span class="tok-str">"menuitem"</span> <span class="tok-attr">href</span>=<span class="tok-str">"#"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__title"</span><span class="tok-tag">&gt;</span>Channel<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/a&gt;</span>
+  <span class="tok-tag">&lt;a</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base"</span> <span class="tok-attr">role</span>=<span class="tok-str">"menuitem"</span> <span class="tok-attr">href</span>=<span class="tok-str">"#"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__text"</span><span class="tok-tag">&gt;&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"cell-base__title"</span><span class="tok-tag">&gt;</span>Chat<span class="tok-tag">&lt;/p&gt;&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/a&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+    <!-- /DropdownRow -->
+
   </main>
 
   <script src="scripts/nav.js"></script>
@@ -741,5 +1003,26 @@
     });
   </script>
 
+  <script>
+  (() => {
+    const AVATAR_COLORS = [
+      '--color-avatar-green', '--color-avatar-purple', '--color-avatar-teal',
+      '--color-avatar-peach', '--color-avatar-rose', '--color-avatar-sky',
+      '--color-avatar-lime', '--color-avatar-lavender', '--color-avatar-mint',
+      '--color-avatar-indigo', '--color-avatar-sand',
+    ];
+    function hashName(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) >>> 0;
+      return h;
+    }
+    document.querySelectorAll('.avatar:not(.avatar--folder)').forEach(el => {
+      const name = el.getAttribute('aria-label') || el.querySelector('.avatar__initials')?.textContent?.trim() || '';
+      el.style.background = `var(${AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length]})`;
+    });
+  })();
+  </script>
+
+  <script src="scripts/page-transition.js?v=3"></script>
 </body>
 </html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ButtonDoodle · Restart</title>
+<link rel="stylesheet" href="../styles/color-tokens.css" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;gap:56px;flex-wrap:wrap;
+       background:var(--color-constant-primary);font-family:system-ui,sans-serif}
+  .col{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .cap{font-size:12px;color:var(--color-primary-transparent-48);letter-spacing:.4px;text-transform:uppercase}
+
+  /* ── ATOM: ButtonDoodle — Restart ──
+     Hand-drawn "Restart" button; strokes are driven by `color` via currentColor,
+     so the whole thing themes from a single token. */
+  .doodle-btn{
+    all:unset; box-sizing:border-box;
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:6px 16px; cursor:pointer;
+    color:var(--color-primary);                 /* default stroke */
+    background:transparent; border-radius:16px;
+    transition:color .12s ease, background .12s ease, transform .1s ease, opacity .1s ease;
+  }
+  .doodle-btn svg{display:block; height:34px; width:auto;}
+  .doodle-btn:hover{ color:var(--color-brand-red-primary); background:var(--color-brand-red-transparent-8); }
+  .doodle-btn:active{ opacity:.6; transform:scale(.96); }          /* pressed → 60% */
+  .doodle-btn:focus-visible{ outline:2px solid var(--color-primary-transparent-87); outline-offset:3px; }
+  .doodle-btn:disabled{ color:var(--color-primary-transparent-48); background:transparent; cursor:default; transform:none; opacity:1; }
+  /* release micro-interaction */
+  @keyframes doodle-wobble{ 0%{transform:rotate(0)} 25%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} 75%{transform:rotate(-1deg)} 100%{transform:rotate(0)} }
+  .doodle-btn.is-clicked{ animation:doodle-wobble .35s ease; }
+</style>
+</head>
+<body>
+  <!-- hidden SVG sprite: the hand-drawn "Restart" artwork, reused via <use> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ico-restart" viewBox="0 0 266 62" fill="none">
+      <path d="M95.1241 21.7741C95.1241 21.77 95.1241 21.7658 95.1178 23.632C95.1115 25.4981 95.0989 29.2346 95.0861 31.2194C95.0733 33.2043 95.0607 33.3242 95.0542 34.1119C95.0477 34.8995 95.0477 36.3512 95.0671 37.2676C95.0864 38.184 95.1252 38.521 95.1647 38.8574" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M95.5881 22.9798C95.7784 22.929 96.6923 22.5928 98.8249 21.9615C100.468 21.4753 102.872 21.8409 103.793 22.0745C104.596 22.2784 105.115 22.9945 105.609 24.012C106.507 25.8648 106.282 27.1779 106.121 28.0365C105.987 28.7536 104.643 29.598 102.376 30.4184C101.263 30.8211 99.2329 31.0097 97.9317 31.2149C96.6306 31.4202 96.0726 31.4693 96.0929 31.5064C96.4 32.0666 97.9926 31.7954 99.6179 32.4738C102.049 33.4887 103.548 34.623 103.944 35.0097C104.293 35.4648 104.963 36.637 105.805 38.1366C106.142 38.7147 106.295 38.9216 106.614 39.3378" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M109.711 32.7861C109.726 32.7861 110.657 32.7809 112.594 32.7154C113.61 32.6811 114.685 32.54 115.291 32.471C115.898 32.4021 116.002 32.3829 116.589 32.3653C118.243 32.3158 119.355 32.225 119.373 32.0374C119.451 31.2434 119.34 29.9759 119.141 29.3455C118.989 28.8627 118.002 27.8427 117.22 27.1501C116.408 26.4304 115.166 26.4606 114.092 26.4436C113.683 26.4371 113.34 26.5701 112.987 26.7344C112.559 26.9342 111.814 27.7322 110.952 28.7027C110.354 29.3754 110.116 30.3223 109.996 31.326C109.95 31.716 109.997 32.3356 110.085 33.008C110.269 34.4019 110.666 35.5017 110.987 36.2356C111.481 37.3669 111.987 37.7046 112.356 38.0163C112.903 38.4777 114.098 38.6384 115.72 38.6949C116.483 38.7215 116.969 38.3447 117.831 37.6647C118.037 37.4848 118.155 37.3576 118.246 37.2526C118.337 37.1476 118.398 37.0687 118.468 36.8168" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M131.641 28.8839C131.641 28.77 131.61 28.3892 131.491 28.0846C131.372 27.7818 131.054 27.4942 130.063 26.8023C129.728 26.5685 129.352 26.4893 128.839 26.4105C128.239 26.3182 127.824 26.375 127.463 26.496C126.658 26.7649 126.001 27.1355 125.676 27.3819C125.063 27.8461 124.9 28.2404 124.768 28.5957C124.625 28.9829 124.632 29.7393 124.632 30.4978C124.632 30.972 124.814 31.2275 125.318 31.7779C125.839 32.3464 126.393 32.5582 126.699 32.6827C126.922 32.7733 127.298 32.8801 127.944 33.0564C128.591 33.2327 129.5 33.4652 130.143 33.6707C131.154 33.9939 131.642 34.3291 131.924 34.5472C132.497 34.991 132.711 35.628 132.777 35.8992C132.876 36.3071 132.622 36.7914 132.28 37.3799C132.133 37.6331 131.8 37.7933 130.919 38.0576C130.351 38.2281 129.279 38.3674 128.509 38.4675C127.296 38.625 126.775 38.5637 126.578 38.5106C126.197 38.4079 125.858 38.253 125.615 38.1152C125.317 37.9129 124.937 37.5668 124.545 37.128C124.366 36.9149 124.23 36.7213 124.063 36.5047" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M137.724 23.3862C137.724 23.3877 137.724 23.3892 137.728 25.1453C137.733 26.9013 137.742 30.4119 137.785 32.4259C137.829 34.4398 137.907 34.8508 138.021 35.236C138.242 35.9817 138.495 36.4203 138.699 36.6897C139.042 37.1432 139.385 37.4416 139.587 37.5911C140.191 37.9356 140.544 38.073 140.817 38.1424C140.978 38.177 141.182 38.2105 141.417 38.2449" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M135.498 27.1153C135.5 27.1153 135.502 27.1153 136.111 27.107C136.72 27.0987 137.937 27.0821 138.659 27.0585C139.813 26.9718 140.21 26.9661 140.692 26.9592C140.871 26.9543 140.917 26.9464 140.982 26.9382" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M146 28.7667C146.007 28.7667 146.727 28.4031 147.936 27.81C148.657 27.456 149.021 27.3942 149.228 27.3711C149.48 27.3429 150.17 27.4709 151.056 27.662C151.725 27.8064 152.003 28.1236 152.684 28.9888C153.16 29.5948 153.395 30.2909 153.617 31.0424C153.756 31.5107 153.854 32.1801 153.924 33.1063C153.993 34.0324 154.007 35.2014 153.955 36.2884C153.904 37.3753 153.787 38.3449 153.726 38.9097C153.666 39.4745 153.666 39.6052 153.618 39.7165" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M153.906 32.0063C153.904 32.0063 153.902 32.0063 152.974 32.0148C152.047 32.0232 150.194 32.0401 149.048 32.1C147.902 32.1598 147.519 32.2621 147.185 32.3779C146.567 32.5923 146.14 32.8535 145.813 33.101C145.425 33.3941 145.082 33.8748 144.788 34.3096C144.461 34.7939 144.467 35.79 144.549 36.3357C144.661 37.0722 145.146 37.3978 145.641 37.8322C145.921 38.0774 146.535 38.2721 147.296 38.5047C147.892 38.6868 148.528 38.7017 149.14 38.6971C149.552 38.694 149.979 38.5209 150.546 38.267C150.846 38.1324 151.143 37.9258 151.519 37.6209C151.894 37.316 152.331 36.9037 152.657 36.5677C152.983 36.2316 153.183 35.9843 153.295 35.8328C153.407 35.6812 153.424 35.6329 153.441 35.5831" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M158.936 26.4272C158.936 27.1403 158.936 27.8533 158.947 29.9163C158.957 31.9793 158.978 35.3707 159.001 37.1832C159.024 38.9957 159.049 39.1267 159.08 39.273" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M159.541 29.522C159.585 29.4464 160.151 28.8369 161.072 28.021C161.901 27.2862 162.587 26.9814 162.919 26.838C163.195 26.741 163.512 26.6742 163.879 26.6295C164.054 26.6143 164.208 26.6143 164.377 26.6086" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M169.57 23.0098C169.57 23.0127 169.57 23.0156 169.568 25.0068C169.567 26.998 169.564 30.9773 169.606 33.2534C169.648 35.5295 169.736 35.9818 169.846 36.3821C170.049 37.1271 170.308 37.6302 170.492 37.9363C170.84 38.3519 171.214 38.6015 172.182 38.8252C172.555 38.8688 173.052 38.8921 173.572 38.8513" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M166.896 26.7485C166.897 26.7485 166.899 26.7485 167.66 26.7557C168.422 26.7629 169.942 26.7773 171.109 26.8273C172.276 26.8774 173.043 26.9627 173.887 27.0506" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M263.809 1.82666C263.809 1.84099 263.809 1.85532 263.876 10.3665C263.943 18.8777 264.077 35.8852 264.196 45.1287C264.315 54.3722 264.415 55.3363 264.492 56.1141C264.569 56.8919 264.619 57.4542 264.823 58.9702" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M1.7817 2.44484C1.76642 2.42956 1.75113 2.41427 1.58369 11.6996C1.41625 20.985 1.09712 39.5715 1.01895 49.3372C0.94078 59.103 1.11324 59.4847 1.3749 59.9807" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M1.77661 1.79336C1.79047 1.79336 4.27661 1.79336 40.1718 1.65763C79.986 1.50707 159.601 1.58453 201.431 1.47033C243.261 1.35613 244.895 1.17793 248.801 1.04529C252.707 0.912641 257.277 1.04527 263.777 1.79347" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M1.50393 59.8326C1.52937 59.8326 1.55481 59.8326 44.7767 60.2935C87.9987 60.7543 174.189 58.137 218.951 58.6715C263.714 59.2059 264.202 59.3252 264.277 59.2869" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <div class="col">
+    <div class="cap">Default · hover · press</div>
+    <button class="doodle-btn" aria-label="Restart"
+            onclick="this.classList.remove('is-clicked');void this.offsetWidth;this.classList.add('is-clicked')">
+      <svg viewBox="0 0 266 62" aria-hidden="true"><use href="#ico-restart"/></svg>
+    </button>
+  </div>
+
+  <div class="col">
+    <div class="cap">Disabled</div>
+    <button class="doodle-btn" aria-label="Restart" disabled>
+      <svg viewBox="0 0 266 62" aria-hidden="true"><use href="#ico-restart"/></svg>
+    </button>
+  </div>
+</body>
+</html>

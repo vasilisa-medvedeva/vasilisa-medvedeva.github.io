@@ -38,7 +38,7 @@
 |---|---|
 | `--color-constant-primary` | Background of btn-add and field |
 | `--color-primary-transparent-24` | Border of btn-add and field |
-| `--color-primary-transparent-60` | Placeholder text color |
+| `--color-primary-transparent-48` | Placeholder text color |
 | `--color-primary-transparent-87` | Typed text and caret color |
 | `--text-body-large-*` | Typography for all text inside field |
 
