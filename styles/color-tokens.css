@@ -101,6 +101,10 @@
   --color-avatar-indigo-text:   #4C49A2;
   --color-avatar-sand-text:     #8A7748;
 
+  /* Chat background gradient (Peach → Rose) */
+  --color-chat-bg-start: #FFE6D0;   /* Peach */
+  --color-chat-bg-end:   #FCD3E2;   /* Rose */
+
   /* Viewer / Documentation */
   --color-state-label: var(--color-primary-transparent-48);
 }

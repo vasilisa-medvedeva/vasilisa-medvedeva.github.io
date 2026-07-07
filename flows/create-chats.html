@@ -502,7 +502,7 @@
     }
     .chat-body {
       flex: 1; min-height: 0; overflow-y: auto; position: relative;
-      background: linear-gradient(45deg, #FFE6D0, #FCD3E2);  /* Peach → Rose */
+      background: linear-gradient(45deg, var(--color-chat-bg-start), var(--color-chat-bg-end));  /* Peach → Rose */
       display: flex; flex-direction: column;
     }
     .chat-body::before {
@@ -1683,7 +1683,7 @@
                   <div class="channelchat-lead" role="button" tabindex="0" aria-label="Sub-channels" aria-haspopup="dialog" onclick="window.openSubchannels()">
                     <div class="channelchat-round"><span class="channelchat-round__initial" id="channelChatRoundInitial">N</span></div>
                     <span class="chat-topbar__name" id="channelChatName">General</span>
-                    <svg class="channelchat-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 10l5 5 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="channelchat-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 10l5 5 5-5" stroke="var(--color-constant-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <button class="icon-btn icon-btn--on-red" aria-label="Pinned messages"><img src="../icons/general/pin.svg" alt="" aria-hidden="true"></button>
                   <div class="channelchat-icon" aria-label="Channel"><span class="channelchat-icon__initial" id="channelChatIcon">N</span></div>
