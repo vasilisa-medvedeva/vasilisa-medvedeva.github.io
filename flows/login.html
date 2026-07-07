@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow · Log in</title>
+  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="stylesheet" href="../styles/cursor.css?v=9" />
+  <link rel="stylesheet" href="../styles/text-tokens.css" />
+  <link rel="stylesheet" href="../styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="../styles/page-transition.css?v=3" />
+  <!-- Inter — used for the flow-description panel (portfolio copy) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-constant-primary);   /* white */
+      height: 100vh; overflow: hidden;   /* fixed viewport; the scaled stage centres within it */
+      display: flex;
+      align-items: center;        /* centre the composition both axes */
+      justify-content: center;
+      padding: 40px;
+    }
+
+    /* ── Centred composition: left column + phone. Internal gaps are fixed;
+       the whole stage scales down (fitStage) when the window is small, so the
+       side margins grow/shrink with the page. ── */
+    .flow-stage {
+      display: flex;
+      align-items: center;
+      gap: 72px;                  /* fixed gap between the copy column and the phone */
+      transform-origin: center center;
+    }
+
+    /* Close ✕ — top-right of the window, back to the PYROBLAST home */
+    .flow-close {
+      position: fixed; top: 32px; right: 40px; z-index: 50;
+      width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+    }
+    .flow-close img { width: 64px; height: 64px; display: block; }
+    .flow-close:active { transform: scale(0.94); }
+
+    /* ── Left copy column ── */
+    .flow-desc {
+      width: 631px; flex-shrink: 0;            /* line length from Figma */
+      display: flex; flex-direction: column; align-items: stretch; gap: 13px;   /* title→text gap */
+    }
+    .flow-desc__eyebrow {
+      font-family: var(--text-label-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-large-font-size);
+      font-weight: var(--text-label-large-font-weight);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: var(--text-label-large-letter-spacing);
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    /* Text block (title + lead + Demo): 570px wide, right edge aligned to the
+       Restart button's right edge (align-self flex-end + the 20px right margin). */
+    .flow-desc__text {
+      align-self: flex-end;
+      width: 570px; margin-right: 20px;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    /* Demo sits under the text block, 30px below, left edge aligned to the heading. */
+    .flow-desc__text .flow-btn--demo { margin-top: 60px; margin-right: 0; }
+    .flow-desc__title {
+      font-family: "Inter", sans-serif;
+      font-size: 80px; font-weight: 700; line-height: 80px;   /* from Figma */
+      color: var(--color-primary);
+      margin-bottom: 13px;   /* title → lead gap (flex gap removed for exact button spacing) */
+    }
+    .flow-desc__lead {
+      font-family: "Inter", sans-serif;
+      font-size: 20px; font-weight: 400; line-height: 28px;   /* from Figma */
+      color: var(--color-primary-transparent-70);
+    }
+
+    /* Right-aligned call-to-action group: Hi-fi illustration + Start/Restart */
+    .flow-cta { align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; margin-top: 184px; }
+    .flow-illustration { width: 352px; height: auto; display: block; margin-bottom: 4px; transform: translate(55px, 20px); }
+
+    /* Doodle buttons (Start / Restart) — SVG assets; colours baked into the asset */
+    .flow-btn {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      width: 264px; margin-right: 20px; border-radius: 14px;   /* nudged 20px left of the column edge */
+      transition: transform .1s ease, filter .12s ease;
+    }
+    .flow-btn svg { display: block; width: 100%; height: auto; }
+    .flow-btn .btn-fill { transition: fill .12s ease; }
+    .flow-btn--demo:hover    .btn-fill { fill: #5DA9F9; }   /* darker blue on hover */
+    .flow-btn--start:hover   .btn-fill { fill: #E0EFFF; }   /* light-blue tint on hover */
+    .flow-btn:active { transform: scale(.98); opacity: .7; }   /* pressed feedback */
+    .flow-btn:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 3px; }
+
+    /* ── Android device mockup ── */
+    /* pinned to the right: 40px body padding + 60px margin = 100px gap on the right;
+       left edge falls where it may. */
+    .stage { position: relative; flex-shrink: 0; }
+    .device {
+      position: relative;
+      width: max-content;                           /* natural size (phone + bezel); ignore stage's set width */
+      padding: 12px;                                /* bezel thickness */
+      background: var(--color-primary);             /* device chrome */
+      border-radius: 54px;
+      box-shadow: var(--elevation-5);
+      transform-origin: top left;
+    }
+    /* punch-hole camera, centred over the status bar */
+    .device__cam {
+      position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--color-primary);
+      box-shadow: 0 0 0 1.5px var(--color-primary-transparent-70);
+      z-index: 60; pointer-events: none;
+    }
+
+    /* ── Phone screen (sits flush inside the bezel) ── */
+    .phone {
+      position: relative;
+      width: 360px;
+      height: 780px;
+      border-radius: 42px;
+      background: var(--color-brand-yellow-4);
+      overflow: hidden;
+    }
+
+    /* Fade-to-black overlay — covers the screen during the loop restart */
+    .flow-fade {
+      position: absolute; inset: 0; z-index: 200;
+      background: var(--color-primary);   /* black */
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.46s ease;
+    }
+    .flow-fade.is-black { opacity: 1; }
+
+    /* Social sign-in confirmation — brief animated screen after Google/Facebook */
+    .social-auth {
+      position: absolute; inset: 0; z-index: 190;
+      background: var(--color-brand-yellow-4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .social-auth.is-visible { opacity: 1; pointer-events: auto; }
+    .social-auth__badge {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: var(--color-brand-yellow-secondary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .social-auth__check { width: 52px; height: 52px; }
+    .social-auth__check path {
+      fill: none; stroke: var(--color-primary); stroke-width: 5;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 40; stroke-dashoffset: 40;
+    }
+    .social-auth__label {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-87);
+      opacity: 0;
+    }
+    .social-auth__label img { width: 22px; height: 22px; display: block; }
+    .social-auth.is-visible .social-auth__badge     { animation: sa-pop 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+    .social-auth.is-visible .social-auth__check path { animation: sa-draw 0.3s ease 0.28s forwards; }
+    .social-auth.is-visible .social-auth__label      { animation: sa-label 0.3s ease 0.42s forwards; }
+    @keyframes sa-pop   { from { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } to { transform: scale(1); opacity: 1; } }
+    @keyframes sa-draw  { to { stroke-dashoffset: 0; } }
+    @keyframes sa-label { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      .social-auth__badge, .social-auth__check path, .social-auth__label { animation: none !important; }
+      .social-auth__check path { stroke-dashoffset: 0; }
+      .social-auth__label { opacity: 1; }
+    }
+
+    /* Embed mode (?embed=1) — bare phone for the home-page grid preview */
+    body.embed { background: transparent; padding: 0; gap: 0; align-items: flex-start; justify-content: flex-start; min-height: 0; }
+    body.embed .stage { align-self: flex-start; margin-right: 0; }
+    body.embed .device { padding: 0; background: transparent; border-radius: 0; box-shadow: none; transform: none; }
+    body.embed .device__cam { display: none; }
+    body.embed .phone { box-shadow: none; border: 0; border-radius: 0; }
+    body.embed .flow-desc, body.embed .flow-close { display: none; }
+    body.embed .flow-stage { gap: 0; }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-brand-yellow-4);
+    }
+
+    /* ── Top slab: statusbar + topbar + tabs as one seamless red surface ── */
+    .top-slab { background: var(--color-brand-red-secondary); flex-shrink: 0; }
+
+    /* ── Statusbar (atom · red) ── */
+    .statusbar {
+      display: flex; align-items: flex-end; gap: 16px;
+      height: 50px; padding: 10px 24px;
+      background: var(--color-brand-red-secondary);
+      flex-shrink: 0;
+    }
+    .statusbar__time {
+      flex: 1;
+      font-family: var(--text-label-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-large-font-size);
+      font-weight: var(--text-label-large-font-weight);
+      line-height: 20px;
+      letter-spacing: 0.14px;
+      color: var(--color-constant-primary);
+    }
+    .statusbar__icons { display: flex; align-items: center; gap: 6px; }
+    .statusbar__icons img { display: block; }
+    .sb-icon { width: 16px; height: 16px; }
+    .sb-icon--battery { width: 8px; height: 15px; }
+
+    /* ── TopBar (molecule · Chats) ── */
+    .top-bar {
+      display: flex; align-items: center; gap: 8px;
+      height: 64px; padding: 4px 4px 4px 16px;   /* M3 small top app bar */
+      background: var(--color-brand-red-secondary);
+      flex-shrink: 0;
+    }
+    .top-bar__title {
+      flex: 1; min-width: 0;
+      font-family: var(--text-title-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-large-font-size);
+      font-weight: var(--text-title-large-font-weight);
+      line-height: var(--text-title-large-line-height);
+      letter-spacing: var(--text-title-large-letter-spacing);
+      color: var(--color-constant-primary);
+    }
+    .icon-btn {
+      all: unset; box-sizing: border-box;
+      width: 48px; height: 48px; border-radius: 100px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .icon-btn img { width: 24px; height: 24px; display: block; }
+    .icon-btn--on-red img { filter: brightness(0) invert(1); }
+
+    /* ── SwipeTabs (molecule · topNavigation) ── */
+    .swipe-tabs {
+      display: flex; align-items: flex-start;
+      background: var(--color-brand-red-secondary);
+      overflow-x: auto; overflow-y: hidden;
+      flex-shrink: 0;
+      scrollbar-width: none;
+    }
+    .swipe-tabs::-webkit-scrollbar { display: none; }
+    .swipe-tab {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 12px; cursor: pointer; flex-shrink: 0;
+    }
+    .swipe-tab--active { padding: 12px 12px 0; }
+    .swipe-tab__label {
+      white-space: nowrap;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-constant-transparent-87);
+    }
+    .swipe-tab--active .swipe-tab__label {
+      font-family: var(--text-title-medium-font-family), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-constant-primary);
+    }
+    .swipe-tab__indicator {
+      display: block; height: 5px; width: 100%;
+      margin-top: 7px; border-radius: 3px 3px 0 0;
+      background: var(--color-primary-transparent-87);
+    }
+
+    /* ── Chat list row · Molecule TableRows_Chats ── */
+    .chats-row {
+      position: relative;
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; min-height: 64px; padding: 0 16px;
+      background: var(--color-brand-yellow-4);
+    }
+    .chats-row--pressed, .chats-row:active { background: var(--color-brand-yellow-8); }
+    .chats-row__avatar {
+      position: relative; flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-brand-yellow-16);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .chats-row--channel .chats-row__avatar { border-radius: 12px; }
+    /* Pyroblast Team brand avatar (black chip · yellow initial) */
+    .chats-row__avatar--brand { background: var(--color-primary); border-radius: 12px; }
+    .chats-row__avatar--brand .chats-row__initials { color: var(--color-brand-yellow-primary); }
+    .chats-row__initials {
+      font-family: var(--text-headline-medium-font-family, "Roboto"), sans-serif;
+      font-weight: 600; font-size: 20px; line-height: 24px;
+      color: var(--color-primary-transparent-70); user-select: none;
+    }
+    .chats-row__text { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; padding: 12px 0; }
+    .chats-row--channel .chats-row__text { padding: 5px 0; }
+    .chats-row__title {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chats-row__subtitle {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chats-row--unread .chats-row__subtitle { color: var(--color-primary-transparent-87); }
+    .chats-row__right {
+      flex-shrink: 0; align-self: stretch;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding-top: 8px;
+    }
+    .chats-row__time {
+      font-family: var(--text-body-small-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      font-weight: var(--text-body-small-font-weight);
+      line-height: 14px; letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+    .chats-row__pin { width: 24px; height: 24px; display: block; }
+    .chats-row__divider {
+      position: absolute; left: 64px; right: 0; bottom: 0; height: 0;
+      border-top: 0.5px solid var(--color-primary-transparent-16);
+    }
+    .chats-row--no-divider .chats-row__divider { display: none; }
+
+    /* Atom · NotificationCounter (--cell) */
+    .notification-counter {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 4px 6px; border-radius: 12px;
+      background: var(--color-brand-yellow-secondary);
+      border: 1.5px solid var(--color-primary-transparent-87);
+    }
+    .notification-counter--cell { background: var(--color-brand-red-secondary); padding-left: 7px; padding-right: 7px; }
+    .notification-counter__number {
+      font-family: var(--text-label-medium-bold-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-bold-font-size);
+      font-weight: var(--text-label-medium-bold-font-weight);
+      line-height: var(--text-label-medium-bold-line-height);
+      letter-spacing: var(--text-label-medium-bold-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .notification-counter--cell .notification-counter__number { color: var(--color-constant-primary); }
+
+    .screen__spacer { flex: 1; }
+
+    /* ── Bottom TabBar (molecule) + home indicator ── */
+    .tab-bar {
+      background: var(--color-brand-yellow-8);
+      flex-shrink: 0;
+    }
+    .tab-bar__tabs { display: flex; align-items: center; }
+    .tab-bar__tab-btn {
+      all: unset; box-sizing: border-box;
+      flex: 1; height: 48px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tab-bar__tab-icon { width: 24px; height: 24px; display: block; }
+    .home-indicator {
+      height: 16px; display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 6px; background: var(--color-brand-yellow-8);
+    }
+    .home-indicator__bar { width: 72px; height: 2px; border-radius: 1.5px; background: var(--color-primary-transparent-87); }
+
+    /* ── Bottom sheet (login) — hidden below, ready for the next flow step ── */
+    .scrim {
+      position: absolute; inset: 0; background: var(--color-primary-transparent-32);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .bottom-sheet {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      background: var(--color-brand-yellow-4);
+      border-top: 2px solid var(--color-primary-transparent-87);
+      border-radius: 16px 16px 0 0;
+      /* Container transform open — the sheet grows into place from a smaller container */
+      transform-origin: bottom center;
+      transform: scale(0.85);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.25s cubic-bezier(0.2, 0, 0, 1); /* outgoing 250ms */
+      display: flex; flex-direction: column; align-items: stretch;
+      padding: 16px 16px 0;
+    }
+    .screen.sheet-open .bottom-sheet { transform: scale(1); opacity: 1; transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); } /* incoming 300ms */
+    .screen.sheet-open .scrim { opacity: 1; pointer-events: auto; }
+    /* content fades in during the first ~25% (FADE_MODE_IN) while the container grows */
+    .bottom-sheet > * { opacity: 0; }
+    .screen.sheet-open .bottom-sheet > * { opacity: 1; transition: opacity 0.12s 0.02s cubic-bezier(0.2, 0, 0, 1); }
+    /* Log in / Sign up open — the sheet grows to full screen in place; Hello-buddy just fades out */
+    .screen.login-open .bottom-sheet,
+    .screen.signup-open .bottom-sheet { opacity: 0; pointer-events: none; transition: opacity 0.15s cubic-bezier(0.2, 0, 0, 1); }
+
+    /* Start/Restart tap feedback — a slight "re-open" bounce so the press reads as a response */
+    @keyframes sheet-nudge {
+      0%   { transform: scale(1); }
+      45%  { transform: scale(0.955); }
+      100% { transform: scale(1); }
+    }
+    .screen.sheet-open .bottom-sheet.is-nudge { animation: sheet-nudge 0.34s cubic-bezier(0.2, 0, 0, 1); }
+
+    .sheet__handle { width: 32px; height: 4px; border-radius: 100px; background: var(--color-primary-transparent-87); align-self: center; }
+    .sheet__title {
+      margin: 28px 0 24px; text-align: center;
+      font-family: var(--text-headline-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: var(--text-headline-medium-letter-spacing);
+      color: var(--color-primary);
+    }
+    .sheet__buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+
+    /* Button atom */
+    .btn {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 18px 16px; border-radius: 30px;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      cursor: pointer;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+    }
+    .btn--primary { background: var(--color-brand-yellow-primary); }
+    .btn--secondary { background: var(--color-constant-primary); }
+    .btn--text { border-color: transparent; background: transparent; }
+    .sheet__guest { padding: 16px 0; }
+
+    /* States — same tokens as the library Button atom (default / pressed / disabled) */
+    /* Primary (Sign up) */
+    .btn--primary:hover  { background: var(--color-brand-yellow-secondary); }
+    .btn--primary:active { background: var(--color-brand-yellow-60); }
+    /* Secondary (Log in) */
+    .btn--secondary:hover,
+    .btn--secondary:active { background: var(--color-primary-transparent-04); }
+    /* Only-text (Continue as Guest) */
+    .btn--text:hover,
+    .btn--text:active { background: var(--color-primary-transparent-04); }
+    /* Autoplay press state — mimics :active so the tap is visible (scale set inline in JS) */
+    .btn.is-pressed { transition: transform .08s ease; }
+    .btn--primary.is-pressed   { background: var(--color-brand-yellow-60); }
+    .btn--secondary.is-pressed { background: var(--color-primary-transparent-04); }
+
+    /* Disabled */
+    .btn:disabled { cursor: default; }
+    .btn--primary:disabled   { background: var(--color-brand-yellow-32); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .btn--secondary:disabled { background: var(--color-primary-transparent-04); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .btn--text:disabled      { background: var(--color-primary-transparent-04); color: var(--color-primary-transparent-48); }
+
+    /* Focus (keyboard a11y) */
+    .btn:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 2px; }
+
+    /* ── Login screen — full-height sheet over a blackout (from "Log in") ── */
+    .login-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .login-overlay__blackout {
+      position: absolute; inset: 0;
+      background: var(--color-primary-transparent-48);
+      opacity: 0; transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
+    }
+    /* white statusbar over the dimmed background */
+    .statusbar--ghost { position: absolute; top: 0; left: 0; right: 0; background: transparent; z-index: 5; }
+    /* Dark statusbar ONLY on the full-screen yellow modal steps (login/signup/verify/newacc).
+       Excludes the chat (success) and leaves chats/Hello-buddy white on red. */
+    .screen.login-open:not(.success-open) .statusbar--ghost .statusbar__time,
+    .screen.signup-open:not(.success-open) .statusbar--ghost .statusbar__time,
+    .screen.verify-open:not(.success-open) .statusbar--ghost .statusbar__time,
+    .screen.newacc-open:not(.success-open) .statusbar--ghost .statusbar__time { color: var(--color-primary-transparent-87); }
+    .screen.login-open:not(.success-open) .statusbar--ghost .sb-icon,
+    .screen.signup-open:not(.success-open) .statusbar--ghost .sb-icon,
+    .screen.verify-open:not(.success-open) .statusbar--ghost .sb-icon,
+    .screen.newacc-open:not(.success-open) .statusbar--ghost .sb-icon { filter: brightness(0); opacity: 0.87; }
+
+    .login-sheet {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      /* collapsed at Hello-buddy height; grows in place (no slide) for Hello→Log in/Sign up.
+         no shadow — the sheet shares the full-screen backdrop surface (same colour) */
+      height: 311px;
+      overflow: hidden;
+      background: var(--color-brand-yellow-4);
+      border-radius: 16px 16px 0 0;
+      opacity: 0; pointer-events: none;
+      transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), opacity 0.09s cubic-bezier(0.3, 0, 0.8, 0.15);
+      display: flex; flex-direction: column; align-items: stretch;
+      padding: 0 16px;
+    }
+    .screen.login-open .login-overlay { pointer-events: auto; }
+    .screen.login-open .login-overlay__blackout { opacity: 1; }
+
+    /* Opaque backdrop behind the sheets — so the crossfade never reveals the chats underneath */
+    .flow-backdrop {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 311px;
+      background: var(--color-brand-yellow-4);
+      border-radius: 16px 16px 0 0;
+      box-shadow: var(--elevation-3-up);
+      opacity: 0; pointer-events: none; z-index: 1;
+      /* only opacity in the base transition → closing just fades (no height "descend");
+         the height (expand) is animated by the open rules below */
+      transition: opacity 0.12s cubic-bezier(0.3, 0, 0.8, 0.15);
+    }
+    /* expands to ALMOST full screen — leaves the ~50px scrim gap at top (Figma 6.5% inset),
+       matching the sheet height so the dark scrim shows through above the sheet */
+    .screen.signup-open .signup-overlay .flow-backdrop { opacity: 1; height: 730px; transition: height 0.3s cubic-bezier(0.2, 0, 0, 1), opacity 0.15s cubic-bezier(0.2, 0, 0, 1); }
+    .screen.login-open .login-overlay .flow-backdrop,
+    .screen.verify-open .login-overlay .flow-backdrop,
+    .screen.newacc-open .login-overlay .flow-backdrop { opacity: 1; height: 730px; transition: height 0.3s cubic-bezier(0.2, 0, 0, 1), opacity 0.15s cubic-bezier(0.2, 0, 0, 1); }
+    /* on the Sign Up path the login-overlay backdrop is pre-sized to full height (opacity 0)
+       so opening the code screen just fades it in — no growing "strip" at the top */
+    .screen.signup-open .login-overlay .flow-backdrop { height: 730px; }
+    /* on the empty screen the sheets are gone — the opaque success screen shows, hide the backdrop */
+    /* Final step: the whole modal (backdrop + sheet) slides DOWN to close, revealing the chat */
+    .screen.success-open .login-overlay .flow-backdrop { opacity: 1; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.3, 0, 0.8, 0.15); }
+    /* hide the modal's dark ghost statusbar so the chat's own (white) statusbar shows */
+    .screen.success-open .statusbar--ghost { opacity: 0; }
+    /* sheets sit above the backdrop */
+    .login-sheet { z-index: 2; }
+    /* Active: sheet expands 311→730 AND slides in from the right (shared axis X + unfold) */
+    /* Container transform — the compact sheet morphs (height) into the full screen, standard easing */
+    .screen.login-open .login-sheet:not(.signup-sheet) { height: 730px; opacity: 1; pointer-events: auto; transform: translateX(0); transition: height 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    /* Passed (a deeper step opened): the email sheet flies LEFT + fades (shared axis X · standard easing) */
+    .screen.login-open.verify-open .login-sheet:not(.signup-sheet),
+    .screen.signup-open.verify-open .signup-sheet { height: 730px; opacity: 0; pointer-events: none; transform: translateX(-100px); transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    /* content fades in early (FADE_MODE_IN · 0–25%) while the sheet morphs to full screen */
+    .login-sheet > * { opacity: 0; transition: opacity 0.09s cubic-bezier(0.2, 0, 0, 1); }
+    .screen.login-open .login-sheet:not(.signup-sheet) > *,
+    .screen.signup-open .signup-sheet > * { opacity: 1; transition: opacity 0.12s 0.04s cubic-bezier(0.2, 0, 0, 1); }
+
+    .login-sheet__handle { width: 32px; height: 4px; border-radius: 100px; background: var(--color-primary-transparent-87); align-self: center; margin-top: 16px; }
+    .login-sheet__top { position: relative; height: 56px; display: flex; align-items: center; margin-top: 4px; }
+    .login-sheet__top .icon-btn { position: absolute; left: -4px; }
+    .login-sheet__title {
+      flex: 1; text-align: center;
+      font-family: var(--text-headline-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: var(--text-headline-medium-font-weight);
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: var(--text-headline-medium-letter-spacing);
+      color: var(--color-primary);
+    }
+    /* Email field (TextFields.L) */
+    .login-field { display: flex; flex-direction: column; gap: 6px; margin-top: 24px; }
+    .login-field__control {
+      position: relative;
+      display: flex; align-items: center;
+      min-height: 56px;
+      padding: 16px; border-radius: 30px;
+      background: var(--color-brand-yellow-4);
+      border: 1px solid var(--color-primary-transparent-48);
+      cursor: text;
+      transition: border-color 0.18s ease;
+    }
+    /* Single floating label — animates between resting (placeholder) and floated (notch) */
+    .login-field__label {
+      position: absolute; left: 12px; top: 50%; padding: 0 4px;
+      background: var(--color-brand-yellow-4);
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      transform: translateY(-50%) scale(1);
+      transform-origin: left center;
+      pointer-events: none;
+      transition: top 0.18s cubic-bezier(0.2, 0, 0, 1),
+                  transform 0.18s cubic-bezier(0.2, 0, 0, 1),
+                  color 0.18s ease;
+    }
+    .login-field__helper {
+      padding: 0 4px;
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .login-sheet .btn--primary { margin-top: 18px; }
+    .login-divider {
+      text-align: center; margin-top: 24px;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary);
+    }
+    .social-row { display: flex; gap: 12px; margin-top: 24px; }
+    .social-btn {
+      all: unset; box-sizing: border-box;
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px; border-radius: 40px;
+      background: var(--color-constant-primary);
+      border: 1.5px solid var(--color-primary-transparent-87);
+      cursor: pointer;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      transition: background 0.12s ease;
+    }
+    .social-btn:hover, .social-btn:active { background: var(--color-primary-transparent-04); }
+    .social-btn img { width: 32px; height: 32px; display: block; }
+    .login-footer {
+      margin-top: auto; margin-bottom: 16px; padding: 16px; text-align: center;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary);
+    }
+    .login-footer a {
+      color: var(--color-primary);
+      font-weight: var(--text-title-medium-font-weight);
+      text-decoration: underline; cursor: pointer;
+    }
+
+    /* ── Email field: focused state ── */
+    .login-field.is-focused .login-field__control { border: 1.5px solid var(--color-primary-transparent-87); padding: 15px; }
+    /* label floats up to the border and shrinks (smoothly, via transition above) */
+    .login-field.is-focused .login-field__label {
+      top: 0;
+      transform: translateY(-50%) scale(0.875);
+      color: var(--color-primary-transparent-48);
+    }
+    .login-field__value { display: none; align-items: center; min-height: 20px;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size); font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height); letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .login-field.is-focused .login-field__value { display: flex; }
+    .login-field__caret { width: 1.5px; height: 20px; background: var(--color-primary-transparent-87); animation: caret-blink 1s steps(1) infinite; }
+    @keyframes caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+    /* ── Filled (but unfocused) field — used when returning via "Change" (value shown, label floated, no caret) ── */
+    .login-field.is-filled .login-field__value { display: flex; }
+    .login-field.is-filled .login-field__label {
+      top: 0;
+      transform: translateY(-50%) scale(0.875);
+      color: var(--color-primary-transparent-48);
+    }
+    .login-field.is-filled .login-field__caret { display: none; }
+
+    /* ── Screen 3 — Check your email (verify code) — full-height sheet over the login screen ── */
+    .verify-sheet {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 730px;
+      background: var(--color-brand-yellow-4);
+      border-radius: 16px 16px 0 0;
+      /* Shared axis X (Material) — 300ms · standard easing cubic-bezier(0.4,0,0.2,1) */
+      opacity: 0; pointer-events: none;
+      transform: translateX(100px);
+      transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1);
+      display: flex; flex-direction: column; align-items: stretch;
+      padding: 0 16px;
+      z-index: 3;
+    }
+    .screen.verify-open .verify-sheet { opacity: 1; pointer-events: auto; transform: translateX(0); transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    /* Passed (New Account opened): the code sheet flies LEFT + fades (shared axis X) */
+    .screen.verify-open.newacc-open .verify-sheet { opacity: 0; pointer-events: none; transform: translateX(-100px); transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    /* Final step (chat revealed): sheets slide DOWN to close */
+    .screen.success-open .verify-sheet,
+    .screen.success-open .newacc-sheet { opacity: 1; pointer-events: none; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.3, 0, 0.8, 0.15); }
+    /* keep the code sheet interactive whether it rose from Log in or Sign Up */
+    .screen.verify-open .login-overlay { pointer-events: auto; }
+    .verify-sheet .btn--primary { margin-top: 18px; }
+
+    /* Body copy with inline "Change" action (Body/Large · primary87) */
+    .verify-copy {
+      margin-top: 16px; text-align: center;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .verify-copy__change {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-weight: var(--text-title-medium-font-weight);
+      text-decoration: underline; cursor: pointer;
+    }
+
+    /* Resend footer (Body/Large · primary60) */
+    .verify-resend {
+      margin: 24px 0 16px; padding: 16px; text-align: center;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      font-weight: var(--text-body-large-font-weight);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+    .verify-resend__link {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-weight: var(--text-title-medium-font-weight);
+      text-decoration: underline; cursor: pointer;
+    }
+    .verify-resend__link--inactive {
+      cursor: default;
+      color: var(--color-primary-transparent-32);
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-weight: var(--text-body-large-font-weight); /* regular while the timer runs */
+    }
+
+    /* ── Sign Up overlay ── */
+    .signup-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .screen.signup-open .signup-overlay { pointer-events: auto; }
+    .screen.signup-open .signup-overlay .login-overlay__blackout { opacity: 1; }
+    .screen.signup-open .signup-sheet { height: 730px; opacity: 1; pointer-events: auto; transform: translateX(0); transition: height 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    .signup-continue { margin-top: 18px; }
+    .signup-divider {
+      display: flex; align-items: center; gap: 8px;
+      margin: 20px 0 12px;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      color: var(--color-primary-transparent-60);
+    }
+    .signup-divider::before, .signup-divider::after { content: ''; flex: 1; height: 1px; background: var(--color-primary-transparent-16); }
+    .signup-socials { display: flex; gap: 10px; }
+    .signup-social-btn { flex: 1; gap: 8px; padding: 14px 8px; }
+    .signup-social-btn img { flex-shrink: 0; }
+    .signup-legal {
+      text-align: center; padding: 16px 8px;
+      font-family: var(--text-body-small-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-small-font-size);
+      line-height: var(--text-body-small-line-height);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Screen 5 — New Account ── */
+    .newacc-sheet {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 730px;
+      background: var(--color-brand-yellow-4);
+      border-radius: 16px 16px 0 0;
+      /* Shared axis X (Material) — 300ms · standard easing cubic-bezier(0.4,0,0.2,1) */
+      opacity: 0; pointer-events: none;
+      transform: translateX(100px);
+      transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1);
+      display: flex; flex-direction: column; align-items: stretch;
+      padding: 0 16px;
+      z-index: 4;
+    }
+    .screen.newacc-open .newacc-sheet { opacity: 1; pointer-events: auto; transform: translateX(0); transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.34s cubic-bezier(0.2, 0, 0, 1); }
+    /* Passed (empty screen opened): New Account flies LEFT + fades */
+    .screen.newacc-open.success-open .newacc-sheet { opacity: 1; pointer-events: none; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.3, 0, 0.8, 0.15); }
+    .screen.newacc-open .login-overlay { pointer-events: auto; }
+
+    /* Avatar atom (ported from molecules.html) */
+    .avatar {
+      position: relative; display: flex; align-items: center;
+      justify-content: center; background: var(--color-brand-yellow-16);
+      border-radius: 50%; flex-shrink: 0; overflow: hidden;
+    }
+    .avatar--xl { width: 96px; height: 96px; }
+    .avatar__initials {
+      font-family: var(--text-headline-medium-font-family), sans-serif;
+      font-weight: 500; font-size: 34px; line-height: 1;
+      color: var(--color-brand-yellow-quaternary); /* darker shade of the yellow-16 bg */
+      text-align: center; user-select: none;
+    }
+
+    /* New Account avatar — Avatar atom + add badge overlaid outside its clip */
+    .newacc-avatar { position: relative; align-self: center; margin-top: 24px; }
+    /* default library avatar colours (yellow) — matches New Group in the Create Chats flow */
+    .newacc-avatar .avatar { background: var(--color-brand-yellow-16); }
+    .newacc-avatar .avatar__initials { color: var(--color-brand-yellow-quaternary); }
+    /* button36px_add atom — white round button with subtle border + dark plus */
+    /* Add-photo badge — canonical library icon (icons/general/add-circle.svg: circle + plus) */
+    .newacc-avatar__add {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      position: absolute; right: -2px; bottom: -2px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .newacc-avatar__add img { width: 36px; height: 36px; display: block; }
+    .newacc-sheet .login-field { margin-top: 28px; }
+    .newacc-continue { margin-top: 18px; }
+
+    /* ── Screen 4 — Success ── */
+    .success-screen {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      background: var(--color-brand-yellow-4);
+      opacity: 0; pointer-events: none;
+      z-index: 0; /* sits behind the verify sheet so it's revealed as the sheet slides down */
+    }
+    .screen.success-open .success-screen { opacity: 1; pointer-events: auto; }
+    /* verify/newacc fade out (via removing their -open class) to reveal the empty screen */
+    .screen.success-open .login-overlay__blackout { opacity: 0; }
+    .success-screen__body {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+
+    /* ── Chat screen (final destination of the flow) ── */
+    /* Conversation top bar (red slab · back + avatar + name + pin) */
+    .chat-topbar {
+      display: flex; align-items: center; gap: 8px;
+      height: 64px; padding: 4px;   /* M3: 64dp tall, icons land at 16dp from edges */
+      background: var(--color-brand-red-secondary);
+      flex-shrink: 0;
+    }
+    .chat-topbar__avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .chat-topbar__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .chat-topbar__name {
+      flex: 1; min-width: 0;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-constant-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Messages area */
+    .chat-body {
+      flex: 1; min-height: 0; overflow-y: auto;
+      position: relative;
+      background: linear-gradient(45deg, #FFE6D0, #FCD3E2);  /* Peach → Rose */
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 2px; padding: 12px 0;   /* tight — photo + bubbles read as one sender run */
+    }
+    /* doodle pattern as a plain background-image (renders over file:// — a CSS mask
+       would be blocked as cross-origin there). Flat-tinted SVG (#EDB79E) over the gradient. */
+    .chat-body::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url(../assets/chat-pattern.svg);
+      background-repeat: repeat;
+      background-size: 216px 216px;
+      opacity: 0.8;
+    }
+    .chat-body > * { position: relative; z-index: 1; }
+    /* Grouped run from one sender — 4px gap between bubbles */
+    .message-group { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; }
+
+    /* Bubble2.0 atom (ported from molecules.html) — recipient/white/left used here */
+    .bubble2 {
+      --b2-fill: var(--color-brand-yellow-16); --b2-stroke: var(--color-brand-yellow-32);
+      position: relative; display: inline-flex; max-width: 300px; vertical-align: top;
+    }
+    .bubble2__shape { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+    .bubble2__shape path { fill: var(--b2-fill); stroke: var(--b2-stroke); stroke-width: 1.5; stroke-linejoin: round; }
+    .bubble2__content {
+      position: relative; z-index: 1; min-width: 24px;
+      padding: 8px 12px 6px;
+      font-family: var(--text-body-large-font-family), sans-serif;
+      font-weight: var(--text-body-large-font-weight);
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      overflow-wrap: anywhere;
+    }
+    .bubble2__content p { margin: 0; }
+    /* WhatsApp-style inline time: invisible spacer reserves room on the last line;
+       the real time floats bottom-right (drops to its own line only if the spacer wraps) */
+    .chat-time-gap {
+      display: inline; visibility: hidden; white-space: nowrap; margin-left: 8px;
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-weight: var(--text-body-small-font-weight);
+      font-size: var(--text-body-small-font-size);
+      letter-spacing: var(--text-body-small-letter-spacing);
+    }
+    .bubble2__content .chat-time { position: absolute; right: 12px; bottom: 4px; }
+    .bubble2--white { --b2-fill: var(--color-constant-primary); --b2-stroke: var(--color-brand-yellow-24); }
+    /* Container-transform reveal: the bubble grows from its tail while content fades in */
+    .bubble2, .chat-photo-col { transform-origin: bottom left; }   /* recipient tail = bottom-left */
+    .bubble2__content > * { transition: none; }
+    @keyframes bubble-reveal {
+      0%   { transform: scale(0.6); opacity: 0; }
+      25%  { opacity: 1; }                                    /* FADE_MODE_IN enter 0–25% */
+      100% { transform: scale(1); opacity: 1; }
+    }
+    /* runs when the chat is revealed; cascades down: photo first, then the grouped run */
+    .screen.success-open .bubble2,
+    .screen.success-open .chat-photo-col { animation: bubble-reveal 0.3s cubic-bezier(0.2, 0, 0, 1) both; }
+    .screen.success-open #chatBody > .message:first-child .chat-photo-col { animation-delay: 0.12s; }
+    .screen.success-open .message-group .message:nth-child(1) .bubble2 { animation-delay: 0.24s; }
+    .screen.success-open .message-group .message:nth-child(2) .bubble2 { animation-delay: 0.36s; }
+    .screen.success-open .message-group .message:nth-child(3) .bubble2 { animation-delay: 0.48s; }
+    @media (prefers-reduced-motion: reduce) {
+      .screen.success-open .bubble2,
+      .screen.success-open .chat-photo-col { animation: none; }
+    }
+
+    /* Message wrapper (recipient) */
+    .message { display: flex; align-items: flex-end; gap: 2px; }
+    .message--recipient { justify-content: flex-start; padding-left: 8px; }
+    .message .bubble2 { flex: 0 1 auto; min-width: 0; }
+    /* SendTime inside the bubble, bottom-right */
+    .chat-time {
+      align-self: flex-end;
+      font-family: var(--text-body-small-font-family), sans-serif;
+      font-weight: var(--text-body-small-font-weight);
+      font-size: var(--text-body-small-font-size);
+      line-height: var(--text-body-small-line-height);
+      letter-spacing: var(--text-body-small-letter-spacing);
+      color: var(--color-primary-transparent-48);
+      white-space: nowrap;
+    }
+
+    /* Photo message — standalone image (not a text bubble) */
+    .chat-photo-col { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 2px; max-width: 220px; }
+    .chat-photo { border-radius: 16px; overflow: hidden; line-height: 0; width: 100%; }
+    .chat-photo img { display: block; width: 100%; height: auto; }
+
+    /* Message input bar (brandYellow/8 · add + white field + emoji) */
+    .chat-input-bar { flex-shrink: 0; display: flex; flex-direction: column; background: var(--color-brand-yellow-8); }
+    .chat-input { display: flex; align-items: flex-end; gap: 4px; padding: 4px 10px; border-top: 0.5px solid var(--color-primary-transparent-08); }
+    .chat-input__add {
+      all: unset; box-sizing: border-box; cursor: pointer; flex-shrink: 0;
+      width: 36px; height: 36px; border-radius: 100px;
+      background: var(--color-constant-primary); border: 1px solid var(--color-primary-transparent-24);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-input__add img { width: 20px; height: 20px; display: block; }
+    .chat-input__field {
+      flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
+      padding: 6px 6px 6px 12px;
+      background: var(--color-constant-primary); border: 1px solid var(--color-primary-transparent-08);
+      border-radius: 20px;
+    }
+    .chat-input__placeholder {
+      flex: 1; min-width: 0;
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      letter-spacing: var(--text-body-large-letter-spacing);
+      color: var(--color-primary-transparent-48);
+    }
+    .chat-input__emoji { flex-shrink: 0; display: flex; align-items: center; padding: 2px; }
+    .chat-input__emoji img { width: 20px; height: 20px; display: block; opacity: 0.6; }
+
+    /* ── On-screen keyboard (Android QWERTY) ── */
+    .keyboard {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 10; /* above all sheets (z2–4) */
+      background: var(--color-brand-yellow-4);
+      padding: 6px 4px 0;
+      display: flex; flex-direction: column; gap: 8px;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.3, 0, 0.8, 0.15); /* exit */
+      pointer-events: none; /* parent overlay may be inert; only catch taps while open */
+    }
+    .screen.kb-open .keyboard { transform: translateY(0); pointer-events: auto; transition: transform 0.28s cubic-bezier(0.05, 0.7, 0.1, 1); }
+
+    .kb-accessory { display: flex; align-items: center; gap: 16px; padding: 4px 10px 2px; }
+    .kb-accessory__chip {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      width: 22px; height: 22px; border-radius: 100px;
+      background: var(--color-brand-red-transparent-32);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary-transparent-87); font-size: 14px; flex-shrink: 0;
+    }
+    .kb-accessory__icons { flex: 1; display: flex; align-items: center; gap: 28px; color: var(--color-primary-transparent-87); font-size: 13px; }
+    .kb-accessory__icons span { font-size: 15px; }
+    .kb-accessory__icons .kb-gif { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+    .kb-accessory__mic { color: var(--color-primary-transparent-87); font-size: 15px; }
+
+    .kb-rows { display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
+    .kb-row { display: flex; gap: 5px; justify-content: center; }
+    .kb-row--indent { padding: 0 18px; }
+    .kb-key {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      flex: 1; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-brand-yellow-16); border-radius: 6px;
+      font-family: "Roboto", sans-serif; font-size: 18px;
+      color: var(--color-primary-transparent-87); user-select: none;
+    }
+    .kb-key:active { background: var(--color-brand-yellow-32); }
+    .kb-key.kb-key--press { background: var(--color-brand-yellow-48); }   /* autoplay key flash */
+    .kb-key--fn   { flex: 1.5; background: var(--color-brand-red-transparent-16); font-size: 16px; }
+    .kb-key--alt  { flex: 1.6; background: var(--color-brand-red-transparent-32); font-size: 13px; font-weight: 500; }
+    .kb-key--enter{ flex: 1.6; background: var(--color-brand-red-transparent-32); border-radius: 100px; }
+    .kb-key--space{ flex: 5; }
+    .kb-key--sym  { background: var(--color-brand-red-transparent-16); }
+    .kb-key--none { background: transparent; pointer-events: none; }
+
+    .keyboard--numeric .kb-rows { padding: 0 12px; gap: 6px; }
+    .keyboard--numeric .kb-row  { gap: 8px; }
+    .keyboard--numeric .kb-key  { height: 56px; border-radius: 12px; font-size: 24px; font-weight: 400; }
+    .keyboard--numeric .kb-key--fn { flex: 1; font-size: 20px; }
+
+    .kb-bottomnav { display: flex; align-items: center; justify-content: space-between; padding: 4px 18px 6px; }
+    .kb-bottomnav__btn { all: unset; cursor: pointer; color: var(--color-primary-transparent-87); font-size: 16px; }
+    .kb-bottomnav__handle { width: 94px; height: 3.5px; border-radius: 12px; background: var(--color-primary-transparent-87); }
+
+    /* ── Preview controls (not part of the screen) ── */
+    .flow-controls { display: flex; gap: 10px; }
+    .flow-controls button {
+      all: unset; cursor: pointer; padding: 10px 16px; border-radius: 10px;
+      background: var(--color-primary); color: var(--color-constant-primary);
+      font-size: 14px; font-weight: 500;
+    }
+    .flow-controls button.secondary { background: var(--color-primary-transparent-08); color: var(--color-primary); }
+    .flow-caption { font-size: 13px; color: var(--color-primary-transparent-48); }
+  </style>
+</head>
+<body>
+
+  <!-- Close → back to the PYROBLAST home -->
+  <a class="flow-close" href="../home.html" aria-label="Close"><img src="../assets/ic-close.svg" alt="Close" /></a>
+
+  <div class="flow-stage" id="flowStage">
+  <aside class="flow-desc">
+    <div class="flow-desc__text">
+      <div class="flow-desc__title">Entrance</div>
+      <p class="flow-desc__lead">Skip the login wall. Drop people straight into the chat and blend sign-in and sign-up into one seamless flow.</p>
+      <button class="flow-btn flow-btn--demo" onclick="window.playDemo()" aria-label="Demo">
+        <svg viewBox="0 0 266 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <rect class="btn-fill" x="1" y="2" width="262" height="58" fill="#84C0FF"/>
+          <path d="M133.508 25.0361C134.06 25.0363 134.508 25.4841 134.508 26.0361C134.508 26.0363 134.524 26.725 134.566 28.0264C134.598 28.0036 134.629 27.9798 134.662 27.957C135.199 27.5764 135.827 27.1545 136.274 26.9268C136.753 26.6826 137.389 26.5371 138.042 26.4961C138.709 26.4543 139.471 26.5167 140.215 26.75C140.894 26.9629 141.268 27.4514 141.472 27.8398C141.493 27.8797 141.509 27.921 141.528 27.96C142.522 27.0558 143.593 26.5132 144.14 26.2998C144.552 26.1393 145.025 26.0965 145.447 26.1016C145.886 26.1069 146.353 26.1655 146.795 26.2617C147.44 26.4022 147.874 26.8564 148.177 27.2813C148.485 27.7133 148.77 28.2783 149.061 28.8994L149.094 28.9697L149.116 29.0439C149.28 29.6097 149.416 30.3288 149.479 31.916C149.541 33.4847 149.53 35.9446 149.519 38.4238C149.516 38.976 149.067 39.4213 148.515 39.419C147.963 39.4165 147.517 38.9672 147.519 38.415C147.53 35.9146 147.54 33.5097 147.48 31.9961C147.424 30.5916 147.311 30.0271 147.212 29.6699C146.94 29.0915 146.733 28.6986 146.549 28.4414C146.437 28.2839 146.368 28.2274 146.345 28.2109C146.026 28.1431 145.704 28.105 145.423 28.1016C145.119 28.0979 144.936 28.1359 144.867 28.1631C144.471 28.3177 143.52 28.7985 142.698 29.6055C142.51 29.7894 142.419 29.8903 142.379 29.9356C142.362 29.9552 142.355 29.9644 142.354 29.9658C142.353 29.9667 142.353 29.9681 142.351 29.9707C142.35 29.9715 142.343 29.9798 142.336 29.9883C142.334 29.9916 142.306 30.0278 142.268 30.0674C142.25 30.0862 142.2 30.137 142.125 30.1895C142.113 30.1981 142.09 30.214 142.057 30.2334C142.063 30.3277 142.071 30.425 142.077 30.5254C142.119 31.3577 142.131 32.4501 142.117 33.7578V33.7715L142.116 33.7842C142.07 35.0204 141.957 36.084 141.9 36.8848C141.841 37.6989 141.832 38.3278 141.822 39C141.813 39.5521 141.358 39.9927 140.806 39.9844C140.254 39.9758 139.813 39.5218 139.822 38.9697C139.832 38.296 139.843 37.6177 139.906 36.7422C139.969 35.8576 140.072 34.9138 140.117 33.7275C140.131 32.4411 140.118 31.3986 140.079 30.6279C140.059 30.241 140.034 29.9359 140.003 29.71C139.976 29.5086 139.952 29.4207 139.948 29.4033C139.915 29.3282 139.888 29.2523 139.868 29.1943C139.837 29.1077 139.835 29.1015 139.807 29.0244C139.769 28.9169 139.737 28.8368 139.703 28.7715C139.669 28.7078 139.644 28.6781 139.632 28.667C139.626 28.6611 139.624 28.6604 139.618 28.6582C139.14 28.5086 138.628 28.4634 138.167 28.4922C137.694 28.5219 137.347 28.6256 137.183 28.709C136.88 28.8636 136.356 29.2072 135.818 29.5889C135.31 29.9485 134.855 30.295 134.651 30.4639C134.66 30.6971 134.668 30.9391 134.678 31.1895C134.735 32.6606 134.889 33.6293 134.97 34.6172C135.047 35.548 135.06 36.2697 135.081 36.8828C135.103 37.496 135.135 38.0233 135.205 38.6621C135.266 39.2108 134.87 39.7047 134.322 39.7656C133.773 39.8263 133.279 39.4307 133.218 38.8818C133.14 38.1804 133.106 37.6019 133.082 36.9541C133.059 36.3065 133.049 35.6518 132.977 34.7813C132.91 33.9674 132.738 32.7762 132.679 31.2676C132.55 27.9438 132.508 26.0744 132.508 26.0361C132.508 25.484 132.956 25.0361 133.508 25.0361ZM102.345 21C102.654 21 102.929 21.1399 103.113 21.3594C103.686 21.3665 104.914 21.3874 106.737 21.4492C109.088 21.529 110.673 22.0389 111.625 22.4199C113.621 23.2186 114.722 24.9253 115.412 26.3135C115.675 26.8448 115.812 27.476 115.906 28.0977C116 28.7248 116.066 29.4559 116.144 30.1934C116.328 31.9487 116.052 33.3749 115.738 34.3125C115.066 36.3145 113.365 37.7103 112.412 38.3066C111.171 39.0823 109.404 39.3147 107.788 39.4639L107.754 39.4668L107.721 39.4678C105.711 39.5201 104.015 39.49 103.017 39.4375V39.4365C102.965 39.4339 102.913 39.4304 102.862 39.4277C102.683 39.731 102.35 39.9312 101.973 39.9209C101.421 39.9054 100.985 39.4455 101 38.8936C101.16 33.167 101.253 27.6548 101.299 24.8701C101.346 22.0764 101.345 22.0399 101.345 22C101.345 21.4479 101.793 21.0002 102.345 21ZM157.999 25.8193C158.292 25.6048 158.692 25.5568 159.038 25.7305C159.044 25.7333 159.048 25.7351 159.06 25.7373C159.068 25.7389 159.082 25.7415 159.105 25.7441C159.117 25.7455 159.13 25.7463 159.147 25.748C159.162 25.7496 159.185 25.7525 159.207 25.7549L159.231 25.7568L159.254 25.7607C159.495 25.7983 159.758 25.8614 160.104 25.9795L160.48 26.1172L160.496 26.123C161.008 26.3316 161.486 26.5272 161.879 26.7422C162.289 26.9661 162.674 27.2457 162.975 27.6621C163.322 28.1423 164.053 29.0746 164.406 30.2373C164.67 31.1104 164.901 32.2704 164.696 33.6016C164.536 34.6352 164.245 35.8579 163.674 36.9307C163.531 37.2 163.404 37.4276 163.287 37.6065C163.179 37.7703 163.02 37.9905 162.786 38.1514C162.772 38.1643 162.092 38.8189 161.17 39.1709C160.461 39.4418 159.029 39.8367 157.084 39.3594C156.619 39.2452 156.122 39.1105 155.599 38.749C154.777 38.1805 154.107 37.5746 153.525 36.3018C153.312 35.8363 153.019 35.1422 152.967 33.7607C152.936 32.93 152.946 31.7009 153.028 30.9316C153.123 30.0314 153.219 29.3981 153.529 28.8809C153.897 28.2662 154.535 27.2059 155.827 26.5635C156.717 26.1207 157.456 25.9111 157.999 25.8193ZM122.84 25.4355C124.448 25.4786 126.248 25.2599 127.735 26.7979C128.545 27.6356 129.393 29.185 129.371 31.6699C129.368 31.891 129.364 32.4389 128.949 32.8721C128.551 33.2866 127.995 33.373 127.569 33.3984C127.103 33.4262 126.484 33.3824 125.861 33.3359C125.207 33.2873 124.485 33.2298 123.722 33.2061C122.089 33.1552 120.848 33.1261 120.014 33.1094C119.762 33.1043 119.547 33.1006 119.371 33.0977C119.524 33.8358 119.745 34.5315 119.919 34.9756C120.03 35.2587 120.235 35.4935 120.629 35.7461C121.055 36.0181 121.598 36.2498 122.344 36.5772C123.712 37.1772 124.883 36.8859 125.528 36.6484C125.778 36.5106 125.975 36.3718 126.142 36.2178C126.207 36.143 126.306 36.0143 126.531 35.6416C126.816 35.1691 127.431 35.0175 127.904 35.3027C128.376 35.5882 128.528 36.203 128.243 36.6758C127.979 37.1129 127.804 37.3659 127.603 37.5869L127.58 37.6113L127.556 37.6357C127.213 37.9641 126.832 38.2228 126.414 38.4453L126.36 38.4746L126.301 38.4971C125.439 38.826 123.637 39.3291 121.54 38.4092C120.863 38.1119 120.141 37.8079 119.551 37.4307C118.931 37.034 118.37 36.5043 118.057 35.7051C117.814 35.0839 117.516 34.1189 117.34 33.125C117.172 32.1772 117.075 31.0051 117.406 30.0869C117.69 29.2967 118.264 27.5422 119.863 26.4395C120.568 25.9534 121.638 25.4035 122.84 25.4355ZM158.87 27.7295C158.8 27.7453 158.727 27.7555 158.653 27.7559C158.481 27.7567 157.795 27.818 156.716 28.3545C155.989 28.7163 155.602 29.3112 155.245 29.9082C155.196 29.9889 155.118 30.178 155.016 31.1426C154.949 31.7779 154.936 32.9009 154.965 33.6856C155.005 34.7449 155.211 35.1808 155.343 35.4707C155.737 36.3329 156.126 36.6814 156.738 37.1045C156.941 37.2454 157.134 37.312 157.562 37.417C159.002 37.7706 160.008 37.4745 160.457 37.3027C161.088 37.062 161.144 36.8693 161.584 36.5518C161.591 36.5419 161.602 36.5283 161.615 36.5098C161.678 36.4127 161.769 36.2539 161.909 35.9912C162.329 35.2012 162.575 34.2292 162.719 33.2969C162.862 32.3696 162.708 31.5314 162.492 30.8184C162.256 30.0413 161.76 29.3974 161.353 28.833C161.287 28.7421 161.177 28.6375 160.92 28.4971C160.649 28.3491 160.292 28.1992 159.757 27.9814C159.32 27.8121 159.102 27.7623 158.96 27.7393C158.937 27.7372 158.906 27.7337 158.87 27.7295ZM103.299 24.9033C103.257 27.4421 103.173 32.2552 103.038 37.4336C103.064 37.4349 103.091 37.438 103.12 37.4395H103.121C104.053 37.4885 105.682 37.5188 107.636 37.4688C109.303 37.3136 110.579 37.093 111.351 36.6104C112.133 36.1216 113.383 35.0427 113.842 33.6758C114.077 32.9757 114.306 31.8384 114.155 30.4023C114.072 29.6171 114.014 28.9644 113.928 28.3965C113.842 27.8236 113.741 27.4458 113.621 27.2031C112.993 25.9402 112.176 24.7953 110.882 24.2773C110.098 23.9637 108.744 23.5186 106.669 23.4482C105.393 23.405 104.413 23.3815 103.751 23.3691C103.59 23.3661 103.446 23.3642 103.323 23.3623C103.316 23.7501 103.31 24.2522 103.299 24.9033ZM122.787 27.4355C122.201 27.42 121.556 27.7018 120.998 28.0859C120.003 28.7723 119.6 29.8939 119.288 30.7637C119.254 30.8562 119.229 30.9673 119.212 31.0947C119.923 31.1058 121.462 31.1347 123.785 31.207C124.601 31.2324 125.372 31.2943 126.009 31.3418C126.619 31.3872 127.064 31.4126 127.368 31.4033C127.331 29.5749 126.704 28.6082 126.297 28.1875C125.519 27.3825 124.813 27.4898 122.787 27.4355Z" fill="black"/>
+          <path d="M263.809 1.82666C263.809 1.84099 263.809 1.85532 263.876 10.3665C263.943 18.8777 264.077 35.8852 264.196 45.1287C264.315 54.3722 264.415 55.3363 264.492 56.1141C264.569 56.8919 264.619 57.4542 264.823 58.9702" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.7817 2.44484C1.76642 2.42956 1.75113 2.41427 1.58369 11.6996C1.41625 20.985 1.09712 39.5715 1.01895 49.3372C0.94078 59.103 1.11324 59.4847 1.3749 59.9807" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.77661 1.79336C1.79047 1.79336 4.27661 1.79336 40.1718 1.65763C79.986 1.50707 159.601 1.58453 201.431 1.47033C243.261 1.35613 244.895 1.17793 248.801 1.04529C252.707 0.912641 257.277 1.04527 263.777 1.79347" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.50393 59.8326C1.52937 59.8326 1.55481 59.8326 44.7767 60.2935C87.9987 60.7543 174.189 58.137 218.951 58.6715C263.714 59.2059 264.202 59.3252 264.277 59.2869" stroke="black" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flow-cta">
+      <img class="flow-illustration" src="../assets/il-hi-fi.svg" alt="Hi-fi prototype" />
+      <button class="flow-btn flow-btn--start" onclick="window.restartManual()" aria-label="Start">
+        <svg viewBox="0 0 266 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <rect class="btn-fill" x="1" y="2" width="262" height="58" fill="none"/>
+          <path d="M117.145 22.3349C117.145 22.1391 117.095 21.4837 116.904 20.9596C116.714 20.4385 116.203 19.9436 114.616 18.7529C114.079 18.3507 113.476 18.2143 112.655 18.0788C111.692 17.92 111.028 18.0177 110.448 18.2258C109.159 18.6887 108.105 19.3263 107.584 19.7503C106.603 20.5492 106.341 21.2277 106.13 21.839C105.9 22.5053 105.912 23.8071 105.912 25.1123C105.912 25.9283 106.204 26.3679 107.012 27.3151C107.847 28.2935 108.734 28.6579 109.225 28.8721C109.582 29.028 110.184 29.2118 111.22 29.5152C112.256 29.8186 113.714 30.2186 114.744 30.5723C116.365 31.1285 117.146 31.7053 117.598 32.0807C118.516 32.8442 118.859 33.9405 118.965 34.4072C119.124 35.109 118.717 35.9424 118.169 36.9552C117.934 37.3908 117.399 37.6665 115.988 38.1214C115.078 38.4147 113.358 38.6546 112.124 38.8267C110.181 39.0978 109.346 38.9924 109.03 38.901C108.42 38.7242 107.876 38.4577 107.487 38.2206C107.01 37.8724 106.401 37.2768 105.772 36.5217C105.486 36.155 105.267 35.8218 105 35.4491" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M123.724 23.3862C123.724 23.3877 123.724 23.3892 123.728 25.1453C123.733 26.9013 123.742 30.4119 123.785 32.4259C123.829 34.4398 123.907 34.8508 124.021 35.236C124.242 35.9817 124.495 36.4203 124.699 36.6897C125.042 37.1432 125.385 37.4416 125.587 37.5911C126.191 37.9356 126.544 38.073 126.817 38.1424C126.978 38.177 127.182 38.2105 127.417 38.2449" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M121.498 27.1153C121.5 27.1153 121.502 27.1153 122.111 27.107C122.72 27.0987 123.937 27.0821 124.659 27.0585C125.813 26.9718 126.21 26.9661 126.692 26.9592C126.871 26.9543 126.917 26.9464 126.982 26.9382" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M132 28.7667C132.007 28.7667 132.727 28.4031 133.936 27.81C134.657 27.456 135.021 27.3942 135.228 27.3711C135.48 27.3429 136.17 27.4709 137.056 27.662C137.725 27.8064 138.003 28.1236 138.684 28.9888C139.16 29.5948 139.395 30.2909 139.617 31.0424C139.756 31.5107 139.854 32.1801 139.924 33.1063C139.993 34.0324 140.007 35.2014 139.955 36.2884C139.904 37.3753 139.787 38.3449 139.726 38.9097C139.666 39.4745 139.666 39.6052 139.618 39.7165" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M139.906 32.0063C139.904 32.0063 139.902 32.0063 138.974 32.0148C138.047 32.0232 136.194 32.0401 135.048 32.1C133.902 32.1598 133.519 32.2621 133.185 32.3779C132.567 32.5923 132.14 32.8535 131.813 33.101C131.425 33.3941 131.082 33.8748 130.788 34.3096C130.461 34.7939 130.467 35.79 130.549 36.3357C130.661 37.0722 131.146 37.3978 131.641 37.8322C131.921 38.0774 132.535 38.2721 133.296 38.5047C133.892 38.6868 134.528 38.7017 135.14 38.6971C135.552 38.694 135.979 38.5209 136.546 38.267C136.846 38.1324 137.143 37.9258 137.519 37.6209C137.894 37.316 138.331 36.9037 138.657 36.5677C138.983 36.2316 139.183 35.9843 139.295 35.8328C139.407 35.6812 139.424 35.6329 139.441 35.5831" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M144.936 26.4272C144.936 27.1403 144.936 27.8533 144.947 29.9163C144.957 31.9793 144.978 35.3707 145.001 37.1832C145.024 38.9957 145.049 39.1267 145.08 39.273" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M145.541 29.522C145.585 29.4464 146.151 28.8369 147.072 28.021C147.901 27.2862 148.587 26.9814 148.919 26.838C149.195 26.741 149.512 26.6742 149.879 26.6295C150.054 26.6143 150.208 26.6143 150.377 26.6086" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M155.57 23.0098C155.57 23.0127 155.57 23.0156 155.568 25.0068C155.567 26.998 155.564 30.9773 155.606 33.2534C155.648 35.5295 155.736 35.9818 155.846 36.3821C156.049 37.1271 156.308 37.6302 156.492 37.9363C156.84 38.3519 157.214 38.6015 158.182 38.8252C158.555 38.8688 159.052 38.8921 159.572 38.8513" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M152.896 26.7485C152.897 26.7485 152.899 26.7485 153.66 26.7557C154.422 26.7629 155.942 26.7773 157.109 26.8273C158.276 26.8774 159.043 26.9627 159.887 27.0506" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M263.809 1.82666C263.809 1.84099 263.809 1.85532 263.876 10.3665C263.943 18.8777 264.077 35.8852 264.196 45.1287C264.315 54.3722 264.415 55.3363 264.492 56.1141C264.569 56.8919 264.619 57.4542 264.823 58.9702" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.7817 2.44484C1.76642 2.42956 1.75113 2.41427 1.58369 11.6996C1.41625 20.985 1.09712 39.5715 1.01895 49.3372C0.94078 59.103 1.11324 59.4847 1.3749 59.9807" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.77661 1.79336C1.79047 1.79336 4.27661 1.79336 40.1718 1.65763C79.986 1.50707 159.601 1.58453 201.431 1.47033C243.261 1.35613 244.895 1.17793 248.801 1.04529C252.707 0.912641 257.277 1.04527 263.777 1.79347" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1.50393 59.8326C1.52937 59.8326 1.55481 59.8326 44.7767 60.2935C87.9987 60.7543 174.189 58.137 218.951 58.6715C263.714 59.2059 264.202 59.3252 264.277 59.2869" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <div class="stage" id="stage">
+   <div class="device">
+  <div class="phone">
+    <div class="screen" id="screen">
+
+      <!-- Top slab (statusbar + topbar + tabs) -->
+      <div class="top-slab">
+
+      <!-- Statusbar -->
+      <div class="statusbar">
+        <span class="statusbar__time">9:30</span>
+        <span class="statusbar__icons">
+          <img class="sb-icon" src="../icons/statusbar/wifi-white.svg" alt="" aria-hidden="true">
+          <img class="sb-icon" src="../icons/statusbar/signal-white.svg" alt="" aria-hidden="true">
+          <img class="sb-icon sb-icon--battery" src="../icons/statusbar/battery-white.svg" alt="" aria-hidden="true">
+        </span>
+      </div>
+
+      <!-- TopBar -->
+      <div class="top-bar">
+        <span class="top-bar__title">Chats</span>
+        <button class="icon-btn icon-btn--on-red" aria-label="New chat">
+          <img src="../icons/general/edit-square.svg" alt="" aria-hidden="true">
+        </button>
+      </div>
+
+      <!-- SwipeTabs -->
+      <div class="swipe-tabs">
+        <div class="swipe-tab swipe-tab--active">
+          <span class="swipe-tab__label">All</span>
+          <span class="swipe-tab__indicator"></span>
+        </div>
+        <div class="swipe-tab"><span class="swipe-tab__label">Direct</span></div>
+        <div class="swipe-tab"><span class="swipe-tab__label">Channel</span></div>
+        <div class="swipe-tab"><span class="swipe-tab__label">Mana Manor</span></div>
+        <div class="swipe-tab"><span class="swipe-tab__label">irMana Manor</span></div>
+      </div>
+
+      </div><!-- /top-slab -->
+
+      <!-- Chat list -->
+      <div class="chat-list">
+        <div class="chats-row chats-row--unread chats-row--no-divider">
+          <div class="chats-row__avatar chats-row__avatar--brand"><span class="chats-row__initials">P</span></div>
+          <div class="chats-row__text">
+            <span class="chats-row__title">Pyroblast Team</span>
+            <span class="chats-row__subtitle">Hello! what's up, buddy.</span>
+          </div>
+          <div class="chats-row__right">
+            <span class="chats-row__time">3:45 PM</span>
+            <span class="notification-counter notification-counter--cell"><span class="notification-counter__number">34</span></span>
+          </div>
+          <span class="chats-row__divider"></span>
+        </div>
+      </div>
+
+      <div class="screen__spacer"></div>
+
+      <!-- Bottom TabBar -->
+      <div class="tab-bar">
+        <div class="tab-bar__tabs">
+          <button class="tab-bar__tab-btn" aria-label="Chats"><img class="tab-bar__tab-icon" src="../icons/tabbar/chats-active.svg" alt=""></button>
+          <button class="tab-bar__tab-btn" aria-label="Friends"><img class="tab-bar__tab-icon" src="../icons/tabbar/friends-default.svg" alt=""></button>
+          <button class="tab-bar__tab-btn" aria-label="Notifications"><img class="tab-bar__tab-icon" src="../icons/tabbar/bell-default.svg" alt=""></button>
+          <button class="tab-bar__tab-btn" aria-label="Settings"><img class="tab-bar__tab-icon" src="../icons/tabbar/settings-default.svg" alt=""></button>
+        </div>
+        <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+      </div>
+
+      <!-- Scrim + Login bottom sheet (next flow step) -->
+      <div class="scrim" id="scrim"></div>
+      <div class="bottom-sheet">
+        <span class="sheet__handle"></span>
+        <h2 class="sheet__title">Hello, buddy</h2>
+        <div class="sheet__buttons">
+          <button class="btn btn--primary" onclick="window.goSignUp()">Sign up</button>
+          <button class="btn btn--secondary" onclick="window.goLogin()">Log in</button>
+        </div>
+        <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+      </div>
+
+      <!-- Screen 2a — Sign Up (full-height sheet over blackout) -->
+      <div class="signup-overlay">
+        <div class="login-overlay__blackout"></div>
+        <div class="flow-backdrop"></div>
+        <div class="statusbar statusbar--ghost">
+          <span class="statusbar__time">9:30</span>
+          <span class="statusbar__icons">
+            <img class="sb-icon" src="../icons/statusbar/wifi-white.svg" alt="" aria-hidden="true">
+            <img class="sb-icon" src="../icons/statusbar/signal-white.svg" alt="" aria-hidden="true">
+            <img class="sb-icon sb-icon--battery" src="../icons/statusbar/battery-white.svg" alt="" aria-hidden="true">
+          </span>
+        </div>
+        <div class="login-sheet signup-sheet">
+          <span class="login-sheet__handle"></span>
+          <div class="login-sheet__top">
+            <button class="icon-btn" aria-label="Back" onclick="window.goBackFromSignUp()">
+              <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
+            </button>
+            <span class="login-sheet__title">Sign Up</span>
+          </div>
+          <div class="login-field" id="signupEmailField">
+            <div class="login-field__control" onclick="window.openKeyboard('signup')">
+              <span class="login-field__label">Email</span>
+              <span class="login-field__value"><span class="login-field__text"></span><span class="login-field__caret"></span></span>
+            </div>
+            <span class="login-field__helper">Enter your email address</span>
+          </div>
+          <button class="btn btn--primary signup-continue" id="signupBtn" onclick="window.goVerifyFromSignUp()" disabled>Continue</button>
+          <div class="signup-divider"><span>Or, continue with</span></div>
+          <div class="signup-socials">
+            <button class="btn btn--secondary signup-social-btn" onclick="window.socialAuth(this,'signup')">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 0 1-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35Z" fill="#4285F4"/><path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0 0 10 20Z" fill="#34A853"/><path d="M4.405 11.9A6.01 6.01 0 0 1 4.09 10c0-.662.114-1.305.314-1.9V5.51H1.063A9.996 9.996 0 0 0 0 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59Z" fill="#FBBC05"/><path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0A9.996 9.996 0 0 0 1.064 5.51l3.34 2.59C5.192 5.736 7.396 3.977 10 3.977Z" fill="#EA4335"/></svg>
+              Google
+            </button>
+            <button class="btn btn--secondary signup-social-btn" onclick="window.socialAuth(this,'signup')">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 10C20 4.477 15.523 0 10 0S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878V12.89H5.898V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.563V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10Z" fill="#1877F2"/><path d="M13.893 12.89 14.336 10h-2.773V8.125c0-.792.388-1.563 1.63-1.563h1.26v-2.46s-1.144-.195-2.238-.195c-2.285 0-3.777 1.384-3.777 3.89V10H5.898v2.89h2.54v6.988a10.06 10.06 0 0 0 3.124 0V12.89h2.33Z" fill="white"/></svg>
+              Facebook
+            </button>
+          </div>
+          <div class="screen__spacer"></div>
+          <p class="signup-legal">By continuing you accept our <u>User Agreement</u> and <u>Privacy Policy</u></p>
+          <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+        </div>
+      </div>
+
+      <!-- Screen 2 — Log in (full-height sheet over blackout) -->
+      <div class="login-overlay">
+        <div class="login-overlay__blackout"></div>
+        <div class="flow-backdrop"></div>
+
+        <!-- white statusbar over the dimmed background -->
+        <div class="statusbar statusbar--ghost">
+          <span class="statusbar__time">9:30</span>
+          <span class="statusbar__icons">
+            <img class="sb-icon" src="../icons/statusbar/wifi-white.svg" alt="" aria-hidden="true">
+            <img class="sb-icon" src="../icons/statusbar/signal-white.svg" alt="" aria-hidden="true">
+            <img class="sb-icon sb-icon--battery" src="../icons/statusbar/battery-white.svg" alt="" aria-hidden="true">
+          </span>
+        </div>
+
+        <div class="login-sheet">
+          <span class="login-sheet__handle"></span>
+
+          <!-- TopBar · onlyArrow + centered title -->
+          <div class="login-sheet__top">
+            <button class="icon-btn" aria-label="Back" onclick="window.goBack()">
+              <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
+            </button>
+            <span class="login-sheet__title">Log in</span>
+          </div>
+
+          <!-- Email field (TextFields.L) -->
+          <div class="login-field" id="emailField">
+            <div class="login-field__control" onclick="window.openKeyboard('email')">
+              <span class="login-field__label">Email</span>
+              <span class="login-field__value"><span class="login-field__text"></span><span class="login-field__caret"></span></span>
+            </div>
+            <span class="login-field__helper">Enter your email address</span>
+          </div>
+
+          <!-- Continue (primary · disabled until email entered) → Check your email -->
+          <button class="btn btn--primary" id="continueBtn" onclick="window.goVerify()" disabled>Continue</button>
+
+          <div class="login-divider">Or, continue with</div>
+
+          <!-- Social buttons -->
+          <div class="social-row">
+            <button class="social-btn" onclick="window.socialAuth(this,'login')"><img src="../icons/social/google.svg" alt="" aria-hidden="true">Google</button>
+            <button class="social-btn" onclick="window.socialAuth(this,'login')"><img src="../icons/social/facebook.svg" alt="" aria-hidden="true">Facebook</button>
+          </div>
+
+          <div class="login-footer">Don't have an account? <a>Sign Up</a></div>
+          <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+        </div>
+
+        <!-- Screen 3 — Check your email (verify code · rises over the login sheet) -->
+        <div class="verify-sheet">
+          <span class="login-sheet__handle"></span>
+
+          <!-- TopBar · onlyArrow + centered title -->
+          <div class="login-sheet__top">
+            <button class="icon-btn" aria-label="Back" onclick="window.goBackToEmail()">
+              <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
+            </button>
+            <span class="login-sheet__title">Check your email</span>
+          </div>
+
+          <!-- Body copy with Change action -->
+          <p class="verify-copy">Follow the link or enter the code we just sent to <span id="verifyEmail"></span> <span class="verify-copy__change" onclick="window.goBackToEmail()">Change</span></p>
+
+          <!-- Code field (TextFields.L) -->
+          <div class="login-field" id="codeField">
+            <div class="login-field__control" onclick="window.openKeyboard('code')">
+              <span class="login-field__label">Code</span>
+              <span class="login-field__value"><span class="login-field__text"></span><span class="login-field__caret"></span></span>
+            </div>
+            <span class="login-field__helper">Enter code</span>
+          </div>
+
+          <!-- Continue (primary · disabled until code entered) -->
+          <button class="btn btn--primary" id="verifyBtn" disabled onclick="window.goSuccess()">Continue</button>
+
+          <!-- Resend footer -->
+          <p class="verify-resend">Didn't receive the email? <span class="verify-resend__link verify-resend__link--inactive" id="resendLink">Resend&nbsp;<span id="resendTimer">0:59</span>&nbsp;sec</span></p>
+
+          <div class="screen__spacer"></div>
+          <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+        </div>
+
+        <!-- Screen 4 — Success placeholder -->
+        <div class="success-screen" id="successScreen">
+          <!-- Red top slab: statusbar + conversation top bar -->
+          <div class="top-slab">
+            <div class="statusbar">
+              <span class="statusbar__time">9:30</span>
+              <span class="statusbar__icons">
+                <img class="sb-icon" src="../icons/statusbar/wifi-white.svg" alt="" aria-hidden="true">
+                <img class="sb-icon" src="../icons/statusbar/signal-white.svg" alt="" aria-hidden="true">
+                <img class="sb-icon sb-icon--battery" src="../icons/statusbar/battery-white.svg" alt="" aria-hidden="true">
+              </span>
+            </div>
+            <div class="chat-topbar">
+              <button class="icon-btn icon-btn--on-red" aria-label="Back">
+                <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
+              </button>
+              <div class="chat-topbar__avatar"><img src="../assets/me.png" alt=""></div>
+              <span class="chat-topbar__name" id="chatName">Vasilisa</span>
+              <button class="icon-btn icon-btn--on-red" aria-label="Pinned messages">
+                <img src="../icons/general/pin.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="chat-body" id="chatBody">
+            <!-- photo message (standalone image, not a bubble) -->
+            <div class="message message--recipient">
+              <div class="chat-photo-col">
+                <div class="chat-photo"><img src="../assets/photo-heart.jpeg" alt=""></div>
+                <span class="chat-time">8:30 pm</span>
+              </div>
+            </div>
+            <!-- one sender, three messages in a row → grouped (top / mid / last) -->
+            <div class="message-group">
+              <div class="message message--recipient">
+                <div class="bubble2 bubble2--white bubble2--left bubble2--top">
+                  <svg class="bubble2__shape" aria-hidden="true"><path/></svg>
+                  <div class="bubble2__content"><p><span id="chatIntroMsg">Boom — you're registered&nbsp;🎉</span><span class="chat-time-gap" aria-hidden="true">8:30 pm</span></p><span class="chat-time">8:30 pm</span></div>
+                </div>
+              </div>
+              <div class="message message--recipient">
+                <div class="bubble2 bubble2--white bubble2--left bubble2--mid">
+                  <svg class="bubble2__shape" aria-hidden="true"><path/></svg>
+                  <div class="bubble2__content"><p>That's the whole flow.<span class="chat-time-gap" aria-hidden="true">8:30 pm</span></p><span class="chat-time">8:30 pm</span></div>
+                </div>
+              </div>
+              <div class="message message--recipient">
+                <div class="bubble2 bubble2--white bubble2--left bubble2--last">
+                  <svg class="bubble2__shape" aria-hidden="true"><path/></svg>
+                  <div class="bubble2__content"><p><span id="chatOutroMsg">Tap Start to try Log in&nbsp;👀</span><span class="chat-time-gap" aria-hidden="true">8:30 pm</span></p><span class="chat-time">8:30 pm</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message input bar -->
+          <div class="chat-input-bar">
+            <div class="chat-input">
+              <button class="chat-input__add" aria-label="Add"><img src="../icons/general/add.svg" alt="" aria-hidden="true"></button>
+              <div class="chat-input__field">
+                <span class="chat-input__placeholder">Message...</span>
+                <span class="chat-input__emoji"><img src="../icons/general/emoji.svg" alt="" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+          </div>
+        </div>
+
+        <!-- Screen 5 — New Account (create profile · rises after the code is verified) -->
+        <div class="newacc-sheet">
+          <span class="login-sheet__handle"></span>
+          <div class="login-sheet__top">
+            <button class="icon-btn" id="newaccBack" aria-label="Back" onclick="window.goBackToVerify()">
+              <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
+            </button>
+            <span class="login-sheet__title">New Account</span>
+          </div>
+
+          <!-- Avatar with add badge -->
+          <div class="newacc-avatar">
+            <div class="avatar avatar--xl">
+              <span class="avatar__initials" id="newaccInitials">DN</span>
+            </div>
+            <button class="newacc-avatar__add" aria-label="Add photo">
+              <img src="../icons/general/add-circle.svg" alt="" aria-hidden="true">
+            </button>
+          </div>
+
+          <!-- Display Name field -->
+          <div class="login-field" id="displayNameField">
+            <div class="login-field__control" onclick="window.openKeyboard('name')">
+              <span class="login-field__label">Display Name</span>
+              <span class="login-field__value"><span class="login-field__text"></span><span class="login-field__caret"></span></span>
+            </div>
+            <span class="login-field__helper">Other people can see your name</span>
+          </div>
+
+          <button class="btn btn--primary newacc-continue" id="newaccBtn" onclick="window.goNewAccDone()">Continue</button>
+
+          <div class="screen__spacer"></div>
+          <div class="home-indicator"><span class="home-indicator__bar"></span></div>
+        </div>
+
+        <!-- On-screen keyboard (slides up when the field is tapped) -->
+        <div class="keyboard" id="keyboard">
+          <div class="kb-accessory">
+            <button class="kb-accessory__chip" onclick="window.closeKeyboard()" aria-label="Hide suggestions">‹</button>
+            <div class="kb-accessory__icons">
+              <span class="kb-gif">GIF</span>
+              <span>⚙</span>
+              <span>🌐</span>
+              <span>☻</span>
+              <span>⋯</span>
+            </div>
+            <span class="kb-accessory__mic">🎙</span>
+          </div>
+          <div class="kb-rows" id="kbRows"></div>
+          <div class="kb-bottomnav">
+            <span class="kb-bottomnav__handle"></span>
+            <button class="kb-bottomnav__btn" onclick="window.closeKeyboard()" aria-label="Close keyboard">⌄</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="flow-fade" id="flowFade"></div>
+
+    <!-- Brief animated confirmation after a Google/Facebook tap -->
+    <div class="social-auth" id="socialAuth" aria-hidden="true">
+      <div class="social-auth__badge">
+        <svg class="social-auth__check" viewBox="0 0 52 52" aria-hidden="true"><path d="M14 27 l8 8 l16 -18"/></svg>
+      </div>
+      <p class="social-auth__label"><img id="socialAuthIcon" src="../icons/social/google.svg" alt="" /><span id="socialAuthName">Signed in with Google</span></p>
+    </div>
+  </div>
+    <span class="device__cam"></span>
+   </div>
+  </div>
+  </div><!-- /.flow-stage -->
+
+  <script>
+    // Embed mode for the home-page grid preview (bare phone, no controls)
+    if (location.search.indexOf('embed') !== -1) document.body.classList.add('embed');
+
+    // Scale the whole composition (copy column + phone) to fit the window.
+    // Internal gaps stay fixed; the side/vertical margins grow or shrink with the page.
+    // Skipped in embed — the home-grid scales the bare phone itself.
+    (function () {
+      if (document.body.classList.contains('embed')) return;
+      var stageEl = document.getElementById('flowStage');
+      if (!stageEl) return;
+      function fitStage() {
+        stageEl.style.transform = 'none';                 // measure natural size
+        var rect = stageEl.getBoundingClientRect();
+        var bs = getComputedStyle(document.body);
+        var availW = window.innerWidth  - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+        var availH = window.innerHeight - parseFloat(bs.paddingTop)  - parseFloat(bs.paddingBottom);
+        var s = Math.min(1, availW / rect.width, availH / rect.height);
+        stageEl.style.transform = 'scale(' + s + ')';
+      }
+      window.addEventListener('resize', fitStage);
+      window.addEventListener('load', fitStage);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitStage);
+      requestAnimationFrame(fitStage);
+      fitStage();
+    })();
+
+    // Figma prototype: Trigger "After delay" · 1ms → sheet auto-opens on entry
+    var FIRST_ENTRY_DELAY_MS = 1;
+    var screen = document.getElementById('screen');
+
+    var emailField = document.getElementById('emailField');
+    var emailText = emailField.querySelector('.login-field__text');
+    var continueBtn = document.getElementById('continueBtn');
+
+    var codeField = document.getElementById('codeField');
+    var codeText = codeField.querySelector('.login-field__text');
+    var verifyBtn = document.getElementById('verifyBtn');
+    var verifyEmail = document.getElementById('verifyEmail');
+
+    var signupField = document.getElementById('signupEmailField');
+    var signupText = signupField.querySelector('.login-field__text');
+    var signupBtn = document.getElementById('signupBtn');
+
+    var nameField = document.getElementById('displayNameField');
+    var nameText = nameField.querySelector('.login-field__text');
+    var newaccBtn = document.getElementById('newaccBtn');
+
+    // Which field the keyboard is currently typing into
+    var activeField = emailField, activeText = emailText;
+
+    // Where the verify (code) screen was opened from — controls the back destination
+    var verifyOrigin = 'login';
+
+    // Email Continue enables once the value contains "@"; verify Continue once a code is entered
+    function updateContinue () {
+      continueBtn.disabled = emailText.textContent.indexOf('@') === -1;
+      verifyBtn.disabled = codeText.textContent.trim().length === 0;
+      signupBtn.disabled = signupText.textContent.indexOf('@') === -1;
+      var name = nameText.textContent.trim();
+      newaccBtn.disabled = name.length === 0;
+      // avatar shows "DN" placeholder until a name is entered, then its initials
+      var initials = name
+        ? name.split(/\s+/).slice(0, 2).map(function (w) { return w.charAt(0).toUpperCase(); }).join('')
+        : 'DN';
+      document.getElementById('newaccInitials').textContent = initials;
+    }
+
+    window.playFlow = function () {
+      window.closeKeyboard();
+      screen.classList.remove('sheet-open', 'login-open', 'signup-open', 'verify-open', 'newacc-open', 'success-open');
+      // reflow so the slide-down resets before opening again
+      void screen.offsetWidth;
+      setTimeout(function () { screen.classList.add('sheet-open'); }, FIRST_ENTRY_DELAY_MS);
+    };
+
+    // "Log in" → content fades in within the SAME sheet (sheet stays put, Hello-buddy fades out)
+    window.goLogin = function () {
+      screen.classList.remove('signup-open', 'verify-open', 'newacc-open', 'success-open');
+      screen.classList.add('sheet-open', 'login-open');
+      window.openKeyboard('email'); // auto-focus the field + show the keyboard
+    };
+
+    // Back arrow → return to the "Hello, buddy" sheet
+    window.goBack = function () {
+      window.closeKeyboard();
+      screen.classList.remove('login-open');
+      screen.classList.add('sheet-open');
+    };
+
+    window.goSignUp = function () {
+      screen.classList.remove('login-open', 'verify-open', 'newacc-open', 'success-open');
+      screen.classList.add('sheet-open', 'signup-open');
+      window.openKeyboard('signup'); // auto-focus the field + show the keyboard
+    };
+
+    window.goBackFromSignUp = function () {
+      window.closeKeyboard();
+      screen.classList.remove('signup-open');
+      screen.classList.add('sheet-open');
+    };
+
+    // Resend countdown timer
+    var resendTimerEl = document.getElementById('resendTimer');
+    var resendLink = document.getElementById('resendLink');
+    var resendInterval = null;
+    function startResendTimer () {
+      var seconds = 59;
+      if (resendInterval) clearInterval(resendInterval);
+      resendLink.classList.add('verify-resend__link--inactive');
+      resendTimerEl.textContent = '0:59';
+      resendInterval = setInterval(function () {
+        seconds--;
+        if (seconds <= 0) {
+          clearInterval(resendInterval);
+          resendTimerEl.textContent = '';
+          resendLink.classList.remove('verify-resend__link--inactive');
+        } else {
+          resendTimerEl.textContent = '0:' + (seconds < 10 ? '0' : '') + seconds;
+        }
+      }, 1000);
+    }
+
+    // Continue (email) → Screen 3 "Check your email" (verify sheet rises, email carried over)
+    window.goVerify = function () {
+      if (continueBtn.disabled) return;
+      verifyOrigin = 'login';
+      verifyEmail.textContent = emailText.textContent.trim();
+      codeText.textContent = '';
+      updateContinue();
+      screen.classList.add('verify-open');
+      startResendTimer();
+      window.openKeyboard('code'); // auto-focus the code field + numeric keyboard
+    };
+
+    // Continue (Sign Up) → same "Verify your email" code screen, email carried over
+    window.goVerifyFromSignUp = function () {
+      if (signupBtn.disabled) return;
+      verifyOrigin = 'signup';
+      verifyEmail.textContent = signupText.textContent.trim();
+      codeText.textContent = '';
+      updateContinue();
+      screen.classList.add('verify-open');
+      startResendTimer();
+      window.openKeyboard('code'); // auto-focus the code field + numeric keyboard
+    };
+
+    // Continue (verify) → New Account (sign-up) or the empty success screen (log in)
+    // keep verify-open so the code sheet flies LEFT (shared axis X, forward)
+    window.goSuccess = function () {
+      if (verifyOrigin === 'signup') {
+        screen.classList.add('newacc-open');
+        window.openKeyboard('name'); // New Account has a field → auto-focus it
+      } else {
+        window.closeKeyboard(); // chat screen has no field focus
+        document.getElementById('chatIntroMsg').textContent = "Boom — you're logged in 🎉";
+        document.getElementById('chatOutroMsg').textContent = "Tap Start to try Sign up 👀";
+        window.setChatTimes && window.setChatTimes();
+        if (window.drawBubbles) window.drawBubbles();   // size bubbles at scale 1 BEFORE the reveal animation
+        screen.classList.add('success-open');
+      }
+    };
+
+    // Social auth — skip email + code. First a short animated "signed in with
+    // Google/Facebook" screen, then continue:
+    //   Log in  → straight to the chat (bubbles).
+    //   Sign up → the nickname (New Account) screen, then the normal finish.
+    // Adding verify-open puts the sheets into the post-verify layout so goSuccess'
+    // reveal animation works exactly like the keyboard path.
+    var socialAuthTimer = null;
+    function showSocialAuth (provider) {
+      var name = provider === 'facebook' ? 'Facebook' : 'Google';
+      document.getElementById('socialAuthName').textContent = 'Signed in with ' + name;
+      document.getElementById('socialAuthIcon').src = '../icons/social/' + provider + '.svg';
+      var el = document.getElementById('socialAuth');
+      el.classList.remove('is-visible'); void el.offsetWidth;   // restart the animation
+      el.classList.add('is-visible');
+    }
+    function hideSocialAuth () {
+      var el = document.getElementById('socialAuth');
+      if (el) el.classList.remove('is-visible');
+    }
+    window.socialAuth = function (btn, mode) {
+      stopAuto();
+      var provider = /facebook/i.test(btn.textContent) ? 'facebook' : 'google';
+      showSocialAuth(provider);
+      clearTimeout(socialAuthTimer);
+      socialAuthTimer = setTimeout(function () {
+        hideSocialAuth();
+        verifyOrigin = (mode === 'signup') ? 'signup' : 'login';
+        screen.classList.add('verify-open');
+        window.goSuccess();               // login → chat · signup → New Account
+        // arrived via social → nothing behind New Account, so drop the Back arrow
+        document.getElementById('newaccBack').style.display = (mode === 'signup') ? 'none' : '';
+      }, 1300);
+    };
+
+    // Continue on New Account → chat (sign-up path)
+    window.goNewAccDone = function () {
+      if (newaccBtn.disabled) return;
+      window.closeKeyboard();
+      document.getElementById('chatIntroMsg').textContent = "Boom — you're registered 🎉";
+      document.getElementById('chatOutroMsg').textContent = "Tap Start to try Log in 👀";
+      window.setChatTimes && window.setChatTimes();
+      if (window.drawBubbles) window.drawBubbles();     // size bubbles at scale 1 BEFORE the reveal animation
+      screen.classList.add('success-open');
+    };
+
+    // Back arrow on New Account → return to the code screen
+    window.goBackToVerify = function () {
+      screen.classList.remove('newacc-open');
+      screen.classList.add('verify-open');
+      window.openKeyboard('code'); // auto-focus the code field
+    };
+
+    // "Change" / back arrow → return to the email screen with the field focused + keyboard
+    window.goBackToEmail = function () {
+      screen.classList.remove('verify-open');
+      emailField.classList.remove('is-filled');
+      signupField.classList.remove('is-filled');
+      window.openKeyboard(verifyOrigin === 'signup' ? 'signup' : 'email');
+      updateContinue();
+    };
+
+    // Keyboard open/close — retargets to whichever field was tapped ('email' | 'code')
+    window.openKeyboard = function (which) {
+      var field = which === 'code' ? codeField : which === 'signup' ? signupField : which === 'name' ? nameField : emailField;
+      activeField = field;
+      activeText = field.querySelector('.login-field__text');
+      emailField.classList.remove('is-filled', 'is-focused');
+      codeField.classList.remove('is-focused');
+      signupField.classList.remove('is-filled', 'is-focused');
+      nameField.classList.remove('is-filled', 'is-focused');
+      field.classList.add('is-focused');
+      var layout = which === 'code' ? 'numeric' : 'letters';
+      document.getElementById('keyboard').classList.toggle('keyboard--numeric', layout === 'numeric');
+      renderKeyboard(layout);
+      screen.classList.add('kb-open');
+      updateContinue();
+    };
+    window.closeKeyboard = function () {
+      activeField.classList.remove('is-focused');
+      screen.classList.remove('kb-open');
+    };
+
+    // ── Keyboard layouts ──
+    // string = letter (types itself); object = special key
+    //   c: style class · a: action (type/space/back/layout) · layout: target layout
+    var layouts = {
+      numeric: [
+        ['1', '2', '3'],
+        ['4', '5', '6'],
+        ['7', '8', '9'],
+        [{ t: '', c: 'none', a: 'none' }, '0', { t: '⌫', c: 'fn', a: 'back' }]
+      ],
+      letters: [
+        'qwertyuiop'.split(''),
+        { indent: true, keys: 'asdfghjkl'.split('') },
+        [{ t: '⇧', c: 'fn' }].concat('zxcvbnm'.split('')).concat([{ t: '⌫', c: 'fn', a: 'back' }]),
+        [{ t: '?123', c: 'alt', a: 'layout', layout: 'symbols' }, { t: '☻', c: 'sym' }, { t: ',', c: 'sym', a: 'type' }, { t: '', c: 'space', a: 'space' }, { t: '.', c: 'sym', a: 'type' }, { t: '↵', c: 'enter' }]
+      ],
+      symbols: [
+        '1234567890'.split(''),
+        '@#$_&-+()/'.split(''),
+        [{ t: '=\\<', c: 'alt', a: 'layout', layout: 'symbols2' }, '*', '"', "'", ':', ';', '!', '?', { t: '⌫', c: 'fn', a: 'back' }],
+        [{ t: 'ABC', c: 'alt', a: 'layout', layout: 'letters' }, { t: ',', c: 'sym', a: 'type' }, { t: '', c: 'space', a: 'space' }, { t: '.', c: 'sym', a: 'type' }, { t: '↵', c: 'enter' }]
+      ],
+      symbols2: [
+        '~`|•√π÷×¶∆'.split(''),
+        '£¢€¥^°={}\\'.split(''),
+        [{ t: '?123', c: 'alt', a: 'layout', layout: 'symbols' }, '%', '©', '®', '™', '✓', '[', ']', { t: '⌫', c: 'fn', a: 'back' }],
+        [{ t: 'ABC', c: 'alt', a: 'layout', layout: 'letters' }, { t: '<', c: 'sym', a: 'type' }, { t: '', c: 'space', a: 'space' }, { t: '>', c: 'sym', a: 'type' }, { t: '↵', c: 'enter' }]
+      ]
+    };
+    var CLS = { fn: 'kb-key--fn', alt: 'kb-key--alt', enter: 'kb-key--enter', space: 'kb-key--space', sym: 'kb-key--sym', none: 'kb-key--none' };
+
+    function renderKeyboard (name) {
+      var root = document.getElementById('kbRows');
+      root.innerHTML = '';
+      var kb = document.querySelector('.keyboard');
+      if (kb) kb.classList.toggle('keyboard--numeric', name === 'numeric');
+      layouts[name].forEach(function (row) {
+        var keys = Array.isArray(row) ? row : row.keys;
+        var indent = !Array.isArray(row) && row.indent;
+        var r = document.createElement('div');
+        r.className = 'kb-row' + (indent ? ' kb-row--indent' : '');
+        keys.forEach(function (k) {
+          var spec = (typeof k === 'string') ? { t: k, a: 'type' } : k;
+          var btn = document.createElement('button');
+          btn.className = 'kb-key' + (spec.c && CLS[spec.c] ? ' ' + CLS[spec.c] : '');
+          btn.textContent = spec.t;
+          btn.addEventListener('click', function () {
+            var a = spec.a || 'none';
+            if (a === 'type')        activeText.textContent += spec.t;
+            else if (a === 'space')  activeText.textContent += ' ';
+            else if (a === 'back')   activeText.textContent = activeText.textContent.slice(0, -1);
+            else if (a === 'layout') { renderKeyboard(spec.layout); return; }
+            updateContinue();
+          });
+          r.appendChild(btn);
+        });
+        root.appendChild(r);
+      });
+    }
+    renderKeyboard('letters');
+
+    // ── Physical (computer) keyboard input ──
+    // Mirror the on-screen keyboard: while a field is focused, let the user type
+    // with their real keyboard. Code field takes digits only; Enter submits;
+    // Backspace deletes. Typing hands control to the user (stops auto-play).
+    document.addEventListener('keydown', function (e) {
+      if (!screen.classList.contains('kb-open') || !activeText) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;   // leave copy/paste, shortcuts alone
+      var isCode = activeField === codeField;
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var btn = activeField === emailField  ? continueBtn
+                : activeField === codeField   ? verifyBtn
+                : activeField === signupField ? signupBtn
+                : activeField === nameField   ? newaccBtn : null;
+        if (btn && !btn.disabled) btn.click();
+        return;
+      } else if (e.key === 'Backspace') {
+        e.preventDefault();
+        activeText.textContent = activeText.textContent.slice(0, -1);
+        flashKey('⌫');
+      } else if (e.key.length === 1) {
+        if (isCode) {
+          if (!/[0-9]/.test(e.key)) return;             // code = digits only
+          if (activeText.textContent.length >= 6) { e.preventDefault(); return; }
+        }
+        e.preventDefault();
+        activeText.textContent += e.key;
+        flashKey(isCode ? e.key : e.key.toLowerCase());
+      } else {
+        return;                                          // ignore arrows, tab, etc.
+      }
+      stopAuto();
+      updateContinue();
+    });
+
+    // ── Auto-play engine ───────────────────────────────────────────────────
+    // Plays the sign-up path on a loop (a "video") until the user takes control
+    // via Start / Restart. Typing flashes the on-screen keyboard keys.
+    var screenEl = document.getElementById('screen');
+    var auto = { cancelled: true, timers: [] };
+    function aDelay(ms){ return new Promise(function(res){ auto.timers.push(setTimeout(res, ms)); }); }
+    function stopAuto(){ auto.cancelled = true; auto.timers.forEach(clearTimeout); auto.timers = []; }
+    function flashKey(ch){
+      var keys = document.querySelectorAll('#kbRows .kb-key');
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].textContent === ch) {
+          (function (b){ b.classList.add('kb-key--press'); setTimeout(function(){ b.classList.remove('kb-key--press'); }, 110); })(keys[i]);
+          return;
+        }
+      }
+    }
+    function focusedText(){ return document.querySelector('.login-field.is-focused .login-field__text'); }
+    async function autoType(str){
+      var t = focusedText(); if (!t) return;
+      t.textContent = '';
+      for (var i = 0; i < str.length; i++) {
+        if (auto.cancelled) return;
+        flashKey(str[i]);
+        t.textContent += str[i];
+        updateContinue();
+        await aDelay(75 + Math.random() * 70);
+      }
+    }
+    function resetPhone(){
+      if (window.closeKeyboard) window.closeKeyboard();
+      clearTimeout(socialAuthTimer); hideSocialAuth();   // cancel any pending social-auth screen
+      var nb = document.getElementById('newaccBack'); if (nb) nb.style.display = '';   // restore Back for the normal path
+      screenEl.classList.remove('signup-open','login-open','verify-open','newacc-open','success-open','kb-open');
+      document.querySelectorAll('.login-field__text').forEach(function(el){ el.textContent = ''; });
+      document.querySelectorAll('.login-field').forEach(function(f){ f.classList.remove('is-filled','is-focused'); });
+    }
+    // Fade the phone screen to black and back — used for the loop restart so the
+    // jump from the final chat back to the start reads as a clean cut.
+    var fadeEl = document.getElementById('flowFade');
+    function fadeToBlack(){   return new Promise(function(res){ if (fadeEl) fadeEl.classList.add('is-black');    auto.timers.push(setTimeout(res, 460)); }); }
+    function fadeFromBlack(){ return new Promise(function(res){ if (fadeEl) fadeEl.classList.remove('is-black'); auto.timers.push(setTimeout(res, 460)); }); }
+
+    // Briefly show a button's pressed state before the transition it triggers,
+    // so the tap reads as a real click.
+    async function pressBtn(sel){
+      var el = typeof sel === 'string' ? document.querySelector(sel) : sel;
+      if (!el) return;
+      el.classList.add('is-pressed');
+      el.style.transform = 'scale(0.965)';   // inline — reliably overrides
+      await aDelay(240);
+      el.classList.remove('is-pressed');
+      el.style.transform = '';
+      if (auto.cancelled) return;
+      await aDelay(130);
+    }
+
+    async function autoplayLoop(firstDelay){
+      auto.cancelled = false;
+      resetPhone(); screenEl.classList.add('sheet-open');   // show the start on first entry
+      var linger = (firstDelay != null) ? firstDelay : 1000;   // first pass can start quicker (Demo click)
+      while (!auto.cancelled) {
+        await aDelay(linger); if (auto.cancelled) return;   /* linger on the Hello-buddy sheet */
+        linger = 1000;   /* subsequent loop iterations use the full linger */
+        await pressBtn('.bottom-sheet .btn--primary');            if (auto.cancelled) return;   /* Sign up */
+        window.goSignUp();                          await aDelay(750);  if (auto.cancelled) return;
+        await autoType('medvedeva_vas@icloud.com'); await aDelay(600);  if (auto.cancelled) return;
+        await pressBtn('#signupBtn');                             if (auto.cancelled) return;   /* Continue */
+        window.goVerifyFromSignUp();                await aDelay(1000); if (auto.cancelled) return;
+        await autoType('504172');                   await aDelay(600);  if (auto.cancelled) return;
+        await pressBtn('#verifyBtn');                             if (auto.cancelled) return;   /* Continue */
+        window.goSuccess();                         await aDelay(1000); if (auto.cancelled) return;
+        await autoType('Vasilisa Medvedeva');       await aDelay(700);  if (auto.cancelled) return;
+        await pressBtn('#newaccBtn');                             if (auto.cancelled) return;   /* Continue */
+        window.goNewAccDone();                      await aDelay(2800); if (auto.cancelled) return;
+        // restart: fade out → reset behind the fade → fade back in (no black dwell)
+        await fadeToBlack();                        if (auto.cancelled) return;
+        resetPhone(); screenEl.classList.add('sheet-open');
+        await fadeFromBlack();                      if (auto.cancelled) return;
+      }
+    }
+
+    // Restart → stop the auto-play and hand control to the user (reset to the start sheet)
+    window.startManual = function(){ stopAuto(); if (fadeEl) fadeEl.classList.remove('is-black'); resetPhone(); screenEl.classList.add('sheet-open'); };
+    // A slight "re-open" bounce on the start sheet so tapping Start always gives feedback,
+    // even when the sheet is already open (a plain re-add of sheet-open wouldn't re-trigger).
+    var startSheetEl = document.querySelector('.bottom-sheet');
+    function nudgeSheet(){
+      if (!startSheetEl) return;
+      startSheetEl.classList.remove('is-nudge');
+      void startSheetEl.offsetWidth;   // force reflow so the animation restarts
+      startSheetEl.classList.add('is-nudge');
+    }
+    if (startSheetEl) startSheetEl.addEventListener('animationend', function(){ startSheetEl.classList.remove('is-nudge'); });
+    // Start button → reset to the start sheet + play the feedback bounce.
+    window.restartManual = function(){ window.startManual(); nudgeSheet(); };
+
+    // Demo → play the auto-play "video". Clicking again restarts it from the beginning;
+    // starts almost immediately (0.3s) rather than the full Hello-buddy linger.
+    window.playDemo = function(){ stopAuto(); if (fadeEl) fadeEl.classList.remove('is-black'); autoplayLoop(300); };
+
+    // Tapping the phone while the demo plays hands control to the user: stop the
+    // auto-play and leave the current screen in place (clearing any half-finished
+    // press/fade the interrupted loop left behind) so they can drive from here.
+    window.takeControl = function(){
+      if (auto.cancelled) return;   // demo isn't playing → nothing to hand over
+      stopAuto();
+      document.querySelectorAll('.phone .is-pressed').forEach(function(b){ b.classList.remove('is-pressed'); b.style.transform = ''; });
+      if (fadeEl) fadeEl.classList.remove('is-black');
+    };
+    var phoneEl = document.querySelector('.phone');
+    if (phoneEl && !document.body.classList.contains('embed')) {
+      phoneEl.addEventListener('click', function(){
+        if (!auto.cancelled) window.takeControl();
+      }, true);   // capture: stop the demo before any tapped in-phone control reacts
+    }
+
+    // On entry, show the start in manual mode. Standalone: demo runs via the Demo
+    // button. Embedded (home-grid card): the parent plays the demo on hover.
+    window.addEventListener('load', window.startManual);
+
+    // Tap scrim to dismiss
+    document.getElementById('scrim').addEventListener('click', function () {
+      screen.classList.remove('sheet-open');
+    });
+
+    // ── Bubble2.0 shape drawing (ported from molecules.html) ──
+    var B_R = 16, B_R4 = 4;
+    var B_TAIL = "c0 0.162 -0.003 0.323 -0.008 0.483c-0.073 3.301 -0.678 10.185 4.683 14.938c0.127 0.112 0.069 0.325 -0.098 0.352c-6.699 1.085 -9.605 -2.288 -10.916 -3.018c-0.008 0.006 -0.017 0.011 -0.025 0.018c-0.143 0.108 -0.288 0.212 -0.434 0.315c-0.04 0.028 -0.08 0.056 -0.12 0.084c-0.306 0.211 -0.619 0.412 -0.94 0.603c-0.036 0.021 -0.072 0.043 -0.108 0.064c-0.164 0.095 -0.329 0.188 -0.497 0.277c-0.008 0.005 -0.016 0.01 -0.024 0.014c-0.164 0.087 -0.329 0.171 -0.496 0.253c-0.027 0.013 -0.053 0.026 -0.079 0.039c-0.163 0.078 -0.327 0.154 -0.493 0.226c-0.042 0.019 -0.085 0.038 -0.128 0.056c-0.168 0.072 -0.337 0.143 -0.507 0.209c-0.025 0.01 -0.05 0.018 -0.075 0.027c-0.15 0.058 -0.302 0.114 -0.455 0.167c-0.045 0.016 -0.09 0.033 -0.135 0.048c-0.162 0.055 -0.325 0.106 -0.489 0.156c-0.057 0.017 -0.114 0.034 -0.171 0.05c-0.175 0.051 -0.351 0.101 -0.529 0.146c-0.016 0.004 -0.031 0.008 -0.047 0.012c-0.18 0.045 -0.361 0.087 -0.543 0.126c-0.028 0.006 -0.056 0.012 -0.085 0.018c-0.186 0.039 -0.373 0.073 -0.561 0.106c-0.043 0.007 -0.085 0.014 -0.128 0.021c-0.186 0.03 -0.373 0.058 -0.562 0.082c-0.03 0.004 -0.061 0.007 -0.092 0.011c-0.163 0.02 -0.328 0.037 -0.493 0.052c-0.051 0.004 -0.103 0.009 -0.155 0.013c-0.187 0.015 -0.374 0.027 -0.562 0.035c-0.041 0.002 -0.081 0.004 -0.122 0.005c-0.201 0.008 -0.403 0.013 -0.606 0.013";
+    function bFit(content) {
+      content.style.width = '';
+      var need = 0;
+      // widest wrapped line — the inline time spacer is inside <p>, so a short last
+      // line reserves room for the time (WhatsApp inline), and it counts here too
+      content.querySelectorAll('p').forEach(function (p) {
+        var range = document.createRange();
+        range.selectNodeContents(p);
+        var rects = range.getClientRects();
+        for (var i = 0; i < rects.length; i++) if (rects[i].width > need) need = rects[i].width;
+      });
+      if (need <= 0) return;
+      var ccs = getComputedStyle(content);
+      var padX = parseFloat(ccs.paddingLeft) + parseFloat(ccs.paddingRight);
+      var maxCW = parseFloat(getComputedStyle(content.parentNode).maxWidth) || 300;
+      content.style.width = Math.min(Math.ceil(need) + padX + 1, maxCW) + 'px';
+    }
+    function bDraw(bubble) {
+      var content = bubble.querySelector('.bubble2__content');
+      var svg = bubble.querySelector('.bubble2__shape');
+      var path = svg && svg.querySelector('path');
+      if (!content || !svg || !path) return;
+      bFit(content);
+      var left = bubble.classList.contains('bubble2--left');
+      var top = bubble.classList.contains('bubble2--top');
+      var mid = bubble.classList.contains('bubble2--mid');
+      var last = bubble.classList.contains('bubble2--last');
+      var hasTail = !top && !mid;                 /* tail only on single + last */
+      var rTR = (mid || last) ? B_R4 : B_R;       /* tail-side top corner tightens on mid/last */
+      var rBR = B_R4;                             /* tail-side bottom corner (used when no tail) */
+      var W = Math.round(content.offsetWidth), H = Math.round(content.offsetHeight);
+      if (W < 2 * B_R) W = 2 * B_R;
+      if (H < 2 * B_R) H = 2 * B_R;
+      var d = "M" + B_R + " 0" +
+              "H" + (W - rTR) +
+              "A" + rTR + " " + rTR + " 0 0 1 " + W + " " + rTR +
+              "V" + (H - (hasTail ? 16 : rBR)) +
+              (hasTail ? B_TAIL : "A" + rBR + " " + rBR + " 0 0 1 " + (W - rBR) + " " + H) +
+              "H" + B_R +
+              "A" + B_R + " " + B_R + " 0 0 1 0 " + (H - B_R) +
+              "V" + B_R + "A" + B_R + " " + B_R + " 0 0 1 " + B_R + " 0" + "Z";
+      path.setAttribute('d', d);
+      if (left) path.setAttribute('transform', 'translate(' + W + ',0) scale(-1,1)');
+      else path.removeAttribute('transform');
+      var padIn = 2, padOut = 7;
+      var padL = left ? padOut : padIn, padR = left ? padIn : padOut;
+      var vbW = W + padL + padR, vbH = H + padIn + padIn;
+      svg.setAttribute('viewBox', (-padL) + ' ' + (-padIn) + ' ' + vbW + ' ' + vbH);
+      svg.setAttribute('width', vbW); svg.setAttribute('height', vbH);
+      svg.style.left = (-padL) + 'px'; svg.style.top = (-padIn) + 'px';
+    }
+    function drawBubbles() {
+      [].slice.call(document.querySelectorAll('#chatBody .bubble2')).forEach(bDraw);
+    }
+    window.drawBubbles = drawBubbles;
+
+    // Show the current Cyprus time (Europe/Nicosia) on every message timestamp, e.g. "8:30 pm"
+    function cyprusTime() {
+      var s = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Nicosia' });
+      return s.replace(/\s?AM$/i, ' am').replace(/\s?PM$/i, ' pm').trim();
+    }
+    function setChatTimes() {
+      var t = cyprusTime();
+      // real timestamps + the invisible inline spacers (so the reserved width matches the time)
+      [].slice.call(document.querySelectorAll('#chatBody .chat-time, #chatBody .chat-time-gap')).forEach(function (el) { el.textContent = t; });
+    }
+    window.setChatTimes = setChatTimes;
+
+    window.addEventListener('load', function () { setChatTimes(); drawBubbles(); });
+    window.addEventListener('resize', drawBubbles);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawBubbles);
+    setInterval(setChatTimes, 30000); // keep the shown time current
+  </script>
+  <script src="../scripts/page-transition.js?v=3"></script>
+</body>
+</html>
