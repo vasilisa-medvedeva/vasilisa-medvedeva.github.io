@@ -72,5 +72,5 @@
 | icons/small/moving.svg | Drag handle (owner only) · 16px |
 
 ## Status
-`draft` — proposed by Claude, confirmed by the user.
-Version 0.1 | Owner: @medvedeva_vas
+`stable` — confirmed by the user.
+Version 1.0 | Owner: @medvedeva_vas

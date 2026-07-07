@@ -753,6 +753,7 @@
     .cell-base--hover    { background: var(--color-brand-yellow-4); }
     .cell-base--pressed  { background: var(--color-brand-yellow-8); }
     .cell-base--selected { background: var(--color-brand-yellow-16); }
+    .cell-base--destructive .cell-base__title { color: var(--color-brand-red-secondary); }
 
     /* Sizes — fixed row heights (match Figma) */
     .cell-base--xsmall { min-height: 36px; }
@@ -2565,6 +2566,11 @@
             <div class="cell-base__text"><p class="cell-base__title">Title</p></div>
             <div class="cell-base__right"><span class="avatar-ph avatar-ph--s"></span></div>
             <div class="cell-base__divider"></div>
+          </div>
+
+          <span class="state-label" style="margin:8px 0 4px;">destructive</span>
+          <div class="cell-base cell-base--medium cell-base--destructive">
+            <div class="cell-base__text"><p class="cell-base__title">Delete Category</p></div>
           </div>
         </div>
       </div>

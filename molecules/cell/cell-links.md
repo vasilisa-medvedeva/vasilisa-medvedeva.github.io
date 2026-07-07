@@ -61,5 +61,5 @@
 - Contrast: `--color-primary-transparent-87` on `--color-constant-primary` — verify 4.5:1
 
 ## Status
-`draft`
+`stable` — confirmed by the user.
 Version 1.0 | Owner: @vasilisamedvedeva19940625-ui
