@@ -11,12 +11,12 @@
 
 ## Anatomy
 ```
-┌──────────────────────────────────────────────────┐  ← top-bar · 412px · h:56px · p:4px · gap:8px
+┌──────────────────────────────────────────────────┐  ← top-bar · 412px · h:64px · p:4px · gap:8px
 │  [←]  [avatar]  Title                  [Action] │
 └──────────────────────────────────────────────────┘
 ```
 
-- **top-bar** — 412px wide, `h: 56px`, `background: brand-red-secondary`, `padding: 4px`, `gap: 8px`
+- **top-bar** — 412px wide, `h: 64px` (M3 small top app bar), `background: brand-red-secondary`, `padding: 4px`, `gap: 8px`
 - **back** — 48×48px button, `arrow-back.svg` white (filter invert), `border-radius: 100px`
 - **body** — `flex: 1`, contains optional avatar + title
 - **avatar** — `avatar--sm` (32×32px circle) for direct; `avatar--sm avatar--channel` (rounded square) for channel

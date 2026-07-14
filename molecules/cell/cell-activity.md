@@ -1,6 +1,6 @@
 # CellActivity
 
-> Ячейка ленты активности: аватар слева (опц. с эмодзи-реакцией), заголовок и подзаголовок. Собрана на базе атомов Avatar и EmojiBadge.
+> An activity-feed cell: avatar on the left (optionally with an emoji reaction), title and subtitle. Built on the Avatar and EmojiBadge atoms.
 
 ## When to use / when not to use
 - ✅ Use in an activity / notifications feed (who reacted, who read).

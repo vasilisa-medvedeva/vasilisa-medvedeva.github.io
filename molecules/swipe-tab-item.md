@@ -1,6 +1,6 @@
 # SwipeTabItem
 
-> Переключатель в горизонтальной свайп-навигации — показывает название канала, счётчик непрочитанных и индикатор активного таба.
+> A switcher in the horizontal swipe navigation — shows the channel name, unread counter, and active-tab indicator.
 
 ## When to use / when not to use
 - ✅ Use when presenting a horizontal list of switchable channels/sections (chats, groups, etc.)

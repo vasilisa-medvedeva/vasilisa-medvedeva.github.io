@@ -10,14 +10,14 @@
 
 ## Anatomy
 ```
-┌─────────────────────────────────────┐  ← tab-bar (318px · yellow-8 · border-top primary-16 0.5px)
+┌─────────────────────────────────────┐  ← tab-bar (318px · yellow-8 · tonal, no divider)
 │  [ icon ] [ icon ] [ icon ] [ icon ]│  ← tab-bar__tabs / tab-bar__tab-btn × 4
 ├─────────────────────────────────────┤
 │           ▬ (pill)                  │  ← tab-bar__indicator (optional)
 └─────────────────────────────────────┘
 ```
 
-- **tab-bar** — 318px wide, `background: brand-yellow-8`, `border-top: 0.5px primary-transparent-16`
+- **tab-bar** — 318px wide, `background: brand-yellow-8` (tonal vs `brand-yellow-4` page bg — no divider or shadow, per Material 3)
 - **tab-btn** — `flex: 1`, height 48px, icon 24×24px; `aria-current="page"` on active
 - **tab-icon** — SVG from `icons/tabbar/`; switches between `*-default.svg` and `*-active.svg`
 - **indicator** — centred pill `72×2px`, `primary-transparent-87`; omit on screens without home bar
@@ -37,8 +37,7 @@
 ## Tokens
 | Token | Role in this component |
 |---|---|
-| `--color-brand-yellow-8` | Component background |
-| `--color-primary-transparent-16` | Top border |
+| `--color-brand-yellow-8` | Component background (tonal, no divider) |
 | `--color-primary-transparent-87` | Home indicator pill |
 
 ## Do / Don't

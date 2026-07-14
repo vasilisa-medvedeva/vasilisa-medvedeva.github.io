@@ -38,15 +38,21 @@
 ## Tokens
 | Token | Role in this component |
 |---|---|
-| `--color-brand-yellow-16` | Initials background |
-| `--color-primary-transparent-70` | Initials text color |
+| `--color-brand-yellow-16` | Initials background (default) |
+| `--color-brand-yellow-quaternary` | Initials text (default) — darker shade of the yellow-16 background |
+| `--color-avatar-{green\|purple\|teal\|peach\|rose\|sky\|lime\|lavender\|mint\|indigo\|sand}` | Initials background (palette, by name hash) |
+| `--color-avatar-{…}-text` | Initials text for the matching palette background — a darker shade of that color |
 | `--color-brand-yellow-secondary` | Active ring |
 | `--color-warning-secondary` | Live ring |
 | `--text-headline-medium-*` | Initials typography |
 
+**Initials color rule:** the initials text is always a **darker shade of the avatar's own background**, not neutral grey. The default yellow-16 avatar pairs with `--color-brand-yellow-quaternary`; each `--color-avatar-*` palette background pairs with its `--color-avatar-*-text` token. Never mix a background from one hue with text from another.
+
 ## Do / Don't
 ✅ **Do** — always set `aria-label` with the user or channel name on the container  
-❌ **Don't** — use `avatar--xl` in sidebars; it is intended for profile screens only
+✅ **Do** — pair each palette background with its matching `-text` token so initials stay tonal  
+❌ **Don't** — use `avatar--xl` in sidebars; it is intended for profile screens only  
+❌ **Don't** — use neutral grey (`--color-primary-transparent-70`) for initials; it breaks the tonal pairing
 
 ## Accessibility
 - Minimum touch target: 44×44pt (sm is 32px — expand the hit area)
@@ -54,5 +60,5 @@
 - `aria-hidden="true"` on `.avatar__initials` and `.avatar__photo`
 
 ## Status
-`draft`  
-Version 1.0 | Owner: @vasilisamedvedeva19940625-ui
+`stable`  
+Version 1.1 | Owner: @vasilisamedvedeva19940625-ui

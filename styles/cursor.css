@@ -1,70 +1,52 @@
-/* ── Fire cursor (Pyroblast flame) ──
-   Статичен по умолчанию. Анимация включается только на интерактивных элементах.
-   Только для устройств с точным указателем (мышь/трекпад). */
+/* ── Doodle cursors (hand-drawn) ──
+   Site-wide custom cursors. Each is a PNG served at 1× AND 2× via image-set(),
+   so HiDPI/Retina screens get the crisp 2× bitmap at the same on-screen size.
+   -webkit-image-set covers Safari; image-set covers Chrome/Firefox.
+   - default (arrow): 17×26, hotspot 1 1  = arrow tip
+   - pointer (hand):  20×27, hotspot 10 1 = index-finger tip, over clickable elements
+   - text (I-beam):   11x18, hotspot 5 9 = centre, over text / inputs
+   1× images live in --*-1x, 2× in --*-2x so they aren't duplicated per rule. */
 
-@media (hover: hover) and (pointer: fine) {
-  html.fire-cursor-on,
-  html.fire-cursor-on * {
-    cursor: none !important;
-  }
-
-  .fire-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20px;
-    color: var(--color-brand-yellow-secondary);
-    pointer-events: none;
-    z-index: 99999;
-    will-change: transform;
-    transform: translate3d(-100px, -100px, 0);
-    filter: drop-shadow(0 0 4px rgba(255, 185, 40, 0.55));
-    transition: width 0.15s ease, opacity 0.2s ease;
-  }
-
-  .fire-cursor svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    transform-origin: 50% 80%;
-    /* по умолчанию — без анимации */
-    animation: none;
-  }
-
-  /* анимация включается только при наведении на интерактивный элемент */
-  .fire-cursor--hover svg {
-    animation: fire-flicker 0.45s ease-in-out infinite alternate;
-  }
-
-  /* при нажатии — вспышка быстрее */
-  .fire-cursor--press svg {
-    animation: fire-flicker 0.18s ease-in-out infinite alternate;
-  }
-
-  /* над интерактивными элементами пламя чуть крупнее */
-  .fire-cursor--hover {
-    width: 26px;
-  }
+:root {
+  --arrow-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAaCAYAAABRqrc5AAABbElEQVR4AaSTAXaEIAxE016seDLjyeRmdn4WKD6h1e0+xoSYfAK4n2bm9pLMewPIl0pXCZjM8wGkVgFKdfLEBiSlZElS4S4l6dEICBX7vr8NapD/gE6QAejWYV8gFeTuuBx2OExmGkJIXtfVOtChWJKGYwohuwMx5eaGXQHR7U4XMUDHcVjX1Q6xF5B+PvWBFVBSEttrXd2GqHDUVYD+hOScbdu2kwAWxe39CgGwLIu5+0WCZGmRfAhhZYqVUP8KFHxo3gsAcbtAALhWpgt8DlTFqUjmOk4QigAobZPEyTJm+gawl6sliBpEFebqQEEAXmwcaOlGIRuCGqScQVYmABnD34Cbfu6upyUzQ9b/AlISiNMFtioq2SbddNs6gYDkUgGg+iUUJrqhI0ARMeP7KK7F7VDMdcWq7c2PE3G6oROkV3SC5L4grI4iMHm0brr3rYbtdPGpG91w+GxLWXQv8xp3IWSzZVbHBpQg+gYAAP//WzzDMgAAAAZJREFUAwAveZF0KiGJpwAAAABJRU5ErkJggg==");
+  --arrow-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAA0CAYAAADvyOpEAAADXElEQVR4AcSYC9biIAxG42xMXJlxZTIrc3JpU6GFvmw7c/hIeDS5Bqxz/j8iEkTkbVITvpnrm4MA8LT0WDPXN0DyrMBQmXzuEn8MQlJgLq9MDQQY7sylMC0Qh8FeogIkhDBOSmXGc6eMJyDvd5EbsmLiFAoLWoDYWKiKquK6LoGZgJD9+XzK1TBVkP8B0wS5GgaQO0lbmjmm0Hpmzzwgw3P3e51pBqa41UOgHU4BMvd8BYbt/BwcArMaJGW1bxPvGb7ijHsBw7vmp6PaBEJiIIBpfL13V2czCDDo6KPaDeIwn88nvY0Z9+KoPuZvqs5PIJYstcpRMQ/QaphDQFJWu8ije5OmrVtVncNALKFwbziqBtBsdQ4FAQYB1IBpVucUEIfZUp3TQIBBM9UpXoKngzhMpTq8iYFJd+c0kBijxJH4UQ0hwJaLr3n4GeTxeMjtdpuI+ZqAyyncB2SC6ItL9vV6SSvw0rP9+svswxQBMdu1EELnrOwp9cLWaOsNCQDcD9alALGHZhufnnJTicZGgt9szcW4pQRge1NbDeIQWFUVgKggforUdVy8ztvYrwKhAiTOY8cYJZp4T2TznK1m49XuIggQqloNyBoLo/VdVZkFIdEoSbTEnLkZESqCQ1VCCLguXlTur7JNEJKoah4k2gAILLKhCLA4wGB7BbPIzLrWBBndCRID4VH/uqOqyaUi7qeJ7u9yvbtsqiAjCKLkEIzJHnFQXhWAmOu1+ogmIATlWPpAGN5+2LGGeVUd1ipH9F0cdk2dAgSIPKhtJ1krULR1ZEbSewWHiqgqrotv0eJ9AST6E6rqLnYOgnXEHqxQRcSAqoQQcF3AuF+1gFQXbLKgsnGtRZtEZmT4BjEABtsrmJ2N1wIZX06L02zVqlARVc0foioA5XODXwMhcBx2LDvsRWkn9yw51lEVgMz1Boz7hQWExD6JX3wMX1iwPJe2cE9QGlgHjBlvVAT5eLCA8Gn42eY49kAQjBgIv7grVASlha5rgnTLIkMg2fevWhWOKq+Qha7moSK2dkgjAUrBHEBV07jvgI29X5gjQQhMIqxQBWDS4NsVVN9p2fZfxfzBhs+nRWkZmOR0HXew8yr90RUhxVAVBibAgMDasN7OACHhzdIBBABizqba7R8AAAD///tt0g8AAAAGSURBVAMAYlEuOGk2odMAAAAASUVORK5CYII=");
+  --hand-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAYAAAB836/YAAABoElEQVR4AZyTjbmDIAxF+d46HULcofsYJxMn891DCaVasT9fboEkHAJp/0L/ExVepE0y6dKugIuZRTML+kzSpfWAVBemaQrDMFyCPKELjDF63sdjD1gh34C7wG9AfnoX6EnNuGlO10/fogc8dIJuq2pgdBxwbr8OqdYD1qSUUp7TcaQFXAcDdYWPgAIcbFmWgBSYRKdiZD8DBaoGGMkxOJDykXx9W9c1qKKc1M6zI4QIkPvzwIgusi7x5+CQp+cx2/sBDmYWtm0LjEqYlLpI1eTz98p/Q9YEvVnMqVZjAqjxYXSwvEWUB2l4NWDkudfnBb4CnKlsnmfPqdVUx8mkHB6AIaXlLidNRtO1HRpjzNDb7ZYUu7Ry3VwRFbKBjS+VAr3f75HglUzFeI4DWZu+MrSUr+W1NbnsP/xTcM7jOIYmsUtd15V4vi6TtkLWCGiamybhPNP+4HdA9s77RJzvVPKSx86AOaEke+5hbOI5n4QzILGaxOJT9YChPPgpq8RfDu4CuRLNoevvRHx/Wg9IY5KZaV9i3mqUE/Fzyb8bB/8DAAD//83az0YAAAAGSURBVAMAMEa4dT4tw74AAAAASUVORK5CYII=");
+  --hand-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA2CAYAAAC1ItuGAAADl0lEQVR4AcyYDZrjIAhAzV6s6cnKnKz2ZF2fFZcw+dVkdvqVgIj4xJh05k/o/0hK8SzyTpp2Uud8ewEBeySUsUhSQdvY3dIDSKUAC+M4BhHJOnw+QH6szmsPYIYA7Pl8hsfjYQHHTq46vBVQNMPtdlMzWLs6O41WwDot21sbFxhdgBtwp2xzK2De1w3AU+rZCnhKdfasoBVwT+5TYloAa/WuOLV+VS2APsel7SsBeZDzbuZ1WJ+bR1fTBbhxivVWQAPbBNkFuFYN4HkNoksckJgA74a9FJD3MwJVEd1yYLE3QVsAqUCZb6per1d16AmngkjtmBqArkK2AE6n2NGygGz7+/22v3wUksNEVZEKfRmghdJqsha1+YlmYoC0O0M7Q14GCIyK3XoDFez9iZ/qoss4IMcfASwTflMWHFjEV/a/AlpiUznrDj8CGGPMk3qIJX8OLhcPyI2pYm/aEr6uliY86rezKCAwHG9uTBU99gDbMZfbttIAAgdMnth2ZkfIf+cCT1xxefVp61jVeLV62FasXx89tl9tBcxtThDCgxQtItlfLixiFVJPIbqMsQ/kyV999gTbBTHOzPsC8KZOG4jNRCaYMCDRi8I430kOZK5vzmfHA5jbtuTZUS4zkNyjpXefIgdio3U+D/j19WXDBMDsYYDrrIEkpwLVcYJBTuDQNh0cpZ25AIzJkRsiEtYgSZhiT/mSi/vcJgMOsT4AaUu6xCRBRFYhiblK7MFJc0iSyZvknhwxySIkqxaRfDLRxJ4pJmfeUXJrBbGR2kHw3HZzz7A1SRMbGXSGzM1FXg/IhFSSvlzJGGO2Zy6HT/NMjiWXaIcHxA9Rhbzf72EFckwDiE+q7ysimoCdUXtyD1ZnMmKSH4N028vcafrPd66Cn54QCJxAhuUPlVzuPdbDvHXEGiBBBNeSs904zxYR0ZR1LnVsARLH6DyQe9FtB/1d4vJFn2wPIGMqpIgEQHFeINHn3AvIOOGCuFXjahaz2LxLPtERQMbmJCYpvi7ZynUUsG7BVuIuajO4GdC92E3K/aZbZF28zXAUkLE5kUuO/7C4Rea8PkkLoM9xafu3AM5Wj5W3AP77JyAZOmTPbdICmJH2JM+B+y6Li24B/LYdwFrhQe6F97gXxkz4ZxotgDXNMAxhGIbgJxaRIE6A8VITrRgtgDHlQ5La9SV2STQB/WpPdAsgCfidyGsPbWVInV5sv7fJgSwC/gUAAP//8k3XxQAAAAZJREFUAwAaRV78b6RdUwAAAABJRU5ErkJggg==");
+  --text-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAYAAACNdSR1AAAApklEQVR4AaSS0Q2DMAxE0y5WOlnLZMBkcM/ECVJsfkC5nImfckj4Xc5nl7n+qqeqRY7oTQ6/dOj6qUZAm+pZorc6rPe2VlUAOCm4jkqJYGto41Nkfd3BnapVBrfoyplF8BBvpLYI1nG8Mpjbh0/J4PDqR3AY7zF3N/OrnTPPYBIMuG4ZfGVaHcFDvNMOE+tiPD8CkKwvYMYQAAF81WZESWCmGXy8HAAAAP//ubYi/AAAAAZJREFUAwBDcxpfIo38CgAAAABJRU5ErkJggg==");
+  --text-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAkCAYAAACNBsqdAAABWElEQVR4AdyWUbKCMAxF1Y2pK1NXpq5Mc5ArNaC58KPjm96XpEkPsXSYblaPv2OYW9I5YkQu3NHYxQw5aiQxdgJfoigPFqJDJADgSwKR0xw2Sh+jBa9jKusUcwwAgmGB0Az5fRRIWn8ROHKTg04BkMQCwhLjK88cYr5TBe6K+n8C9eFn44CvPYKf37u1ccA1ZaLiJ8AvLyeazHFMDWNJx9ZeO+Dt0IfvOWCf1lT+BLh9Wa3f9Dm4czu2Xhx4B2zDAEoOWLWz7FKwvh9vHzYXbG+LCy5PQW69AtsdzgXnejuuOrZBudAF51NQ7nkFzntsf+kqcP6Fdvy/4Pyycjzaoq9thX0KcstLO87HMHNXLhgQF0DsCDI10YJZJAHRdZV1XGMRPsKnhnrikQBTwE0ckMRCLeKWqfsvlhNBjhrqWSsRdw8BjEOx1IK4SPNg5bDAqUHErZ7flDsAAAD//5BisaYAAAAGSURBVAMAVqdHgji9SzsAAAAASUVORK5CYII=");
+  --text-svg: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2713%27%20height%3D%2722%27%20viewBox%3D%270%200%2045%2075%27%3E%3Cpath%20d%3D%27M4.80778%200C4.88068%201.51261e-05%207.50736%200.0131965%2011.9836%200.154297C15.2571%200.257555%2017.0499%201.01477%2018.0031%201.71582C18.7103%202.23605%2019.2476%202.85226%2019.6701%203.57324C19.6794%203.57317%2019.6889%203.57332%2019.6984%203.57324C20.765%203.56453%2022.8354%203.54686%2024.0168%203.51562C24.6003%203.50019%2024.9251%203.48164%2025.1213%203.46582C25.3029%203.45116%2025.3743%203.43994%2025.5226%203.41992C25.6524%203.4024%2025.9757%203.36445%2026.257%203.33105C26.7563%202.71099%2027.3986%202.31699%2028.0861%202.03809C28.8526%201.72715%2029.8132%201.50554%2030.9074%201.2832L30.9709%201.27051L31.0353%201.26172C38.4259%200.25515%2039.917%200.226738%2040.4806%200.18457H40.4884C40.7676%200.164846%2041.0535%200.146695%2041.9465%200.0722656C43.0471%20-0.0193016%2044.0139%200.798774%2044.1056%201.89941C44.197%202.99979%2043.3789%203.96676%2042.2785%204.05859C41.367%204.13457%2041.0568%204.15422%2040.7785%204.17383L40.1515%204.21484C39.2043%204.2829%2037.0613%204.47866%2031.6496%205.21484C30.5693%205.43549%2029.9633%205.59274%2029.59%205.74414C29.4954%205.78252%2029.4353%205.81549%2029.3976%205.83691C29.3894%205.87039%2029.3752%205.91775%2029.3654%205.98242C29.3329%206.19644%2029.3145%206.52229%2029.3381%206.97754C29.3747%207.68693%2029.416%208.43744%2028.9914%2016.7363C28.5639%2025.0906%2027.6888%2040.6254%2027.2756%2050.3477C27.0682%2055.2252%2026.9226%2058.5873%2026.8644%2060.9902C26.8056%2063.4213%2026.8421%2064.7356%2026.9631%2065.5801C27.4085%2068.6901%2027.9196%2069.3721%2028.4797%2069.7842C28.5982%2069.8712%2029.5312%2070.4844%2032.256%2070.5703C34.476%2070.6403%2036.233%2070.6787%2037.4386%2070.6992C38.0412%2070.7095%2038.5063%2070.7154%2038.8224%2070.7188C38.9804%2070.7204%2039.1016%2070.7211%2039.1838%2070.7217C39.2624%2070.7223%2039.3013%2070.7226%2039.3049%2070.7227C40.4093%2070.7228%2041.3049%2071.6182%2041.3049%2072.7227C41.3046%2073.8269%2040.4091%2074.7225%2039.3049%2074.7227C39.2319%2074.7226%2036.6053%2074.7095%2032.1291%2074.5684C28.8558%2074.4651%2027.0628%2073.7078%2026.1095%2073.0068C25.5099%2072.5657%2025.0312%2072.0558%2024.6418%2071.4717C24.4406%2071.5405%2024.2255%2071.5803%2024.0011%2071.5811C21.6627%2071.5885%2019.3993%2071.5962%2018.2697%2071.6035C18.0092%2071.6052%2017.8125%2071.6071%2017.6642%2071.6084C17.1967%2072.1052%2016.6296%2072.4399%2016.0265%2072.6846C15.2601%2072.9955%2014.2993%2073.2171%2013.2052%2073.4395L13.1418%2073.4521L13.0773%2073.4609C5.68681%2074.4675%204.19564%2074.4959%203.632%2074.5381H3.62419C3.34505%2074.5578%203.05905%2074.576%202.16618%2074.6504C1.06558%2074.7419%200.0987425%2073.9239%200.006999%2072.8232C-0.084601%2071.7227%200.733602%2070.7559%201.83415%2070.6641C2.74564%2070.5881%203.05581%2070.5684%203.33415%2070.5488L3.9611%2070.5078C4.90836%2070.4398%207.05142%2070.244%2012.4631%2069.5078C13.5432%2069.2872%2014.1493%2069.1299%2014.5226%2068.9785C14.6171%2068.9402%2014.6773%2068.9072%2014.715%2068.8857C14.7232%2068.8522%2014.7374%2068.8052%2014.7472%2068.7402C14.7797%2068.5262%2014.7981%2068.2007%2014.7746%2067.7451C14.7379%2067.0356%2014.6965%2066.2871%2015.1213%2057.9863C15.5487%2049.6322%2016.4238%2034.0974%2016.8371%2024.375C17.0444%2019.4972%2017.19%2016.1354%2017.2482%2013.7324C17.3071%2011.3011%2017.2705%209.98715%2017.1496%209.14258C16.7041%206.03211%2016.1931%205.35061%2015.633%204.93848C15.5154%204.85206%2014.5833%204.2383%2011.8566%204.15234C9.6366%204.08237%207.87964%204.04397%206.67399%204.02344C6.07144%204.01318%205.6063%204.00722%205.2902%204.00391C5.13227%204.00225%205.01099%204.00157%204.92887%204.00098C4.85027%204.0004%204.81136%204.00002%204.80778%204C3.70332%203.99987%202.80778%203.10449%202.80778%202C2.80778%200.895512%203.70332%200.000131932%204.80778%200ZM18.8156%2070.6855C18.8196%2070.6791%2018.8253%2070.6735%2018.8293%2070.667C18.833%2070.6609%2018.8354%2070.6536%2018.839%2070.6475C18.8314%2070.6602%2018.8235%2070.673%2018.8156%2070.6855ZM25.3517%207.45801C25.0757%207.47819%2024.695%207.49952%2024.1232%207.51465C23.2745%207.5371%2022.0009%207.5497%2020.9484%207.55957C21.005%207.88643%2021.0593%208.22467%2021.1095%208.5752C21.2833%209.78854%2021.3059%2011.4084%2021.2472%2013.8291C21.1879%2016.2787%2021.0396%2019.6895%2020.8332%2024.5449C20.419%2034.2889%2019.5418%2049.8769%2019.1164%2058.1904C18.6883%2066.5565%2018.7459%2067.0782%2018.7697%2067.5391C18.7708%2067.5595%2018.7707%2067.5801%2018.7716%2067.6006C19.8512%2067.595%2021.4952%2067.5887%2023.2404%2067.583C23.1538%2067.1284%2023.0751%2066.6505%2023.0031%2066.1475C22.8293%2064.9342%2022.8068%2063.314%2022.8654%2060.8936C22.9247%2058.444%2023.0731%2055.0329%2023.2795%2050.1777C23.6936%2040.434%2024.5708%2024.8459%2024.9963%2016.5322C25.3523%209.57343%2025.3688%208.04157%2025.3517%207.45801Z%27%20fill%3D%27%23ffffff%27%20stroke%3D%27%23000000%27%20stroke-width%3D%273.5%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E");
 }
 
-@keyframes fire-flicker {
-  0% {
-    transform: scale(1, 1) rotate(-2deg) skewX(0deg);
-    filter: brightness(1);
-  }
-  50% {
-    transform: scale(1.01, 0.99) rotate(1deg) skewX(2deg);
-    filter: brightness(1.04);
-  }
-  100% {
-    transform: scale(0.99, 1.01) rotate(2deg) skewX(-2deg);
-    filter: brightness(1.08);
-  }
+html {
+  cursor: -webkit-image-set(var(--arrow-1x) 1x, var(--arrow-2x) 2x) 1 1, auto;
+  cursor: image-set(var(--arrow-1x) 1x, var(--arrow-2x) 2x) 1 1, auto;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fire-cursor--hover svg,
-  .fire-cursor--press svg {
-    animation: none;
-  }
+/* text surfaces → I-beam */
+input:where([type="text"],[type="email"],[type="search"],[type="password"],[type="url"],[type="tel"],[type="number"],[type="date"],[type="datetime-local"],:not([type])),
+textarea, [contenteditable="true"],
+p, h1, h2, h3, h4, h5, h6, li, dd, dt, td, th, blockquote, figcaption, caption,
+code, pre, small, strong, em, span,
+[style*="cursor:text"], [style*="cursor: text"] {
+  cursor: var(--text-svg) 6 11, text !important;
+}
+
+/* clickable → hand. Re-asserted on descendants (`… *`) so labels/spans inside a
+   link or button keep the hand instead of picking up the text rule above.
+   !important beats per-page inline <style> (e.g. the flow's `.btn { cursor: pointer }`). */
+a, a *, button:not(:disabled), button:not(:disabled) *,
+[role="button"], [role="button"] *, [role="tab"], [role="tab"] *, [role="link"], [role="link"] *,
+.btn:not(:disabled), .btn:not(:disabled) *, label, summary, select:not(:disabled),
+input[type="button"], input[type="submit"], input[type="reset"], input[type="checkbox"], input[type="radio"],
+.sidebar__link, .sidebar__link *, .nav-group__header, .nav-group__header *,
+.flow-card, .flow-card *, .code-toggle-btn, .code-toggle-btn *, .copy-code-btn, .copy-code-btn *,
+[style*="cursor:pointer"], [style*="cursor: pointer"] {
+  cursor: -webkit-image-set(var(--hand-1x) 1x, var(--hand-2x) 2x) 10 1, pointer !important;
+  cursor: image-set(var(--hand-1x) 1x, var(--hand-2x) 2x) 10 1, pointer !important;
+}
+
+/* disabled controls keep the default arrow */
+button:disabled, .btn:disabled, [aria-disabled="true"], :disabled {
+  cursor: -webkit-image-set(var(--arrow-1x) 1x, var(--arrow-2x) 2x) 1 1, default !important;
+  cursor: image-set(var(--arrow-1x) 1x, var(--arrow-2x) 2x) 1 1, default !important;
 }

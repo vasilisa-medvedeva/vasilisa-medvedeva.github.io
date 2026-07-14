@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Typography</title>
   <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Roboto", sans-serif;
-      background: var(--color-primary-transparent-04);
+      font-family: "Archivo", sans-serif;
+      background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -23,9 +28,9 @@
     }
 
     .page-title {
-      font-family: "Roboto", sans-serif;
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
+      letter-spacing: -0.02em;
       line-height: var(--text-headline-medium-line-height);
       color: var(--color-primary);
       margin-bottom: 40px;
@@ -181,71 +186,43 @@
 </head>
 <body>
 
-  <nav class="sidebar">
-    <a class="sidebar__logo" href="home.html">
-      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
-    </a>
-
-    <div class="nav-group" id="nav-styles">
-      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
-        Styles
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="typography.html">Typography</a>
-        <a class="sidebar__link" href="colors.html">Colors</a>
-      </div>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="nav-group" id="nav-icons">
-      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
-        Icons
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="icons.html">Tab bar</a>
-        <a class="sidebar__link" href="icons.html#chats">Chats</a>
-        <a class="sidebar__link" href="icons.html#menu">Menu</a>
-        <a class="sidebar__link" href="icons.html#general">General</a>
-        <a class="sidebar__link" href="icons.html#small">Small</a>
-        <a class="sidebar__link" href="icons.html#loader">Loader</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-atoms">
-      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
-        Atoms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="index.html#tab-bar-item">TabBarItem</a>
-        <a class="sidebar__link" href="index.html#button">Button</a>
-        <a class="sidebar__link" href="index.html#tab-item-bottom">TabItem</a>
-        <a class="sidebar__link" href="index.html#chips">Chips</a>
-        <a class="sidebar__link" href="index.html#photo-placeholder">PhotoPlaceholder</a>
-        <a class="sidebar__link" href="index.html#chat-right">ChatRight</a>
-      </div>
-    </div>
-
-
-    <div class="nav-group" id="nav-components">
-      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
-        Organisms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="sidebar"></nav>
 
   <main class="main">
     <div class="page-title">Typography</div>
@@ -382,5 +359,6 @@
   </main>
 
   <script src="scripts/nav.js"></script>
+  <script src="scripts/page-transition.js?v=3"></script>
 </body>
 </html>

@@ -1,0 +1,18 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="80" fill="#BcD9EE"/>
+  <rect width="80" height="80" fill="url(#sky)"/>
+  <!-- far mountains -->
+  <path d="M0 44L14 28L26 40L40 22L54 38L66 26L80 40V80H0V44Z" fill="#8FA8C2"/>
+  <!-- snow caps -->
+  <path d="M40 22L46 28L43 30L40 27L37 31L34 28L40 22Z" fill="#F2F6FA"/>
+  <path d="M66 26L70 30L68 31L66 29L64 32L62 30L66 26Z" fill="#F2F6FA"/>
+  <!-- near hills -->
+  <path d="M0 56L18 48L34 58L52 50L66 60L80 54V80H0V56Z" fill="#6E8B5A"/>
+  <path d="M0 66L22 60L44 68L62 62L80 68V80H0V66Z" fill="#52733F"/>
+  <defs>
+    <linearGradient id="sky" x1="40" y1="0" x2="40" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#CFE3F4"/>
+      <stop offset="1" stop-color="#E8F0F8"/>
+    </linearGradient>
+  </defs>
+</svg>

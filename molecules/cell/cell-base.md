@@ -39,6 +39,7 @@ Rows are content-driven (add `.cell-base__subtitle` lines). `--row-3` top-aligns
 | `--hover` | pointer hover | `--color-brand-yellow-4` |
 | `--pressed` | active/tap | `--color-brand-yellow-8` |
 | `--selected` | selected row | `--color-brand-yellow-16` |
+| `--destructive` | destructive action row — red title for irreversible actions (Delete / Remove / Leave) | `--color-brand-red-secondary` (title) |
 
 ⚠️ The Figma node defines only the resting layout (`open=no`); hover/pressed/selected follow CellMenu's yellow ramp.
 
@@ -52,6 +53,7 @@ Rows are content-driven (add `.cell-base__subtitle` lines). `--row-3` top-aligns
 | `--color-primary-transparent-16` | Divider hairline (#EBEBEB) |
 | `--color-constant-primary` | Row background |
 | `--color-brand-yellow-4 / -8 / -16` | hover / pressed / selected |
+| `--color-brand-red-secondary` | Destructive title colour (`--destructive`) |
 
 ## Do / Don't
 ✅ **Do** — pick the size by required row height; keep the text column for Title/Subtitle only.
@@ -59,6 +61,7 @@ Rows are content-driven (add `.cell-base__subtitle` lines). `--row-3` top-aligns
 ✅ **Do** — drop a library atom (Avatar, icon, checkbox) into a slot; CellBase only owns the layout.
 ❌ **Don't** — hardcode state backgrounds; use the yellow tokens.
 ❌ **Don't** — add a third text line without `--xlarge --row-3` (other sizes don't define 3 rows).
+❌ **Don't** — use `--destructive` for routine actions; reserve the red title for irreversible ones (delete, remove, leave).
 
 ## Accessibility
 - Minimum touch target: 44×44pt — `--small` and up satisfy this; avoid `--xsmall` for tappable rows.
@@ -73,5 +76,5 @@ Rows are content-driven (add `.cell-base__subtitle` lines). `--row-3` top-aligns
 | (any atom) | real leading/trailing slot content (Avatar, icon, checkbox, chevron) |
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
-Version 0.1 | Owner: @medvedeva_vas
+`stable` — confirmed by the user.
+Version 1.0 | Owner: @medvedeva_vas

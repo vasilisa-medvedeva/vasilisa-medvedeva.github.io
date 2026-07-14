@@ -1,0 +1,171 @@
+/* ── Site header (portfolio chrome) ─────────────────────────────────────
+   Shared by portfolio.html and home.html. Left: avatar + name → main page.
+   Right: CV link + social icons (inline SVGs, colored via currentColor). */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--color-constant-primary);
+}
+
+.site-header__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Left — identity: mini avatar + name, links to the main page */
+.site-header__identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 30px;
+}
+.site-header__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--color-primary-transparent-87);
+  display: block;
+}
+.site-header__name {
+  font-family: "Archivo", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 19px;
+  letter-spacing: -0.01em;
+  color: var(--color-primary-transparent-87);
+  white-space: nowrap;
+}
+/* Hover/press feedback — grey pill behind the whole area (negative margins keep
+   the 60px header height: the padding grows inward, not outward) */
+.site-header__identity { padding: 4px 12px 4px 4px; margin: -4px -12px -4px -4px; }
+.site-header__identity:hover  { background: var(--color-primary-transparent-04); }
+.site-header__identity:active { background: var(--color-primary-transparent-08); }
+.site-header__identity:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
+
+/* Middle — section menus with hover dropdowns, centred in the header */
+.site-header__inner { position: relative; }
+.site-header__menu {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.menu-item { position: relative; }
+.menu-item__trigger {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-primary-transparent-87);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 30px;
+  white-space: nowrap;
+}
+.menu-item:hover .menu-item__trigger,
+.menu-item:focus-within .menu-item__trigger { background: var(--color-primary-transparent-04); }
+.menu-item__trigger:active { background: var(--color-primary-transparent-08); }
+.menu-item__trigger:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
+.menu-item__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;                        /* M3: the menu hangs off the anchor's leading edge */
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 8px 0;                 /* M3: vertical padding only — item state layers run edge to edge */
+  background: var(--color-constant-primary);
+  border: 1px solid var(--color-primary-transparent-08);
+  border-radius: 16px;
+  overflow: hidden;               /* clips full-bleed item highlights to the rounded corners */
+  box-shadow: var(--elevation-4);
+  z-index: 30;
+  /* Material 3 menu motion (as in Compose DropdownMenu): the container scales
+     0.8 → 1 from its anchor corner over 120ms (standard decelerate) while the
+     opacity snaps in over 30ms. Closing is a plain 75ms fade — the scale only
+     resets after the menu is invisible. */
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transform-origin: top left;     /* expands out of the corner nearest the anchor */
+  pointer-events: none;
+  transition: opacity 75ms linear,
+              transform 0s linear 75ms,
+              visibility 0s linear 75ms;
+}
+.menu-item:hover .menu-item__dropdown,
+.menu-item:focus-within .menu-item__dropdown {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  transition: opacity 30ms linear,
+              transform 120ms cubic-bezier(0, 0, 0.2, 1),
+              visibility 0s;
+}
+.menu-item__link {
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-primary-transparent-87);
+  text-decoration: none;
+  padding: 12px 16px;             /* M3 list item: full-width state layer, no rounding */
+  white-space: nowrap;
+}
+.menu-item__link:hover  { background: var(--color-primary-transparent-04); }
+.menu-item__link:active { background: var(--color-primary-transparent-08); }
+.menu-item__link:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: -2px;
+}
+/* Narrow screens: the centred menu would collide with identity/contacts */
+@media (max-width: 920px) {
+  .site-header__menu { display: none; }
+}
+
+/* Right — CV + contacts, plain text links */
+.site-header__links {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.site-header__link {
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-primary-transparent-87);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  padding: 8px 10px;
+  border-radius: 30px;
+  white-space: nowrap;
+}
+.site-header__link:hover  { background: var(--color-primary-transparent-04); }
+.site-header__link:active { background: var(--color-primary-transparent-08); }
+.site-header__link:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}

@@ -5,188 +5,482 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast UI</title>
   <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
-  <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <!-- Archivo — used for flow-card copy (same as the flow pages) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-primary-transparent-04);
+      background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
     }
 
     .main {
-      margin-left: 220px;
-      padding: 40px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 10px;
       min-height: 100vh;
+      max-width: 1440px;               /* on wide screens only the side gaps grow */
+      margin: 0 auto;
     }
 
-    .home-placeholder {
-      text-align: center;
-      color: var(--color-primary-transparent-48);
+    /* ── Hero — oversized statement + offset aside with a doodle arrow ── */
+    .hero {
+      padding: 88px 0 0;                 /* side gutters come from .main, same as the cards */
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 6.9vw, 94px);
+      line-height: 0.96; letter-spacing: -0.025em;
+      color: var(--color-primary-transparent-87);
+      max-width: 1360px;
+    }
+    .hero__aside {
+      align-self: flex-end;
+      margin-top: 20px;
+      width: calc((100% - 10px) / 2.4);  /* aligned with the narrower right column */
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero__aside p {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
     }
 
-    .home-placeholder__title {
+    /* Hand-drawn ring around a word, same doodle stroke as the arrows */
+    .hero__circled { position: relative; display: inline-block; padding: 0 3px; }
+    .hero__circled svg {
+      position: absolute; left: -12%; top: -32%;
+      width: 124%; height: 164%;
+      pointer-events: none;
+    }
+    .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
+
+    /* ── Flows grid (korolev-style tiles) ── */
+    .flows-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;   /* left cards wider, right narrower */
+      gap: 10px;
+      align-items: start;
+      margin-top: 20px;
+      padding-bottom: 50px;            /* room for the offset right column */
+    }
+    /* Staggered columns: the right card sits 40px lower */
+    .flows-grid > .flow-card:nth-child(even) { position: relative; top: 40px; }
+
+    .flow-card {
+      position: relative;
+      display: flex; flex-direction: column;
+      background: var(--color-constant-primary);
+      border: 1px solid var(--color-primary-transparent-08);
+      border-radius: 24px;
+      padding: 5px;
+      overflow: hidden;
+      text-decoration: none; color: inherit;
+      /* reveal-on-scroll start state */
+      opacity: 0;
+      transform: translateY(36px) scale(0.98);
+      transition: opacity 0.7s ease,
+                  transform 0.7s cubic-bezier(0.16, 0.84, 0.24, 1),
+                  box-shadow 0.4s ease;
+      will-change: transform, opacity;
+    }
+    .flow-card.is-revealed { opacity: 1; transform: none; }
+    .flow-card.is-revealed:hover {
+      transform: scale(0.95);
+      box-shadow: var(--elevation-4);
+      z-index: 2;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flow-card { opacity: 1; transform: none; transition: none; }
+    }
+
+    .flow-card__head { display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 0; }
+    .flow-card__name {
+      font-family: "Archivo", sans-serif;
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
-      color: var(--color-primary);
-      margin-bottom: 12px;
+      letter-spacing: -0.02em;   /* matches the flow-page title (-0.88px at 44px) */
+      color: var(--color-primary-transparent-87);
+      text-transform: uppercase;
     }
 
-    .home-placeholder__sub {
+    /* Stage — device on a soft gradient-blob backdrop */
+    .flow-card__stage {
+      position: relative;
+      margin-top: 16px;
+      height: 510px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--color-primary-transparent-04);
+    }
+
+    .flow-card__device {
+      position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
+      width: 54%; max-width: 220px;
+      aspect-ratio: 360 / 780;
+      border-radius: 30px; overflow: hidden;
+      box-shadow: var(--elevation-4);
+      z-index: 1;
+    }
+    .flow-card__device iframe {
+      position: absolute; top: 0; left: 0;
+      width: 360px; height: 780px; border: 0;
+      transform-origin: top left; pointer-events: none;
+    }
+
+    .flow-card--empty .flow-card__stage {
+      display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: 1.5px dashed var(--color-primary-transparent-16);
+      border-radius: 16px;
+    }
+    .flow-card--empty .flow-card__stage span {
       font-size: var(--text-body-large-font-size);
-      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-32);
+    }
+
+    /* Design system card — wall of components (spans two columns). Real library
+       CSS classes/markup are copied in below so they look exactly like the library. */
+    .flow-card--ds .flow-card__stage { background: var(--color-constant-primary); }
+    /* Screenshot overlay — shown when assets/design-system.png exists, else removed (wall fallback) */
+    .ds-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: translateX(-20px) scale(1.2); transform-origin: center; z-index: 2; }
+    .ds-wall {
+      position: absolute; inset: 0; padding: 28px 32px; overflow: hidden;
+      display: flex; flex-wrap: wrap; gap: 14px; align-content: flex-start; align-items: center;
+    }
+    /* ── Button (copied from library) ── */
+    .ds-wall .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 150px; padding: 18px 16px; border-radius: 30px;
+      border: 1.5px solid transparent; white-space: nowrap;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+    }
+    .ds-wall .btn--primary  { background: var(--color-brand-yellow-primary); border-color: var(--color-primary-transparent-87); color: var(--color-primary-transparent-87); }
+    .ds-wall .btn--secondary{ background: var(--color-constant-primary); border-color: var(--color-primary-transparent-87); color: var(--color-primary-transparent-87); }
+    .ds-wall .btn--only-text{ background: transparent; border-color: transparent; color: var(--color-primary-transparent-87); }
+    .ds-wall .btn--accent   { background: var(--color-brand-red-quaternary); border-color: var(--color-primary-transparent-87); color: var(--color-constant-primary); }
+    .ds-wall .btn.s-pressed.btn--primary  { background: var(--color-brand-yellow-60); }
+    .ds-wall .btn.s-pressed.btn--secondary,
+    .ds-wall .btn.s-pressed.btn--only-text{ background: var(--color-primary-transparent-04); }
+    .ds-wall .btn.s-pressed.btn--accent   { background: var(--color-warning-transparent-60); }
+    .ds-wall .btn.s-disabled.btn--primary { background: var(--color-brand-yellow-32); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .ds-wall .btn.s-disabled.btn--secondary,
+    .ds-wall .btn.s-disabled.btn--only-text { background: var(--color-primary-transparent-04); border-color: var(--color-primary-transparent-48); color: var(--color-primary-transparent-48); }
+    .ds-wall .btn.s-disabled.btn--only-text { border-color: transparent; }
+    .ds-wall .btn.s-disabled.btn--accent  { background: var(--color-warning-transparent-48); border-color: var(--color-primary-transparent-48); color: var(--color-constant-primary); }
+    /* ── Chip (copied from library: tag-chip) ── */
+    .ds-wall .tag-chip {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      border-radius: 20px; padding: 10px 8px 10px 12px;
+    }
+    .ds-wall .tag-chip__label {
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
+      font-weight: var(--text-label-medium-font-weight);
+      font-size: var(--text-label-medium-font-size);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: var(--text-label-medium-letter-spacing);
+      color: var(--color-primary-transparent-87); white-space: nowrap;
+    }
+    .ds-wall .tag-chip__cancel {
+      display: flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 13px;
+      background: var(--color-primary-transparent-08); font-size: 11px;
+      color: var(--color-primary-transparent-87);
+    }
+    /* ── Toggle (copied from library) ── */
+    .ds-wall .toggle-cb, .ds-wall .toggle-radio {
+      width: 28px; height: 28px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      color: var(--color-primary-transparent-87); font-size: 16px;
+    }
+    .ds-wall .toggle-cb { border-radius: 9px; background: var(--color-brand-yellow-secondary); }
+    .ds-wall .toggle-radio { border-radius: 50%; }
+    .ds-wall .toggle-radio::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--color-brand-yellow-secondary); }
+    /* ── NotificationCounter (copied from library, --cell variant) ── */
+    .ds-wall .notification-counter {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 4px 7px; border-radius: 12px;
+      background: var(--color-brand-red-secondary);
+      border: 1.5px solid var(--color-primary-transparent-87);
+    }
+    .ds-wall .notification-counter__number {
+      font-family: var(--text-label-medium-bold-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-label-medium-bold-font-size);
+      font-weight: 700; color: var(--color-constant-primary);
+    }
+    /* ── SearchField (library look) ── */
+    .ds-wall .ds-search {
+      display: flex; align-items: center; gap: 8px; width: 240px; height: 44px;
+      padding: 0 16px; border-radius: 30px;
+      border: 1px solid var(--color-primary-transparent-24);
+      background: var(--color-constant-primary);
+      font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-large-font-size);
       color: var(--color-primary-transparent-60);
     }
+    .ds-wall .ds-search img { width: 18px; height: 18px; opacity: 0.55; }
+    /* ── Avatar / ChannelAvatar ── */
+    .ds-wall .ds-avatar {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-brand-red-secondary); color: var(--color-constant-primary);
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif; font-weight: 700; font-size: 14px;
+    }
+    .ds-wall .ds-avatar--ch { border-radius: 12px; background: var(--color-info-secondary); }
+    /* ── Cell (CellContact look) ── */
+    .ds-wall .ds-cell { display: flex; align-items: center; gap: 10px; width: 220px; }
+    .ds-wall .ds-cell__av { width: 40px; height: 40px; border-radius: 50%; background: var(--color-info-transparent-24); flex-shrink: 0; }
+    .ds-wall .ds-cell__tx { display: flex; flex-direction: column; gap: 5px; }
+    .ds-wall .ds-cell__t1 { width: 92px; height: 9px; border-radius: 5px; background: var(--color-primary-transparent-32); }
+    .ds-wall .ds-cell__t2 { width: 132px; height: 8px; border-radius: 5px; background: var(--color-primary-transparent-16); }
+    /* ── VideoChip look ── */
+    .ds-wall .ds-video {
+      display: flex; align-items: center; gap: 8px; width: 158px; height: 44px;
+      padding: 0 12px; border-radius: 12px; background: var(--color-primary-transparent-08);
+      font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif; font-size: 12px; color: var(--color-primary-transparent-87);
+    }
+    .ds-wall .ds-video__play { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: var(--color-constant-primary); display: flex; align-items: center; justify-content: center; font-size: 9px; }
+    .ds-wall .ds-thumb { width: 64px; height: 48px; border-radius: 8px; background: var(--color-primary-transparent-08); flex-shrink: 0; }
   </style>
 </head>
 <body>
 
-  <nav class="sidebar">
-    <a class="sidebar__logo sidebar__logo--active" href="home.html">
-      <img src="assets/pyroblast-logo.svg" alt="Pyroblast" />
-    </a>
-
-    <div class="nav-group" id="nav-styles">
-      <button class="nav-group__header" onclick="toggleGroup('nav-styles')">
-        Styles
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="typography.html">Typography</a>
-        <a class="sidebar__link" href="colors.html">Colors</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-icons">
-      <button class="nav-group__header" onclick="toggleGroup('nav-icons')">
-        Icons
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="icons.html#tabbar">Tab bar</a>
-        <a class="sidebar__link" href="icons.html#chats">Chats</a>
-        <a class="sidebar__link" href="icons.html#menu">Menu</a>
-        <a class="sidebar__link" href="icons.html#general">General</a>
-        <a class="sidebar__link" href="icons.html#small">Small</a>
-        <a class="sidebar__link" href="icons.html#loader">Loader</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-atoms">
-      <button class="nav-group__header" onclick="toggleGroup('nav-atoms')">
-        Atoms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="index.html#chips">VideoChip</a>
-        <a class="sidebar__link" href="index.html#preview">Preview</a>
-        <a class="sidebar__link" href="index.html#preview-doc-chat">PreviewDocChat</a>
-        <a class="sidebar__link" href="index.html#button">Button</a>
-        <a class="sidebar__link" href="index.html#toggle">Toggle</a>
-        <a class="sidebar__link" href="index.html#tab-profile">TabProfile</a>
-        <a class="sidebar__link" href="index.html#tab-item">TabItem</a>
-        <a class="sidebar__link" href="index.html#avatar">Avatar</a>
-        <a class="sidebar__link" href="index.html#channel-avatar">ChannelAvatar</a>
-        <a class="sidebar__link" href="index.html#statusbar">Statusbar</a>
-        <a class="sidebar__link" href="index.html#notification-counter">NotificationCounter</a>
-        <a class="sidebar__link" href="index.html#separator-message">SeparatorMessage</a>
-        <a class="sidebar__link" href="index.html#info-title">InfoTitle</a>
-        <a class="sidebar__link" href="index.html#bubble-2">Bubble2.0</a>
-        <a class="sidebar__link" href="index.html#send-time">SendTime</a>
-        <a class="sidebar__link" href="index.html#reaction">Reaction</a>
-        <a class="sidebar__link" href="index.html#reaction-arrow">ReactionArrow</a>
-        <a class="sidebar__link" href="index.html#bubble-comments">BubbleComments</a>
-        <a class="sidebar__link" href="index.html#cell-menu">CellMenu</a>
-        <a class="sidebar__link" href="index.html#emoji-badge">EmojiBadge</a>
-      </div>
-    </div>
-
-    <div class="nav-group" id="nav-molecules">
-      <button class="nav-group__header" onclick="toggleGroup('nav-molecules')">
-        Molecules
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <div class="nav-subgroup" id="sub-cell">
-          <button class="nav-subgroup__header" onclick="toggleSubgroup('sub-cell')">
-            <svg class="nav-subgroup__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Cell
-          </button>
-          <div class="nav-subgroup__items">
-            <a class="sidebar__link" href="molecules.html#cell-base">CellBase</a>
-            <a class="sidebar__link" href="molecules.html#cell-toggle">CellToggle</a>
-            <a class="sidebar__link" href="molecules.html#cell-contact">CellContact</a>
-            <a class="sidebar__link" href="molecules.html#cell-activity">CellActivity</a>
-            <a class="sidebar__link" href="molecules.html#cell-separator">CellSeparator</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
           </div>
         </div>
-        <div class="nav-subgroup" id="sub-field">
-          <button class="nav-subgroup__header" onclick="toggleSubgroup('sub-field')">
-            <svg class="nav-subgroup__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Field
-          </button>
-          <div class="nav-subgroup__items">
-            <a class="sidebar__link" href="molecules.html#text-fields">TextFields</a>
-            <a class="sidebar__link" href="molecules.html#search-field">SearchField</a>
-            <a class="sidebar__link" href="molecules.html#tf-s">TextFields.S</a>
-            <a class="sidebar__link" href="molecules.html#tf-l">TextFields.L</a>
-            <a class="sidebar__link" href="molecules.html#tf-bar">TextFieldsBar</a>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
           </div>
         </div>
-        <a class="sidebar__link" href="molecules.html#photo-placeholder">PhotoPlaceholder</a>
-        <a class="sidebar__link" href="molecules.html#gallery">Gallery</a>
-        <a class="sidebar__link" href="molecules.html#card-profile-text">CardProfileText</a>
-        <a class="sidebar__link" href="molecules.html#tabs">Tabs</a>
-        <a class="sidebar__link" href="molecules.html#top-bar">TopBar</a>
-        <a class="sidebar__link" href="molecules.html#swipe-tab-item">SwipeTabItem</a>
-        <a class="sidebar__link" href="molecules.html#top-search-bar">TopSearchBar</a>
-        <a class="sidebar__link" href="molecules.html#text-reply">TextReply</a>
-        <a class="sidebar__link" href="molecules.html#above-text-field">AboveTheTextField</a>
-
-        <a class="sidebar__link" href="molecules.html#bubble-bottom-2">BubbleBottom 2.0</a>
-        <a class="sidebar__link" href="molecules.html#message">Message</a>
-      </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <!-- Drop your CV at assets/VasilisaMedvedeva_CV.pdf; replace the social URLs with your real profiles -->
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
     </div>
-
-    <div class="nav-group" id="nav-components">
-      <button class="nav-group__header" onclick="toggleGroup('nav-components')">
-        Organisms
-        <svg class="nav-group__chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M4 2L8 6L4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="nav-group__items">
-        <a class="sidebar__link" href="organisms.html#card-profile">CardProfile</a>
-      </div>
-    </div>
-  </nav>
+  </header>
 
   <main class="main">
-    <div class="home-placeholder">
-      <div class="home-placeholder__title">Pyroblast UI</div>
-      <div class="home-placeholder__sub">Home page — coming soon</div>
+    <section class="hero">
+      <h1 class="hero__title">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
+      <div class="hero__aside">
+        <p>No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
+        <p>Designed for desktop, iOS and Android; the prototypes below are the mobile flows. Built at an early-stage startup that ran out of funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
+      </div>
+    </section>
+
+    <div class="flows-grid">
+      <!-- Live animated flow -->
+      <a class="flow-card" href="flows/login.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Log in</span>
+        </div>
+        <div class="flow-card__stage">
+          <div class="flow-card__device">
+            <iframe src="flows/login.html?embed=1" title="Log in flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>
+        </div>
+      </a>
+
+      <a class="flow-card flow-card--chats" href="flows/create-chats.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Create Chats</span>
+        </div>
+        <div class="flow-card__stage">
+          <div class="flow-card__device">
+            <iframe src="flows/create-chats.html?embed=1" title="Create Chats flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>
+        </div>
+      </a>
+
+      <!-- Design system — entry to the component library -->
+      <a class="flow-card flow-card--ds" href="atoms.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Design system</span>
+        </div>
+        <div class="flow-card__stage">
+          <!-- Drop a screenshot at assets/design-system.png and it shows here automatically;
+               until the file exists, onerror removes the img and the component wall below shows. -->
+          <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()">
+          <div class="ds-wall">
+            <span class="btn btn--primary">Button</span>
+            <span class="btn btn--secondary">Button</span>
+            <span class="btn btn--only-text">Button</span>
+            <span class="btn btn--accent">Button</span>
+            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+
+            <span class="toggle-cb">✓</span>
+            <span class="toggle-radio"></span>
+            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="notification-counter"><span class="notification-counter__number">34</span></span>
+            <span class="ds-avatar">ML</span>
+            <span class="ds-avatar ds-avatar--ch">P</span>
+            <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
+
+            <span class="btn btn--primary s-pressed">Button</span>
+            <span class="btn btn--secondary s-pressed">Button</span>
+            <span class="btn btn--only-text s-pressed">Button</span>
+            <span class="btn btn--accent s-pressed">Button</span>
+            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true"><span style="color:var(--color-primary-transparent-87)">Coffee</span></span>
+
+            <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
+            <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
+            <span class="ds-thumb"></span>
+            <span class="ds-thumb"></span>
+            <span class="ds-video"><span class="ds-video__play">↓</span>0:32 · 102 MB</span>
+
+            <span class="btn btn--primary s-disabled">Button</span>
+            <span class="btn btn--secondary s-disabled">Button</span>
+            <span class="btn btn--only-text s-disabled">Button</span>
+            <span class="btn btn--accent s-disabled">Button</span>
+            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="toggle-cb">✓</span>
+            <span class="toggle-radio"></span>
+
+            <span class="ds-avatar">AB</span>
+            <span class="ds-avatar ds-avatar--ch">G</span>
+            <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
+            <span class="notification-counter"><span class="notification-counter__number">12</span></span>
+            <span class="btn btn--primary">Button</span>
+            <span class="btn btn--accent">Button</span>
+
+            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+            <span class="ds-thumb"></span>
+            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
+            <span class="btn btn--secondary">Button</span>
+
+            <span class="btn btn--primary s-pressed">Button</span>
+            <span class="btn btn--secondary">Button</span>
+            <span class="btn btn--only-text">Button</span>
+            <span class="btn btn--accent s-disabled">Button</span>
+            <span class="toggle-cb">✓</span>
+            <span class="toggle-radio"></span>
+            <span class="notification-counter"><span class="notification-counter__number">7</span></span>
+            <span class="ds-avatar">EM</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="flow-card flow-card--attach" href="flows/attach-photo.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Attach Photo</span>
+        </div>
+        <div class="flow-card__stage">
+          <div class="flow-card__device">
+            <iframe src="flows/attach-photo.html?embed=1" title="Attach Photo flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>
+        </div>
+      </a>
     </div>
   </main>
 
-  <script src="scripts/nav.js"></script>
+  <script>
+    // Always open at the top on reload — otherwise the browser restores the
+    // previous scroll position and hides the 10px top offset.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+
+    // Scale each embedded flow (natural 360px wide) to fill its card
+    function fitFlows() {
+      document.querySelectorAll('.flow-card__device iframe').forEach(function (f) {
+        f.style.transform = 'scale(' + (f.parentElement.clientWidth / 360) + ')';
+      });
+    }
+    window.addEventListener('load', fitFlows);
+    window.addEventListener('resize', fitFlows);
+
+
+    // Play each card's embedded flow demo only while the card is hovered; reset on leave.
+    // Same-origin iframes → we can drive the flow's own window functions directly.
+    (function () {
+      document.querySelectorAll('.flow-card').forEach(function (card) {
+        var iframe = card.querySelector('.flow-card__device iframe');
+        if (!iframe) return;
+        function call (fn) {
+          try { var w = iframe.contentWindow; if (w && typeof w[fn] === 'function') w[fn](); } catch (e) {}
+        }
+        card.addEventListener('mouseenter', function () { call('playDemo'); });
+        card.addEventListener('mouseleave', function () { call('restartManual'); });
+      });
+    })();
+
+
+    // Reveal cards as they scroll into view (staggered)
+    (function () {
+      var cards = document.querySelectorAll('.flow-card');
+      function reveal (el, delay) { setTimeout(function () { el.classList.add('is-revealed'); }, delay || 0); }
+      if (!('IntersectionObserver' in window)) {
+        cards.forEach(function (c) { reveal(c); });
+        return;
+      }
+      // threshold 0 → reveal the moment a card enters (robust even when a tall hero
+      // leaves the first card only slightly in view on load).
+      var io = new IntersectionObserver(function (entries) {
+        var shown = 0;
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          reveal(e.target, shown * 110);
+          shown++;
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+      // Reveal anything already in (or above) the viewport right away — robust on
+      // reload and when a tall hero pushes the first cards down to the fold, where
+      // the observer's initial callback can otherwise miss them. Observe the rest.
+      var initial = 0;
+      cards.forEach(function (c) {
+        if (c.getBoundingClientRect().top < window.innerHeight) {
+          reveal(c, initial * 110);
+          initial++;
+        } else {
+          io.observe(c);
+        }
+      });
+    })();
+  </script>
+  <script src="scripts/page-transition.js?v=3"></script>
 </body>
 </html>

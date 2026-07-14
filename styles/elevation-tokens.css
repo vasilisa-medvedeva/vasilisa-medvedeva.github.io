@@ -14,9 +14,13 @@
   --elevation-3: 0px 4px 16px rgba(0, 0, 0, 0.12),
                  0px 1px 4px  rgba(0, 0, 0, 0.08);
 
-  /* Level 4 — overlay: bottom sheets, modals */
-  --elevation-4: 0px 8px 32px rgba(0, 0, 0, 0.16),
-                 0px 2px 8px  rgba(0, 0, 0, 0.10);
+  /* Level 3 up — bottom sheets that rise from the bottom (Figma "elevation 3 (-)") */
+  --elevation-3-up: 0px -1px 3px rgba(0, 0, 0, 0.10),
+                    0px -4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  /* Level 4 — overlay: dropdown menus, bottom sheets (Figma "elevation 4") */
+  --elevation-4: 0px 2px 3px rgba(0, 0, 0, 0.10),
+                 0px 6px 10px 4px rgba(0, 0, 0, 0.15);
 
   /* Level 5 — top layer: dialogs, full-screen overlays */
   --elevation-5: 0px 16px 48px rgba(0, 0, 0, 0.20),
