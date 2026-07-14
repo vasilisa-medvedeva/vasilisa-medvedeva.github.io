@@ -300,7 +300,10 @@
     .ios--new .ios__paypanel { height: 80px; }   /* button 288×56, y496 */
 
     /* Payment-method row (y448, h44): VISA logo x16 · number x56 · chevron right */
-    .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 7s infinite; }
+    .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 12s infinite; }
+    .ios__method-opt { position: absolute; inset: 0; }
+    .ios__method-opt--visa { animation: pay-opt-visa 12s infinite; }
+    .ios__method-opt--mc { opacity: 0; animation: pay-opt-mc 12s infinite; }
     .ios__visa {
       position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
       font-style: italic; font-weight: 800; font-size: 14.5px; line-height: 16px;
@@ -310,11 +313,11 @@
     .ios__chev { position: absolute; right: 16px; top: 18px; display: block; }
 
     /* ── Scrim + card sheet (y372, h196, top radius 4) ── */
-    .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 7s infinite; }
+    .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 12s infinite; }
     .ios__sheet {
       position: absolute; left: 0; right: 0; bottom: 0; height: 284px;
       background: #fff; border-radius: 4px 4px 0 0;
-      transform: translateY(101%); animation: pay-sheet 7s infinite;
+      transform: translateY(101%); animation: pay-sheet 12s infinite;
     }
     .ios__sheet-title { position: absolute; left: 16px; top: 19px; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
     .ios__x {
@@ -324,13 +327,15 @@
       font-size: 16px; line-height: 1;
     }
     .ios__card { position: absolute; left: 0; right: 0; height: 44px; }
-    .ios__card--saved { top: 68px; animation: pay-card-hl 7s infinite; }
-    .ios__card--mc  { top: 112px; }
+    .ios__card--saved { top: 68px; animation: pay-card-visa-hl 12s infinite; }
+    .ios__card--mc  { top: 112px; animation: pay-card-mc-hl 12s infinite; }
     .ios__card--mir { top: 156px; }
     .ios__card--new { top: 200px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
     .ios__check { position: absolute; right: 16px; top: 17px; display: block; }
+    .ios__check--visa { animation: pay-check-visa 12s infinite; }
+    .ios__check--mc { opacity: 0; animation: pay-check-mc 12s infinite; }
     .ios__mc { position: absolute; left: 16px; top: 14px; width: 32px; height: 16px; }
     .ios__mc::before, .ios__mc::after { content: ""; position: absolute; top: 0; width: 16px; height: 16px; border-radius: 50%; }
     .ios__mc::before { left: 3px; background: #EB001B; }
@@ -350,34 +355,62 @@
       position: absolute; width: 40px; height: 40px; border-radius: 50%;
       background: rgba(27,117,204,0.22); border: 1.5px solid rgba(27,117,204,0.45);
       opacity: 0; transform: translate(-50%,-50%) scale(0.8); pointer-events: none;
-      animation: pay-tap 7s infinite;
+      animation: pay-tap 12s infinite;
     }
 
-    /* Sheet transition per iOS HIG: ≈420ms ease-out (decelerate) in, ≈280ms ease-in out */
+    /* Sheet transition per iOS HIG: ≈420ms ease-out (decelerate) in, ≈280ms ease-in out.
+       Two acts per 12s loop: pick Mastercard, then switch back to VISA — so the loop
+       closes seamlessly with no visible reset. */
     @keyframes pay-scrim {
-      0%,20%  { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      26%,74% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      78%,100%{ opacity:0; }
+      0%,14%    { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      17.5%,33% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      35.3%,64% { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      67.5%,83% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      85.3%,100%{ opacity:0; }
     }
     @keyframes pay-sheet {
-      0%,20%  { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      26%,74% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      78%,100%{ transform:translateY(101%); }
+      0%,14%    { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      17.5%,33% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      35.3%,64% { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      67.5%,83% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      85.3%,100%{ transform:translateY(101%); }
     }
-    @keyframes pay-method-hl { 0%,12%{background:transparent} 15%,19%{background:#ececec} 23%,100%{background:transparent} }
-    @keyframes pay-card-hl { 0%,46%{background:transparent} 50%,55%{background:#ececec} 60%,100%{background:transparent} }
+    @keyframes pay-method-hl {
+      0%,9.5%     { background:transparent }
+      10.5%,12.5% { background:#ececec }
+      14%,59.5%   { background:transparent }
+      60.5%,62.5% { background:#ececec }
+      64%,100%    { background:transparent }
+    }
+    @keyframes pay-card-mc-hl   { 0%,22.5%{background:transparent} 23.5%,26%{background:#ececec} 28%,100%{background:transparent} }
+    @keyframes pay-card-visa-hl { 0%,72.5%{background:transparent} 73.5%,76%{background:#ececec} 78%,100%{background:transparent} }
+    /* the iOS checkmark jumps to the tapped card while the sheet is still open */
+    @keyframes pay-check-visa { 0%,27%{opacity:1} 28%,77%{opacity:0} 78%,100%{opacity:1} }
+    @keyframes pay-check-mc   { 0%,27%{opacity:0} 28%,77%{opacity:1} 78%,100%{opacity:0} }
+    /* the method row relabels under the open sheet, so the swap is never seen directly */
+    @keyframes pay-opt-visa { 0%,29%{opacity:1} 30%,79%{opacity:0} 80%,100%{opacity:1} }
+    @keyframes pay-opt-mc   { 0%,29%{opacity:0} 30%,79%{opacity:1} 80%,100%{opacity:0} }
     @keyframes pay-tap {
-      0%,9%   { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      13%     { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
-      17%     { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
-      21%,45% { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      47%     { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      51%     { opacity:1; top:498px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      55%     { opacity:0.9; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      59%,100%{ opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      0%,8%    { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      10%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      12%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      14%,21%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      21.5%    { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      23%      { opacity:1; top:542px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      25%      { opacity:0.9; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      27%,57%  { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      58%      { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      60%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      62%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      64%,71%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      71.5%    { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      73%      { opacity:1; top:498px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      75%      { opacity:0.9; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      77%,100% { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__tap { animation: none; }
+      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__card--mc,
+      .ios__check--visa, .ios__check--mc, .ios__method-opt--visa, .ios__method-opt--mc, .ios__tap { animation: none; }
       .ios__scrim, .ios__sheet, .ios__tap { display: none; }
     }
 
@@ -617,7 +650,8 @@
                 <div class="ios__hr ios__field-hr"></div>
                 <div class="ios__h ios__h--method">Способ оплаты</div>
                 <div class="ios__method">
-                  <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span>
+                  <span class="ios__method-opt ios__method-opt--visa"><span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span></span>
+                  <span class="ios__method-opt ios__method-opt--mc"><span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span></span>
                   <svg class="ios__chev" width="13" height="8" viewBox="0 0 13 8" fill="none" aria-hidden="true"><path d="M1 1l5.5 5.3L12 1" stroke="#c1c1c1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="ios__paypanel"><div class="ios__pay">Оплатить штраф</div></div>
@@ -628,10 +662,11 @@
                   <span class="ios__x">×</span>
                   <div class="ios__card ios__card--saved">
                     <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span>
-                    <svg class="ios__check" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="ios__check ios__check--visa" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div class="ios__card ios__card--mc">
                     <span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span>
+                    <svg class="ios__check ios__check--mc" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div class="ios__card ios__card--mir">
                     <span class="ios__mir">МИР</span><span class="ios__num">**&nbsp;5511</span>
