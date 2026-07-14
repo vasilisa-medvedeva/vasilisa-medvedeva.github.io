@@ -169,3 +169,126 @@
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
 }
+
+/* ── Mobile cluster (CV button + burger) — injected by page-transition.js,
+   hidden on desktop, revealed on phones in place of the contact links. ── */
+.site-header__mobile { display: none; }
+
+@media (max-width: 600px) {
+  .site-header__inner { gap: 8px; padding: 10px 12px; }
+  .site-header__links { display: none; }         /* contacts move into the panel */
+  .site-header__mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  /* keep the name from pushing the burger off-screen */
+  .site-header__name { font-size: 16px; }
+  .site-header__identity { min-width: 0; }
+  .site-header__identity .site-header__name {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+}
+
+/* CV — kept visible as the primary recruiter action (yellow pill) */
+.site-header__cv {
+  display: inline-flex; align-items: center;
+  font-family: "Archivo", sans-serif;
+  font-weight: 700; font-size: 14px; line-height: 20px;
+  color: var(--color-primary-transparent-87);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-brand-yellow-primary);
+  white-space: nowrap;
+}
+.site-header__cv:active { opacity: 0.8; }
+
+/* Burger toggle */
+.site-header__burger {
+  all: unset;
+  box-sizing: border-box;
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full, 9999px);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.site-header__burger:active { background: var(--color-primary-transparent-08); }
+.site-header__burger:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
+.site-header__burger span,
+.site-header__burger span::before,
+.site-header__burger span::after {
+  content: "";
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--color-primary-transparent-87);
+  border-radius: 2px;
+  transition: transform 0.24s cubic-bezier(0.2, 0, 0, 1), opacity 0.18s linear;
+}
+.site-header__burger span { position: relative; }
+.site-header__burger span::before { position: absolute; top: -6px; }
+.site-header__burger span::after  { position: absolute; top:  6px; }
+/* open state → X */
+body.mobile-nav-open .site-header__burger span { background: transparent; }
+body.mobile-nav-open .site-header__burger span::before { transform: translateY(6px) rotate(45deg); }
+body.mobile-nav-open .site-header__burger span::after  { transform: translateY(-6px) rotate(-45deg); }
+
+/* ── Slide-down panel + scrim ── */
+.mobile-nav__scrim {
+  position: fixed; inset: 0;
+  background: var(--color-primary-transparent-48);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.24s linear, visibility 0s linear 0.24s;
+  z-index: 18;
+}
+body.mobile-nav-open .mobile-nav__scrim {
+  opacity: 1; visibility: visible;
+  transition: opacity 0.24s linear;
+}
+.mobile-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--color-constant-primary);
+  border-bottom-left-radius: var(--radius-xl, 24px);
+  border-bottom-right-radius: var(--radius-xl, 24px);
+  box-shadow: var(--elevation-4);
+  padding: 76px 20px 28px;         /* clears the 60px header */
+  z-index: 19;
+  transform: translateY(-100%);
+  transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1);
+  max-height: 100vh; overflow-y: auto;
+}
+body.mobile-nav-open .mobile-nav { transform: translateY(0); }
+
+.mobile-nav__label {
+  font-family: "Archivo", sans-serif;
+  font-weight: 500; font-size: 12px; line-height: 16px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-primary-transparent-48);
+  margin: 18px 8px 4px;
+}
+.mobile-nav__label:first-child { margin-top: 0; }
+.mobile-nav__link {
+  display: block;
+  font-family: "Archivo", sans-serif;
+  font-weight: 500; font-size: 18px; line-height: 24px;
+  color: var(--color-primary-transparent-87);
+  text-decoration: none;
+  padding: 12px 8px;
+  border-radius: var(--radius-sm, 8px);
+}
+.mobile-nav__link--sub {
+  font-weight: 300; font-size: 16px;
+  color: var(--color-primary-transparent-60);
+  padding-left: 20px;
+}
+.mobile-nav__link:active { background: var(--color-primary-transparent-04); }
+
+@media (min-width: 601px) {
+  .mobile-nav, .mobile-nav__scrim { display: none; }
+}

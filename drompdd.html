@@ -186,8 +186,21 @@
     .page-end { height: 120px; }
 
     @media (max-width: 900px) {
-      .hero__aside { width: 100%; }
+      .hero__aside { width: 100%; align-self: stretch; }
       .role, .case__grid { grid-template-columns: 1fr; }
+      .role { margin-top: 56px; }
+      .case { margin-top: 72px; }
+    }
+
+    @media (max-width: 600px) {
+      .main { padding: 8px; }
+      .hero { padding: 76px 0 0; gap: 18px; }
+      .hero__aside { margin-top: 8px; }
+      .role { margin-top: 44px; }
+      .role__team { margin-top: 12px; }
+      .case { margin-top: 56px; gap: 24px; }
+      .case__grid { gap: 20px; }
+      .page-end { height: 56px; }
     }
   </style>
 </head>
@@ -328,6 +341,6 @@
     <div class="page-end"></div>
   </main>
 
-  <script src="scripts/page-transition.js?v=3"></script>
+  <script src="scripts/page-transition.js?v=4"></script>
 </body>
 </html>
