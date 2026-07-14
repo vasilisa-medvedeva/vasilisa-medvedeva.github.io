@@ -265,6 +265,22 @@
 
     @media (max-width: 900px) {
       .info-section { grid-template-columns: 1fr; }
+      /* Hero aside drops below the title at full width instead of a narrow side column */
+      .hero__aside {
+        width: 100%; align-self: stretch; margin-top: 4px;
+      }
+      /* Projects stack; drop the staggered offset on the even cards */
+      .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid > .project-card:nth-child(even) { top: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .main { padding: 8px; }
+      .hero { padding: 24px 0 0; gap: 16px; }
+      .info-section { padding: 40px 12px; gap: 20px; }
+      .project-card__head { padding: 20px 16px 0; }
+      .project-card__stage { height: 420px; }
+      .footer { padding: 32px 12px 48px; }
     }
 
     /* ── Footer ── */
@@ -586,6 +602,6 @@
       });
     })();
   </script>
-  <script src="scripts/page-transition.js?v=3"></script>
+  <script src="scripts/page-transition.js?v=4"></script>
 </body>
 </html>

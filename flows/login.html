@@ -1019,6 +1019,35 @@
     }
     .flow-controls button.secondary { background: var(--color-primary-transparent-08); color: var(--color-primary); }
     .flow-caption { font-size: 13px; color: var(--color-primary-transparent-48); }
+
+    /* ── Mobile: stack the copy above the phone and let the page scroll ──
+       (fitStage bails out ≤900px, so the stage keeps its natural size here) */
+    @media (max-width: 900px) {
+      body {
+        height: auto; min-height: 100vh;
+        overflow-x: hidden; overflow-y: auto;
+        display: block;
+        padding: 76px 16px 48px;
+      }
+      .flow-stage {
+        flex-direction: column;      /* DOM order: copy first, phone second */
+        align-items: center;
+        gap: 4px;
+        transform: none !important;  /* cancel any desktop scale */
+        width: 100%;
+      }
+      .flow-desc {
+        width: 100%; max-width: 480px;
+        margin-bottom: 4px;
+      }
+      .flow-orwatch { margin-top: 28px; }
+      /* The bezel is drawn at scale(0.7875) from its top-left, so its layout box
+         keeps the full unscaled size. Pull the empty margin back in so the phone
+         centres and doesn't force horizontal scroll. */
+      .device { margin: 0 -82px -170px 0; }
+      /* Side-by-side doodles don't apply to the stacked layout */
+      .flow-tryit, .flow-point { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1444,6 +1473,8 @@
       if (!stageEl) return;
       function fitStage() {
         stageEl.style.transform = 'none';                 // measure natural size
+        // Mobile: the stage stacks vertically and the page scrolls — no scaling.
+        if (window.innerWidth <= 900) return;
         var rect = stageEl.getBoundingClientRect();
         var bs = getComputedStyle(document.body);
         var availW = window.innerWidth  - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
@@ -1977,6 +2008,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawBubbles);
     setInterval(setChatTimes, 30000); // keep the shown time current
   </script>
-  <script src="../scripts/page-transition.js?v=3"></script>
+  <script src="../scripts/page-transition.js?v=4"></script>
 </body>
 </html>

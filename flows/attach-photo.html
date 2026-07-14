@@ -710,6 +710,27 @@
     .flow-btn:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 3px; }
     .flow-fade { position: absolute; inset: 0; z-index: 200; background: var(--color-primary); opacity: 0; pointer-events: none; transition: opacity 0.46s ease; }
     .flow-fade.is-black { opacity: 1; }
+
+    /* ── Mobile: stack the copy above the phone and let the page scroll ── */
+    @media (max-width: 900px) {
+      body {
+        height: auto; min-height: 100vh;
+        overflow-x: hidden; overflow-y: auto;
+        display: block;
+        padding: 76px 16px 48px;
+      }
+      .flow-stage {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        transform: none !important;
+        width: 100%;
+      }
+      .flow-desc { width: 100%; max-width: 480px; margin-bottom: 4px; }
+      .flow-orwatch { margin-top: 28px; }
+      .device { margin: 0 -82px -170px 0; }
+      .flow-tryit, .flow-point { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1496,6 +1517,7 @@
       if (!stageEl) return;
       function fitStage() {
         stageEl.style.transform = 'none';
+        if (window.innerWidth <= 900) return;   // mobile: vertical stack, page scrolls
         var rect = stageEl.getBoundingClientRect();
         var bs = getComputedStyle(document.body);
         var availW = window.innerWidth  - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
@@ -1639,5 +1661,6 @@
       window.addEventListener('load', window.startManual);
     })();
   </script>
+  <script src="../scripts/page-transition.js?v=4"></script>
 </body>
 </html>
