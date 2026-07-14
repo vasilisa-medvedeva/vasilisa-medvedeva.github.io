@@ -257,13 +257,13 @@
       border-radius: 13px; z-index: 60;
     }
     .ios__close { position: absolute; left: 16px; top: 39px; font-size: 17px; line-height: 22px; color: #1b75cc; }
-    .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
+    .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; color: #181818; }  /* HIG: inline nav title 17 Semibold */
 
     /* ── Shared primitives, positioned per screen below ── */
     .ios__row {
       position: absolute; left: 16px; right: 16px;
       display: flex; justify-content: space-between;
-      font-size: 16px; line-height: 20px; color: #181818;
+      font-size: 17px; line-height: 22px; color: #181818;   /* HIG body */
     }
     .ios__row b { font-weight: 700; }
     .ios__hr { position: absolute; left: 16px; right: 16px; height: 0.5px; background: #c1c1c1; }
@@ -311,7 +311,7 @@
     .ios--new .ios__total-hr { top: 220px; }
     .ios--new .ios__row--total { top: 236px; }
     .ios--new .ios__h--payer { top: 304px; }
-    .ios--new .ios__payer-value { position: absolute; left: 16px; top: 352px; font-size: 16px; line-height: 20px; color: #181818; }
+    .ios--new .ios__payer-value { position: absolute; left: 16px; top: 352px; font-size: 17px; line-height: 22px; color: #181818; }
     .ios--new .ios__field-hr { top: 379px; height: 1px; }
     .ios--new .ios__h--method { top: 420px; }
     .ios--new .ios__paypanel { height: 110px; }   /* 8 + 56 button + 46 (34 safe area + 12) */
@@ -327,7 +327,7 @@
       font-style: italic; font-weight: 800; font-size: 14.5px; line-height: 16px;
       letter-spacing: -0.5px; color: #1a1f71; text-align: center;
     }
-    .ios__num { position: absolute; left: 56px; top: 12px; font-size: 16px; line-height: 20px; color: #000; }
+    .ios__num { position: absolute; left: 56px; top: 11px; font-size: 17px; line-height: 22px; color: #000; }
     .ios__chev { position: absolute; right: 16px; top: 18px; display: block; }
 
     /* ── Scrim + card sheet (y372, h196, top radius 4) ── */
@@ -635,7 +635,7 @@
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I redesigned the screen around saved cards: a returning user confirms the payment instead of retyping the card. Usability testing validated the new layout before release.</p>
+          <p>I redesigned the screen around saved cards: a returning user confirms the payment instead of retyping the card. The chosen payment method is remembered for the next time, so the next fine opens ready to pay. Usability testing validated the new layout before release.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
@@ -666,7 +666,7 @@
                 <div class="ios__payer-value">Dmitry Mikhailov</div>
                 <div class="ios__hr ios__field-hr"></div>
                 <div class="ios__label ios__label--details">Payment details</div>
-                <div class="ios__row ios__row--1"><span>2 fines</span><span>750,00&nbsp;₽</span></div>
+                <div class="ios__row ios__row--1"><span>Fine</span><span>750,00&nbsp;₽</span></div>
                 <div class="ios__row ios__row--2"><span>Fee</span><span>37,50&nbsp;₽</span></div>
                 <div class="ios__hr ios__total-hr"></div>
                 <div class="ios__row ios__row--total"><span>Total</span><b>787,50&nbsp;₽</b></div>
