@@ -1,6 +1,6 @@
 # SeparatorMessage
 
-> Текстовый разделитель в ленте чата — отделяет сообщения по дате или помечает границу непрочитанных.
+> A text separator in the chat feed — splits messages by date or marks the unread boundary.
 
 ## When to use / when not to use
 - ✅ Use to mark a date boundary between messages (e.g. "Today", "Mon 16 Jun")

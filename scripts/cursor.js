@@ -1,6 +1,6 @@
 /* ── Fire cursor (Pyroblast flame) ──
-   Статичен по умолчанию. Анимация только на интерактивных элементах.
-   Только для точного указателя (мышь/трекпад). */
+   Static by default. Animates only on interactive elements.
+   Fine pointers only (mouse/trackpad). */
 (function () {
   if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
@@ -28,13 +28,13 @@
     if (!raf) raf = requestAnimationFrame(render);
   }
 
-  /* Интерактивные элементы — ссылки, кнопки, карточки, nav-items, курсор-pointer */
+  /* Interactive elements — links, buttons, cards, nav items, cursor: pointer */
   var INTERACTIVE = 'a, button, input, textarea, select, label, [role="button"], [role="link"], [role="tab"], .sidebar__link, .code-toggle-btn, .copy-code-btn, .nav-group__header';
 
   function isInteractive(target) {
     if (!target || !target.closest) return false;
     if (target.closest(INTERACTIVE)) return true;
-    /* элементы, которым явно задан cursor: pointer в инлайн-стиле */
+    /* elements with an explicit inline cursor: pointer */
     var t = target;
     while (t && t !== document.body) {
       if (t.style && t.style.cursor === 'pointer') return true;
@@ -67,14 +67,14 @@
       el.classList.remove('fire-cursor--press');
     });
 
-    /* mouseover/mouseout с проверкой relatedTarget —
-       анимация не мигает при переходе между дочерними узлами */
+    /* mouseover/mouseout with a relatedTarget check —
+       the animation does not flicker when moving between child nodes */
     document.addEventListener('mouseover', function (e) {
       if (isInteractive(e.target)) setHover(true);
     });
 
     document.addEventListener('mouseout', function (e) {
-      /* снимаем hover только если курсор уходит за пределы интерактивной зоны */
+      /* drop hover only when the cursor leaves the interactive area */
       var leaving = e.target;
       var entering = e.relatedTarget;
       if (isInteractive(leaving) && !isInteractive(entering)) {
@@ -82,7 +82,7 @@
       }
     });
 
-    /* курсор покинул окно */
+    /* cursor left the window */
     document.addEventListener('mouseleave', function () {
       el.style.opacity = '0';
       setHover(false);

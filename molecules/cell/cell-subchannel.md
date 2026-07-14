@@ -1,6 +1,6 @@
 # CellSubchannel
 
-> Строка списка подканала: аватар (с опц. замком), заголовок (с опц. счётчиком непрочитанных), кнопка меню и хэндл перетаскивания справа.
+> A sub-channel list row: avatar (with an optional lock), title (with an optional unread counter), menu button and drag handle on the right.
 
 ## When to use / when not to use
 - ✅ Use inside a categorized channel list for a single subchannel row.
@@ -17,7 +17,7 @@
 ├── .cell-subchannel__text          flex:1 · column · py 18px (16px if --message)
 │   └── .cell-subchannel__title-row  flex · gap 4px · align center
 │       ├── .cell-subchannel__title  Title/Medium · flex:1 (flex:0 if --message)
-│       └── NotificationCounter--cell  (--message) красный pill «2»
+│       └── NotificationCounter--cell  (--message) red pill "2"
 └── .cell-subchannel__right         (owner) flex · gap 16px
     ├── .cell-subchannel__menu      icons/small/menu.svg · 16px
     └── .cell-subchannel__move      icons/small/moving.svg · 16px

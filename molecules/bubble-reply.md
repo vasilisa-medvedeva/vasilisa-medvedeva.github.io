@@ -1,6 +1,6 @@
 # BubbleReply
 
-> Пузырь чата с встроенной цитатой ответа — отображается когда пользователь отвечает на конкретное сообщение.
+> A chat bubble with an embedded reply quote — shown when the user replies to a specific message.
 
 ## When to use / when not to use
 - ✅ Use when a message is a reply to a previous message — to show the quoted context

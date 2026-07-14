@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nomerogram — Vasilisa Medvedeva</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-constant-primary);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      padding: 10px;
+      min-height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ── Hero — same oversized statement as the other pages ── */
+    .hero {
+      padding: 88px 0 0;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero__eyebrow {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+    }
+    .hero__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 6.9vw, 94px);
+      line-height: 0.96; letter-spacing: -0.025em;
+      color: var(--color-primary-transparent-87);
+      max-width: 1360px;
+    }
+    .hero__aside {
+      align-self: flex-end;
+      margin-top: 20px;
+      width: calc((100% - 10px) / 2.4);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero__aside p {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
+    }
+    .hero__stores { display: flex; gap: 8px; flex-wrap: wrap; }
+    .store-link {
+      display: inline-flex; align-items: center;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      border-radius: 30px;
+      padding: 10px 16px;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .store-link:hover { background: var(--color-primary-transparent-04); }
+
+    /* ── Role section ── */
+    .role {
+      margin-top: 96px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 10px;
+    }
+    .section-title {
+      font-family: "Archivo", sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: 900;
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: -0.02em;
+      color: var(--color-primary-transparent-87);
+      text-transform: uppercase;
+      max-width: 480px;
+    }
+    .role__team {
+      margin-top: 16px;
+      max-width: 420px;
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-60);
+    }
+    .role__list {
+      list-style: none;
+      display: flex; flex-direction: column;
+    }
+    .role__list li {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
+      padding: 14px 0;
+      border-top: 1px solid var(--color-primary-transparent-16);
+    }
+    .role__list li:first-child { border-top: none; padding-top: 0; }
+
+    /* ── Case studies ── */
+    .case {
+      margin-top: 120px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .case__index {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    .case__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 3.4vw, 52px);
+      line-height: 1.02; letter-spacing: -0.02em;
+      color: var(--color-primary-transparent-87);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .case__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .case__label {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-medium-font-size);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 12px;
+    }
+    .case__col p,
+    .case__col li {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .case__col p + p { margin-top: 10px; }
+    .case__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .case__col ul li { padding-left: 20px; position: relative; }
+    .case__col ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 6px;
+      width: 11px; height: 11px;
+      background: url("assets/point-doodle.svg") no-repeat center / contain;
+    }
+    .case__figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--color-primary-transparent-04);
+    }
+    .case__figure img { display: block; width: 100%; height: auto; }
+
+    .page-end { height: 120px; }
+
+    @media (max-width: 900px) {
+      .hero__aside { width: 100%; }
+      .role, .case__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <!-- Drop your CV at assets/VasilisaMedvedeva_CV.pdf; replace the social URLs with your real profiles -->
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <span class="hero__eyebrow">Nomerogram · iOS / Android</span>
+      <h1 class="hero__title">Nomerogram shows a&nbsp;car&#8217;s sale history and photos by&nbsp;its license plate.</h1>
+      <div class="hero__aside">
+        <p>The history comes from old sale ads, social networks and open databases, and from drivers themselves: photograph a car behaving badly on the road, and the shot joins that plate&#8217;s public record.</p>
+        <span class="hero__stores">
+          <a class="store-link" href="https://apps.apple.com/ru/app/%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%B0%D0%B2%D1%82%D0%BE/id1360117854" target="_blank" rel="noopener">App Store</a>
+          <a class="store-link" href="https://play.google.com/store/apps/details?id=ru.drom.numbers&hl=ru&gl=US" target="_blank" rel="noopener">Google Play</a>
+        </span>
+      </div>
+    </section>
+
+    <section class="role">
+      <div>
+        <h2 class="section-title">My Role and Responsibilities</h2>
+        <p class="role__team">The team: a product manager, an analyst, two iOS and two Android engineers, and a QA engineer, with backend owned by a separate team.</p>
+      </div>
+      <ul class="role__list">
+        <li>Owned UX for the iOS and Android apps: search, history, and the photo contribution flows.</li>
+        <li>Turned analytics findings into features: history clutter among heavy users became the case for Favorites.</li>
+        <li>Ran in-depth interviews and hallway tests to pick between prototyped concepts before development.</li>
+        <li>Worked with the product manager and analyst to prioritize the roadmap by impact.</li>
+        <li>Prototyped key flows in Figma, including edge cases for camera-based plate recognition.</li>
+      </ul>
+    </section>
+
+    <!-- ── Case 01 — Onboarding to Boost Photo Uploads ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 01</span>
+        <h2 class="case__title">Onboarding to Boost Photo Uploads</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Uploading photos sat outside the app&#8217;s core flow: only 12.7% of users ever reached the upload screen, and just 1.5% of those who searched for cars uploaded a photo.</p>
+          <p>Discoverability wasn&#8217;t the whole problem &#8212; users saw no reason to contribute.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>Instead of telling users <em>what</em> they could do (&#8220;Upload photos&#8221;), the onboarding told them <em>why</em> it mattered. The screen says it plainly: &#8220;Photograph a damaged car &#8212; help the future owner avoid junk.&#8221;</p>
+          <p>One lightweight screen, shown on the user&#8217;s fifth or sixth visit, once the app had proven its value. Like every change we shipped, it went through an A/B test.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>Visits to the upload screen grew by 27%</li>
+            <li>Uploaded photos nearly doubled</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/nomerogram/onboarding.png" alt="Photo upload onboarding on iOS and Android: a screen asking users to photograph a damaged car to help the future owner, and a coach mark pointing to the Add tab where photos are uploaded" loading="lazy" />
+      </figure>
+    </section>
+
+    <!-- ── Case 02 — License Plate Recognition from Photo ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 02</span>
+        <h2 class="case__title">License Plate Recognition from Photo</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>The only way to check a car was to type the plate by hand. In the most common real-world scenario, standing next to a car on the street, that meant photographing the plate and then switching screens to retype the number.</p>
+          <p>Extra effort landed at exactly the moment users were most motivated.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I designed a camera-first check: point the camera at a plate inside the on-screen frame, the app recognizes the number and starts the check. No typing, no screen switching.</p>
+          <p>Recognition didn&#8217;t have to be perfect. In production the engine read 97% of plates correctly, and I designed the flow around the remaining 3%: the app pre-filled every character it did read into the plate input, and the user corrected the rest instead of starting over.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>Checking a car became a one-step action in street scenarios</li>
+            <li>Manual plate entry no longer blocked the core flow</li>
+            <li>A misread plate cost the user a one-character fix, not a retyped number</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/nomerogram/plate-recognition.png" alt="Three screens of the camera check: a scan icon next to the plate input, an intro screen saying photographing a car is easier than typing the number, and the camera with a framing zone for the plate" loading="lazy" />
+      </figure>
+      <!-- Fallback figure — waiting for Figma exports. Drop the file at
+           assets/nomerogram/plate-fallback.png (suggested frames, left to right:
+           1) camera with a real plate inside the framing zone, 2) plate input
+           pre-filled with the recognized characters and the plate keyboard open,
+           3) "couldn't read the plate" state), then uncomment:
+      <figure class="case__figure">
+        <img src="assets/nomerogram/plate-fallback.png" alt="Fallback states of the camera check: a partially recognized number pre-filled into the plate input for correction, and the state shown when the plate could not be read" loading="lazy" />
+      </figure>
+      -->
+    </section>
+
+    <!-- ── Case 03 — Search History ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 03</span>
+        <h2 class="case__title">Search History</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Active users checked up to 30 license plates in a single session, but history kept only the 20 most recent searches.</p>
+          <p>Cars they wanted to come back to silently disappeared, and they had to search for them all over again.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>Analytics and interviews pointed to the same need: a way to save a car deliberately, separate from the automatic history.</p>
+          <p>I prototyped several concepts and tested them in hallway sessions and in-depth interviews. Favorites won: save a car, return to it any time.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>In the A/B test, 15% of users adopted Favorites within a month</li>
+            <li>No complaints in reviews or support after release</li>
+            <li>History stayed manageable even for those checking dozens of plates a session</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/nomerogram/search-history.png" alt="Four Nomerogram screens: the History tab with recent plate searches, an action sheet with an Add to Favorites option, the Favorites tab with starred cars, and a confirmation dialog for removing a car from Favorites" loading="lazy" />
+      </figure>
+    </section>
+
+    <div class="page-end"></div>
+  </main>
+
+  <script src="scripts/page-transition.js?v=3"></script>
+</body>
+</html>

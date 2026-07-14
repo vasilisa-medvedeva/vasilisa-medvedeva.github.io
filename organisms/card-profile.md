@@ -1,6 +1,6 @@
 # CardProfile
 
-> Карточка профиля пользователя: аватар с инициалами, имя, подпись, статус приватности и bio.
+> A user profile card: avatar with initials, name, subtitle, privacy status, and bio.
 
 ## When to use / when not to use
 - ✅ Use on profile screens as the main identity block

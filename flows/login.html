@@ -9,12 +9,16 @@
   <link rel="stylesheet" href="../styles/text-tokens.css" />
   <link rel="stylesheet" href="../styles/elevation-tokens.css" />
   <link rel="stylesheet" href="../styles/page-transition.css?v=3" />
-  <!-- Inter — used for the flow-description panel (portfolio copy) -->
+  <!-- Archivo — used for the flow-description panel (portfolio copy) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="../styles/site-header.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Shared site header — fixed above the scaled stage */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
@@ -23,84 +27,72 @@
       display: flex;
       align-items: center;        /* centre the composition both axes */
       justify-content: center;
-      padding: 40px;
+      padding: 100px 40px 40px;   /* top clears the fixed site header */
     }
 
     /* ── Centred composition: left column + phone. Internal gaps are fixed;
        the whole stage scales down (fitStage) when the window is small, so the
        side margins grow/shrink with the page. ── */
     .flow-stage {
-      display: flex;
+      display: flex; flex-direction: row-reverse;   /* phone left, copy right; copy stays first in the DOM */
       align-items: center;
-      gap: 72px;                  /* fixed gap between the copy column and the phone */
+      gap: 90px;                  /* fixed gap between the phone and the copy column */
       transform-origin: center center;
     }
 
-    /* Close ✕ — top-right of the window, back to the PYROBLAST home */
-    .flow-close {
-      position: fixed; top: 32px; right: 40px; z-index: 50;
-      width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
-      color: var(--color-primary);
-    }
-    .flow-close img { width: 64px; height: 64px; display: block; }
-    .flow-close:active { transform: scale(0.94); }
 
-    /* ── Left copy column ── */
-    .flow-desc {
-      width: 631px; flex-shrink: 0;            /* line length from Figma */
-      display: flex; flex-direction: column; align-items: stretch; gap: 13px;   /* title→text gap */
-    }
-    .flow-desc__eyebrow {
-      font-family: var(--text-label-large-font-family, "Roboto"), sans-serif;
-      font-size: var(--text-label-large-font-size);
-      font-weight: var(--text-label-large-font-weight);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: var(--text-label-large-letter-spacing);
-      text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
-    }
-    /* Text block (title + lead + Demo): 570px wide, right edge aligned to the
-       Restart button's right edge (align-self flex-end + the 20px right margin). */
-    .flow-desc__text {
-      align-self: flex-end;
-      width: 570px; margin-right: 20px;
-      display: flex; flex-direction: column; align-items: flex-start;
-    }
-    /* Demo sits under the text block, 30px below, left edge aligned to the heading. */
-    .flow-desc__text .flow-btn--demo { margin-top: 60px; margin-right: 0; }
+    /* ── Copy column (right of the phone) — wireframe node 40:1733 ── */
+    /* margin-bottom offsets the restart zone under the phone (stage 683 − device 633),
+       so the column centres on the phone itself */
+    .flow-desc { width: 572px; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 50px; }
     .flow-desc__title {
-      font-family: "Inter", sans-serif;
-      font-size: 80px; font-weight: 700; line-height: 80px;   /* from Figma */
-      color: var(--color-primary);
-      margin-bottom: 13px;   /* title → lead gap (flex gap removed for exact button spacing) */
+      font-family: "Archivo", sans-serif;
+      font-size: 44px; font-weight: 900; line-height: 44px; letter-spacing: -0.88px;
+      color: var(--color-primary-transparent-87);
+      margin-bottom: 13px;
     }
     .flow-desc__lead {
-      font-family: "Inter", sans-serif;
-      font-size: 20px; font-weight: 400; line-height: 28px;   /* from Figma */
-      color: var(--color-primary-transparent-70);
+      font-family: "Archivo", sans-serif;
+      font-size: 20px; font-weight: 300; line-height: 28px;
+      color: var(--color-primary-transparent-87);
     }
+    /* "or watch the" hand-written label above the Demo button */
+    .flow-orwatch { display: block; width: 95px; height: auto; margin-top: 111px; margin-left: 6px; }
 
-    /* Right-aligned call-to-action group: Hi-fi illustration + Start/Restart */
-    .flow-cta { align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; margin-top: 184px; }
-    .flow-illustration { width: 352px; height: auto; display: block; margin-bottom: 4px; transform: translate(55px, 20px); }
-
-    /* Doodle buttons (Start / Restart) — SVG assets; colours baked into the asset */
+    /* ── Demo doodle button (hand-drawn frame, wireframe node 40:1736) ── */
     .flow-btn {
       all: unset; box-sizing: border-box; cursor: pointer;
-      width: 264px; margin-right: 20px; border-radius: 14px;   /* nudged 20px left of the column edge */
-      transition: transform .1s ease, filter .12s ease;
+      width: 264px; margin-top: 11px; border-radius: 14px;
+      transition: transform .1s ease;
     }
     .flow-btn svg { display: block; width: 100%; height: auto; }
     .flow-btn .btn-fill { transition: fill .12s ease; }
-    .flow-btn--demo:hover    .btn-fill { fill: #5DA9F9; }   /* darker blue on hover */
-    .flow-btn--start:hover   .btn-fill { fill: #E0EFFF; }   /* light-blue tint on hover */
+    .flow-btn--demo:hover .btn-fill { fill: var(--color-primary-transparent-08); }
     .flow-btn:active { transform: scale(.98); opacity: .7; }   /* pressed feedback */
     .flow-btn:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 3px; }
 
     /* ── Android device mockup ── */
     /* pinned to the right: 40px body padding + 60px margin = 100px gap on the right;
        left edge falls where it may. */
-    .stage { position: relative; flex-shrink: 0; }
+    /* Scaled to the wireframe's phone size so the hand-drawn annotations
+       line up 1:1 with the Figma coordinates */
+    .stage { position: relative; flex-shrink: 0; width: 302px; height: 683px; }
+    /* Hand-drawn annotations around the phone: "try it yourself" arrow and
+       the restart doodle under the phone */
+    .flow-point { position: absolute; left: 249px; top: 49px; width: 40px; height: 40px; pointer-events: none; z-index: 40; }
+    .flow-tryit { position: absolute; left: 306px; top: 80px; width: 264px; height: auto; pointer-events: none; z-index: 40; }
+    .flow-restart {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      border-radius: 100px; z-index: 40;
+      /* hidden until the user drives the prototype themselves */
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .flow-restart.is-visible { opacity: 1; pointer-events: auto; }
+    .flow-restart img { width: 40px; height: 40px; display: block; }
+    .flow-restart:active { transform: translateX(-50%) scale(0.92); }
+    .flow-restart:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 3px; }
     .device {
       position: relative;
       width: max-content;                           /* natural size (phone + bezel); ignore stage's set width */
@@ -109,6 +101,7 @@
       border-radius: 54px;
       box-shadow: var(--elevation-5);
       transform-origin: top left;
+      transform: scale(0.7875);
     }
     /* punch-hole camera, centred over the status bar */
     .device__cam {
@@ -186,7 +179,9 @@
     body.embed .device { padding: 0; background: transparent; border-radius: 0; box-shadow: none; transform: none; }
     body.embed .device__cam { display: none; }
     body.embed .phone { box-shadow: none; border: 0; border-radius: 0; }
-    body.embed .flow-desc, body.embed .flow-close { display: none; }
+    body.embed .flow-desc, body.embed .site-header { display: none; }
+    body.embed .flow-point, body.embed .flow-tryit, body.embed .flow-restart { display: none; }
+    body.embed .stage { width: auto; height: auto; }
     body.embed .flow-stage { gap: 0; }
 
     .screen {
@@ -847,19 +842,15 @@
     .chat-body {
       flex: 1; min-height: 0; overflow-y: auto;
       position: relative;
-      background: linear-gradient(45deg, var(--color-chat-bg-start), var(--color-chat-bg-end));  /* Peach → Rose */
+      background-image: url(../assets/chat-pattern-soft.svg), linear-gradient(45deg, var(--color-chat-bg-start), var(--color-chat-bg-end));
+      background-repeat: repeat, no-repeat;
+      background-size: 216px 216px, 100% 100%;
+      background-attachment: local, local;   /* pattern rides the whole scrollable thread */
       display: flex; flex-direction: column; align-items: flex-start;
       gap: 2px; padding: 12px 0;   /* tight — photo + bubbles read as one sender run */
     }
     /* doodle pattern as a plain background-image (renders over file:// — a CSS mask
        would be blocked as cross-origin there). Flat-tinted SVG (#EDB79E) over the gradient. */
-    .chat-body::before {
-      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background-image: url(../assets/chat-pattern.svg);
-      background-repeat: repeat;
-      background-size: 216px 216px;
-      opacity: 0.8;
-    }
     .chat-body > * { position: relative; z-index: 1; }
     /* Grouped run from one sender — 4px gap between bubbles */
     .message-group { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; }
@@ -1029,49 +1020,64 @@
 </head>
 <body>
 
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="../index.html">
+        <img class="site-header__avatar" src="../assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="../index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="../index.html">Main page</a>
+            <a class="menu-item__link" href="../index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="../index.html#education">Education</a>
+            <a class="menu-item__link" href="../index.html#tools">Tools</a>
+            <a class="menu-item__link" href="../index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="../index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="../home.html">Pyroblast</a>
+            <a class="menu-item__link" href="../nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="../drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="../dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="../assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- Close → back to the PYROBLAST home -->
-  <a class="flow-close" href="../home.html" aria-label="Close"><img src="../assets/ic-close.svg" alt="Close" /></a>
 
   <div class="flow-stage" id="flowStage">
   <aside class="flow-desc">
-    <div class="flow-desc__text">
-      <div class="flow-desc__title">Entrance</div>
-      <p class="flow-desc__lead">Skip the login wall. Drop people straight into the chat and blend sign-in and sign-up into one seamless flow.</p>
-      <button class="flow-btn flow-btn--demo" onclick="window.playDemo()" aria-label="Demo">
-        <svg viewBox="0 0 266 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-          <rect class="btn-fill" x="1" y="2" width="262" height="58" fill="#84C0FF"/>
-          <path d="M133.508 25.0361C134.06 25.0363 134.508 25.4841 134.508 26.0361C134.508 26.0363 134.524 26.725 134.566 28.0264C134.598 28.0036 134.629 27.9798 134.662 27.957C135.199 27.5764 135.827 27.1545 136.274 26.9268C136.753 26.6826 137.389 26.5371 138.042 26.4961C138.709 26.4543 139.471 26.5167 140.215 26.75C140.894 26.9629 141.268 27.4514 141.472 27.8398C141.493 27.8797 141.509 27.921 141.528 27.96C142.522 27.0558 143.593 26.5132 144.14 26.2998C144.552 26.1393 145.025 26.0965 145.447 26.1016C145.886 26.1069 146.353 26.1655 146.795 26.2617C147.44 26.4022 147.874 26.8564 148.177 27.2813C148.485 27.7133 148.77 28.2783 149.061 28.8994L149.094 28.9697L149.116 29.0439C149.28 29.6097 149.416 30.3288 149.479 31.916C149.541 33.4847 149.53 35.9446 149.519 38.4238C149.516 38.976 149.067 39.4213 148.515 39.419C147.963 39.4165 147.517 38.9672 147.519 38.415C147.53 35.9146 147.54 33.5097 147.48 31.9961C147.424 30.5916 147.311 30.0271 147.212 29.6699C146.94 29.0915 146.733 28.6986 146.549 28.4414C146.437 28.2839 146.368 28.2274 146.345 28.2109C146.026 28.1431 145.704 28.105 145.423 28.1016C145.119 28.0979 144.936 28.1359 144.867 28.1631C144.471 28.3177 143.52 28.7985 142.698 29.6055C142.51 29.7894 142.419 29.8903 142.379 29.9356C142.362 29.9552 142.355 29.9644 142.354 29.9658C142.353 29.9667 142.353 29.9681 142.351 29.9707C142.35 29.9715 142.343 29.9798 142.336 29.9883C142.334 29.9916 142.306 30.0278 142.268 30.0674C142.25 30.0862 142.2 30.137 142.125 30.1895C142.113 30.1981 142.09 30.214 142.057 30.2334C142.063 30.3277 142.071 30.425 142.077 30.5254C142.119 31.3577 142.131 32.4501 142.117 33.7578V33.7715L142.116 33.7842C142.07 35.0204 141.957 36.084 141.9 36.8848C141.841 37.6989 141.832 38.3278 141.822 39C141.813 39.5521 141.358 39.9927 140.806 39.9844C140.254 39.9758 139.813 39.5218 139.822 38.9697C139.832 38.296 139.843 37.6177 139.906 36.7422C139.969 35.8576 140.072 34.9138 140.117 33.7275C140.131 32.4411 140.118 31.3986 140.079 30.6279C140.059 30.241 140.034 29.9359 140.003 29.71C139.976 29.5086 139.952 29.4207 139.948 29.4033C139.915 29.3282 139.888 29.2523 139.868 29.1943C139.837 29.1077 139.835 29.1015 139.807 29.0244C139.769 28.9169 139.737 28.8368 139.703 28.7715C139.669 28.7078 139.644 28.6781 139.632 28.667C139.626 28.6611 139.624 28.6604 139.618 28.6582C139.14 28.5086 138.628 28.4634 138.167 28.4922C137.694 28.5219 137.347 28.6256 137.183 28.709C136.88 28.8636 136.356 29.2072 135.818 29.5889C135.31 29.9485 134.855 30.295 134.651 30.4639C134.66 30.6971 134.668 30.9391 134.678 31.1895C134.735 32.6606 134.889 33.6293 134.97 34.6172C135.047 35.548 135.06 36.2697 135.081 36.8828C135.103 37.496 135.135 38.0233 135.205 38.6621C135.266 39.2108 134.87 39.7047 134.322 39.7656C133.773 39.8263 133.279 39.4307 133.218 38.8818C133.14 38.1804 133.106 37.6019 133.082 36.9541C133.059 36.3065 133.049 35.6518 132.977 34.7813C132.91 33.9674 132.738 32.7762 132.679 31.2676C132.55 27.9438 132.508 26.0744 132.508 26.0361C132.508 25.484 132.956 25.0361 133.508 25.0361ZM102.345 21C102.654 21 102.929 21.1399 103.113 21.3594C103.686 21.3665 104.914 21.3874 106.737 21.4492C109.088 21.529 110.673 22.0389 111.625 22.4199C113.621 23.2186 114.722 24.9253 115.412 26.3135C115.675 26.8448 115.812 27.476 115.906 28.0977C116 28.7248 116.066 29.4559 116.144 30.1934C116.328 31.9487 116.052 33.3749 115.738 34.3125C115.066 36.3145 113.365 37.7103 112.412 38.3066C111.171 39.0823 109.404 39.3147 107.788 39.4639L107.754 39.4668L107.721 39.4678C105.711 39.5201 104.015 39.49 103.017 39.4375V39.4365C102.965 39.4339 102.913 39.4304 102.862 39.4277C102.683 39.731 102.35 39.9312 101.973 39.9209C101.421 39.9054 100.985 39.4455 101 38.8936C101.16 33.167 101.253 27.6548 101.299 24.8701C101.346 22.0764 101.345 22.0399 101.345 22C101.345 21.4479 101.793 21.0002 102.345 21ZM157.999 25.8193C158.292 25.6048 158.692 25.5568 159.038 25.7305C159.044 25.7333 159.048 25.7351 159.06 25.7373C159.068 25.7389 159.082 25.7415 159.105 25.7441C159.117 25.7455 159.13 25.7463 159.147 25.748C159.162 25.7496 159.185 25.7525 159.207 25.7549L159.231 25.7568L159.254 25.7607C159.495 25.7983 159.758 25.8614 160.104 25.9795L160.48 26.1172L160.496 26.123C161.008 26.3316 161.486 26.5272 161.879 26.7422C162.289 26.9661 162.674 27.2457 162.975 27.6621C163.322 28.1423 164.053 29.0746 164.406 30.2373C164.67 31.1104 164.901 32.2704 164.696 33.6016C164.536 34.6352 164.245 35.8579 163.674 36.9307C163.531 37.2 163.404 37.4276 163.287 37.6065C163.179 37.7703 163.02 37.9905 162.786 38.1514C162.772 38.1643 162.092 38.8189 161.17 39.1709C160.461 39.4418 159.029 39.8367 157.084 39.3594C156.619 39.2452 156.122 39.1105 155.599 38.749C154.777 38.1805 154.107 37.5746 153.525 36.3018C153.312 35.8363 153.019 35.1422 152.967 33.7607C152.936 32.93 152.946 31.7009 153.028 30.9316C153.123 30.0314 153.219 29.3981 153.529 28.8809C153.897 28.2662 154.535 27.2059 155.827 26.5635C156.717 26.1207 157.456 25.9111 157.999 25.8193ZM122.84 25.4355C124.448 25.4786 126.248 25.2599 127.735 26.7979C128.545 27.6356 129.393 29.185 129.371 31.6699C129.368 31.891 129.364 32.4389 128.949 32.8721C128.551 33.2866 127.995 33.373 127.569 33.3984C127.103 33.4262 126.484 33.3824 125.861 33.3359C125.207 33.2873 124.485 33.2298 123.722 33.2061C122.089 33.1552 120.848 33.1261 120.014 33.1094C119.762 33.1043 119.547 33.1006 119.371 33.0977C119.524 33.8358 119.745 34.5315 119.919 34.9756C120.03 35.2587 120.235 35.4935 120.629 35.7461C121.055 36.0181 121.598 36.2498 122.344 36.5772C123.712 37.1772 124.883 36.8859 125.528 36.6484C125.778 36.5106 125.975 36.3718 126.142 36.2178C126.207 36.143 126.306 36.0143 126.531 35.6416C126.816 35.1691 127.431 35.0175 127.904 35.3027C128.376 35.5882 128.528 36.203 128.243 36.6758C127.979 37.1129 127.804 37.3659 127.603 37.5869L127.58 37.6113L127.556 37.6357C127.213 37.9641 126.832 38.2228 126.414 38.4453L126.36 38.4746L126.301 38.4971C125.439 38.826 123.637 39.3291 121.54 38.4092C120.863 38.1119 120.141 37.8079 119.551 37.4307C118.931 37.034 118.37 36.5043 118.057 35.7051C117.814 35.0839 117.516 34.1189 117.34 33.125C117.172 32.1772 117.075 31.0051 117.406 30.0869C117.69 29.2967 118.264 27.5422 119.863 26.4395C120.568 25.9534 121.638 25.4035 122.84 25.4355ZM158.87 27.7295C158.8 27.7453 158.727 27.7555 158.653 27.7559C158.481 27.7567 157.795 27.818 156.716 28.3545C155.989 28.7163 155.602 29.3112 155.245 29.9082C155.196 29.9889 155.118 30.178 155.016 31.1426C154.949 31.7779 154.936 32.9009 154.965 33.6856C155.005 34.7449 155.211 35.1808 155.343 35.4707C155.737 36.3329 156.126 36.6814 156.738 37.1045C156.941 37.2454 157.134 37.312 157.562 37.417C159.002 37.7706 160.008 37.4745 160.457 37.3027C161.088 37.062 161.144 36.8693 161.584 36.5518C161.591 36.5419 161.602 36.5283 161.615 36.5098C161.678 36.4127 161.769 36.2539 161.909 35.9912C162.329 35.2012 162.575 34.2292 162.719 33.2969C162.862 32.3696 162.708 31.5314 162.492 30.8184C162.256 30.0413 161.76 29.3974 161.353 28.833C161.287 28.7421 161.177 28.6375 160.92 28.4971C160.649 28.3491 160.292 28.1992 159.757 27.9814C159.32 27.8121 159.102 27.7623 158.96 27.7393C158.937 27.7372 158.906 27.7337 158.87 27.7295ZM103.299 24.9033C103.257 27.4421 103.173 32.2552 103.038 37.4336C103.064 37.4349 103.091 37.438 103.12 37.4395H103.121C104.053 37.4885 105.682 37.5188 107.636 37.4688C109.303 37.3136 110.579 37.093 111.351 36.6104C112.133 36.1216 113.383 35.0427 113.842 33.6758C114.077 32.9757 114.306 31.8384 114.155 30.4023C114.072 29.6171 114.014 28.9644 113.928 28.3965C113.842 27.8236 113.741 27.4458 113.621 27.2031C112.993 25.9402 112.176 24.7953 110.882 24.2773C110.098 23.9637 108.744 23.5186 106.669 23.4482C105.393 23.405 104.413 23.3815 103.751 23.3691C103.59 23.3661 103.446 23.3642 103.323 23.3623C103.316 23.7501 103.31 24.2522 103.299 24.9033ZM122.787 27.4355C122.201 27.42 121.556 27.7018 120.998 28.0859C120.003 28.7723 119.6 29.8939 119.288 30.7637C119.254 30.8562 119.229 30.9673 119.212 31.0947C119.923 31.1058 121.462 31.1347 123.785 31.207C124.601 31.2324 125.372 31.2943 126.009 31.3418C126.619 31.3872 127.064 31.4126 127.368 31.4033C127.331 29.5749 126.704 28.6082 126.297 28.1875C125.519 27.3825 124.813 27.4898 122.787 27.4355Z" fill="black"/>
-          <path d="M263.809 1.82666C263.809 1.84099 263.809 1.85532 263.876 10.3665C263.943 18.8777 264.077 35.8852 264.196 45.1287C264.315 54.3722 264.415 55.3363 264.492 56.1141C264.569 56.8919 264.619 57.4542 264.823 58.9702" stroke="black" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.7817 2.44484C1.76642 2.42956 1.75113 2.41427 1.58369 11.6996C1.41625 20.985 1.09712 39.5715 1.01895 49.3372C0.94078 59.103 1.11324 59.4847 1.3749 59.9807" stroke="black" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.77661 1.79336C1.79047 1.79336 4.27661 1.79336 40.1718 1.65763C79.986 1.50707 159.601 1.58453 201.431 1.47033C243.261 1.35613 244.895 1.17793 248.801 1.04529C252.707 0.912641 257.277 1.04527 263.777 1.79347" stroke="black" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.50393 59.8326C1.52937 59.8326 1.55481 59.8326 44.7767 60.2935C87.9987 60.7543 174.189 58.137 218.951 58.6715C263.714 59.2059 264.202 59.3252 264.277 59.2869" stroke="black" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-    <div class="flow-cta">
-      <img class="flow-illustration" src="../assets/il-hi-fi.svg" alt="Hi-fi prototype" />
-      <button class="flow-btn flow-btn--start" onclick="window.restartManual()" aria-label="Start">
-        <svg viewBox="0 0 266 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-          <rect class="btn-fill" x="1" y="2" width="262" height="58" fill="none"/>
-          <path d="M117.145 22.3349C117.145 22.1391 117.095 21.4837 116.904 20.9596C116.714 20.4385 116.203 19.9436 114.616 18.7529C114.079 18.3507 113.476 18.2143 112.655 18.0788C111.692 17.92 111.028 18.0177 110.448 18.2258C109.159 18.6887 108.105 19.3263 107.584 19.7503C106.603 20.5492 106.341 21.2277 106.13 21.839C105.9 22.5053 105.912 23.8071 105.912 25.1123C105.912 25.9283 106.204 26.3679 107.012 27.3151C107.847 28.2935 108.734 28.6579 109.225 28.8721C109.582 29.028 110.184 29.2118 111.22 29.5152C112.256 29.8186 113.714 30.2186 114.744 30.5723C116.365 31.1285 117.146 31.7053 117.598 32.0807C118.516 32.8442 118.859 33.9405 118.965 34.4072C119.124 35.109 118.717 35.9424 118.169 36.9552C117.934 37.3908 117.399 37.6665 115.988 38.1214C115.078 38.4147 113.358 38.6546 112.124 38.8267C110.181 39.0978 109.346 38.9924 109.03 38.901C108.42 38.7242 107.876 38.4577 107.487 38.2206C107.01 37.8724 106.401 37.2768 105.772 36.5217C105.486 36.155 105.267 35.8218 105 35.4491" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M123.724 23.3862C123.724 23.3877 123.724 23.3892 123.728 25.1453C123.733 26.9013 123.742 30.4119 123.785 32.4259C123.829 34.4398 123.907 34.8508 124.021 35.236C124.242 35.9817 124.495 36.4203 124.699 36.6897C125.042 37.1432 125.385 37.4416 125.587 37.5911C126.191 37.9356 126.544 38.073 126.817 38.1424C126.978 38.177 127.182 38.2105 127.417 38.2449" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M121.498 27.1153C121.5 27.1153 121.502 27.1153 122.111 27.107C122.72 27.0987 123.937 27.0821 124.659 27.0585C125.813 26.9718 126.21 26.9661 126.692 26.9592C126.871 26.9543 126.917 26.9464 126.982 26.9382" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M132 28.7667C132.007 28.7667 132.727 28.4031 133.936 27.81C134.657 27.456 135.021 27.3942 135.228 27.3711C135.48 27.3429 136.17 27.4709 137.056 27.662C137.725 27.8064 138.003 28.1236 138.684 28.9888C139.16 29.5948 139.395 30.2909 139.617 31.0424C139.756 31.5107 139.854 32.1801 139.924 33.1063C139.993 34.0324 140.007 35.2014 139.955 36.2884C139.904 37.3753 139.787 38.3449 139.726 38.9097C139.666 39.4745 139.666 39.6052 139.618 39.7165" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M139.906 32.0063C139.904 32.0063 139.902 32.0063 138.974 32.0148C138.047 32.0232 136.194 32.0401 135.048 32.1C133.902 32.1598 133.519 32.2621 133.185 32.3779C132.567 32.5923 132.14 32.8535 131.813 33.101C131.425 33.3941 131.082 33.8748 130.788 34.3096C130.461 34.7939 130.467 35.79 130.549 36.3357C130.661 37.0722 131.146 37.3978 131.641 37.8322C131.921 38.0774 132.535 38.2721 133.296 38.5047C133.892 38.6868 134.528 38.7017 135.14 38.6971C135.552 38.694 135.979 38.5209 136.546 38.267C136.846 38.1324 137.143 37.9258 137.519 37.6209C137.894 37.316 138.331 36.9037 138.657 36.5677C138.983 36.2316 139.183 35.9843 139.295 35.8328C139.407 35.6812 139.424 35.6329 139.441 35.5831" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M144.936 26.4272C144.936 27.1403 144.936 27.8533 144.947 29.9163C144.957 31.9793 144.978 35.3707 145.001 37.1832C145.024 38.9957 145.049 39.1267 145.08 39.273" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M145.541 29.522C145.585 29.4464 146.151 28.8369 147.072 28.021C147.901 27.2862 148.587 26.9814 148.919 26.838C149.195 26.741 149.512 26.6742 149.879 26.6295C150.054 26.6143 150.208 26.6143 150.377 26.6086" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M155.57 23.0098C155.57 23.0127 155.57 23.0156 155.568 25.0068C155.567 26.998 155.564 30.9773 155.606 33.2534C155.648 35.5295 155.736 35.9818 155.846 36.3821C156.049 37.1271 156.308 37.6302 156.492 37.9363C156.84 38.3519 157.214 38.6015 158.182 38.8252C158.555 38.8688 159.052 38.8921 159.572 38.8513" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M152.896 26.7485C152.897 26.7485 152.899 26.7485 153.66 26.7557C154.422 26.7629 155.942 26.7773 157.109 26.8273C158.276 26.8774 159.043 26.9627 159.887 27.0506" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M263.809 1.82666C263.809 1.84099 263.809 1.85532 263.876 10.3665C263.943 18.8777 264.077 35.8852 264.196 45.1287C264.315 54.3722 264.415 55.3363 264.492 56.1141C264.569 56.8919 264.619 57.4542 264.823 58.9702" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.7817 2.44484C1.76642 2.42956 1.75113 2.41427 1.58369 11.6996C1.41625 20.985 1.09712 39.5715 1.01895 49.3372C0.94078 59.103 1.11324 59.4847 1.3749 59.9807" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.77661 1.79336C1.79047 1.79336 4.27661 1.79336 40.1718 1.65763C79.986 1.50707 159.601 1.58453 201.431 1.47033C243.261 1.35613 244.895 1.17793 248.801 1.04529C252.707 0.912641 257.277 1.04527 263.777 1.79347" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M1.50393 59.8326C1.52937 59.8326 1.55481 59.8326 44.7767 60.2935C87.9987 60.7543 174.189 58.137 218.951 58.6715C263.714 59.2059 264.202 59.3252 264.277 59.2869" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
+    <div class="flow-desc__title">Log in</div>
+    <p class="flow-desc__lead">A sign-up wall is the first place a messenger loses people: the form comes before any value, and the curious ones leave. This flow is my bet against it — the app opens on a live chat, so you see the product before it asks who you are; sign-up and log-in fold into one sheet, a code replaces the password, and profile setup waits until the account exists.</p>
+    <img class="flow-orwatch" src="../assets/or-watch-the.svg" alt="or watch the" />
+    <button class="flow-btn flow-btn--demo" onclick="window.playDemo()" aria-label="Demo">
+      <svg viewBox="0 0 267 63" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <rect class="btn-fill" x="3" y="3" width="260" height="55" fill="none"/>
+          <path d="M264.306 1.82617C264.306 1.8405 264.306 1.85484 264.373 10.366C264.439 18.8772 264.573 35.8847 264.692 45.1282C264.811 54.3718 264.912 55.3358 264.988 56.1136C265.065 56.8914 265.115 57.4537 265.319 58.9697" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2.2778 2.4446C2.26251 2.42931 2.24722 2.41402 2.07978 11.6994C1.91234 20.9848 1.59321 39.5713 1.51504 49.337C1.43687 59.1027 1.60934 59.4844 1.87099 59.9805" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2.27246 1.79336C2.28632 1.79336 4.77246 1.79336 40.6677 1.65763C80.4818 1.50707 160.097 1.58453 201.927 1.47033C243.757 1.35613 245.39 1.17793 249.297 1.04529C253.203 0.912641 257.772 1.04527 264.272 1.79347" stroke="black" stroke-width="2" stroke-linecap="round"/>
+          <path d="M134.004 23.0361C134.556 23.0363 135.004 23.4841 135.004 24.0361C135.004 24.0363 135.02 24.725 135.062 26.0264C135.094 26.0036 135.126 25.9798 135.158 25.957C135.695 25.5764 136.323 25.1545 136.77 24.9268C137.249 24.6826 137.885 24.5371 138.538 24.4961C139.206 24.4543 139.967 24.5167 140.711 24.75C141.39 24.9629 141.764 25.4514 141.968 25.8398C141.989 25.8797 142.005 25.921 142.024 25.96C143.018 25.0558 144.089 24.5132 144.636 24.2998C145.048 24.1393 145.521 24.0965 145.943 24.1016C146.382 24.1069 146.849 24.1655 147.291 24.2617C147.936 24.4022 148.37 24.8564 148.673 25.2813C148.981 25.7133 149.266 26.2783 149.557 26.8994L149.59 26.9697L149.612 27.0439C149.776 27.6097 149.912 28.3288 149.975 29.916C150.037 31.4847 150.026 33.9446 150.015 36.4238C150.013 36.976 149.563 37.4213 149.011 37.419C148.459 37.4165 148.013 36.9672 148.015 36.415C148.026 33.9146 148.036 31.5097 147.976 29.9961C147.92 28.5916 147.807 28.0271 147.708 27.6699C147.436 27.0915 147.229 26.6986 147.045 26.4414C146.933 26.2839 146.864 26.2274 146.841 26.2109C146.522 26.1431 146.2 26.105 145.919 26.1016C145.615 26.0979 145.432 26.1359 145.363 26.1631C144.967 26.3177 144.016 26.7985 143.194 27.6055C143.006 27.7894 142.915 27.8903 142.875 27.9356C142.858 27.9552 142.851 27.9644 142.85 27.9658C142.849 27.9667 142.849 27.9681 142.847 27.9707C142.846 27.9715 142.839 27.9798 142.832 27.9883C142.83 27.9916 142.802 28.0278 142.764 28.0674C142.746 28.0862 142.696 28.137 142.621 28.1895C142.609 28.1981 142.586 28.214 142.553 28.2334C142.559 28.3277 142.568 28.425 142.573 28.5254C142.615 29.3577 142.627 30.4501 142.613 31.7578V31.7715L142.612 31.7842C142.566 33.0204 142.453 34.084 142.396 34.8848C142.337 35.6989 142.328 36.3278 142.318 37C142.309 37.5521 141.854 37.9927 141.302 37.9844C140.75 37.9758 140.309 37.5218 140.318 36.9697C140.328 36.296 140.339 35.6177 140.402 34.7422C140.465 33.8576 140.568 32.9138 140.613 31.7275C140.627 30.4411 140.614 29.3986 140.575 28.6279C140.555 28.241 140.53 27.9359 140.499 27.71C140.472 27.5086 140.448 27.4207 140.444 27.4033C140.411 27.3282 140.384 27.2523 140.364 27.1943C140.333 27.1077 140.331 27.1015 140.303 27.0244C140.265 26.9169 140.233 26.8368 140.199 26.7715C140.165 26.7078 140.14 26.6781 140.128 26.667C140.122 26.6611 140.121 26.6604 140.114 26.6582C139.636 26.5086 139.124 26.4634 138.663 26.4922C138.19 26.5219 137.843 26.6256 137.679 26.709C137.376 26.8636 136.852 27.2072 136.314 27.5889C135.806 27.9485 135.351 28.295 135.147 28.4639C135.156 28.6971 135.165 28.9391 135.174 29.1895C135.231 30.6606 135.385 31.6293 135.466 32.6172C135.543 33.548 135.556 34.2697 135.578 34.8828C135.599 35.496 135.631 36.0233 135.702 36.6621C135.762 37.2108 135.366 37.7047 134.818 37.7656C134.269 37.8263 133.775 37.4307 133.714 36.8818C133.637 36.1804 133.602 35.6019 133.579 34.9541C133.555 34.3065 133.545 33.6518 133.473 32.7813C133.406 31.9674 133.234 30.7762 133.175 29.2676C133.046 25.9438 133.004 24.0744 133.004 24.0361C133.004 23.484 133.452 23.0361 134.004 23.0361ZM102.841 19C103.15 19 103.425 19.1399 103.609 19.3594C104.182 19.3665 105.41 19.3874 107.233 19.4492C109.584 19.529 111.169 20.0389 112.121 20.4199C114.117 21.2186 115.218 22.9253 115.908 24.3135C116.171 24.8448 116.308 25.476 116.402 26.0977C116.496 26.7248 116.562 27.4559 116.64 28.1934C116.825 29.9487 116.548 31.3749 116.234 32.3125C115.562 34.3145 113.862 35.7103 112.908 36.3066C111.667 37.0823 109.9 37.3147 108.284 37.4639L108.25 37.4668L108.217 37.4678C106.207 37.5201 104.511 37.49 103.513 37.4375V37.4365C103.462 37.4339 103.41 37.4304 103.358 37.4277C103.179 37.731 102.846 37.9312 102.469 37.9209C101.917 37.9054 101.481 37.4455 101.496 36.8936C101.656 31.167 101.749 25.6548 101.795 22.8701C101.842 20.0764 101.841 20.0399 101.841 20C101.841 19.4479 102.289 19.0002 102.841 19ZM158.496 23.8193C158.788 23.6048 159.188 23.5568 159.535 23.7305C159.54 23.7333 159.544 23.7351 159.556 23.7373C159.564 23.7389 159.578 23.7415 159.601 23.7441C159.613 23.7455 159.626 23.7463 159.643 23.748C159.658 23.7496 159.681 23.7525 159.704 23.7549L159.727 23.7568L159.75 23.7607C159.991 23.7983 160.254 23.8614 160.6 23.9795L160.976 24.1172L160.992 24.123C161.504 24.3316 161.982 24.5272 162.375 24.7422C162.785 24.9661 163.171 25.2457 163.471 25.6621C163.818 26.1423 164.549 27.0746 164.902 28.2373C165.166 29.1104 165.397 30.2704 165.192 31.6016C165.032 32.6352 164.741 33.8579 164.17 34.9307C164.027 35.2 163.9 35.4276 163.783 35.6065C163.675 35.7703 163.516 35.9905 163.282 36.1514C163.268 36.1643 162.588 36.8189 161.666 37.1709C160.957 37.4418 159.525 37.8367 157.58 37.3594C157.116 37.2452 156.618 37.1105 156.095 36.749C155.273 36.1805 154.603 35.5746 154.021 34.3018C153.808 33.8363 153.515 33.1422 153.463 31.7607C153.432 30.93 153.442 29.7009 153.524 28.9316C153.619 28.0314 153.715 27.3981 154.025 26.8809C154.393 26.2662 155.031 25.2059 156.323 24.5635C157.213 24.1207 157.952 23.9111 158.496 23.8193ZM123.336 23.4355C124.944 23.4786 126.744 23.2599 128.231 24.7979C129.041 25.6356 129.889 27.185 129.867 29.6699C129.865 29.891 129.86 30.4389 129.445 30.8721C129.047 31.2866 128.491 31.373 128.065 31.3984C127.599 31.4262 126.98 31.3824 126.357 31.3359C125.704 31.2873 124.981 31.2298 124.218 31.2061C122.585 31.1552 121.344 31.1261 120.51 31.1094C120.258 31.1043 120.043 31.1006 119.867 31.0977C120.02 31.8358 120.241 32.5315 120.415 32.9756C120.526 33.2587 120.731 33.4935 121.125 33.7461C121.551 34.0181 122.094 34.2498 122.84 34.5772C124.208 35.1772 125.379 34.8859 126.024 34.6484C126.274 34.5106 126.472 34.3718 126.638 34.2178C126.703 34.143 126.802 34.0143 127.027 33.6416C127.312 33.1691 127.927 33.0175 128.4 33.3027C128.873 33.5882 129.024 34.203 128.739 34.6758C128.475 35.1129 128.3 35.3659 128.099 35.5869L128.077 35.6113L128.052 35.6357C127.709 35.9641 127.328 36.2228 126.911 36.4453L126.856 36.4746L126.797 36.4971C125.935 36.826 124.133 37.3291 122.037 36.4092C121.359 36.1119 120.637 35.8079 120.047 35.4307C119.427 35.034 118.866 34.5043 118.553 33.7051C118.31 33.0839 118.013 32.1189 117.836 31.125C117.668 30.1772 117.572 29.0051 117.902 28.0869C118.186 27.2967 118.76 25.5422 120.359 24.4395C121.064 23.9534 122.134 23.4035 123.336 23.4355ZM159.366 25.7295C159.296 25.7453 159.223 25.7555 159.149 25.7559C158.977 25.7567 158.291 25.818 157.212 26.3545C156.485 26.7163 156.098 27.3112 155.741 27.9082C155.692 27.9889 155.614 28.178 155.512 29.1426C155.445 29.7779 155.432 30.9009 155.461 31.6856C155.501 32.7449 155.707 33.1808 155.839 33.4707C156.233 34.3329 156.622 34.6814 157.234 35.1045C157.438 35.2454 157.63 35.312 158.058 35.417C159.498 35.7706 160.504 35.4745 160.954 35.3027C161.584 35.062 161.64 34.8693 162.08 34.5518C162.088 34.5419 162.099 34.5283 162.111 34.5098C162.174 34.4127 162.265 34.2539 162.405 33.9912C162.825 33.2012 163.071 32.2292 163.215 31.2969C163.358 30.3696 163.204 29.5314 162.988 28.8184C162.752 28.0413 162.256 27.3974 161.849 26.833C161.783 26.7421 161.673 26.6375 161.416 26.4971C161.146 26.3491 160.788 26.1992 160.253 25.9814C159.816 25.8121 159.598 25.7623 159.456 25.7393C159.433 25.7372 159.402 25.7337 159.366 25.7295ZM103.795 22.9033C103.753 25.4421 103.67 30.2552 103.535 35.4336C103.56 35.4349 103.587 35.438 103.616 35.4395H103.618C104.549 35.4885 106.178 35.5188 108.132 35.4688C109.799 35.3136 111.075 35.093 111.847 34.6104C112.629 34.1216 113.879 33.0427 114.338 31.6758C114.573 30.9757 114.802 29.8384 114.651 28.4023C114.568 27.6171 114.51 26.9644 114.424 26.3965C114.338 25.8236 114.237 25.4458 114.117 25.2031C113.489 23.9402 112.672 22.7953 111.378 22.2773C110.594 21.9637 109.24 21.5186 107.165 21.4482C105.889 21.405 104.909 21.3815 104.247 21.3691C104.086 21.3661 103.942 21.3642 103.819 21.3623C103.812 21.7501 103.806 22.2522 103.795 22.9033ZM123.283 25.4355C122.697 25.42 122.052 25.7018 121.495 26.0859C120.499 26.7723 120.097 27.8939 119.784 28.7637C119.75 28.8562 119.725 28.9673 119.708 29.0947C120.419 29.1058 121.958 29.1347 124.281 29.207C125.097 29.2324 125.868 29.2943 126.505 29.3418C127.115 29.3872 127.56 29.4126 127.864 29.4033C127.827 27.5749 127.2 26.6082 126.793 26.1875C126.015 25.3825 125.309 25.4898 123.283 25.4355Z" fill="black"/>
+          <path d="M2.00002 59.8331C2.02546 59.8331 2.0509 59.8331 45.2728 60.2939C88.4948 60.7548 174.685 58.1375 219.448 58.672C264.21 59.2064 264.698 59.3257 264.773 59.2874" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </button>
   </aside>
 
   <div class="stage" id="stage">
+    <img class="flow-tryit" src="../assets/try-it-login.svg" alt="Try it yourself" />
+    <button class="flow-restart" onclick="window.restartManual()" aria-label="Restart"><img src="../assets/ic-reload.svg" alt="" /></button>
    <div class="device">
   <div class="phone">
     <div class="screen" id="screen">
@@ -1170,7 +1176,7 @@
             <button class="icon-btn" aria-label="Back" onclick="window.goBackFromSignUp()">
               <img src="../icons/general/arrow-back.svg" alt="" aria-hidden="true">
             </button>
-            <span class="login-sheet__title">Sign Up</span>
+            <span class="login-sheet__title">Sign up</span>
           </div>
           <div class="login-field" id="signupEmailField">
             <div class="login-field__control" onclick="window.openKeyboard('signup')">
@@ -1180,7 +1186,7 @@
             <span class="login-field__helper">Enter your email address</span>
           </div>
           <button class="btn btn--primary signup-continue" id="signupBtn" onclick="window.goVerifyFromSignUp()" disabled>Continue</button>
-          <div class="signup-divider"><span>Or, continue with</span></div>
+          <div class="signup-divider"><span>Or continue with</span></div>
           <div class="signup-socials">
             <button class="btn btn--secondary signup-social-btn" onclick="window.socialAuth(this,'signup')">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 0 1-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35Z" fill="#4285F4"/><path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0 0 10 20Z" fill="#34A853"/><path d="M4.405 11.9A6.01 6.01 0 0 1 4.09 10c0-.662.114-1.305.314-1.9V5.51H1.063A9.996 9.996 0 0 0 0 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59Z" fill="#FBBC05"/><path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0A9.996 9.996 0 0 0 1.064 5.51l3.34 2.59C5.192 5.736 7.396 3.977 10 3.977Z" fill="#EA4335"/></svg>
@@ -1235,7 +1241,7 @@
           <!-- Continue (primary · disabled until email entered) → Check your email -->
           <button class="btn btn--primary" id="continueBtn" onclick="window.goVerify()" disabled>Continue</button>
 
-          <div class="login-divider">Or, continue with</div>
+          <div class="login-divider">Or continue with</div>
 
           <!-- Social buttons -->
           <div class="social-row">
@@ -1243,7 +1249,7 @@
             <button class="social-btn" onclick="window.socialAuth(this,'login')"><img src="../icons/social/facebook.svg" alt="" aria-hidden="true">Facebook</button>
           </div>
 
-          <div class="login-footer">Don't have an account? <a>Sign Up</a></div>
+          <div class="login-footer">Don't have an account? <a>Sign up</a></div>
           <div class="home-indicator"><span class="home-indicator__bar"></span></div>
         </div>
 
@@ -1765,8 +1771,8 @@
     });
 
     // ── Auto-play engine ───────────────────────────────────────────────────
-    // Plays the sign-up path on a loop (a "video") until the user takes control
-    // via Start / Restart. Typing flashes the on-screen keyboard keys.
+    // Plays the sign-up path once (a "video") unless the user takes control
+    // first via Start / Restart. Typing flashes the on-screen keyboard keys.
     var screenEl = document.getElementById('screen');
     var auto = { cancelled: true, timers: [] };
     function aDelay(ms){ return new Promise(function(res){ auto.timers.push(setTimeout(res, ms)); }); }
@@ -1823,26 +1829,23 @@
     async function autoplayLoop(firstDelay){
       auto.cancelled = false;
       resetPhone(); screenEl.classList.add('sheet-open');   // show the start on first entry
-      var linger = (firstDelay != null) ? firstDelay : 1000;   // first pass can start quicker (Demo click)
-      while (!auto.cancelled) {
-        await aDelay(linger); if (auto.cancelled) return;   /* linger on the Hello-buddy sheet */
-        linger = 1000;   /* subsequent loop iterations use the full linger */
-        await pressBtn('.bottom-sheet .btn--primary');            if (auto.cancelled) return;   /* Sign up */
-        window.goSignUp();                          await aDelay(750);  if (auto.cancelled) return;
-        await autoType('medvedeva_vas@icloud.com'); await aDelay(600);  if (auto.cancelled) return;
-        await pressBtn('#signupBtn');                             if (auto.cancelled) return;   /* Continue */
-        window.goVerifyFromSignUp();                await aDelay(1000); if (auto.cancelled) return;
-        await autoType('504172');                   await aDelay(600);  if (auto.cancelled) return;
-        await pressBtn('#verifyBtn');                             if (auto.cancelled) return;   /* Continue */
-        window.goSuccess();                         await aDelay(1000); if (auto.cancelled) return;
-        await autoType('Vasilisa Medvedeva');       await aDelay(700);  if (auto.cancelled) return;
-        await pressBtn('#newaccBtn');                             if (auto.cancelled) return;   /* Continue */
-        window.goNewAccDone();                      await aDelay(2800); if (auto.cancelled) return;
-        // restart: fade out → reset behind the fade → fade back in (no black dwell)
-        await fadeToBlack();                        if (auto.cancelled) return;
-        resetPhone(); screenEl.classList.add('sheet-open');
-        await fadeFromBlack();                      if (auto.cancelled) return;
-      }
+      await aDelay((firstDelay != null) ? firstDelay : 1000); if (auto.cancelled) return;   /* linger on the Hello-buddy sheet */
+      await pressBtn('.bottom-sheet .btn--primary');            if (auto.cancelled) return;   /* Sign up */
+      window.goSignUp();                          await aDelay(750);  if (auto.cancelled) return;
+      await autoType('medvedeva_vas@icloud.com'); await aDelay(600);  if (auto.cancelled) return;
+      await pressBtn('#signupBtn');                             if (auto.cancelled) return;   /* Continue */
+      window.goVerifyFromSignUp();                await aDelay(1000); if (auto.cancelled) return;
+      await autoType('504172');                   await aDelay(600);  if (auto.cancelled) return;
+      await pressBtn('#verifyBtn');                             if (auto.cancelled) return;   /* Continue */
+      window.goSuccess();                         await aDelay(1000); if (auto.cancelled) return;
+      await autoType('Vasilisa Medvedeva');       await aDelay(700);  if (auto.cancelled) return;
+      await pressBtn('#newaccBtn');                             if (auto.cancelled) return;   /* Continue */
+      window.goNewAccDone();                      await aDelay(2800); if (auto.cancelled) return;
+      // single pass done: fade out → reset to the start sheet behind the fade → hand control back
+      await fadeToBlack();                        if (auto.cancelled) return;
+      resetPhone(); screenEl.classList.add('sheet-open');
+      await fadeFromBlack();
+      stopAuto();
     }
 
     // Restart → stop the auto-play and hand control to the user (reset to the start sheet)
@@ -1862,7 +1865,12 @@
 
     // Demo → play the auto-play "video". Clicking again restarts it from the beginning;
     // starts almost immediately (0.3s) rather than the full Hello-buddy linger.
-    window.playDemo = function(){ stopAuto(); if (fadeEl) fadeEl.classList.remove('is-black'); autoplayLoop(300); };
+    // Restart doodle under the phone — only shown once the user taps the prototype themselves
+    var restartBtn = document.querySelector('.flow-restart');
+    function showRestart(){ if (restartBtn) restartBtn.classList.add('is-visible'); }
+    function hideRestart(){ if (restartBtn) restartBtn.classList.remove('is-visible'); }
+
+    window.playDemo = function(){ stopAuto(); hideRestart(); if (fadeEl) fadeEl.classList.remove('is-black'); autoplayLoop(300); };
 
     // Tapping the phone while the demo plays hands control to the user: stop the
     // auto-play and leave the current screen in place (clearing any half-finished
@@ -1876,6 +1884,7 @@
     var phoneEl = document.querySelector('.phone');
     if (phoneEl && !document.body.classList.contains('embed')) {
       phoneEl.addEventListener('click', function(){
+        showRestart();
         if (!auto.cancelled) window.takeControl();
       }, true);   // capture: stop the demo before any tapped in-phone control reacts
     }

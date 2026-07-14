@@ -1,6 +1,6 @@
 # Notification Counter
 
-> Компактный жёлтый бейдж с числом — показывает количество непрочитанных сообщений или событий.
+> A compact yellow badge with a number — shows the count of unread messages or events.
 
 ## When to use / when not to use
 - ✅ Use when a count of unread items must be visible at a glance (tabs, list items)
@@ -17,8 +17,8 @@ Container (pill) → Number label
 ## Variants
 | Variant | Description |
 |---|---|
-| Default | Yellow pill — счётчик непрочитанных в верхних свайп-табах (SwipeTabItem) |
-| Cell (`--cell`) | Red pill, white text, `px: 7px` — счётчик непрочитанных в строке списка чатов |
+| Default | Yellow pill — unread counter in the top swipe tabs (SwipeTabItem) |
+| Cell (`--cell`) | Red pill, white text, `px: 7px` — unread counter in a chat-list row |
 
 ## States
 | State | Description |

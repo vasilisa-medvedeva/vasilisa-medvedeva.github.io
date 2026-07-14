@@ -1,6 +1,6 @@
 # CellContact
 
-> Ячейка списка контактов/чатов: аватар слева, заголовок (+ опц. подзаголовок), справа — чеврон раскрытия или чекбокс выбора. Собрана на базе атома Avatar.
+> A contact/chat list cell: avatar on the left, title (+ optional subtitle), and an expand chevron or selection checkbox on the right. Built on the Avatar atom.
 
 ## When to use / when not to use
 - ✅ Use in a contacts, chats, channels, or folders list.

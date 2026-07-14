@@ -1,6 +1,6 @@
 # CellCategory
 
-> Строка-заголовок сворачиваемой категории в списке чатов: название с шевроном и опциональным замком слева, кнопка меню и хэндл перетаскивания справа.
+> A collapsible category header row in the chat list: name with a chevron and an optional lock on the left, menu button and drag handle on the right.
 
 ## When to use / when not to use
 - ✅ Use as a collapsible section header in a categorized chat/contact list.

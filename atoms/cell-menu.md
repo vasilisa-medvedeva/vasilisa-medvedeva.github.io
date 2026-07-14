@@ -1,6 +1,6 @@
 # CellMenu
 
-> Ячейка контекстного меню — иконка слева, текст по центру, опциональный кластер аватаров справа. Строительный блок для dropdown-меню.
+> A context-menu cell — icon on the left, label in the middle, optional avatar cluster on the right. The building block for dropdown menus.
 
 ## When to use / when not to use
 - ✅ Use inside a dropdown or context menu list.

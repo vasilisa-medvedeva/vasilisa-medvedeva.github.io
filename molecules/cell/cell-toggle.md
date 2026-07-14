@@ -1,6 +1,6 @@
 # CellToggle
 
-> Строка-ячейка со списковым текстом слева и переключателем (Radio или Checkbox) справа — используется в списках выбора, настройках и формах.
+> A cell row with list text on the left and a toggle (Radio or Checkbox) on the right — used in selection lists, settings, and forms.
 
 ## When to use / when not to use
 - ✅ Use when presenting a mutually exclusive choice (radio) or a multi-select item (checkbox) in a list.

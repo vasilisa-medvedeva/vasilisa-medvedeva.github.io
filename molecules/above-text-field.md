@@ -1,6 +1,6 @@
 # AboveTheTextField
 
-> Панель над полем ввода текста, появляющаяся при ответе на сообщение, пересылке или редактировании.
+> A panel above the text input that appears when replying to, forwarding, or editing a message.
 
 ## When to use / when not to use
 - ✅ Use when the user is replying to, forwarding, or editing a message — to provide context before sending

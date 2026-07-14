@@ -8,13 +8,15 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-family: "Archivo", sans-serif;
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -27,7 +29,8 @@
 
     .page-title {
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
+      letter-spacing: -0.02em;
       line-height: var(--text-headline-medium-line-height);
       margin-bottom: 8px;
     }
@@ -79,7 +82,7 @@
     }
 
     .state-label {
-      font-family: var(--text-body-small-font-family);
+      font-family: "Archivo", sans-serif;
       font-size: var(--text-body-small-font-size);
       font-weight: var(--text-body-small-font-weight);
       line-height: var(--text-body-small-line-height);
@@ -188,10 +191,62 @@
     .docs__toggle svg { width: 14px; height: 14px; flex-shrink: 0; transition: transform 0.2s ease; }
     .docs.is-expanded .docs__toggle svg { transform: rotate(180deg); }
 
+    /* ── ORGANISM: MeetBar — live-meet banner under the chat top bar ── */
+    /* Atom: ButtonIcon (copied from the library) */
+    .btn-icon {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      width: 40px; height: 40px; border-radius: 30px;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      background: var(--color-constant-primary);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-icon img { width: 24px; height: 24px; display: block; }
+    .btn-icon--active { background: var(--color-brand-yellow-primary); }
+    /* Atom: Button (copied from the library — sm size, primary/accent) */
+    .meet-bar .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 30px; border: 1.5px solid transparent;
+      white-space: nowrap; cursor: pointer;
+      min-width: 84px; flex: 0 0 auto;
+      padding: 9px 12px; text-transform: uppercase;
+      font-family: var(--text-title-small-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+    }
+    .meet-bar .btn--primary { background: var(--color-brand-yellow-primary); border-color: var(--color-primary-transparent-87); color: var(--color-primary-transparent-87); }
+    .meet-bar .btn--accent  { background: var(--color-brand-red-quaternary); border-color: var(--color-primary-transparent-87); color: var(--color-constant-primary); }
+
+    .meet-bar {
+      display: flex; align-items: center; gap: 16px;
+      width: 360px; padding: 8px 16px;
+      background: var(--color-brand-yellow-8);
+      border-bottom: 1.5px solid var(--color-brand-red-quaternary);
+    }
+    .meet-bar__buttons { display: flex; gap: 12px; flex-shrink: 0; }
+    .meet-bar__text { flex: 1; min-width: 0; text-align: center; }
+    .meet-bar__title {
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: 20px;
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+    }
+    .meet-bar__subtitle {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-body-medium-font-size);
+      font-weight: var(--text-body-medium-font-weight);
+      line-height: var(--text-body-medium-line-height);
+      letter-spacing: var(--text-body-medium-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+
     /* ── Code panel ── */
     .code-toggle-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      font-family: "Roboto", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: "Archivo", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60);
       background: var(--color-primary-transparent-04);
       border: 1px solid var(--color-primary-transparent-16);
@@ -217,7 +272,7 @@
 
     .copy-code-btn {
       position: absolute; top: 14px; right: 16px;
-      font-family: "Roboto", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: "Archivo", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
       border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
     }
@@ -228,7 +283,7 @@
       height: 0; background: transparent; margin: 0 0 48px;
     }
 
-    /* ── Atom: Avatar (from index.html) ── */
+    /* ── Atom: Avatar (from atoms.html) ── */
     .avatar {
       position: relative;
       display: flex;
@@ -583,13 +638,48 @@
 </head>
 <body>
 
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- ── Sidebar ── -->
   <nav class="sidebar"></nav>
 
   <!-- ── Main ── -->
   <main class="main">
     <h1 class="page-title">Organisms</h1>
-    <p class="page-subtitle">Сложные UI-блоки, собранные из атомов и молекул. Принцип: Reuse → Compose → Create.</p>
 
     <div class="section-divider"></div>
 
@@ -714,9 +804,9 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Composition</div>
-          <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">новый атом · 72×72px</span></div>
-          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">молекула · reused</span></div>
-          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · через молекулу</span></div>
+          <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">new atom · 72 × 72px</span></div>
+          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">molecule · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · via the molecule</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -725,15 +815,15 @@
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">h 240px · flex-col · gap 12px · centered</span></div>
           <div class="docs__row"><span class="docs__row-label">ava slot</span><span class="docs__row-value">flex: 1 · centered</span></div>
           <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">72px · circle · brand-yellow-16</span></div>
-          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">356px · варианты: private/public × bio/no bio</span></div>
+          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">356px · variants: private/public × bio/no bio</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
-          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только имя и подпись</span></div>
+          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Lock + bio</span></div>
+          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Bio only</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Lock only</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Name + subtitle only</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -831,8 +921,8 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Composition</div>
-          <div class="docs__row"><span class="docs__row-label">CellToggle</span><span class="docs__row-value">молекула · xSmall · reused</span></div>
-          <div class="docs__row"><span class="docs__row-label">Toggle (radio)</span><span class="docs__row-value">атом · toggle-radio · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">CellToggle</span><span class="docs__row-value">molecule · xSmall · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">Toggle (radio)</span><span class="docs__row-value">atom · toggle-radio · reused</span></div>
           <div class="docs__row"><span class="docs__row-label">Button (Cancel)</span><span class="docs__row-value">outlined · pill · flex 1</span></div>
           <div class="docs__row"><span class="docs__row-label">Button (Delete)</span><span class="docs__row-value">filled red · pill · flex 1</span></div>
         </div>
@@ -891,6 +981,104 @@
       </div>
     </div>
     <!-- /ConfirmDialog -->
+
+    <div class="section-divider"></div>
+
+    <div id="meet-bar" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">MeetBar</div>
+          <button class="code-toggle-btn" onclick="toggleCode('meet-bar')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="component-block__states" style="flex-direction:column; align-items:flex-start; gap:24px;">
+          <div class="state-wrapper">
+            <div class="meet-bar">
+              <div class="meet-bar__buttons">
+                <button class="btn-icon btn-icon--active" aria-pressed="true" aria-label="Mute microphone"><img src="icons/general/meet-voice.svg" alt="" aria-hidden="true"></button>
+                <button class="btn-icon" aria-pressed="false" aria-label="Turn camera on"><img src="icons/general/meet-video-off.svg" alt="" aria-hidden="true"></button>
+              </div>
+              <div class="meet-bar__text">
+                <p class="meet-bar__title">Meet</p>
+                <p class="meet-bar__subtitle">16 participants</p>
+              </div>
+              <button class="btn btn--primary">Join</button>
+            </div>
+            <span class="state-label">Join (not in the meet)</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="meet-bar">
+              <div class="meet-bar__buttons">
+                <button class="btn-icon btn-icon--active" aria-pressed="true" aria-label="Mute microphone"><img src="icons/general/meet-voice.svg" alt="" aria-hidden="true"></button>
+                <button class="btn-icon" aria-pressed="false" aria-label="Turn camera on"><img src="icons/general/meet-video-off.svg" alt="" aria-hidden="true"></button>
+              </div>
+              <div class="meet-bar__text">
+                <p class="meet-bar__title">Meet</p>
+                <p class="meet-bar__subtitle">16 participants</p>
+              </div>
+              <button class="btn btn--accent">Exit</button>
+            </div>
+            <span class="state-label">Exit (joined)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">MeetBar</div>
+        <span class="docs__type">Organism</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">360px · pad 8×16 · bottom border 1.5px</span></div>
+          <div class="docs__row"><span class="docs__row-label">ButtonIcon ×2</span><span class="docs__row-value">atom · voice + video · reused</span></div>
+          <div class="docs__row"><span class="docs__row-label">title + subtitle</span><span class="docs__row-value">title-medium + body-medium · centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">Button</span><span class="docs__row-value">atom · sm · reused</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">join</span><span class="docs__row-value">Button primary "JOIN" — meet available</span></div>
+          <div class="docs__row"><span class="docs__row-label">exit</span><span class="docs__row-value">Button accent "EXIT" — user has joined</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-8</span>
+          <span class="docs__token">--color-brand-red-quaternary</span>
+          <span class="docs__token">--color-brand-yellow-primary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--text-title-medium-*</span>
+          <span class="docs__token">--text-body-medium-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-meet-bar">
+        <button class="copy-code-btn" onclick="copyCode('meet-bar')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"meet-bar"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"meet-bar__buttons"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"btn-icon btn-icon--active"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/meet-voice.svg"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;/button&gt;</span>
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"btn-icon"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"icons/general/meet-video-off.svg"</span><span class="tok-tag">&gt;</span><span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"meet-bar__text"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"meet-bar__title"</span><span class="tok-tag">&gt;</span>Meet<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;p</span> <span class="tok-attr">class</span>=<span class="tok-str">"meet-bar__subtitle"</span><span class="tok-tag">&gt;</span>16 participants<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-cmt">&lt;!-- join: btn--primary "Join" · exit: btn--accent "Exit" --&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"btn btn--primary"</span><span class="tok-tag">&gt;</span>Join<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /MeetBar -->
 
     <div class="section-divider"></div>
 
@@ -1018,7 +1206,10 @@
     }
     document.querySelectorAll('.avatar:not(.avatar--folder)').forEach(el => {
       const name = el.getAttribute('aria-label') || el.querySelector('.avatar__initials')?.textContent?.trim() || '';
-      el.style.background = `var(${AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length]})`;
+      const key = AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length];
+      el.style.background = `var(${key})`;
+      const ini = el.querySelector('.avatar__initials');
+      if (ini) ini.style.color = `var(${key}-text)`;   // paired text token of the same hue
     });
   })();
   </script>

@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="styles/color-tokens.css" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/site-header.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <!-- Inter — used for flow-card copy -->
+  <!-- Archivo — used for flow-card copy (same as the flow pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,14 +27,55 @@
     .main {
       padding: 10px;
       min-height: 100vh;
+      max-width: 1440px;               /* on wide screens only the side gaps grow */
+      margin: 0 auto;
     }
+
+    /* ── Hero — oversized statement + offset aside with a doodle arrow ── */
+    .hero {
+      padding: 88px 0 0;                 /* side gutters come from .main, same as the cards */
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 6.9vw, 94px);
+      line-height: 0.96; letter-spacing: -0.025em;
+      color: var(--color-primary-transparent-87);
+      max-width: 1360px;
+    }
+    .hero__aside {
+      align-self: flex-end;
+      margin-top: 20px;
+      width: calc((100% - 10px) / 2.4);  /* aligned with the narrower right column */
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero__aside p {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
+    }
+
+    /* Hand-drawn ring around a word, same doodle stroke as the arrows */
+    .hero__circled { position: relative; display: inline-block; padding: 0 3px; }
+    .hero__circled svg {
+      position: absolute; left: -12%; top: -32%;
+      width: 124%; height: 164%;
+      pointer-events: none;
+    }
+    .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
 
     /* ── Flows grid (korolev-style tiles) ── */
     .flows-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      grid-template-columns: 1.4fr 1fr;   /* left cards wider, right narrower */
       gap: 10px;
+      align-items: start;
+      margin-top: 20px;
+      padding-bottom: 50px;            /* room for the offset right column */
     }
+    /* Staggered columns: the right card sits 40px lower */
+    .flows-grid > .flow-card:nth-child(even) { position: relative; top: 40px; }
 
     .flow-card {
       position: relative;
@@ -63,20 +106,13 @@
 
     .flow-card__head { display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 0; }
     .flow-card__name {
-      font-family: "Inter", sans-serif;
+      font-family: "Archivo", sans-serif;
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
-      letter-spacing: var(--text-headline-medium-letter-spacing);
-      color: var(--color-primary);
+      letter-spacing: -0.02em;   /* matches the flow-page title (-0.88px at 44px) */
+      color: var(--color-primary-transparent-87);
       text-transform: uppercase;
-    }
-    .flow-card__desc {
-      font-family: "Inter", sans-serif;
-      font-size: var(--text-body-medium-font-size);
-      line-height: var(--text-body-medium-line-height);
-      letter-spacing: var(--text-body-medium-letter-spacing);
-      color: var(--color-primary-transparent-60);
     }
 
     /* Stage — device on a soft gradient-blob backdrop */
@@ -88,13 +124,6 @@
       overflow: hidden;
       background: var(--color-primary-transparent-04);
     }
-    .flow-card__blob {
-      position: absolute; width: 240px; height: 240px; border-radius: 50%;
-      filter: blur(48px); pointer-events: none;
-    }
-    .flow-card__blob--1 { background: var(--color-brand-yellow-secondary); top: -40px; left: -30px; opacity: 0.5; }
-    .flow-card__blob--2 { background: var(--color-brand-red-primary);   bottom: -50px; left: 10px;  opacity: 0.38; }
-    .flow-card__blob--3 { background: var(--color-info-primary);        top: 60px;   right: -60px; opacity: 0.32; }
 
     .flow-card__device {
       position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
@@ -123,7 +152,6 @@
 
     /* Design system card — wall of components (spans two columns). Real library
        CSS classes/markup are copied in below so they look exactly like the library. */
-    .flow-card--ds { grid-column: span 2; }
     .flow-card--ds .flow-card__stage { background: var(--color-constant-primary); }
     /* Screenshot overlay — shown when assets/design-system.png exists, else removed (wall fallback) */
     .ds-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: translateX(-20px) scale(1.2); transform-origin: center; z-index: 2; }
@@ -234,14 +262,80 @@
 </head>
 <body>
 
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <!-- Drop your CV at assets/VasilisaMedvedeva_CV.pdf; replace the social URLs with your real profiles -->
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
 
   <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
+      <div class="hero__aside">
+        <p>No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
+        <p>Designed for desktop, iOS and Android; the prototypes below are the mobile flows. Built at an early-stage startup that ran out of funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
+      </div>
+    </section>
+
     <div class="flows-grid">
+      <!-- Live animated flow -->
+      <a class="flow-card" href="flows/login.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Log in</span>
+        </div>
+        <div class="flow-card__stage">
+          <div class="flow-card__device">
+            <iframe src="flows/login.html?embed=1" title="Log in flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>
+        </div>
+      </a>
+
+      <a class="flow-card flow-card--chats" href="flows/create-chats.html">
+        <div class="flow-card__head">
+          <span class="flow-card__name">Create Chats</span>
+        </div>
+        <div class="flow-card__stage">
+          <div class="flow-card__device">
+            <iframe src="flows/create-chats.html?embed=1" title="Create Chats flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>
+        </div>
+      </a>
+
       <!-- Design system — entry to the component library -->
-      <a class="flow-card flow-card--ds" href="index.html">
+      <a class="flow-card flow-card--ds" href="atoms.html">
         <div class="flow-card__head">
           <span class="flow-card__name">Design system</span>
-          <span class="flow-card__desc">Tokens, icons &amp; components</span>
         </div>
         <div class="flow-card__stage">
           <!-- Drop a screenshot at assets/design-system.png and it shows here automatically;
@@ -309,40 +403,16 @@
         </div>
       </a>
 
-      <!-- Live animated flow -->
-      <a class="flow-card" href="flows/login.html">
+      <a class="flow-card flow-card--attach" href="flows/attach-photo.html">
         <div class="flow-card__head">
-          <span class="flow-card__name">Log in</span>
-          <span class="flow-card__desc">Entrance → bottom sheet → email &amp; keyboard</span>
+          <span class="flow-card__name">Attach Photo</span>
         </div>
         <div class="flow-card__stage">
-          <span class="flow-card__blob flow-card__blob--1"></span>
-          <span class="flow-card__blob flow-card__blob--2"></span>
-          <span class="flow-card__blob flow-card__blob--3"></span>
           <div class="flow-card__device">
-            <iframe src="flows/login.html?embed=1" title="Log in flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            <iframe src="flows/attach-photo.html?embed=1" title="Attach Photo flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
           </div>
         </div>
       </a>
-
-      <a class="flow-card" href="flows/create-chats.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Create Chats</span>
-          <span class="flow-card__desc">Chats list → compose → new chat</span>
-        </div>
-        <div class="flow-card__stage">
-          <span class="flow-card__blob flow-card__blob--1"></span>
-          <span class="flow-card__blob flow-card__blob--2"></span>
-          <span class="flow-card__blob flow-card__blob--3"></span>
-          <div class="flow-card__device">
-            <iframe src="flows/create-chats.html?embed=1" title="Create Chats flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
-        </div>
-      </a>
-
-      <!-- Placeholders for upcoming flows -->
-      <div class="flow-card flow-card--empty"><div class="flow-card__head"><span class="flow-card__name">Soon</span><span class="flow-card__desc">Next flow</span></div><div class="flow-card__stage"><span>Coming soon</span></div></div>
-      <div class="flow-card flow-card--empty"><div class="flow-card__head"><span class="flow-card__name">Soon</span><span class="flow-card__desc">Next flow</span></div><div class="flow-card__stage"><span>Coming soon</span></div></div>
     </div>
   </main>
 

@@ -7,13 +7,16 @@
   <link rel="stylesheet" href="styles/color-tokens.css" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-family: "Archivo", sans-serif;
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -29,7 +32,8 @@
 
     .page-title {
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
+      letter-spacing: -0.02em;
       line-height: var(--text-headline-medium-line-height);
       margin-bottom: 8px;
     }
@@ -164,6 +168,42 @@
   </style>
 </head>
 <body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
 
   <nav class="sidebar"></nav>
 
@@ -658,6 +698,13 @@
           <span class="icon-card__name">format-text</span>
           <span class="icon-card__toast">Copied!</span>
         </div>
+
+        <div class="icon-card" data-name="format-text-active" onclick="copyName(this)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <circle id="Ellipse 27" cx="12" cy="12" r="10" fill="#FFC244" stroke="#212121" stroke-width="1.5"/> <path id="Aa" d="M6.88565 15H5.23793L7.74858 7.72727H9.73011L12.2372 15H10.5895L8.76776 9.3892H8.71094L6.88565 15ZM6.78267 12.1413H10.6747V13.3416H6.78267V12.1413ZM14.3196 15.103C13.9715 15.103 13.6614 15.0426 13.3892 14.9219C13.1169 14.7988 12.9015 14.6177 12.7429 14.3786C12.5866 14.1371 12.5085 13.8364 12.5085 13.4766C12.5085 13.1735 12.5641 12.919 12.6754 12.7131C12.7867 12.5071 12.9382 12.3414 13.1299 12.2159C13.3217 12.0904 13.5395 11.9957 13.7833 11.9318C14.0296 11.8679 14.2876 11.8229 14.5575 11.7969C14.8747 11.7637 15.1304 11.733 15.3245 11.7045C15.5187 11.6738 15.6595 11.6288 15.7471 11.5696C15.8347 11.5104 15.8785 11.4228 15.8785 11.3068V11.2855C15.8785 11.0606 15.8075 10.8866 15.6654 10.7635C15.5258 10.6404 15.3269 10.5788 15.0688 10.5788C14.7966 10.5788 14.58 10.6392 14.419 10.7599C14.258 10.8783 14.1515 11.0275 14.0994 11.2074L12.7002 11.0938C12.7713 10.7623 12.9109 10.4759 13.1193 10.2344C13.3276 9.99053 13.5963 9.8035 13.9254 9.6733C14.2568 9.54072 14.6403 9.47443 15.076 9.47443C15.379 9.47443 15.669 9.50994 15.946 9.58097C16.2253 9.65199 16.4727 9.76207 16.6882 9.91122C16.906 10.0604 17.0776 10.2521 17.2031 10.4865C17.3286 10.7185 17.3913 10.9967 17.3913 11.321V15H15.9566V14.2436H15.914C15.8264 14.4141 15.7092 14.5644 15.5625 14.6946C15.4157 14.8224 15.2393 14.9231 15.0333 14.9964C14.8274 15.0675 14.5894 15.103 14.3196 15.103ZM14.7528 14.0589C14.9753 14.0589 15.1718 14.0152 15.3423 13.9276C15.5127 13.8376 15.6465 13.7169 15.7436 13.5653C15.8406 13.4138 15.8892 13.2422 15.8892 13.0504V12.4716C15.8418 12.5024 15.7767 12.5308 15.6938 12.5568C15.6134 12.5805 15.5222 12.603 15.4204 12.6243C15.3186 12.6432 15.2168 12.661 15.115 12.6776C15.0132 12.6918 14.9209 12.7048 14.838 12.7166C14.6605 12.7427 14.5054 12.7841 14.3728 12.8409C14.2403 12.8977 14.1373 12.9747 14.0639 13.0717C13.9905 13.1664 13.9538 13.2848 13.9538 13.4268C13.9538 13.6328 14.0284 13.7902 14.1775 13.8991C14.329 14.0057 14.5208 14.0589 14.7528 14.0589Z" fill="#212121"/> </svg>
+          <span class="icon-card__name">format-text</span>
+          <span class="icon-card__variant">active</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
         <div class="icon-card" data-name="group" onclick="copyName(this)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="group" d="M1 20V17.2C1 16.6333 1.14583 16.1125 1.4375 15.6375C1.72917 15.1625 2.11667 14.8 2.6 14.55C3.63333 14.0333 4.68333 13.6458 5.75 13.3875C6.81667 13.1292 7.9 13 9 13C10.1 13 11.1833 13.1292 12.25 13.3875C13.3167 13.6458 14.3667 14.0333 15.4 14.55C15.8833 14.8 16.2708 15.1625 16.5625 15.6375C16.8542 16.1125 17 16.6333 17 17.2V20H1ZM19 20V17C19 16.2667 18.7958 15.5625 18.3875 14.8875C17.9792 14.2125 17.4 13.6333 16.65 13.15C17.5 13.25 18.3 13.4208 19.05 13.6625C19.8 13.9042 20.5 14.2 21.15 14.55C21.75 14.8833 22.2083 15.2542 22.525 15.6625C22.8417 16.0708 23 16.5167 23 17V20H19ZM9 12C7.9 12 6.95833 11.6083 6.175 10.825C5.39167 10.0417 5 9.1 5 8C5 6.9 5.39167 5.95833 6.175 5.175C6.95833 4.39167 7.9 4 9 4C10.1 4 11.0417 4.39167 11.825 5.175C12.6083 5.95833 13 6.9 13 8C13 9.1 12.6083 10.0417 11.825 10.825C11.0417 11.6083 10.1 12 9 12ZM19 8C19 9.1 18.6083 10.0417 17.825 10.825C17.0417 11.6083 16.1 12 15 12C14.8167 12 14.5833 11.9792 14.3 11.9375C14.0167 11.8958 13.7833 11.85 13.6 11.8C14.05 11.2667 14.3958 10.675 14.6375 10.025C14.8792 9.375 15 8.7 15 8C15 7.3 14.8792 6.625 14.6375 5.975C14.3958 5.325 14.05 4.73333 13.6 4.2C13.8333 4.11667 14.0667 4.0625 14.3 4.0375C14.5333 4.0125 14.7667 4 15 4C16.1 4 17.0417 4.39167 17.825 5.175C18.6083 5.95833 19 6.9 19 8ZM3 18H15V17.2C15 17.0167 14.9542 16.85 14.8625 16.7C14.7708 16.55 14.65 16.4333 14.5 16.35C13.6 15.9 12.6917 15.5625 11.775 15.3375C10.8583 15.1125 9.93333 15 9 15C8.06667 15 7.14167 15.1125 6.225 15.3375C5.30833 15.5625 4.4 15.9 3.5 16.35C3.35 16.4333 3.22917 16.55 3.1375 16.7C3.04583 16.85 3 17.0167 3 17.2V18ZM9 10C9.55 10 10.0208 9.80417 10.4125 9.4125C10.8042 9.02083 11 8.55 11 8C11 7.45 10.8042 6.97917 10.4125 6.5875C10.0208 6.19583 9.55 6 9 6C8.45 6 7.97917 6.19583 7.5875 6.5875C7.19583 6.97917 7 7.45 7 8C7 8.55 7.19583 9.02083 7.5875 9.4125C7.97917 9.80417 8.45 10 9 10Z" fill="#212121"/> </svg>
           <span class="icon-card__name">group</span>
@@ -713,6 +760,70 @@
           <span class="icon-card__name">share</span>
           <span class="icon-card__toast">Copied!</span>
         </div>
+                <div class="icon-card" data-name="icon_general_meet_voice" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 58">
+<path id="mic" d="M12 14.4733C13.6565 14.4733 14.8147 13.2475 14.8147 11.4923V6.98096C14.8147 5.22575 13.6565 4 12 4C10.3508 4 9.18534 5.22575 9.18534 6.98096V11.4923C9.18534 13.2475 10.3508 14.4733 12 14.4733ZM12 13.1315C11.1424 13.1315 10.6 12.4787 10.6 11.5213V6.95195C10.6 5.99456 11.1424 5.3418 12 5.3418C12.8576 5.3418 13.4 5.99456 13.4 6.95195V11.5213C13.4 12.4787 12.8576 13.1315 12 13.1315ZM8.62827 20H15.3717C15.7602 20 16.0827 19.6881 16.0827 19.311C16.0827 18.9266 15.7602 18.6219 15.3717 18.6219H12.6817V17.1496C15.577 16.874 17.6 14.8214 17.6 11.8187V10.3898C17.6 10.0054 17.2921 9.70807 16.9037 9.70807C16.5152 9.70807 16.1927 10.0054 16.1927 10.3898V11.7679C16.1927 14.2412 14.4995 15.8658 12 15.8658C9.50052 15.8658 7.80733 14.2412 7.80733 11.7679V10.3898C7.80733 10.0054 7.49215 9.70807 7.10367 9.70807C6.71518 9.70807 6.4 10.0054 6.4 10.3898V11.8187C6.4 14.8214 8.42304 16.874 11.3183 17.1496V18.6219H8.62827C8.23979 18.6219 7.91728 18.9266 7.91728 19.311C7.91728 19.6881 8.23979 20 8.62827 20Z" fill="#212121"/>
+</g>
+</svg>
+          <span class="icon-card__name">meet-voice</span>
+          <span class="icon-card__variant">default</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
+        <div class="icon-card" data-name="icon_general_meet_voice_off" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 58">
+<path id="mic.slash" d="M15.1146 6.88095C15.1146 5.12574 13.9596 3.89999 12.3252 3.89999C10.9233 3.89999 9.8918 4.82112 9.65209 6.18467V6.42402L10.9378 7.70054V6.85194C10.9378 5.89455 11.4753 5.24179 12.3252 5.24179C13.1751 5.24179 13.7126 5.89455 13.7126 6.85194V10.3043C13.7126 10.3624 13.7054 10.4131 13.7054 10.4639L15.0783 11.8347C15.1001 11.6897 15.1146 11.5446 15.1146 11.3923V6.88095ZM17.933 17.6008C18.1654 17.8257 18.5359 17.8257 18.7538 17.6008C18.9717 17.3687 18.979 17.0061 18.7538 16.7812L7.10971 5.16926C6.88453 4.94442 6.51406 4.93716 6.28888 5.16926C6.0637 5.38685 6.0637 5.764 6.28888 5.98159L17.933 17.6008ZM8.98381 19.9H15.6666C16.0516 19.9 16.3712 19.5881 16.3712 19.211C16.3712 18.8266 16.0516 18.5219 15.6666 18.5219H13.0008V17.0496C13.8797 16.9626 14.6715 16.716 15.3543 16.3098L14.3519 15.3161C13.778 15.6062 13.0879 15.7658 12.3252 15.7658C9.84822 15.7658 8.17025 14.1412 8.17025 11.6679V10.2898C8.17025 9.90543 7.85063 9.60806 7.46564 9.60806C7.08065 9.60806 6.7683 9.90543 6.7683 10.2898V11.7187C6.7683 14.7214 8.77315 16.774 11.6497 17.0496V18.5219H8.98381C8.59882 18.5219 8.2792 18.8266 8.2792 19.211C8.2792 19.5881 8.59882 19.9 8.98381 19.9ZM16.2623 13.0097L17.3737 14.1194C17.7005 13.4231 17.8749 12.6108 17.8749 11.7187V10.2898C17.8749 9.90543 17.5625 9.60806 17.1775 9.60806C16.7926 9.60806 16.4802 9.90543 16.4802 10.2898V11.6679C16.4802 12.1538 16.4076 12.6035 16.2623 13.0097ZM12.3252 14.3732C12.6594 14.3732 12.9645 14.3152 13.2405 14.2064L11.9693 12.9372C11.9257 12.9589 11.8676 12.9589 11.8095 12.9589C11.4172 12.8719 11.1194 12.5528 11.025 12.1393L11.0177 11.987L9.53587 10.5074V11.3923C9.53587 13.1475 10.6836 14.3732 12.3252 14.3732Z" fill="#212121"/>
+</g>
+</svg>
+          <span class="icon-card__name">meet-voice</span>
+          <span class="icon-card__variant">off</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
+        <div class="icon-card" data-name="icon_general_meet_video" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 58">
+<path id="video" d="M5.9067 18H13.3708C15.2153 18 16.2847 16.96 16.2847 15.1524V14.2917L18.8612 16.4722C19.1986 16.7591 19.5502 16.9528 19.8947 16.9528C20.5478 16.9528 21 16.4794 21 15.7693V8.27376C21 7.56366 20.5478 7.09026 19.8947 7.09026C19.5502 7.09026 19.1986 7.28392 18.8612 7.56366L16.2847 9.75134V8.85475C16.2847 7.04722 15.2153 6 13.3708 6H5.9067C4.12679 6 3 7.04722 3 8.85475V15.2026C3 17.003 4.0622 18 5.9067 18ZM6.14354 16.7089C5.02392 16.7089 4.38517 16.1064 4.38517 14.9444V9.06276C4.38517 7.87926 5.02392 7.29827 6.14354 7.29827H13.134C14.2536 7.29827 14.8923 7.8936 14.8923 9.06276V14.9444C14.8923 16.1064 14.2464 16.7089 13.134 16.7089H6.14354ZM19.3995 15.2959L16.2847 12.7496V11.2935L19.3995 8.74716C19.4641 8.69695 19.5072 8.66826 19.5646 8.66826C19.6435 8.66826 19.6866 8.72564 19.6866 8.82606V15.217C19.6866 15.3102 19.6435 15.3748 19.5646 15.3748C19.5072 15.3748 19.4641 15.3389 19.3995 15.2959Z" fill="#212121"/>
+</g>
+</svg>
+          <span class="icon-card__name">meet-video</span>
+          <span class="icon-card__variant">default</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
+        <div class="icon-card" data-name="icon_general_meet_video_off" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 58">
+<path id="video.slash" d="M16.4322 19.6599C16.6646 19.8911 17.0349 19.8911 17.2527 19.6599C17.4706 19.4286 17.4778 19.0557 17.2527 18.8169L2.99119 4.17344C2.76609 3.94219 2.39575 3.94219 2.16338 4.17344C1.94554 4.40469 1.94554 4.7926 2.16338 5.01639L16.4322 19.6599ZM13.4477 5.65793H5.73603L7.05036 7.00815H13.2081C14.3409 7.00815 14.9871 7.62731 14.9871 8.84325V14.7365C14.9871 14.8856 14.9726 14.9975 14.9436 15.1169L16.1926 16.4C16.3233 16.0643 16.3959 15.6615 16.3959 15.2512V14.2814L19.0027 16.5492C19.344 16.8476 19.6998 17.049 20.0484 17.049C20.7092 17.049 21.1667 16.5566 21.1667 15.8181V8.02267C21.1667 7.28416 20.7092 6.79181 20.0484 6.79181C19.6998 6.79181 19.344 6.99323 19.0027 7.28416L16.3959 9.55938V8.62691C16.3959 6.74706 15.3139 5.65793 13.4477 5.65793ZM5.89578 18.1381H13.6365L12.3294 16.7953H6.13541C5.00262 16.7953 4.35635 16.1687 4.35635 14.9602V8.64929L2.98393 7.23194C2.96215 7.58255 2.95488 7.9257 2.95488 8.29122V15.2288C2.95488 17.1012 4.02958 18.1381 5.89578 18.1381ZM19.5474 15.3258L16.3959 12.6776V11.1632L19.5474 8.51502C19.6127 8.4628 19.6563 8.43296 19.7144 8.43296C19.7942 8.43296 19.8378 8.49264 19.8378 8.59707V15.2437C19.8378 15.3407 19.7942 15.4078 19.7144 15.4078C19.6563 15.4078 19.6127 15.3705 19.5474 15.3258Z" fill="#212121"/>
+</g>
+</svg>
+          <span class="icon-card__name">meet-video</span>
+          <span class="icon-card__variant">off</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
+        <div class="icon-card" data-name="icon_general_scale_open" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle id="background" cx="12" cy="12" r="11" fill="#F5F5F5"/>
+<path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M17 6.25H12C11.5858 6.25 11.25 6.58579 11.25 7C11.25 7.41421 11.5858 7.75 12 7.75L16.25 7.75V12C16.25 12.4142 16.5858 12.75 17 12.75C17.4142 12.75 17.75 12.4142 17.75 12V7C17.75 6.58579 17.4142 6.25 17 6.25ZM7 17.75H12C12.4142 17.75 12.75 17.4142 12.75 17C12.75 16.5858 12.4142 16.25 12 16.25H7.75L7.75 12C7.75 11.5858 7.41421 11.25 7 11.25C6.58578 11.25 6.25 11.5858 6.25 12V17C6.25 17.4142 6.58578 17.75 7 17.75Z" fill="#858585"/>
+</svg>
+          <span class="icon-card__name">scale</span>
+          <span class="icon-card__variant">open</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
+        <div class="icon-card" data-name="icon_general_scale_close" onclick="copyName(this)">
+          <svg class="icon-card__img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle id="background" cx="12" cy="12" r="11" fill="#F5F5F5"/>
+<path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M13.25 10L13.25 5C13.25 4.58579 13.5858 4.25 14 4.25C14.4142 4.25 14.75 4.58579 14.75 5L14.75 9.25L19 9.25C19.4142 9.25 19.75 9.58579 19.75 10C19.75 10.4142 19.4142 10.75 19 10.75L14 10.75C13.5858 10.75 13.25 10.4142 13.25 10ZM10.75 14L10.75 19C10.75 19.4142 10.4142 19.75 9.99997 19.75C9.58575 19.75 9.24997 19.4142 9.24997 19L9.24997 14.75H4.99997C4.58575 14.75 4.24997 14.4142 4.24997 14C4.24997 13.5858 4.58575 13.25 4.99997 13.25H9.99997C10.4142 13.25 10.75 13.5858 10.75 14Z" fill="#858585"/>
+</svg>
+          <span class="icon-card__name">scale</span>
+          <span class="icon-card__variant">close</span>
+          <span class="icon-card__toast">Copied!</span>
+        </div>
+
       </div>
     </section>
 

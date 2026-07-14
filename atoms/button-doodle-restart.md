@@ -4,7 +4,7 @@
 
 ## When to use / when not to use
 - ✅ Use when a control needs the playful hand-drawn look (flow replay, illustrative surfaces).
-- ✅ Use for the "Restart / Проиграть заново" action on flow spec pages.
+- ✅ Use for the "Restart / play again" action on flow spec pages.
 - ❌ Don't use in dense system UI — reach for the standard Button atom there.
 - ❌ Don't use for primary conversion actions (checkout, submit).
 

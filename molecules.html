@@ -9,12 +9,14 @@
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      font-family: "Archivo", sans-serif;
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -27,7 +29,8 @@
 
     .page-title {
       font-size: var(--text-headline-medium-font-size);
-      font-weight: var(--text-headline-medium-font-weight);
+      font-weight: 900;
+      letter-spacing: -0.02em;
       line-height: var(--text-headline-medium-line-height);
       margin-bottom: 8px;
     }
@@ -79,7 +82,7 @@
     }
 
     .state-label {
-      font-family: var(--text-body-small-font-family);
+      font-family: "Archivo", sans-serif;
       font-size: var(--text-body-small-font-size);
       font-weight: var(--text-body-small-font-weight);
       line-height: var(--text-body-small-line-height);
@@ -188,10 +191,36 @@
     .docs__toggle svg { width: 14px; height: 14px; flex-shrink: 0; transition: transform 0.2s ease; }
     .docs.is-expanded .docs__toggle svg { transform: rotate(180deg); }
 
+    /* ── Molecule: SegmentedControl (bordered box · yellow active pill) ── */
+    .seg-control {
+      display: flex; align-items: stretch;
+      width: 320px; padding: 3px;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      border-radius: 6px;
+    }
+    .seg-control__item {
+      all: unset; box-sizing: border-box; cursor: pointer;
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 6px 10px; border-radius: 4px;
+      border: 1.5px solid transparent;
+      font-family: var(--text-title-small-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-small-font-size);
+      font-weight: var(--text-title-small-font-weight);
+      line-height: var(--text-title-small-line-height);
+      letter-spacing: var(--text-title-small-letter-spacing);
+      color: var(--color-primary-transparent-60);
+    }
+    .seg-control__item:active { background: var(--color-primary-transparent-04); }
+    .seg-control__item.is-active {
+      background: var(--color-brand-yellow-primary);
+      border-color: var(--color-primary-transparent-87);
+      color: var(--color-primary-transparent-87);
+    }
+
     /* ── Code panel ── */
     .code-toggle-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      font-family: "Roboto", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: "Archivo", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60);
       background: var(--color-primary-transparent-04);
       border: 1px solid var(--color-primary-transparent-16);
@@ -217,7 +246,7 @@
 
     .copy-code-btn {
       position: absolute; top: 14px; right: 16px;
-      font-family: "Roboto", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: "Archivo", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
       border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
     }
@@ -1044,7 +1073,7 @@
       box-sizing: border-box;
     }
 
-    /* row 2 и 3 — высота поля увеличивается, кнопка и поле прижаты к низу */
+    /* rows 2 and 3 — the field grows taller; button and field stick to the bottom */
     .text-field--row-2,
     .text-field--row-3 { align-items: flex-end; }
 
@@ -1685,7 +1714,7 @@
     .avatar--sm .avatar__initials { font-size: 16px; letter-spacing: 0.15px; }
     .avatar__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-    /* Folder shape (copy from index.html — must follow base .avatar to win) */
+    /* Folder shape (copy from atoms.html — must follow base .avatar to win) */
     .avatar--folder {
       background: transparent;
       border-radius: 0;
@@ -2058,7 +2087,7 @@
     }
 
 
-    /* ── Atoms reused by BubbleBottom 2.0 (copies from index.html) ── */
+    /* ── Atoms reused by BubbleBottom 2.0 (copies from atoms.html) ── */
 
     .send-time { display: inline-flex; align-items: flex-end; gap: 2px; padding: 1px 4px; }
     .send-time__label, .send-time__time {
@@ -2171,7 +2200,7 @@
       justify-content: flex-end;
     }
 
-    /* ── Atoms reused by Message (copies from index.html) ── */
+    /* ── Atoms reused by Message (copies from atoms.html) ── */
 
     /* Bubble2.0 — shape (single dynamic SVG path); positions/left are JS-driven. */
     .bubble2 {
@@ -2428,13 +2457,48 @@
 </head>
 <body>
 
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- ── Sidebar ── -->
   <nav class="sidebar"></nav>
 
   <!-- ── Main ── -->
   <main class="main">
     <h1 class="page-title">Molecules</h1>
-    <p class="page-subtitle">Комбинации атомов. Токены only — без новых цветов и шрифтов.</p>
 
     <div class="section-divider"></div>
 
@@ -3894,7 +3958,7 @@
           <div class="docs__section-title">Composition</div>
           <div class="docs__row"><span class="docs__row-label">CellBase</span><span class="docs__row-value">xlarge (72px) · medium (56px)</span></div>
           <div class="docs__row"><span class="docs__row-label">cell-links__preview</span><span class="docs__row-value">40×40px · r 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">favicon</span><span class="docs__row-value">bg transparent-16 + буква</span></div>
+          <div class="docs__row"><span class="docs__row-label">favicon</span><span class="docs__row-value">bg transparent-16 + letter</span></div>
           <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">img object-fit: cover</span></div>
           <div class="docs__row"><span class="docs__row-label">cell-links__link</span><span class="docs__row-value">link-medium · underline</span></div>
         </div>
@@ -4133,16 +4197,16 @@
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">States</div>
           <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">Placeholder primary-60</span></div>
-          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">Курсор + приглушённый placeholder</span></div>
-          <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">Текст primary-87 + курсор</span></div>
-          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">Текст primary-87, без курсора</span></div>
+          <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">Caret + dimmed placeholder</span></div>
+          <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">Text primary-87 + caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">Text primary-87, no caret</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">row 1</span><span class="docs__row-value">Однострочный ввод</span></div>
-          <div class="docs__row"><span class="docs__row-label">row 2</span><span class="docs__row-value">min-height 56px, текст переносится</span></div>
-          <div class="docs__row"><span class="docs__row-label">row 3</span><span class="docs__row-value">min-height 76px, текст переносится</span></div>
+          <div class="docs__row"><span class="docs__row-label">row 1</span><span class="docs__row-value">Single-line input</span></div>
+          <div class="docs__row"><span class="docs__row-label">row 2</span><span class="docs__row-value">min-height 56px, text wraps</span></div>
+          <div class="docs__row"><span class="docs__row-label">row 3</span><span class="docs__row-value">min-height 76px, text wraps</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -4357,9 +4421,9 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">318px · pill · border · white bg</span></div>
-          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · search или loader</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24 × 24px · search or loader</span></div>
           <div class="docs__row"><span class="docs__row-label">value</span><span class="docs__row-value">Body/Large · flex 1</span></div>
-          <div class="docs__row"><span class="docs__row-label">cancel</span><span class="docs__row-value">24×24px · только typed/progressing (+ M focused)</span></div>
+          <div class="docs__row"><span class="docs__row-label">cancel</span><span class="docs__row-value">24 × 24px · typed/progressing only (+ M focused)</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -4936,7 +5000,7 @@
               <div class="tab-bar__indicator-pill"></div>
             </div>
           </div>
-          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Начни вводить текст — появится кнопка Send</p>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Start typing — the Send button appears</p>
         </div>
 
         <div class="if-playground__title">States</div>
@@ -5323,9 +5387,9 @@
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">189 × 189px · r 8px · bg primary-16</span></div>
           <div class="docs__row"><span class="docs__row-label">Overlay</span><span class="docs__row-value">rgba(0,0,0,0.4) · blur 2px · download/loading/more</span></div>
-          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center или bottom-right 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32×32px · центр · image download/loading</span></div>
-          <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · белый · центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center or bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32 × 32px · centered · image download/loading</span></div>
+          <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · white · centered</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -5336,14 +5400,14 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">video/download</span><span class="docs__row-value">Overlay + chip not-loaded, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">video/loading</span><span class="docs__row-value">Overlay + chip loading, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">video/regular</span><span class="docs__row-value">Chip regular, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/download</span><span class="docs__row-value">Overlay + not-loaded chip, centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/loading</span><span class="docs__row-value">Overlay + loading chip, centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">video/regular</span><span class="docs__row-value">Regular chip, centered</span></div>
           <div class="docs__row"><span class="docs__row-label">video/playing</span><span class="docs__row-value">Chip playing, bottom-right 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/download</span><span class="docs__row-value">Overlay + иконка download, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/loading</span><span class="docs__row-value">Overlay + спиннер, центр</span></div>
-          <div class="docs__row"><span class="docs__row-label">image/regular</span><span class="docs__row-value">Чистая карточка</span></div>
-          <div class="docs__row"><span class="docs__row-label">more/regular</span><span class="docs__row-value">Overlay + "+N" текст, центр</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/download</span><span class="docs__row-value">Overlay + download icon, centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/loading</span><span class="docs__row-value">Overlay + spinner, centered</span></div>
+          <div class="docs__row"><span class="docs__row-label">image/regular</span><span class="docs__row-value">Plain card</span></div>
+          <div class="docs__row"><span class="docs__row-label">more/regular</span><span class="docs__row-value">Overlay + "+N" label, centered</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -5480,15 +5544,15 @@
           <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">Title/Large · primary-87</span></div>
           <div class="docs__row"><span class="docs__row-label">subtitle</span><span class="docs__row-value">Body/Medium · primary-60</span></div>
           <div class="docs__row"><span class="docs__row-label">private</span><span class="docs__row-value">ic16_lock + «Private» · gap 2px</span></div>
-          <div class="docs__row"><span class="docs__row-label">bio</span><span class="docs__row-value">Body/Large · primary-87 · опционально</span></div>
+          <div class="docs__row"><span class="docs__row-label">bio</span><span class="docs__row-value">Body/Large · primary-87 · optional</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Замок + биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Только замок</span></div>
-          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Только биография</span></div>
-          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Только title + subtitle</span></div>
+          <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Lock + bio</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Lock only</span></div>
+          <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Bio only</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Title + subtitle only</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -5564,7 +5628,7 @@
               <div class="tab-bar__indicator-pill"></div>
             </div>
           </div>
-          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Нажми на иконку — она станет активной</p>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Tap an icon to make it active</p>
         </div>
 
         <div class="if-playground__title">States</div>
@@ -5667,6 +5731,92 @@
       </div>
     </div>
     <!-- /Tabs -->
+
+    <div class="section-divider"></div>
+
+    <div id="segmented-control" class="component-block">
+
+      <!-- Preview -->
+      <div class="component-block__preview">
+        <div class="component-block__preview-header">
+          <div class="component-block__preview-title">SegmentedControl</div>
+          <button class="code-toggle-btn" onclick="toggleCode('segmented-control')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
+        </div>
+
+        <div class="component-block__states" style="flex-direction:column; align-items:flex-start; gap:24px;">
+          <div class="state-wrapper">
+            <div class="seg-control" role="tablist">
+              <button class="seg-control__item is-active" role="tab" aria-selected="true">Text</button>
+              <button class="seg-control__item" role="tab" aria-selected="false">Text</button>
+            </div>
+            <span class="state-label">2 tabs · left</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="seg-control" role="tablist">
+              <button class="seg-control__item" role="tab" aria-selected="false">Text</button>
+              <button class="seg-control__item is-active" role="tab" aria-selected="true">Text</button>
+            </div>
+            <span class="state-label">2 tabs · right</span>
+          </div>
+          <div class="state-wrapper">
+            <div class="seg-control" role="tablist">
+              <button class="seg-control__item" role="tab" aria-selected="false">Text</button>
+              <button class="seg-control__item is-active" role="tab" aria-selected="true">Text</button>
+              <button class="seg-control__item" role="tab" aria-selected="false">Text</button>
+            </div>
+            <span class="state-label">3 tabs · medium</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <aside class="docs">
+        <div class="docs__name">SegmentedControl</div>
+        <span class="docs__type">Molecule</span>
+
+        <div class="docs__section">
+          <div class="docs__section-title">Anatomy</div>
+          <div class="docs__row"><span class="docs__row-label">box</span><span class="docs__row-value">border 1.5px · radius 6 · pad 3px</span></div>
+          <div class="docs__row"><span class="docs__row-label">switch</span><span class="docs__row-value">flex 1 · pad 6×10 · radius 4</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">title-small</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Variants</div>
+          <div class="docs__row"><span class="docs__row-label">tabs</span><span class="docs__row-value">2 or 3 equal switches</span></div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">left / medium / right (single selection)</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">States</div>
+          <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">bg brand-yellow-primary · border 1.5px · text primary-87</span></div>
+          <div class="docs__row"><span class="docs__row-label">inactive</span><span class="docs__row-value">transparent · text primary-60</span></div>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Tokens</div>
+          <span class="docs__token">--color-brand-yellow-primary</span>
+          <span class="docs__token">--color-primary-transparent-87</span>
+          <span class="docs__token">--color-primary-transparent-60</span>
+          <span class="docs__token">--text-title-small-*</span>
+        </div>
+
+        <div class="docs__section docs__section--collapsible">
+          <div class="docs__section-title">Status</div>
+          <span class="docs__status docs__status--draft">draft</span>
+        </div>
+      </aside>
+
+      <div class="code-panel" id="code-segmented-control">
+        <button class="copy-code-btn" onclick="copyCode('segmented-control')">Copy</button>
+        <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"seg-control"</span> <span class="tok-attr">role</span>=<span class="tok-str">"tablist"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"seg-control__item is-active"</span> <span class="tok-attr">aria-selected</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>Text<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"seg-control__item"</span> <span class="tok-attr">aria-selected</span>=<span class="tok-str">"false"</span><span class="tok-tag">&gt;</span>Text<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+    </div>
+    <!-- /SegmentedControl -->
 
     <div class="section-divider"></div>
 
@@ -5880,12 +6030,12 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Types</div>
-          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">стандартный экран</span></div>
-          <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">центрированный заголовок</span></div>
-          <div class="docs__row"><span class="docs__row-label">onlyArrow</span><span class="docs__row-value">только кнопка назад</span></div>
-          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">личный чат с аватаром</span></div>
-          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">канал с аватаром и chevron</span></div>
-          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">строка поиска вместо заголовка</span></div>
+          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">standard screen</span></div>
+          <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">centered title</span></div>
+          <div class="docs__row"><span class="docs__row-label">onlyArrow</span><span class="docs__row-value">back button only</span></div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">direct chat with avatar</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">channel with avatar and chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">search field instead of the title</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -7469,7 +7619,7 @@
   <!-- Message: data-driven 36-variant builder + Bubble2.0 shape drawing -->
   <script>
   (function () {
-    // ---- Bubble2.0 shape (ported from index.html) ----
+    // ---- Bubble2.0 shape (ported from atoms.html) ----
     var R = 16, R4 = 4;
     var TAIL = "c0 0.162 -0.003 0.323 -0.008 0.483c-0.073 3.301 -0.678 10.185 4.683 14.938c0.127 0.112 0.069 0.325 -0.098 0.352c-6.699 1.085 -9.605 -2.288 -10.916 -3.018c-0.008 0.006 -0.017 0.011 -0.025 0.018c-0.143 0.108 -0.288 0.212 -0.434 0.315c-0.04 0.028 -0.08 0.056 -0.12 0.084c-0.306 0.211 -0.619 0.412 -0.94 0.603c-0.036 0.021 -0.072 0.043 -0.108 0.064c-0.164 0.095 -0.329 0.188 -0.497 0.277c-0.008 0.005 -0.016 0.01 -0.024 0.014c-0.164 0.087 -0.329 0.171 -0.496 0.253c-0.027 0.013 -0.053 0.026 -0.079 0.039c-0.163 0.078 -0.327 0.154 -0.493 0.226c-0.042 0.019 -0.085 0.038 -0.128 0.056c-0.168 0.072 -0.337 0.143 -0.507 0.209c-0.025 0.01 -0.05 0.018 -0.075 0.027c-0.15 0.058 -0.302 0.114 -0.455 0.167c-0.045 0.016 -0.09 0.033 -0.135 0.048c-0.162 0.055 -0.325 0.106 -0.489 0.156c-0.057 0.017 -0.114 0.034 -0.171 0.05c-0.175 0.051 -0.351 0.101 -0.529 0.146c-0.016 0.004 -0.031 0.008 -0.047 0.012c-0.18 0.045 -0.361 0.087 -0.543 0.126c-0.028 0.006 -0.056 0.012 -0.085 0.018c-0.186 0.039 -0.373 0.073 -0.561 0.106c-0.043 0.007 -0.085 0.014 -0.128 0.021c-0.186 0.03 -0.373 0.058 -0.562 0.082c-0.03 0.004 -0.061 0.007 -0.092 0.011c-0.163 0.02 -0.328 0.037 -0.493 0.052c-0.051 0.004 -0.103 0.009 -0.155 0.013c-0.187 0.015 -0.374 0.027 -0.562 0.035c-0.041 0.002 -0.081 0.004 -0.122 0.005c-0.201 0.008 -0.403 0.013 -0.606 0.013";
 
@@ -7775,7 +7925,10 @@
 
     document.querySelectorAll('.avatar:not(.avatar--folder)').forEach(el => {
       const name = el.getAttribute('aria-label') || el.querySelector('.avatar__initials')?.textContent?.trim() || '';
-      el.style.background = `var(${AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length]})`;
+      const key = AVATAR_COLORS[hashName(name) % AVATAR_COLORS.length];
+      el.style.background = `var(${key})`;
+      const ini = el.querySelector('.avatar__initials');
+      if (ini) ini.style.color = `var(${key}-text)`;   // paired text token of the same hue
     });
   })();
   </script>

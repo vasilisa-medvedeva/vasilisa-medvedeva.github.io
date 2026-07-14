@@ -18,29 +18,31 @@
       ['icons.html#loader', 'Loader'],
     ]},
     { id: 'nav-atoms', label: 'Atoms', items: [
-      ['index.html#chips', 'VideoChip'],
-      ['index.html#preview', 'Preview'],
-      ['index.html#preview-doc-chat', 'PreviewDocChat'],
-      ['index.html#button', 'Button'],
-      ['index.html#toggle', 'Toggle'],
-      ['index.html#tab-profile', 'TabProfile'],
-      ['index.html#tab-item', 'TabItem'],
-      ['index.html#avatar', 'Avatar'],
-      ['index.html#channel-avatar', 'ChannelAvatar'],
-      ['index.html#statusbar', 'Statusbar'],
-      ['index.html#notification-counter', 'NotificationCounter'],
-      ['index.html#separator-message', 'SeparatorMessage'],
-      ['index.html#info-title', 'InfoTitle'],
-      ['index.html#bubble-2', 'Bubble2.0'],
-      ['index.html#send-time', 'SendTime'],
-      ['index.html#reaction', 'Reaction'],
-      ['index.html#reaction-arrow', 'ReactionArrow'],
-      ['index.html#bubble-comments', 'BubbleComments'],
-      ['index.html#cell-menu', 'CellMenu'],
-      ['index.html#emoji-badge', 'EmojiBadge'],
-      ['index.html#tag-chip', 'Chip'],
-      ['index.html#allocation', 'Allocation'],
-      ['index.html#menu-compact-item', 'MenuCompactItem'],
+      ['atoms.html#chips', 'VideoChip'],
+      ['atoms.html#preview', 'Preview'],
+      ['atoms.html#preview-doc-chat', 'PreviewDocChat'],
+      ['atoms.html#button', 'Button'],
+      ['atoms.html#button-icon', 'ButtonIcon'],
+      ['atoms.html#toggle', 'Toggle'],
+      ['atoms.html#tab-profile', 'TabProfile'],
+      ['atoms.html#tab-item', 'TabItem'],
+      ['atoms.html#avatar', 'Avatar'],
+      ['atoms.html#channel-avatar', 'ChannelAvatar'],
+      ['atoms.html#statusbar', 'Statusbar'],
+      ['atoms.html#notification-counter', 'NotificationCounter'],
+      ['atoms.html#separator-message', 'SeparatorMessage'],
+      ['atoms.html#info-title', 'InfoTitle'],
+      ['atoms.html#bubble-2', 'Bubble2.0'],
+      ['atoms.html#send-time', 'SendTime'],
+      ['atoms.html#reaction', 'Reaction'],
+      ['atoms.html#reaction-arrow', 'ReactionArrow'],
+      ['atoms.html#bubble-comments', 'BubbleComments'],
+      ['atoms.html#cell-menu', 'CellMenu'],
+      ['atoms.html#emoji-badge', 'EmojiBadge'],
+      ['atoms.html#tag-chip', 'Chip'],
+      ['atoms.html#chip-live', 'ChipLive'],
+      ['atoms.html#allocation', 'Allocation'],
+      ['atoms.html#menu-compact-item', 'MenuCompactItem'],
     ]},
     { id: 'nav-molecules', label: 'Molecules', items: [
       { id: 'sub-cell', label: 'Cell', items: [
@@ -65,6 +67,7 @@
       ['molecules.html#gallery', 'Gallery'],
       ['molecules.html#card-profile-text', 'CardProfileText'],
       ['molecules.html#tabs', 'Tabs'],
+      ['molecules.html#segmented-control', 'SegmentedControl'],
       ['molecules.html#top-bar', 'TopBar'],
       ['molecules.html#swipe-tab-item', 'SwipeTabItem'],
       ['molecules.html#top-search-bar', 'TopSearchBar'],
@@ -78,6 +81,7 @@
     { id: 'nav-components', label: 'Organisms', items: [
       ['organisms.html#card-profile', 'CardProfile'],
       ['organisms.html#confirm-dialog', 'ConfirmDialog'],
+      ['organisms.html#meet-bar', 'MeetBar'],
       ['organisms.html#dropdown-row', 'DropdownRow'],
     ]},
   ];
@@ -99,8 +103,7 @@
     }).join('');
   }
   function buildSidebar() {
-    var html = '<a class="sidebar__logo" href="home.html"><img src="assets/pyroblast-logo.svg" alt="Pyroblast" /></a>';
-    html += NAV.map(function (g) {
+    var html = NAV.map(function (g) {
       return '<div class="nav-group" id="' + g.id + '">' +
         '<button class="nav-group__header" onclick="toggleGroup(\'' + g.id + '\')">' + g.label +
         chevron('nav-group__chevron') + '</button>' +
@@ -128,6 +131,7 @@
     if (location.search.indexOf('embed') !== -1) {
       document.body.classList.add('lib-embed');
       if (sidebar) sidebar.remove();
+      var header = document.querySelector('.site-header'); if (header) header.remove();
       var main = document.querySelector('.main');
       if (main) { main.style.marginLeft = '0'; main.style.padding = '24px'; }
       var pt = document.querySelector('.page-title'); if (pt) pt.style.display = 'none';
@@ -137,12 +141,12 @@
 
     if (sidebar) sidebar.innerHTML = buildSidebar();
 
-    var page = location.pathname.split('/').pop() || 'index.html';
+    var page = location.pathname.split('/').pop() || 'atoms.html';
     var hash = location.hash; // e.g. "#tab-bar-item" or ""
 
     // Auto-open the group that owns the current page
     var groupId = page === 'icons.html'      ? 'nav-icons'
-                : page === 'index.html'       ? 'nav-atoms'
+                : page === 'atoms.html'       ? 'nav-atoms'
                 : page === 'molecules.html'   ? 'nav-molecules'
                 : page === 'organisms.html'   ? 'nav-components'
                 : null;

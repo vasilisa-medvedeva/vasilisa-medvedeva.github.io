@@ -1,6 +1,6 @@
 # ConfirmDialog
 
-> Модальный диалог подтверждения действия: заголовок + опции выбора (radio) + деструктивная пара кнопок.
+> A modal confirmation dialog: title + selection options (radio) + a destructive button pair.
 
 ## When to use / when not to use
 - ✅ Use when a destructive action (delete, block, report) requires the user to confirm intent

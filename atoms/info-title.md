@@ -1,6 +1,6 @@
 # InfoTitle
 
-> Строка контекста над телом сообщения — показывает тип источника (пересылка, закреп, редактирование, ответ) с иконкой и подписью.
+> A context line above the message body — shows the source type (forward, pin, edit, reply) with an icon and a label.
 
 ## When to use / when not to use
 - ✅ Use inside a chat message bubble to show forward/reply/pin/edit context

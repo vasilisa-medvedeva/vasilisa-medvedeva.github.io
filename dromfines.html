@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drom Fines — Vasilisa Medvedeva</title>
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+      background: var(--color-constant-primary);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      padding: 10px;
+      min-height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ── Hero — same oversized statement as the other pages ── */
+    .hero {
+      padding: 88px 0 0;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero__eyebrow {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+    }
+    .hero__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 6.9vw, 94px);
+      line-height: 0.96; letter-spacing: -0.025em;
+      color: var(--color-primary-transparent-87);
+      max-width: 1360px;
+    }
+    .hero__aside {
+      align-self: flex-end;
+      margin-top: 20px;
+      width: calc((100% - 10px) / 2.4);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .hero__aside p {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
+    }
+    .hero__stores { display: flex; gap: 8px; flex-wrap: wrap; }
+    .store-link {
+      display: inline-flex; align-items: center;
+      border: 1.5px solid var(--color-primary-transparent-87);
+      border-radius: 30px;
+      padding: 10px 16px;
+      font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: var(--text-title-medium-font-weight);
+      line-height: var(--text-title-medium-line-height);
+      letter-spacing: var(--text-title-medium-letter-spacing);
+      color: var(--color-primary-transparent-87);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .store-link:hover { background: var(--color-primary-transparent-04); }
+
+    /* ── Role section ── */
+    .role {
+      margin-top: 96px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 10px;
+    }
+    .section-title {
+      font-family: "Archivo", sans-serif;
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: 900;
+      line-height: var(--text-headline-medium-line-height);
+      letter-spacing: -0.02em;
+      color: var(--color-primary-transparent-87);
+      text-transform: uppercase;
+      max-width: 480px;
+    }
+    .role__team {
+      margin-top: 16px;
+      max-width: 420px;
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-60);
+    }
+    .role__list {
+      list-style: none;
+      display: flex; flex-direction: column;
+    }
+    .role__list li {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
+      padding: 14px 0;
+      border-top: 1px solid var(--color-primary-transparent-16);
+    }
+    .role__list li:first-child { border-top: none; padding-top: 0; }
+
+    /* ── Case studies ── */
+    .case {
+      margin-top: 120px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .case__index {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    .case__title {
+      font-family: "Archivo", sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 3.4vw, 52px);
+      line-height: 1.02; letter-spacing: -0.02em;
+      color: var(--color-primary-transparent-87);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .case__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .case__label {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-medium-font-size);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 12px;
+    }
+    .case__col p,
+    .case__col li {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .case__col p + p { margin-top: 10px; }
+    .case__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .case__col ul li { padding-left: 20px; position: relative; }
+    .case__col ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 6px;
+      width: 11px; height: 11px;
+      background: url("assets/point-doodle.svg") no-repeat center / contain;
+    }
+    .case__figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--color-primary-transparent-04);
+    }
+    .case__figure img { display: block; width: 100%; height: auto; }
+    .case__figure + .case__figure { margin-top: 10px; }
+
+    .page-end { height: 120px; }
+
+    @media (max-width: 900px) {
+      .hero__aside { width: 100%; }
+      .role, .case__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html">Main page</a>
+            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <span class="hero__eyebrow">Drom Fines · iOS / Android</span>
+      <h1 class="hero__title">Drom Fines lets drivers check and pay traffic fines&nbsp;online.</h1>
+      <div class="hero__aside">
+        <p>Fine data comes straight from the official government database (GIS&nbsp;GMP). Paying in the app gives drivers legally valid confirmation and helps them avoid late fees.</p>
+        <span class="hero__stores">
+          <a class="store-link" href="https://apps.apple.com/ru/app/%D1%88%D1%82%D1%80%D0%B0%D1%84%D1%8B-%D0%B3%D0%B8%D0%B1%D0%B4%D0%B4-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D1%81-%D1%84%D0%BE%D1%82%D0%BE-%D0%BF%D0%B4%D0%B4/id1467318250" target="_blank" rel="noopener">App Store</a>
+          <a class="store-link" href="https://play.google.com/store/apps/details?id=ru.drom.fines&hl=ru&gl=US" target="_blank" rel="noopener">Google Play</a>
+        </span>
+      </div>
+    </section>
+
+    <section class="role">
+      <div>
+        <h2 class="section-title">My Role and Responsibilities</h2>
+        <p class="role__team">The team: a product manager, an analyst, two iOS and two Android engineers, and a QA engineer, with backend owned by a separate team.</p>
+      </div>
+      <ul class="role__list">
+        <li>Owned UX for the fines app on iOS and Android: registration, fine search, payment, and onboarding.</li>
+        <li>Redesigned the payment screen around saved cards, cutting manual input for repeat payers.</li>
+        <li>Designed and A/B-tested the Lottie onboarding that brought 16% more registrations.</li>
+        <li>Moved the fines feature into the main Drom app, restyling it on Drom&#8217;s design system and dark theme.</li>
+        <li>Mapped the flow for fines tied to a driver&#8217;s license rather than a vehicle.</li>
+        <li>Prepared the onboarding animations as Lottie files for development.</li>
+      </ul>
+    </section>
+
+    <!-- ── Case 01 — Onboarding ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 01</span>
+        <h2 class="case__title">Onboarding</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>A significant share of new users never finished registration: they opened the app once and never came back. The first thing the app asked for was documents, before it had shown any reason to trust it with them.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>My hypothesis: people dropped off because nothing explained why the app was worth their documents. I designed a short onboarding on animated Lottie screens with two messages: the data is official, straight from GIBDD, the Federal Treasury, MADI, AMPP, and FSSP, and checking takes one scan of the registration certificate.</p>
+          <p>We ran it as a month-long A/B test: the new onboarding against the flow without one.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>The onboarding variant brought 16% more registrations</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/dromfines/onboarding.png" alt="Drom Fines animated onboarding screens" loading="lazy" />
+      </figure>
+    </section>
+
+    <!-- ── Case 02 — Registration Screen Redesign ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 02</span>
+        <h2 class="case__title">Registration Screen Redesign</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>The app could scan documents instead of asking users to type the plate and registration certificate numbers, but almost nobody found it: scanning hid behind a small camera icon inside an input field. Most users took the slowest path through the very first screen of the product.</p>
+          <p>The input fields themselves looked dated and gave little feedback while typing.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I rebuilt the hierarchy: scanning became the primary button at the top of the screen, manual fields the fallback below it. The inputs got clear labels and visible states.</p>
+          <p>The layout also reserves room for registering by driver&#8217;s license, which later became its own case.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>After the redesign, registration drop-off fell by 20%</li>
+            <li>Scanning is now the first thing a new user sees; manual entry became the fallback</li>
+            <li>The same layout later absorbed the driver&#8217;s license scenario without a rework</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/dromfines/registration.png" alt="Drom Fines registration screen redesign" loading="lazy" />
+      </figure>
+    </section>
+
+    <!-- ── Case 03 — Payment Screen Redesign ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 03</span>
+        <h2 class="case__title">Payment Screen Redesign</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Every payment started from scratch: the app had no saved cards and no Apple&nbsp;Pay or Google&nbsp;Pay, so users retyped card details for every fine. Repeat payers, the core of a revenue-critical flow, felt it most.</p>
+          <p>The screen also looked different from the rest of the app, and it looked different at the worst possible moment: when users hand over money.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I redesigned the screen around saved cards: a returning user confirms the payment instead of retyping the card. Usability testing validated the new layout before release.</p>
+          <p>The visual style now matches the rest of the app, and the payment-method block has room for Apple&nbsp;Pay and Google&nbsp;Pay, so adding them won&#8217;t need a redesign.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>After the redesign, payment conversion doubled and fines revenue grew 5&times;</li>
+            <li>Repeat payments went from retyping a card to confirming a saved one</li>
+            <li>Apple&nbsp;Pay and Google&nbsp;Pay can be added without a redesign</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/dromfines/payment.png" alt="Drom Fines payment screen redesign" loading="lazy" />
+      </figure>
+    </section>
+
+    <!-- ── Case 04 — Integration into the Drom Ecosystem ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 04</span>
+        <h2 class="case__title">Integration into the Drom Ecosystem</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>The fines feature was moving into the main Drom app, where millions of users already knew Drom&#8217;s visual language, including its dark theme. Dropped in as-is, it would have read as a third-party embed inside a trusted product.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I restyled the feature on Drom&#8217;s design system: its dark palette, its components, its navigation patterns. Existing Drom components were reused wherever possible instead of building a parallel kit.</p>
+          <p>A custom onboarding animation in Drom&#8217;s style introduced fines to the existing audience.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>The fines feature reads as native Drom, down to the dark theme</li>
+            <li>Reusing Drom components meant no parallel UI kit to maintain</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/dromfines/ecosystem-1.png" alt="Drom Fines aligned with the Drom design system" loading="lazy" />
+      </figure>
+      <figure class="case__figure">
+        <img src="assets/dromfines/ecosystem-2.png" alt="Drom Fines ecosystem onboarding animation frames" loading="lazy" />
+      </figure>
+      <figure class="case__figure">
+        <img src="assets/dromfines/ecosystem-3.png" alt="Drom Fines ecosystem visual continuity screens" loading="lazy" />
+      </figure>
+    </section>
+
+    <!-- ── Case 05 — Driver’s License Fine Tracking ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 05</span>
+        <h2 class="case__title">Driver&#8217;s License Fine Tracking</h2>
+      </div>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Some fines are issued to a driver&#8217;s license rather than a vehicle, so the app, which tracked fines only by car, silently showed users an incomplete list. A &#8220;no fines&#8221; screen could be wrong.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I mapped the full flow for adding and tracking fines by license and designed the license card for the fines list. A banner in the list prompts drivers to add their license, so the feature surfaces exactly where the incomplete list lives.</p>
+        </div>
+      </div>
+      <figure class="case__figure">
+        <img src="assets/dromfines/license.png" alt="Drom Fines driver&#8217;s license tracking flow" loading="lazy" />
+      </figure>
+    </section>
+
+    <div class="page-end"></div>
+  </main>
+
+  <script src="scripts/page-transition.js?v=3"></script>
+</body>
+</html>
