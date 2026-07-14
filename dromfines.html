@@ -223,27 +223,29 @@
       border-radius: 36px; box-shadow: var(--elevation-4); flex-shrink: 0;
     }
     .pay-phone__screen {
-      position: relative; width: 320px; height: 568px;
-      background: #fff; border-radius: 14px; overflow: hidden;
+      /* 320-wide Figma grid on a taller canvas (same proportions as the case video);
+         corner radius is concentric with the bezel: 36 − 7 = 29 */
+      position: relative; width: 320px; height: 692px;
+      background: #fff; border-radius: 29px; overflow: hidden;
       font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
       color: #181818;
     }
 
     /* ── Shared chrome (current iOS status bar: time left, signal + Wi-Fi + battery right) ── */
     .ios { position: absolute; inset: 0; }
-    .ios__sb { position: absolute; top: 0; left: 0; right: 0; height: 20px; }
+    .ios__sb { position: absolute; top: 0; left: 0; right: 0; height: 34px; }
     .ios__sb-time {
-      position: absolute; left: 16px; top: 3px;
+      position: absolute; left: 16px; top: 11px;
       font-size: 12px; line-height: 14px; font-weight: 600; color: #030303;
     }
-    .ios__sb-right { position: absolute; right: 16px; top: 0; height: 20px; display: flex; align-items: center; gap: 4px; }
+    .ios__sb-right { position: absolute; right: 16px; top: 0; height: 34px; display: flex; align-items: center; gap: 4px; }
     .ios__sb-cell, .ios__sb-wifi { display: block; }
     .ios__sb-bat { position: relative; width: 22px; height: 11px; border: 1px solid rgba(3,3,3,0.4); border-radius: 3.5px; }
     .ios__sb-bat::before { content: ""; position: absolute; inset: 1.5px; background: #030303; border-radius: 1.8px; }
     .ios__sb-bat::after { content: ""; position: absolute; right: -3px; top: 2.9px; width: 1.4px; height: 3.6px; background: rgba(3,3,3,0.4); border-radius: 0 1px 1px 0; }
 
-    .ios__close { position: absolute; left: 16px; top: 31px; font-size: 17px; line-height: 22px; color: #1b75cc; }
-    .ios__title { position: absolute; left: 0; right: 0; top: 31px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
+    .ios__close { position: absolute; left: 16px; top: 39px; font-size: 17px; line-height: 22px; color: #1b75cc; }
+    .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
 
     /* ── Shared primitives, positioned per screen below ── */
     .ios__row {
@@ -266,14 +268,14 @@
 
     /* ── Old screen (node 2:151): grey 14px labels, payer on top, 48px button ── */
     .ios__label { position: absolute; left: 16px; font-size: 14px; line-height: 16px; color: #8b8b8b; }
-    .ios--old .ios__label--payer { top: 76px; }
-    .ios--old .ios__payer-value { position: absolute; left: 16px; top: 112px; font-size: 16px; line-height: 20px; color: #181818; }
-    .ios--old .ios__field-hr { top: 139px; height: 1px; }
-    .ios--old .ios__label--details { top: 192px; }
-    .ios--old .ios__row--1 { top: 230px; }
-    .ios--old .ios__row--2 { top: 270px; }
-    .ios--old .ios__total-hr { top: 316px; }
-    .ios--old .ios__row--total { top: 342px; }
+    .ios--old .ios__label--payer { top: 84px; }
+    .ios--old .ios__payer-value { position: absolute; left: 16px; top: 120px; font-size: 16px; line-height: 20px; color: #181818; }
+    .ios--old .ios__field-hr { top: 147px; height: 1px; }
+    .ios--old .ios__label--details { top: 200px; }
+    .ios--old .ios__row--1 { top: 238px; }
+    .ios--old .ios__row--2 { top: 278px; }
+    .ios--old .ios__total-hr { top: 324px; }
+    .ios--old .ios__row--total { top: 350px; }
     .ios--old .ios__paypanel { height: 72px; }   /* button 288×48, y504 */
 
     /* ── New screen (node 0:136): 24px Medium section headers, 56px button ── */
@@ -281,19 +283,19 @@
       position: absolute; left: 16px; right: 16px;
       font-size: 24px; line-height: 28px; font-weight: 500; color: #181818;
     }
-    .ios--new .ios__h--details { top: 88px; }
-    .ios--new .ios__row--1 { top: 134px; }
-    .ios--new .ios__row--2 { top: 174px; }
-    .ios--new .ios__total-hr { top: 212px; }
-    .ios--new .ios__row--total { top: 228px; }
-    .ios--new .ios__h--payer { top: 296px; }
-    .ios--new .ios__payer-value { position: absolute; left: 16px; top: 344px; font-size: 16px; line-height: 20px; color: #181818; }
-    .ios--new .ios__field-hr { top: 371px; height: 1px; }
-    .ios--new .ios__h--method { top: 412px; }
+    .ios--new .ios__h--details { top: 96px; }
+    .ios--new .ios__row--1 { top: 142px; }
+    .ios--new .ios__row--2 { top: 182px; }
+    .ios--new .ios__total-hr { top: 220px; }
+    .ios--new .ios__row--total { top: 236px; }
+    .ios--new .ios__h--payer { top: 304px; }
+    .ios--new .ios__payer-value { position: absolute; left: 16px; top: 352px; font-size: 16px; line-height: 20px; color: #181818; }
+    .ios--new .ios__field-hr { top: 379px; height: 1px; }
+    .ios--new .ios__h--method { top: 420px; }
     .ios--new .ios__paypanel { height: 80px; }   /* button 288×56, y496 */
 
     /* Payment-method row (y448, h44): VISA logo x16 · number x56 · chevron right */
-    .ios__method { position: absolute; left: 0; right: 0; top: 448px; height: 44px; animation: pay-method-hl 7s infinite; }
+    .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 7s infinite; }
     .ios__visa {
       position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
       font-style: italic; font-weight: 800; font-size: 14.5px; line-height: 16px;
@@ -334,19 +336,28 @@
       animation: pay-tap 7s infinite;
     }
 
-    @keyframes pay-scrim { 0%,20%{opacity:0} 27%,72%{opacity:1} 80%,100%{opacity:0} }
-    @keyframes pay-sheet { 0%,20%{transform:translateY(101%)} 28%,72%{transform:translateY(0)} 80%,100%{transform:translateY(101%)} }
+    /* Sheet transition per iOS HIG: ≈420ms ease-out (decelerate) in, ≈280ms ease-in out */
+    @keyframes pay-scrim {
+      0%,20%  { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      26%,74% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      78%,100%{ opacity:0; }
+    }
+    @keyframes pay-sheet {
+      0%,20%  { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      26%,74% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      78%,100%{ transform:translateY(101%); }
+    }
     @keyframes pay-method-hl { 0%,12%{background:transparent} 15%,19%{background:#ececec} 23%,100%{background:transparent} }
     @keyframes pay-card-hl { 0%,46%{background:transparent} 50%,55%{background:#ececec} 60%,100%{background:transparent} }
     @keyframes pay-tap {
-      0%,9%   { opacity:0; top:470px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      13%     { opacity:1; top:470px; left:272px; transform:translate(-50%,-50%) scale(1); }
-      17%     { opacity:0.9; top:470px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
-      21%,45% { opacity:0; top:470px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      47%     { opacity:0; top:462px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      51%     { opacity:1; top:462px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      55%     { opacity:0.9; top:462px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      59%,100%{ opacity:0; top:462px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      0%,9%   { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      13%     { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      17%     { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      21%,45% { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      47%     { opacity:0; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      51%     { opacity:1; top:586px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      55%     { opacity:0.9; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      59%,100%{ opacity:0; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
       .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__tap { animation: none; }
