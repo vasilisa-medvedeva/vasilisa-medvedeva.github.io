@@ -193,6 +193,32 @@
       box-shadow: var(--elevation-4);
     }
 
+    /* "Before" accent — the old payment screen shown phone-sized beside a short note */
+    .case__before {
+      margin-top: 28px;
+      display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+    }
+    .case__before-shot {
+      width: 248px; flex-shrink: 0;
+      border-radius: 32px; overflow: hidden;
+      box-shadow: var(--elevation-4);
+    }
+    .case__before-shot img { display: block; width: 100%; height: auto; }
+    .case__before figcaption {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 20px; line-height: 30px;
+      color: var(--color-primary-transparent-87);
+      max-width: 440px;
+    }
+    .case__before-tag {
+      display: block;
+      font-family: "Archivo", sans-serif;
+      font-weight: 500; font-size: 12px; line-height: 16px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+      margin-bottom: 10px;
+    }
+
     .page-end { height: 120px; }
 
     @media (max-width: 900px) {
@@ -212,6 +238,9 @@
       .case__grid { gap: 20px; }
       .case__figure--video { padding: 24px 12px; }
       .case__figure--video video { max-width: 260px; max-height: 560px; }
+      .case__before { flex-direction: column; gap: 20px; }
+      .case__before-shot { width: 232px; align-self: center; }
+      .case__before figcaption { font-size: 18px; line-height: 27px; }
       .page-end { height: 56px; }
     }
   </style>
@@ -349,6 +378,15 @@
         <span class="case__index">Case 03</span>
         <h2 class="case__title">Payment Screen Redesign</h2>
       </div>
+      <figure class="case__before">
+        <div class="case__before-shot">
+          <img src="assets/dromfines/payment-before.jpg" alt="The old Drom Fines payment screen: a payer name field and the amount due, with no saved card and no Apple Pay or Google Pay" loading="lazy" />
+        </div>
+        <figcaption>
+          <span class="case__before-tag">Before</span>
+          Every fine opened on a blank form. With no saved cards and no Apple&nbsp;Pay or Google&nbsp;Pay, a returning payer keyed in the full card number, expiry and CVC — every single time.
+        </figcaption>
+      </figure>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
