@@ -193,30 +193,123 @@
       box-shadow: var(--elevation-4);
     }
 
-    /* "Before" accent — the old payment screen shown phone-sized beside a short note */
-    .case__before {
-      margin-top: 28px;
-      display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+    /* ── Payment demo: old screen (static) vs new screen with an animated card pick ── */
+    .pay-demo {
+      margin-top: 32px;
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: 56px; flex-wrap: wrap;
     }
-    .case__before-shot {
-      width: 248px; flex-shrink: 0;
-      border-radius: 32px; overflow: hidden;
-      box-shadow: var(--elevation-4);
+    .pay-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .pay-demo__cap {
+      font-family: "Archivo", sans-serif; font-weight: 300;
+      font-size: 15px; line-height: 22px; text-align: center;
+      color: var(--color-primary-transparent-60); max-width: 240px;
     }
-    .case__before-shot img { display: block; width: 100%; height: auto; }
-    .case__before figcaption {
-      font-family: "Archivo", sans-serif;
-      font-weight: 300; font-size: 20px; line-height: 30px;
-      color: var(--color-primary-transparent-87);
-      max-width: 440px;
+    .pay-demo__tag {
+      display: inline-block; font-family: "Archivo", sans-serif;
+      font-weight: 500; font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-primary-transparent-48);
+      margin-right: 6px;
     }
-    .case__before-tag {
-      display: block;
-      font-family: "Archivo", sans-serif;
-      font-weight: 500; font-size: 12px; line-height: 16px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
-      margin-bottom: 10px;
+    .pay-demo__tag--after { color: #0a7aff; }
+
+    /* Phone frame (shared by the static shot and the assembled screen) */
+    .pay-phone {
+      width: 258px; padding: 7px; background: #0b0b0d;
+      border-radius: 40px; box-shadow: var(--elevation-4); flex-shrink: 0;
+    }
+    .pay-phone__screen {
+      position: relative; width: 100%; aspect-ratio: 375 / 812;
+      background: #fff; border-radius: 33px; overflow: hidden;
+      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+      color: #1c1c1e;
+    }
+    .pay-phone__shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* Assembled iOS payment screen */
+    .ios { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .ios__sb { position: relative; height: 30px; flex-shrink: 0; }
+    .ios__sb-t { position: absolute; left: 50%; top: 9px; transform: translateX(-50%); font-size: 12px; font-weight: 700; letter-spacing: 0.2px; }
+    .ios__sb-bat { position: absolute; right: 16px; top: 11px; width: 20px; height: 10px; border: 1px solid #1c1c1e; border-radius: 3px; }
+    .ios__sb-bat::before { content: ""; position: absolute; inset: 1.5px; width: 80%; background: #1c1c1e; border-radius: 1px; }
+    .ios__sb-bat::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 4px; background: #1c1c1e; border-radius: 0 1px 1px 0; }
+    .ios__sb-sig { position: absolute; left: 16px; top: 10px; display: flex; align-items: flex-end; gap: 2px; height: 11px; }
+    .ios__sb-sig i { width: 3px; background: #1c1c1e; border-radius: 1px; }
+    .ios__sb-sig i:nth-child(1){height:4px} .ios__sb-sig i:nth-child(2){height:6px} .ios__sb-sig i:nth-child(3){height:8px} .ios__sb-sig i:nth-child(4){height:11px}
+
+    .ios__nav { position: relative; height: 34px; flex-shrink: 0; display: flex; align-items: center; }
+    .ios__close { position: absolute; left: 16px; color: #0a7aff; font-size: 14px; }
+    .ios__title { position: absolute; left: 50%; transform: translateX(-50%); font-weight: 700; font-size: 15px; }
+
+    .ios__body { flex: 1; padding: 4px 16px 0; display: flex; flex-direction: column; }
+    .ios__h { font-size: 17px; font-weight: 700; margin: 12px 0 8px; }
+    .ios__h:first-child { margin-top: 4px; }
+    .ios__row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+    .ios__row--total { font-weight: 700; }
+    .ios__hr { height: 1px; background: #e5e5ea; margin: 7px 0; }
+    .ios__payer { font-size: 13px; padding: 3px 0; }
+    .ios__method {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 8px 6px; margin: 0 -6px; border: 0; background: none;
+      font-size: 13px; color: inherit; border-radius: 8px;
+      animation: pay-method-hl 7s infinite;
+    }
+    .ios__visa { font-style: italic; font-weight: 800; color: #1a1f71; font-size: 13px; letter-spacing: -0.4px; }
+    .ios__num { flex: 1; text-align: left; }
+    .ios__chev { color: #c7c7cc; font-size: 13px; }
+    .ios__pay {
+      margin: auto 12px 14px; padding: 13px; border: 0; border-radius: 12px;
+      background: #0a7aff; color: #fff; font-size: 15px; font-weight: 600; text-align: center;
+    }
+
+    /* Old screen — flat labels, payer on top, no payment-method block */
+    .ios-old__label { color: #8e8e93; font-size: 12px; margin: 6px 0 8px; }
+    .ios-old__label--sp { margin-top: 22px; }
+    .ios-old__field { font-size: 14px; padding-bottom: 6px; }
+
+    /* Scrim + card sheet */
+    .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.35); opacity: 0; animation: pay-scrim 7s infinite; }
+    .ios__sheet {
+      position: absolute; left: 0; right: 0; bottom: 0; background: #fff;
+      border-radius: 18px 18px 0 0; padding: 16px 16px 20px;
+      transform: translateY(101%); animation: pay-sheet 7s infinite;
+    }
+    .ios__sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .ios__sheet-title { font-weight: 700; font-size: 15px; }
+    .ios__x { width: 22px; height: 22px; border-radius: 50%; background: #e5e5ea; color: #8e8e93; display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; }
+    .ios__card { display: flex; align-items: center; gap: 10px; padding: 12px 6px; margin: 0 -6px; font-size: 14px; border-radius: 8px; }
+    .ios__card--saved { animation: pay-card-hl 7s infinite; }
+    .ios__card--saved { border-bottom: 1px solid #f0f0f0; }
+    .ios__check { margin-left: auto; color: #0a7aff; font-weight: 800; opacity: 0; animation: pay-check 7s infinite; }
+    .ios__plus { color: #0a7aff; font-weight: 600; font-size: 18px; width: 18px; text-align: center; }
+    .ios__new { color: #0a7aff; }
+
+    /* Touch indicator */
+    .ios__tap {
+      position: absolute; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(10,122,255,0.22); border: 1.5px solid rgba(10,122,255,0.45);
+      opacity: 0; transform: translate(-50%,-50%) scale(0.8); pointer-events: none;
+      animation: pay-tap 7s infinite;
+    }
+
+    @keyframes pay-scrim { 0%,20%{opacity:0} 27%,72%{opacity:1} 80%,100%{opacity:0} }
+    @keyframes pay-sheet { 0%,20%{transform:translateY(101%)} 28%,72%{transform:translateY(0)} 80%,100%{transform:translateY(101%)} }
+    @keyframes pay-method-hl { 0%,12%{background:transparent} 15%,19%{background:#f2f2f7} 23%,100%{background:transparent} }
+    @keyframes pay-card-hl { 0%,46%{background:transparent} 50%,55%{background:#f2f2f7} 60%,100%{background:transparent} }
+    @keyframes pay-check { 0%,52%{opacity:0;transform:scale(0.4)} 58%,72%{opacity:1;transform:scale(1)} 79%,100%{opacity:0;transform:scale(1)} }
+    @keyframes pay-tap {
+      0%,9%   { opacity:0; top:74%; left:34%; transform:translate(-50%,-50%) scale(0.9); }
+      13%     { opacity:1; top:74%; left:34%; transform:translate(-50%,-50%) scale(1); }
+      17%     { opacity:0.9; top:74%; left:34%; transform:translate(-50%,-50%) scale(0.62); }
+      21%,45% { opacity:0; top:74%; left:34%; transform:translate(-50%,-50%) scale(0.9); }
+      47%     { opacity:0; top:84%; left:30%; transform:translate(-50%,-50%) scale(0.9); }
+      51%     { opacity:1; top:84%; left:30%; transform:translate(-50%,-50%) scale(1); }
+      55%     { opacity:0.9; top:84%; left:30%; transform:translate(-50%,-50%) scale(0.62); }
+      59%,100%{ opacity:0; top:84%; left:30%; transform:translate(-50%,-50%) scale(0.9); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__check, .ios__tap { animation: none; }
+      .ios__scrim, .ios__sheet { display: none; }
     }
 
     .page-end { height: 120px; }
@@ -238,6 +331,7 @@
       .case__grid { gap: 20px; }
       .case__figure--video { padding: 24px 12px; }
       .case__figure--video video { max-width: 260px; max-height: 560px; }
+      .pay-demo { gap: 36px; margin-top: 24px; }
       .case__before { flex-direction: column; gap: 20px; }
       .case__before-shot { width: 232px; align-self: center; }
       .case__before figcaption { font-size: 18px; line-height: 27px; }
@@ -378,15 +472,6 @@
         <span class="case__index">Case 03</span>
         <h2 class="case__title">Payment Screen Redesign</h2>
       </div>
-      <figure class="case__before">
-        <div class="case__before-shot">
-          <img src="assets/dromfines/payment-before.jpg" alt="The old Drom Fines payment screen: a payer name field and the amount due, with no saved card and no Apple Pay or Google Pay" loading="lazy" />
-        </div>
-        <figcaption>
-          <span class="case__before-tag">Before</span>
-          Every fine opened on a blank form. With no saved cards and no Apple&nbsp;Pay or Google&nbsp;Pay, a returning payer keyed in the full card number, expiry and CVC — every single time.
-        </figcaption>
-      </figure>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
@@ -407,9 +492,83 @@
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/dromfines/payment.png" alt="Drom Fines payment screen redesign" loading="lazy" />
-      </figure>
+      <div class="pay-demo">
+        <figure class="pay-demo__item">
+          <div class="pay-phone">
+            <div class="pay-phone__screen" aria-label="The old Drom Fines payment screen — payer and amount only, no saved card">
+              <div class="ios ios--old">
+                <div class="ios__sb">
+                  <span class="ios__sb-sig"><i></i><i></i><i></i><i></i></span>
+                  <span class="ios__sb-t">9:41</span>
+                  <span class="ios__sb-bat"></span>
+                </div>
+                <div class="ios__nav">
+                  <span class="ios__close">Закрыть</span>
+                  <span class="ios__title">Оплата</span>
+                </div>
+                <div class="ios__body">
+                  <div class="ios-old__label">Плательщик</div>
+                  <div class="ios-old__field">Михайлов Дмитрий Иванович</div>
+                  <div class="ios__hr"></div>
+                  <div class="ios-old__label ios-old__label--sp">Детали платежа</div>
+                  <div class="ios__row"><span>2 штрафа</span><span>750,00&nbsp;₽</span></div>
+                  <div class="ios__row"><span>Комиссия</span><span>37,50&nbsp;₽</span></div>
+                  <div class="ios__hr"></div>
+                  <div class="ios__row ios__row--total"><span>Сумма к оплате</span><span>787,50&nbsp;₽</span></div>
+                </div>
+                <div class="ios__pay">Оплатить штраф</div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> the full card was retyped for every fine</figcaption>
+        </figure>
+
+        <figure class="pay-demo__item">
+          <div class="pay-phone">
+            <div class="pay-phone__screen" aria-label="Redesigned payment screen: tapping the payment method opens a sheet to pick a saved card">
+              <div class="ios">
+                <div class="ios__sb">
+                  <span class="ios__sb-sig"><i></i><i></i><i></i><i></i></span>
+                  <span class="ios__sb-t">9:41</span>
+                  <span class="ios__sb-bat"></span>
+                </div>
+                <div class="ios__nav">
+                  <span class="ios__close">Закрыть</span>
+                  <span class="ios__title">Оплата</span>
+                </div>
+                <div class="ios__body">
+                  <div class="ios__h">Детали платежа</div>
+                  <div class="ios__row"><span>Штраф</span><span>750,00&nbsp;₽</span></div>
+                  <div class="ios__row"><span>Комиссия</span><span>37,50&nbsp;₽</span></div>
+                  <div class="ios__hr"></div>
+                  <div class="ios__row ios__row--total"><span>Сумма к оплате</span><span>787,50&nbsp;₽</span></div>
+                  <div class="ios__h">Плательщик</div>
+                  <div class="ios__payer">Михайлов Дмитрий Иванович</div>
+                  <div class="ios__hr"></div>
+                  <div class="ios__h">Способ оплаты</div>
+                  <div class="ios__method">
+                    <span class="ios__visa">VISA</span><span class="ios__num">•• 9876</span><span class="ios__chev">⌄</span>
+                  </div>
+                </div>
+                <div class="ios__pay">Оплатить штраф</div>
+
+                <div class="ios__scrim"></div>
+                <div class="ios__sheet">
+                  <div class="ios__sheet-head"><span class="ios__sheet-title">Способ оплаты</span><span class="ios__x">×</span></div>
+                  <div class="ios__card ios__card--saved">
+                    <span class="ios__visa">VISA</span><span class="ios__num">•• 9876</span><span class="ios__check">✓</span>
+                  </div>
+                  <div class="ios__card ios__card--new">
+                    <span class="ios__plus">+</span><span class="ios__new">Новая карта</span>
+                  </div>
+                </div>
+                <div class="ios__tap"></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="pay-demo__cap"><span class="pay-demo__tag pay-demo__tag--after">After</span> pick a saved card in two taps</figcaption>
+        </figure>
+      </div>
     </section>
 
     <!-- ── Case 04 — Integration into the Drom Ecosystem ── -->
