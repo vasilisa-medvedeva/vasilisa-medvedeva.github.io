@@ -216,6 +216,9 @@
       margin-right: 6px;
     }
     .pay-demo__tag--after { color: #1b75cc; }
+    /* Hand-drawn arrow between the old and new screens — same doodle stroke as the site's arrows */
+    .pay-demo__arrow { align-self: flex-start; margin-top: 330px; flex-shrink: 0; }
+    .pay-demo__arrow svg { display: block; }
 
     /* Phone frame — the screen renders at the Figma frame's native 320×568 */
     .pay-phone {
@@ -441,6 +444,7 @@
       .case__figure--video { padding: 24px 12px; }
       .case__figure--video video { max-width: 260px; max-height: 560px; }
       .pay-demo { gap: 36px; margin-top: 24px; }
+      .pay-demo__arrow { align-self: center; margin: 30px 0; transform: rotate(90deg); }
       .case__before { flex-direction: column; gap: 20px; }
       .case__before-shot { width: 232px; align-self: center; }
       .case__before figcaption { font-size: 18px; line-height: 27px; }
@@ -631,6 +635,14 @@
           </div>
           <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> the full card was retyped for every fine</figcaption>
         </figure>
+
+        <div class="pay-demo__arrow" aria-hidden="true">
+          <svg width="104" height="44" viewBox="0 0 104 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.5 27.2C17.8 21.4 34.6 17.6 51.9 18.1C66.3 18.5 80.2 21.4 92.6 25.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C88.5 20.9 84.3 15.8 80.9 10.6" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C86.8 28.1 80.1 30.6 73.9 33.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
 
         <figure class="pay-demo__item">
           <div class="pay-phone">
