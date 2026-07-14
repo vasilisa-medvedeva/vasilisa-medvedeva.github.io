@@ -235,19 +235,19 @@
     .ios { position: absolute; inset: 0; }
     .ios__sb { position: absolute; top: 0; left: 0; right: 0; height: 34px; }
     .ios__sb-time {
-      position: absolute; left: 16px; top: 11px;
+      position: absolute; left: 16px; top: 12px;
       font-size: 12px; line-height: 14px; font-weight: 600; color: #030303;
     }
-    .ios__sb-right { position: absolute; right: 16px; top: 0; height: 34px; display: flex; align-items: center; gap: 4px; }
+    .ios__sb-right { position: absolute; right: 16px; top: 5px; height: 28px; display: flex; align-items: center; gap: 4px; }
     .ios__sb-cell, .ios__sb-wifi { display: block; }
     .ios__sb-bat { position: relative; width: 22px; height: 11px; border: 1px solid rgba(3,3,3,0.4); border-radius: 3.5px; }
     .ios__sb-bat::before { content: ""; position: absolute; inset: 1.5px; background: #030303; border-radius: 1.8px; }
     .ios__sb-bat::after { content: ""; position: absolute; right: -3px; top: 2.9px; width: 1.4px; height: 3.6px; background: rgba(3,3,3,0.4); border-radius: 0 1px 1px 0; }
 
-    .ios__notch {
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 140px; height: 27px; background: #0b0b0d;
-      border-radius: 0 0 18px 18px; z-index: 60;
+    .ios__island {
+      position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 26px; background: #0b0b0d;
+      border-radius: 13px; z-index: 60;
     }
     .ios__close { position: absolute; left: 16px; top: 39px; font-size: 17px; line-height: 22px; color: #1b75cc; }
     .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
@@ -315,7 +315,7 @@
     /* ── Scrim + card sheet (y372, h196, top radius 4) ── */
     .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 12s infinite; }
     .ios__sheet {
-      position: absolute; left: 0; right: 0; bottom: 0; height: 284px;
+      position: absolute; left: 0; right: 0; bottom: 0; height: 328px;
       background: #fff; border-radius: 4px 4px 0 0;
       transform: translateY(101%); animation: pay-sheet 12s infinite;
     }
@@ -327,10 +327,11 @@
       font-size: 16px; line-height: 1;
     }
     .ios__card { position: absolute; left: 0; right: 0; height: 44px; }
-    .ios__card--saved { top: 68px; animation: pay-card-visa-hl 12s infinite; }
-    .ios__card--mc  { top: 112px; animation: pay-card-mc-hl 12s infinite; }
-    .ios__card--mir { top: 156px; }
-    .ios__card--new { top: 200px; }
+    .ios__card--ap  { top: 68px; }
+    .ios__card--saved { top: 112px; animation: pay-card-visa-hl 12s infinite; }
+    .ios__card--mc  { top: 156px; animation: pay-card-mc-hl 12s infinite; }
+    .ios__card--mir { top: 200px; }
+    .ios__card--new { top: 244px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
     .ios__check { position: absolute; right: 16px; top: 17px; display: block; }
@@ -340,6 +341,12 @@
     .ios__mc::before, .ios__mc::after { content: ""; position: absolute; top: 0; width: 16px; height: 16px; border-radius: 50%; }
     .ios__mc::before { left: 3px; background: #EB001B; }
     .ios__mc::after { left: 13px; background: #F79E1B; opacity: 0.92; }
+    .ios__ap {
+      position: absolute; left: 16px; top: 12px;
+      display: flex; align-items: center; gap: 3px;
+      font-size: 16px; line-height: 20px; font-weight: 500; color: #000;
+    }
+    .ios__ap svg { display: block; margin-top: -2px; }
     .ios__mir {
       position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
       font-style: italic; font-weight: 800; font-size: 11px; line-height: 16px;
@@ -607,7 +614,7 @@
                     <span class="ios__sb-bat"></span>
                   </span>
                 </div>
-                <div class="ios__notch" aria-hidden="true"></div>
+                <div class="ios__island" aria-hidden="true"></div>
                 <span class="ios__close">Закрыть</span>
                 <span class="ios__title">Оплата</span>
                 <div class="ios__label ios__label--payer">Плательщик</div>
@@ -637,7 +644,7 @@
                     <span class="ios__sb-bat"></span>
                   </span>
                 </div>
-                <div class="ios__notch" aria-hidden="true"></div>
+                <div class="ios__island" aria-hidden="true"></div>
                 <span class="ios__close">Закрыть</span>
                 <span class="ios__title">Оплата</span>
                 <div class="ios__h ios__h--details">Детали платежа</div>
@@ -660,6 +667,9 @@
                 <div class="ios__sheet">
                   <span class="ios__sheet-title">Способ оплаты</span>
                   <span class="ios__x">×</span>
+                  <div class="ios__card ios__card--ap">
+                    <span class="ios__ap"><svg width="12" height="15" viewBox="0 0 384 512" aria-hidden="true"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span>
+                  </div>
                   <div class="ios__card ios__card--saved">
                     <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span>
                     <svg class="ios__check ios__check--visa" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
