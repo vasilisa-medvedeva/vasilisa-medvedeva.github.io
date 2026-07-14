@@ -244,6 +244,11 @@
     .ios__sb-bat::before { content: ""; position: absolute; inset: 1.5px; background: #030303; border-radius: 1.8px; }
     .ios__sb-bat::after { content: ""; position: absolute; right: -3px; top: 2.9px; width: 1.4px; height: 3.6px; background: rgba(3,3,3,0.4); border-radius: 0 1px 1px 0; }
 
+    .ios__notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 140px; height: 27px; background: #0b0b0d;
+      border-radius: 0 0 18px 18px; z-index: 60;
+    }
     .ios__close { position: absolute; left: 16px; top: 39px; font-size: 17px; line-height: 22px; color: #1b75cc; }
     .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
 
@@ -307,7 +312,7 @@
     /* ── Scrim + card sheet (y372, h196, top radius 4) ── */
     .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 7s infinite; }
     .ios__sheet {
-      position: absolute; left: 0; right: 0; bottom: 0; height: 196px;
+      position: absolute; left: 0; right: 0; bottom: 0; height: 284px;
       background: #fff; border-radius: 4px 4px 0 0;
       transform: translateY(101%); animation: pay-sheet 7s infinite;
     }
@@ -319,10 +324,22 @@
       font-size: 16px; line-height: 1;
     }
     .ios__card { position: absolute; left: 0; right: 0; height: 44px; }
-    .ios__card--saved { top: 68px; animation: pay-card-hl 7s infinite; }   /* abs y440 */
-    .ios__card--new { top: 112px; }                                        /* abs y484 */
+    .ios__card--saved { top: 68px; animation: pay-card-hl 7s infinite; }
+    .ios__card--mc  { top: 112px; }
+    .ios__card--mir { top: 156px; }
+    .ios__card--new { top: 200px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
+    .ios__check { position: absolute; right: 16px; top: 17px; display: block; }
+    .ios__mc { position: absolute; left: 16px; top: 14px; width: 32px; height: 16px; }
+    .ios__mc::before, .ios__mc::after { content: ""; position: absolute; top: 0; width: 16px; height: 16px; border-radius: 50%; }
+    .ios__mc::before { left: 3px; background: #EB001B; }
+    .ios__mc::after { left: 13px; background: #F79E1B; opacity: 0.92; }
+    .ios__mir {
+      position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
+      font-style: italic; font-weight: 800; font-size: 11px; line-height: 16px;
+      letter-spacing: -0.2px; color: #0F754E; text-align: center;
+    }
     .ios__plus {
       position: absolute; left: 16px; top: 12px; width: 32px;
       text-align: center; color: #1b75cc; font-size: 19px; line-height: 20px; font-weight: 500;
@@ -354,10 +371,10 @@
       13%     { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
       17%     { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
       21%,45% { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      47%     { opacity:0; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      51%     { opacity:1; top:586px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      55%     { opacity:0.9; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      59%,100%{ opacity:0; top:586px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      47%     { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      51%     { opacity:1; top:498px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      55%     { opacity:0.9; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      59%,100%{ opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
       .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__tap { animation: none; }
@@ -557,6 +574,7 @@
                     <span class="ios__sb-bat"></span>
                   </span>
                 </div>
+                <div class="ios__notch" aria-hidden="true"></div>
                 <span class="ios__close">Закрыть</span>
                 <span class="ios__title">Оплата</span>
                 <div class="ios__label ios__label--payer">Плательщик</div>
@@ -586,6 +604,7 @@
                     <span class="ios__sb-bat"></span>
                   </span>
                 </div>
+                <div class="ios__notch" aria-hidden="true"></div>
                 <span class="ios__close">Закрыть</span>
                 <span class="ios__title">Оплата</span>
                 <div class="ios__h ios__h--details">Детали платежа</div>
@@ -609,6 +628,13 @@
                   <span class="ios__x">×</span>
                   <div class="ios__card ios__card--saved">
                     <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span>
+                    <svg class="ios__check" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="ios__card ios__card--mc">
+                    <span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span>
+                  </div>
+                  <div class="ios__card ios__card--mir">
+                    <span class="ios__mir">МИР</span><span class="ios__num">**&nbsp;5511</span>
                   </div>
                   <div class="ios__card ios__card--new">
                     <span class="ios__plus">+</span><span class="ios__num">Новая карта</span>
