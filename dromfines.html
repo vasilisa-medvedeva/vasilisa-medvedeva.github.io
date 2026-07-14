@@ -256,8 +256,8 @@
       width: 100px; height: 26px; background: #0b0b0d;
       border-radius: 13px; z-index: 60;
     }
-    .ios__close { position: absolute; left: 16px; top: 39px; font-size: 17px; line-height: 22px; color: #1b75cc; }
-    .ios__title { position: absolute; left: 0; right: 0; top: 39px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; color: #181818; }  /* HIG: inline nav title 17 Semibold */
+    .ios__close { position: absolute; left: 16px; top: 50px; font-size: 17px; line-height: 22px; color: #1b75cc; }
+    .ios__title { position: absolute; left: 0; right: 0; top: 50px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; color: #181818; }  /* HIG: inline nav title 17 Semibold; 18px below the island like real iOS */
 
     /* ── Shared primitives, positioned per screen below ── */
     .ios__row {
@@ -348,7 +348,7 @@
     .ios__card--ap  { top: 68px; animation: pay-card-ap-hl 18s infinite; }
     .ios__card--saved { top: 112px; animation: pay-card-visa-hl 18s infinite; }
     .ios__card--mc  { top: 156px; animation: pay-card-mc-hl 18s infinite; }
-    .ios__card--mir { top: 200px; }
+    .ios__card--visa2 { top: 200px; }
     .ios__card--new { top: 244px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
@@ -370,11 +370,6 @@
       font-size: 9px; line-height: 9px; font-weight: 500; color: #000;
     }
     .ios__ap svg { display: block; width: 6px; height: 7.5px; margin-top: -0.5px; }
-    .ios__mir {
-      position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
-      font-style: italic; font-weight: 800; font-size: 11px; line-height: 16px;
-      letter-spacing: -0.2px; color: #0F754E; text-align: center;
-    }
     .ios__plus {
       position: absolute; left: 16px; top: 12px; width: 32px;
       text-align: center; color: #1b75cc; font-size: 19px; line-height: 20px; font-weight: 500;
@@ -632,7 +627,6 @@
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
           <p>Every payment started from scratch: the app had no saved cards and no Apple&nbsp;Pay or Google&nbsp;Pay, so users retyped card details for every fine. Repeat payers, the core of a revenue-critical flow, felt it most.</p>
-          <p>The screen also looked different from the rest of the app, and it looked different at the worst possible moment: when users hand over money.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
@@ -738,8 +732,8 @@
                     <span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span>
                     <svg class="ios__check ios__check--mc" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
-                  <div class="ios__card ios__card--mir">
-                    <span class="ios__mir">Mir</span><span class="ios__num">**&nbsp;5511</span>
+                  <div class="ios__card ios__card--visa2">
+                    <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;5511</span>
                   </div>
                   <div class="ios__card ios__card--new">
                     <span class="ios__plus">+</span><span class="ios__num">New card</span>
