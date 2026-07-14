@@ -183,6 +183,16 @@
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
 
+    /* Video figure — a vertical screen recording, shown phone-sized on the soft stage */
+    .case__figure--video { display: flex; justify-content: center; padding: 40px 20px; }
+    .case__figure--video video {
+      display: block;
+      width: auto; height: auto;
+      max-width: 300px; max-height: 640px;
+      border-radius: 28px;
+      box-shadow: var(--elevation-4);
+    }
+
     .page-end { height: 120px; }
 
     @media (max-width: 900px) {
@@ -200,6 +210,8 @@
       .role__team { margin-top: 12px; }
       .case { margin-top: 56px; gap: 24px; }
       .case__grid { gap: 20px; }
+      .case__figure--video { padding: 24px 12px; }
+      .case__figure--video video { max-width: 260px; max-height: 560px; }
       .page-end { height: 56px; }
     }
   </style>
@@ -293,8 +305,10 @@
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/dromfines/onboarding.png" alt="Drom Fines animated onboarding screens" loading="lazy" />
+      <figure class="case__figure case__figure--video">
+        <video src="assets/dromfines/onboarding.mp4" poster="assets/dromfines/onboarding-poster.jpg"
+               autoplay muted loop playsinline preload="metadata"
+               aria-label="Drom Fines animated Lottie onboarding: official data sources and a one-scan check"></video>
       </figure>
     </section>
 
@@ -420,5 +434,24 @@
   </main>
 
   <script src="scripts/page-transition.js?v=4"></script>
+  <script>
+    /* Play case videos only while they're on screen (reliable where the
+       autoplay attribute is ignored, and it saves data off-screen). */
+    (function () {
+      var vids = document.querySelectorAll('.case__figure--video video');
+      if (!vids.length) return;
+      if (!('IntersectionObserver' in window)) {
+        vids.forEach(function (v) { v.play().catch(function () {}); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) e.target.play().catch(function () {});
+          else e.target.pause();
+        });
+      }, { threshold: 0.25 });
+      vids.forEach(function (v) { io.observe(v); });
+    })();
+  </script>
 </body>
 </html>
