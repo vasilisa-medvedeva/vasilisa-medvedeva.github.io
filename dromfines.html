@@ -285,8 +285,8 @@
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
     .ios__pay--ap svg { display: block; margin-top: -2px; }
-    .ios__pay-opt--card { animation: pay-opt-visa 12s infinite; }
-    .ios__pay-opt--ap { opacity: 0; animation: pay-opt-ap 12s infinite; }
+    .ios__pay-opt--card { animation: pay-btn-card 18s infinite; }
+    .ios__pay-opt--ap { opacity: 0; animation: pay-btn-ap 18s infinite; }
 
     /* ── Old screen (node 2:151): grey 14px labels, payer on top, 48px button ── */
     .ios__label { position: absolute; left: 16px; font-size: 14px; line-height: 16px; color: #8b8b8b; }
@@ -317,10 +317,11 @@
     .ios--new .ios__paypanel { height: 110px; }   /* 8 + 56 button + 46 (34 safe area + 12) */
 
     /* Payment-method row (y448, h44): VISA logo x16 · number x56 · chevron right */
-    .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 12s infinite; }
+    .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 18s infinite; }
     .ios__method-opt { position: absolute; inset: 0; }
-    .ios__method-opt--visa { animation: pay-opt-visa 12s infinite; }
-    .ios__method-opt--ap { opacity: 0; animation: pay-opt-ap 12s infinite; }
+    .ios__method-opt--visa { animation: pay-opt-visa 18s infinite; }
+    .ios__method-opt--mc { opacity: 0; animation: pay-opt-mc 18s infinite; }
+    .ios__method-opt--ap { opacity: 0; animation: pay-opt-ap 18s infinite; }
     .ios__visa {
       position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
       font-style: italic; font-weight: 800; font-size: 14.5px; line-height: 16px;
@@ -330,11 +331,11 @@
     .ios__chev { position: absolute; right: 16px; top: 18px; display: block; }
 
     /* ── Scrim + card sheet (y372, h196, top radius 4) ── */
-    .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 12s infinite; }
+    .ios__scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.4); opacity: 0; animation: pay-scrim 18s infinite; }
     .ios__sheet {
       position: absolute; left: 0; right: 0; bottom: 0; height: 328px;
       background: #fff; border-radius: 4px 4px 0 0;
-      transform: translateY(101%); animation: pay-sheet 12s infinite;
+      transform: translateY(101%); animation: pay-sheet 18s infinite;
     }
     .ios__sheet-title { position: absolute; left: 16px; top: 19px; font-size: 17px; line-height: 22px; font-weight: 700; color: #181818; }
     .ios__x {
@@ -344,16 +345,17 @@
       font-size: 16px; line-height: 1;
     }
     .ios__card { position: absolute; left: 0; right: 0; height: 44px; }
-    .ios__card--ap  { top: 68px; animation: pay-card-ap-hl 12s infinite; }
-    .ios__card--saved { top: 112px; animation: pay-card-visa-hl 12s infinite; }
-    .ios__card--mc  { top: 156px; }
+    .ios__card--ap  { top: 68px; animation: pay-card-ap-hl 18s infinite; }
+    .ios__card--saved { top: 112px; animation: pay-card-visa-hl 18s infinite; }
+    .ios__card--mc  { top: 156px; animation: pay-card-mc-hl 18s infinite; }
     .ios__card--mir { top: 200px; }
     .ios__card--new { top: 244px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
     .ios__check { position: absolute; right: 16px; top: 17px; display: block; }
-    .ios__check--visa { animation: pay-check-visa 12s infinite; }
-    .ios__check--ap { opacity: 0; animation: pay-check-ap 12s infinite; }
+    .ios__check--visa { animation: pay-check-visa 18s infinite; }
+    .ios__check--mc { opacity: 0; animation: pay-check-mc 18s infinite; }
+    .ios__check--ap { opacity: 0; animation: pay-check-ap 18s infinite; }
     .ios__mc { position: absolute; left: 16px; top: 14px; width: 32px; height: 16px; }
     .ios__mc::before, .ios__mc::after { content: ""; position: absolute; top: 0; width: 16px; height: 16px; border-radius: 50%; }
     .ios__mc::before { left: 3px; background: #EB001B; }
@@ -382,62 +384,84 @@
       position: absolute; width: 40px; height: 40px; border-radius: 50%;
       background: rgba(27,117,204,0.22); border: 1.5px solid rgba(27,117,204,0.45);
       opacity: 0; transform: translate(-50%,-50%) scale(0.8); pointer-events: none;
-      animation: pay-tap 12s infinite;
+      animation: pay-tap 18s infinite;
     }
 
-    /* Sheet transition per iOS HIG: ≈420ms ease-out (decelerate) in, ≈280ms ease-in out.
-       Two acts per 12s loop: pick Mastercard, then switch back to VISA — so the loop
-       closes seamlessly with no visible reset. */
+    /* Sheet transitions per iOS HIG: ≈420ms decelerate in, ≈280ms accelerate out.
+       Three acts per 18s loop: switch card (VISA→MC, button stays blue), pick
+       Apple Pay (button turns into the black  Pay button), switch back to VISA —
+       the loop closes seamlessly. Relabeling happens under the open sheet. */
     @keyframes pay-scrim {
-      0%,14%    { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      17.5%,33% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      35.3%,64% { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      67.5%,83% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      85.3%,100%{ opacity:0; }
+      0%,8%      { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      10.33%,19% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      20.56%,37.3% { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      39.63%,48.5% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      50.06%,70.7% { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      73.03%,82% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      83.56%,100%{ opacity:0; }
     }
     @keyframes pay-sheet {
-      0%,14%    { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      17.5%,33% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      35.3%,64% { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      67.5%,83% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      85.3%,100%{ transform:translateY(101%); }
+      0%,8%      { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      10.33%,19% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      20.56%,37.3% { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      39.63%,48.5% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      50.06%,70.7% { transform:translateY(101%); animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      73.03%,82% { transform:translateY(0); animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      83.56%,100%{ transform:translateY(101%); }
     }
     @keyframes pay-method-hl {
-      0%,9.5%     { background:transparent }
-      10.5%,12.5% { background:#ececec }
-      14%,59.5%   { background:transparent }
-      60.5%,62.5% { background:#ececec }
-      64%,100%    { background:transparent }
+      0%,4.5%     { background:transparent }
+      5.5%,7%     { background:#ececec }
+      8.5%,33.5%  { background:transparent }
+      34.5%,36%   { background:#ececec }
+      37.5%,67%   { background:transparent }
+      68%,69.5%   { background:#ececec }
+      71%,100%    { background:transparent }
     }
-    @keyframes pay-card-ap-hl   { 0%,22.5%{background:transparent} 23.5%,26%{background:#ececec} 28%,100%{background:transparent} }
-    @keyframes pay-card-visa-hl { 0%,72.5%{background:transparent} 73.5%,76%{background:#ececec} 78%,100%{background:transparent} }
-    /* the iOS checkmark jumps to the tapped card while the sheet is still open */
-    @keyframes pay-check-visa { 0%,27%{opacity:1} 28%,77%{opacity:0} 78%,100%{opacity:1} }
-    @keyframes pay-check-ap   { 0%,27%{opacity:0} 28%,77%{opacity:1} 78%,100%{opacity:0} }
-    /* the method row relabels under the open sheet, so the swap is never seen directly */
-    @keyframes pay-opt-visa { 0%,29%{opacity:1} 30%,79%{opacity:0} 80%,100%{opacity:1} }
-    @keyframes pay-opt-ap   { 0%,29%{opacity:0} 30%,79%{opacity:1} 80%,100%{opacity:0} }
+    @keyframes pay-card-mc-hl   { 0%,13%{background:transparent} 14%,15.5%{background:#ececec} 17%,100%{background:transparent} }
+    @keyframes pay-card-ap-hl   { 0%,42%{background:transparent} 43%,44.5%{background:#ececec} 46%,100%{background:transparent} }
+    @keyframes pay-card-visa-hl { 0%,75.5%{background:transparent} 76.5%,78%{background:#ececec} 79.5%,100%{background:transparent} }
+    /* the checkmark hops: VISA → MC (act 1) → Apple Pay (act 2) → VISA (act 3) */
+    @keyframes pay-check-visa { 0%,16%{opacity:1} 16.5%,78%{opacity:0} 78.5%,100%{opacity:1} }
+    @keyframes pay-check-mc   { 0%,16%{opacity:0} 16.5%,45%{opacity:1} 45.5%,100%{opacity:0} }
+    @keyframes pay-check-ap   { 0%,45%{opacity:0} 45.5%,78%{opacity:1} 78.5%,100%{opacity:0} }
+    /* the method row relabels under the open sheet */
+    @keyframes pay-opt-visa { 0%,17%{opacity:1} 17.5%,79.5%{opacity:0} 80%,100%{opacity:1} }
+    @keyframes pay-opt-mc   { 0%,17%{opacity:0} 17.5%,46%{opacity:1} 46.5%,100%{opacity:0} }
+    @keyframes pay-opt-ap   { 0%,46%{opacity:0} 46.5%,79.5%{opacity:1} 80%,100%{opacity:0} }
+    /* the pay button goes black while Apple Pay is selected (act 2 → act 3) */
+    @keyframes pay-btn-card { 0%,46%{opacity:1} 46.5%,79.5%{opacity:0} 80%,100%{opacity:1} }
+    @keyframes pay-btn-ap   { 0%,46%{opacity:0} 46.5%,79.5%{opacity:1} 80%,100%{opacity:0} }
     @keyframes pay-tap {
-      0%,8%    { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      10%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
-      12%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
-      14%,21%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      21.5%    { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      23%      { opacity:1; top:454px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      25%      { opacity:0.9; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      27%,57%  { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      58%      { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      60%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
-      62%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
-      64%,71%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      71.5%    { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      73%      { opacity:1; top:498px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      75%      { opacity:0.9; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      77%,100% { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      0%,4.5%   { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      5.5%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      6.5%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      8%,12.5%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      13%       { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      14%       { opacity:1; top:542px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      15.5%     { opacity:0.9; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      17%,33.5% { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      34%       { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      35%       { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      36%       { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      37.5%,41.5%{ opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      42%       { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      43%       { opacity:1; top:454px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      44.5%     { opacity:0.9; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      46%,67.5% { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      68%       { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      69%       { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
+      70%       { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
+      71.5%,75% { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
+      75.5%     { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      76.5%     { opacity:1; top:498px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      78%       { opacity:0.9; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      79.5%,100%{ opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__card--ap,
-      .ios__check--visa, .ios__check--ap, .ios__method-opt--visa, .ios__method-opt--ap,
+      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__card--mc, .ios__card--ap,
+      .ios__check--visa, .ios__check--mc, .ios__check--ap,
+      .ios__method-opt--visa, .ios__method-opt--mc, .ios__method-opt--ap,
       .ios__pay-opt--card, .ios__pay-opt--ap, .ios__tap { animation: none; }
       .ios__scrim, .ios__sheet, .ios__tap { display: none; }
     }
@@ -690,6 +714,7 @@
                 <div class="ios__h ios__h--method">Payment method</div>
                 <div class="ios__method">
                   <span class="ios__method-opt ios__method-opt--visa"><span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span></span>
+                  <span class="ios__method-opt ios__method-opt--mc"><span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span></span>
                   <span class="ios__method-opt ios__method-opt--ap"><span class="ios__ap" aria-hidden="true"><svg width="9" height="11" viewBox="0 0 384 512"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span></span>
                   <svg class="ios__chev" width="13" height="8" viewBox="0 0 13 8" fill="none" aria-hidden="true"><path d="M1 1l5.5 5.3L12 1" stroke="#c1c1c1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -712,6 +737,7 @@
                   </div>
                   <div class="ios__card ios__card--mc">
                     <span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span>
+                    <svg class="ios__check ios__check--mc" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div class="ios__card ios__card--mir">
                     <span class="ios__mir">Mir</span><span class="ios__num">**&nbsp;5511</span>
