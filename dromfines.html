@@ -202,6 +202,8 @@
       margin-top: 32px;
       display: flex; justify-content: center; align-items: flex-start;
       gap: 56px; flex-wrap: wrap;
+      background: var(--color-primary-transparent-04);
+      border-radius: 20px; padding: 40px 20px;
     }
     .pay-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .pay-demo__cap {
@@ -217,13 +219,15 @@
     }
     .pay-demo__tag--after { color: #1b75cc; }
     /* Hand-drawn arrow between the old and new screens — same doodle stroke as the site's arrows */
-    .pay-demo__arrow { align-self: flex-start; margin-top: 330px; flex-shrink: 0; }
+    .pay-demo__arrow { align-self: flex-start; margin-top: 298px; flex-shrink: 0; }
     .pay-demo__arrow svg { display: block; }
 
     /* Phone frame — the screen renders at the Figma frame's native 320×568 */
+    .pay-phone-scale { width: 303px; height: 640px; flex-shrink: 0; }  /* 334×706 × 0.9065 — same height as the case-01 video */
     .pay-phone {
       width: 334px; padding: 7px; background: #0b0b0d;
       border-radius: 36px; box-shadow: var(--elevation-4); flex-shrink: 0;
+      transform: scale(0.9065); transform-origin: top left;
     }
     .pay-phone__screen {
       /* 320-wide Figma grid on a taller canvas (same proportions as the case video);
@@ -277,6 +281,12 @@
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 17px; font-weight: 500;
     }
+    .ios__paybox { position: relative; height: 100%; }
+    .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
+    .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
+    .ios__pay--ap svg { display: block; margin-top: -2px; }
+    .ios__pay-opt--card { animation: pay-opt-visa 12s infinite; }
+    .ios__pay-opt--ap { opacity: 0; animation: pay-opt-ap 12s infinite; }
 
     /* ── Old screen (node 2:151): grey 14px labels, payer on top, 48px button ── */
     .ios__label { position: absolute; left: 16px; font-size: 14px; line-height: 16px; color: #8b8b8b; }
@@ -310,7 +320,7 @@
     .ios__method { position: absolute; left: 0; right: 0; top: 456px; height: 44px; animation: pay-method-hl 12s infinite; }
     .ios__method-opt { position: absolute; inset: 0; }
     .ios__method-opt--visa { animation: pay-opt-visa 12s infinite; }
-    .ios__method-opt--mc { opacity: 0; animation: pay-opt-mc 12s infinite; }
+    .ios__method-opt--ap { opacity: 0; animation: pay-opt-ap 12s infinite; }
     .ios__visa {
       position: absolute; left: 16px; top: 14px; width: 32px; height: 16px;
       font-style: italic; font-weight: 800; font-size: 14.5px; line-height: 16px;
@@ -334,16 +344,16 @@
       font-size: 16px; line-height: 1;
     }
     .ios__card { position: absolute; left: 0; right: 0; height: 44px; }
-    .ios__card--ap  { top: 68px; }
+    .ios__card--ap  { top: 68px; animation: pay-card-ap-hl 12s infinite; }
     .ios__card--saved { top: 112px; animation: pay-card-visa-hl 12s infinite; }
-    .ios__card--mc  { top: 156px; animation: pay-card-mc-hl 12s infinite; }
+    .ios__card--mc  { top: 156px; }
     .ios__card--mir { top: 200px; }
     .ios__card--new { top: 244px; }
     .ios__card .ios__visa { top: 14px; }
     .ios__card .ios__num { top: 12px; }
     .ios__check { position: absolute; right: 16px; top: 17px; display: block; }
     .ios__check--visa { animation: pay-check-visa 12s infinite; }
-    .ios__check--mc { opacity: 0; animation: pay-check-mc 12s infinite; }
+    .ios__check--ap { opacity: 0; animation: pay-check-ap 12s infinite; }
     .ios__mc { position: absolute; left: 16px; top: 14px; width: 32px; height: 16px; }
     .ios__mc::before, .ios__mc::after { content: ""; position: absolute; top: 0; width: 16px; height: 16px; border-radius: 50%; }
     .ios__mc::before { left: 3px; background: #EB001B; }
@@ -399,23 +409,23 @@
       60.5%,62.5% { background:#ececec }
       64%,100%    { background:transparent }
     }
-    @keyframes pay-card-mc-hl   { 0%,22.5%{background:transparent} 23.5%,26%{background:#ececec} 28%,100%{background:transparent} }
+    @keyframes pay-card-ap-hl   { 0%,22.5%{background:transparent} 23.5%,26%{background:#ececec} 28%,100%{background:transparent} }
     @keyframes pay-card-visa-hl { 0%,72.5%{background:transparent} 73.5%,76%{background:#ececec} 78%,100%{background:transparent} }
     /* the iOS checkmark jumps to the tapped card while the sheet is still open */
     @keyframes pay-check-visa { 0%,27%{opacity:1} 28%,77%{opacity:0} 78%,100%{opacity:1} }
-    @keyframes pay-check-mc   { 0%,27%{opacity:0} 28%,77%{opacity:1} 78%,100%{opacity:0} }
+    @keyframes pay-check-ap   { 0%,27%{opacity:0} 28%,77%{opacity:1} 78%,100%{opacity:0} }
     /* the method row relabels under the open sheet, so the swap is never seen directly */
     @keyframes pay-opt-visa { 0%,29%{opacity:1} 30%,79%{opacity:0} 80%,100%{opacity:1} }
-    @keyframes pay-opt-mc   { 0%,29%{opacity:0} 30%,79%{opacity:1} 80%,100%{opacity:0} }
+    @keyframes pay-opt-ap   { 0%,29%{opacity:0} 30%,79%{opacity:1} 80%,100%{opacity:0} }
     @keyframes pay-tap {
       0%,8%    { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
       10%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
       12%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
       14%,21%  { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
-      21.5%    { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
-      23%      { opacity:1; top:542px; left:100px; transform:translate(-50%,-50%) scale(1); }
-      25%      { opacity:0.9; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
-      27%,57%  { opacity:0; top:542px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      21.5%    { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
+      23%      { opacity:1; top:454px; left:100px; transform:translate(-50%,-50%) scale(1); }
+      25%      { opacity:0.9; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.62); }
+      27%,57%  { opacity:0; top:454px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
       58%      { opacity:0; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.9); }
       60%      { opacity:1; top:478px; left:272px; transform:translate(-50%,-50%) scale(1); }
       62%      { opacity:0.9; top:478px; left:272px; transform:translate(-50%,-50%) scale(0.62); }
@@ -426,8 +436,9 @@
       77%,100% { opacity:0; top:498px; left:100px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__card--mc,
-      .ios__check--visa, .ios__check--mc, .ios__method-opt--visa, .ios__method-opt--mc, .ios__tap { animation: none; }
+      .ios__scrim, .ios__sheet, .ios__method, .ios__card--saved, .ios__card--ap,
+      .ios__check--visa, .ios__check--ap, .ios__method-opt--visa, .ios__method-opt--ap,
+      .ios__pay-opt--card, .ios__pay-opt--ap, .ios__tap { animation: none; }
       .ios__scrim, .ios__sheet, .ios__tap { display: none; }
     }
 
@@ -450,7 +461,7 @@
       .case__grid { gap: 20px; }
       .case__figure--video { padding: 24px 12px; }
       .case__figure--video video { max-width: 260px; max-height: 560px; }
-      .pay-demo { gap: 36px; margin-top: 24px; }
+      .pay-demo { gap: 36px; margin-top: 24px; padding: 24px 12px; }
       .pay-demo__arrow { align-self: center; margin: 30px 0; transform: rotate(90deg); }
       .case__before { flex-direction: column; gap: 20px; }
       .case__before-shot { width: 232px; align-self: center; }
@@ -614,7 +625,7 @@
       </div>
       <div class="pay-demo">
         <figure class="pay-demo__item">
-          <div class="pay-phone">
+          <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="The old Drom Fines payment screen — payer and amount only, no saved card">
               <div class="ios ios--old">
                 <div class="ios__sb">
@@ -640,7 +651,7 @@
                 <div class="ios__paypanel"><div class="ios__pay">Pay fine</div></div>
               </div>
             </div>
-          </div>
+          </div></div>
           <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> the full card was retyped for every fine</figcaption>
         </figure>
 
@@ -653,7 +664,7 @@
         </div>
 
         <figure class="pay-demo__item">
-          <div class="pay-phone">
+          <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="Redesigned payment screen: tapping the payment method opens a sheet to pick a saved card">
               <div class="ios ios--new">
                 <div class="ios__sb">
@@ -679,17 +690,21 @@
                 <div class="ios__h ios__h--method">Payment method</div>
                 <div class="ios__method">
                   <span class="ios__method-opt ios__method-opt--visa"><span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span></span>
-                  <span class="ios__method-opt ios__method-opt--mc"><span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span></span>
+                  <span class="ios__method-opt ios__method-opt--ap"><span class="ios__ap" aria-hidden="true"><svg width="9" height="11" viewBox="0 0 384 512"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span></span>
                   <svg class="ios__chev" width="13" height="8" viewBox="0 0 13 8" fill="none" aria-hidden="true"><path d="M1 1l5.5 5.3L12 1" stroke="#c1c1c1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <div class="ios__paypanel"><div class="ios__pay">Pay fine</div></div>
+                <div class="ios__paypanel"><div class="ios__paybox">
+                  <div class="ios__pay ios__pay-opt--card">Pay fine</div>
+                  <div class="ios__pay ios__pay--ap ios__pay-opt--ap"><svg width="14" height="17" viewBox="0 0 384 512" aria-hidden="true"><path fill="#fff" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</div>
+                </div></div>
 
                 <div class="ios__scrim"></div>
                 <div class="ios__sheet">
                   <span class="ios__sheet-title">Payment method</span>
                   <span class="ios__x">×</span>
                   <div class="ios__card ios__card--ap">
-                    <span class="ios__ap"><svg width="12" height="15" viewBox="0 0 384 512" aria-hidden="true"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span>
+                    <span class="ios__ap"><svg width="9" height="11" viewBox="0 0 384 512" aria-hidden="true"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span>
+                    <svg class="ios__check ios__check--ap" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div class="ios__card ios__card--saved">
                     <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span>
@@ -697,7 +712,6 @@
                   </div>
                   <div class="ios__card ios__card--mc">
                     <span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span>
-                    <svg class="ios__check ios__check--mc" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1.5 5.8l3.6 3.7L12.5 1.5" stroke="#1b75cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div class="ios__card ios__card--mir">
                     <span class="ios__mir">Mir</span><span class="ios__num">**&nbsp;5511</span>
@@ -709,7 +723,7 @@
                 <div class="ios__tap"></div>
               </div>
             </div>
-          </div>
+          </div></div>
           <figcaption class="pay-demo__cap"><span class="pay-demo__tag pay-demo__tag--after">After</span> pick a saved card in two taps</figcaption>
         </figure>
       </div>
