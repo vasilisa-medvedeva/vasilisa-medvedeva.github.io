@@ -520,21 +520,16 @@
       position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
       font-size: 16px; line-height: 20px; color: #8b8b8b;
     }
-    .reg-new__f1 .reg-new__fph { animation: reg-ph-1 12s infinite; }
-    .reg-new__f2 .reg-new__fph { animation: reg-ph-2 12s infinite; }
+    /* fields stay empty — scanning jumps straight to the fines list */
     /* once a value exists, the label floats up into the border notch */
     .reg-new__flabel {
       position: absolute; left: 12px; top: -8px; background: #fff; padding: 0 5px;
       font-size: 12px; line-height: 16px; color: #8b8b8b; opacity: 0;
     }
-    .reg-new__f1 .reg-new__flabel { animation: reg-fill-1 12s infinite; }
-    .reg-new__f2 .reg-new__flabel { animation: reg-fill-2 12s infinite; }
     .reg-new__fvalue {
       position: absolute; left: 15px; top: 18px; font-size: 16px; line-height: 20px; color: #181818;
       opacity: 0;
     }
-    .reg-new__f1 .reg-new__fvalue { animation: reg-fill-1 12s infinite; }
-    .reg-new__f2 .reg-new__fvalue { animation: reg-fill-2 12s infinite; }
 
     /* Scanner overlay — appears after tapping Scan, fills the fields, then dismisses */
     /* Scanner "camera view": a stylised СТС on the floor, framed by the scan corners.
@@ -597,16 +592,15 @@
     }
     @keyframes reg-scan-cap { 0%,20%{opacity:0} 22%,28%{opacity:1} 30%,100%{opacity:0} }
     /* values appear on their own after the scan (the payoff), reset softly at loop end */
-    /* fields fill after the scan; they reset under the result screen's cover */
-    @keyframes reg-fill-1 { 0%,31%{opacity:0} 34%,89%{opacity:1} 91%,100%{opacity:0} }
-    @keyframes reg-fill-2 { 0%,33%{opacity:0} 36%,89%{opacity:1} 91%,100%{opacity:0} }
-    @keyframes reg-ph-1 { 0%,31%{opacity:1} 34%,89%{opacity:0} 91%,100%{opacity:1} }
-    @keyframes reg-ph-2 { 0%,33%{opacity:1} 36%,89%{opacity:0} 91%,100%{opacity:1} }
 
     /* Result screen — the fines list (node 12:1281) shown after the scan */
     .reg__result {
       position: absolute; inset: 0; background: #fff; z-index: 5;
-      opacity: 0; animation: reg-result 12s infinite;
+      /* iOS navigation push: the result slides in from the trailing edge with a
+         leading-edge shadow, using the system presentation curve */
+      transform: translateX(100%);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.12);
+      animation: reg-result 12s infinite;
     }
     .reg__ricon { position: absolute; top: 50px; }
     .reg__ricon--plus { right: 60px; }
@@ -634,9 +628,9 @@
       font-size: 16px; line-height: 20px; font-weight: 500; color: #8b8b8b;
     }
     @keyframes reg-result {
-      0%,48%  { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      52%,92% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      96%,100%{ opacity:0; }
+      0%,30%  { transform:translateX(100%); animation-timing-function: cubic-bezier(0.32,0.72,0,1); }
+      36%,92% { transform:translateX(0);    animation-timing-function: cubic-bezier(0.32,0.72,0,1); }
+      100%    { transform:translateX(100%); }
     }
 
     .reg__tap {
@@ -654,8 +648,8 @@
     @media (prefers-reduced-motion: reduce) {
       .reg__scanner, .reg-new__scan, .reg-old__cam, .reg__tap, .reg__result { animation: none; }
       .reg__scanner, .reg__tap, .reg__result { display: none; }
-      .reg-new__fvalue, .reg-new__flabel { animation: none; opacity: 1; }
-      .reg-new__fph { animation: none; opacity: 0; }
+      .reg-new__fvalue, .reg-new__flabel { opacity: 0; }
+      .reg-new__fph { opacity: 1; }
     }
 
     .page-end { height: 120px; }
@@ -888,6 +882,16 @@
                 </div>
 
                 <div class="reg__result">
+                  <div class="ios__sb">
+                    <span class="ios__sb-time">9:41</span>
+                    <span class="ios__sb-right">
+                      <svg class="ios__sb-cell" width="17" height="11" viewBox="0 0 17 11" fill="#030303" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="4.8" width="3" height="6.2" rx="1"/><rect x="9.2" y="2.4" width="3" height="8.6" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>
+                      <svg class="ios__sb-wifi" width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#030303"/></svg>
+                      <span class="ios__sb-bat"></span>
+                    </span>
+                  </div>
+                  <div class="ios__island" aria-hidden="true"></div>
+                  <div class="ios__home" aria-hidden="true"></div>
                   <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
                   <svg class="reg__ricon reg__ricon--plus" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#1b75cc" stroke-width="2" stroke-linecap="round"/></svg>
                   <svg class="reg__ricon reg__ricon--profile" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#1b75cc"/><circle cx="13" cy="10" r="4" fill="#fff"/><path d="M5.5 21.2c1.5-3 4.3-4.6 7.5-4.6s6 1.6 7.5 4.6a12 12 0 0 1-15 0z" fill="#fff"/></svg>
