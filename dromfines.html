@@ -462,6 +462,129 @@
       .ios__scrim, .ios__sheet, .ios__tap { display: none; }
     }
 
+    /* ── Registration demo: old (static) vs new (animated scan-to-fill) ──
+       Reuses the pay-demo stage / phone frame / status bar / island / home
+       indicator / arrow. Screens coded from Figma (old: node 3:320, new: 3:460). */
+    .reg { position: absolute; inset: 0; }
+    .reg__logo {
+      position: absolute; left: 16px; top: 54px;
+      display: flex; align-items: center; gap: 5px;
+      font-family: "Archivo", -apple-system, sans-serif; font-weight: 800;
+      font-size: 17px; line-height: 20px; letter-spacing: -0.3px;
+    }
+    .reg__logo-dot { width: 20px; height: 20px; border-radius: 50%; background: #e21b22; flex-shrink: 0; }
+    .reg__logo b { color: #181818; }
+    .reg__logo i { color: #e21b22; font-style: normal; }
+
+    /* Old screen — Material underline fields, scanning hidden in a tiny camera icon */
+    .reg-old__label { position: absolute; left: 16px; font-size: 12px; line-height: 16px; }
+    .reg-old__value { position: absolute; left: 16px; font-size: 16px; line-height: 20px; color: #181818; }
+    .reg-old__line { position: absolute; left: 16px; right: 16px; height: 1px; background: #c1c1c1; }
+    .reg-old__f1-label { top: 128px; color: #8b8b8b; }
+    .reg-old__f1-value { top: 150px; }
+    .reg-old__f1-line  { top: 178px; }
+    .reg-old__f2-label { top: 210px; color: #1b75cc; }   /* active field */
+    .reg-old__f2-value { top: 232px; }
+    .reg-old__f2-line  { top: 260px; height: 2px; background: #1b75cc; }
+    .reg-old__cam {
+      position: absolute; right: 16px; top: 226px; width: 24px; height: 24px; opacity: 0.5;
+      animation: reg-cam-hint 2.6s ease-in-out infinite;   /* gently flags where scanning was buried */
+    }
+    @keyframes reg-cam-hint { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.75;transform:scale(1.12)} }
+
+    /* New screen — scan is a primary button; fields are labelled outlined boxes */
+    .reg-new__scan {
+      position: absolute; left: 16px; right: 16px; top: 112px; height: 48px;
+      border: 1.5px solid #1b75cc; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      color: #1b75cc; font-size: 16px; font-weight: 500;
+      animation: reg-scan-hl 9s infinite;
+    }
+    .reg-new__field {
+      position: absolute; left: 16px; right: 16px; height: 56px;
+      border: 1px solid #c1c1c1; border-radius: 10px;
+    }
+    .reg-new__field--active { border: 1.5px solid #1b75cc; }
+    .reg-new__f1 { top: 184px; }
+    .reg-new__f2 { top: 256px; }
+    .reg-new__flabel {
+      position: absolute; left: 12px; top: -8px; background: #fff; padding: 0 5px;
+      font-size: 12px; line-height: 16px; color: #8b8b8b;
+    }
+    .reg-new__field--active .reg-new__flabel { color: #1b75cc; }
+    .reg-new__fvalue {
+      position: absolute; left: 15px; top: 18px; font-size: 16px; line-height: 20px; color: #181818;
+      opacity: 0;
+    }
+    .reg-new__f1 .reg-new__fvalue { animation: reg-fill-1 9s infinite; }
+    .reg-new__f2 .reg-new__fvalue { animation: reg-fill-2 9s infinite; }
+
+    /* Scanner overlay — appears after tapping Scan, fills the fields, then dismisses */
+    .reg__scanner {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.82);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; animation: reg-scanner 9s infinite;
+    }
+    .reg__scan-box {
+      position: relative; width: 208px; height: 132px; border-radius: 12px;
+      animation: reg-scan-pulse 9s infinite;
+    }
+    .reg__scan-box span {
+      position: absolute; width: 26px; height: 26px; border: 3px solid #fff; border-radius: 3px;
+    }
+    .reg__scan-box span:nth-child(1){ left:0; top:0; border-right:0; border-bottom:0; }
+    .reg__scan-box span:nth-child(2){ right:0; top:0; border-left:0; border-bottom:0; }
+    .reg__scan-box span:nth-child(3){ left:0; bottom:0; border-right:0; border-top:0; }
+    .reg__scan-box span:nth-child(4){ right:0; bottom:0; border-left:0; border-top:0; }
+    .reg__scan-line {
+      position: absolute; left: 6px; right: 6px; height: 2px; background: #1b75cc;
+      box-shadow: 0 0 8px 1px #1b75cc; border-radius: 2px;
+      animation: reg-scan-sweep 9s infinite;
+    }
+    .reg__scan-cap {
+      position: absolute; left: 0; right: 0; bottom: -34px; text-align: center;
+      color: #fff; font-size: 14px; font-weight: 500;
+      animation: reg-scan-cap 9s infinite;
+    }
+
+    @keyframes reg-scan-hl {
+      0%,13.5%{ background:transparent } 15%,18%{ background:rgba(27,117,204,0.08) } 20%,100%{ background:transparent }
+    }
+    @keyframes reg-scanner {
+      0%,18%   { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      21%,36%  { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      39%,100% { opacity:0; }
+    }
+    @keyframes reg-scan-pulse { 0%,20%{transform:scale(0.9);opacity:0} 24%,36%{transform:scale(1);opacity:1} 39%,100%{opacity:0} }
+    @keyframes reg-scan-sweep {
+      0%,23%   { top:8px; opacity:0 }
+      25%      { top:8px; opacity:1 }
+      34%      { top:120px; opacity:1 }
+      36%,100% { top:120px; opacity:0 }
+    }
+    @keyframes reg-scan-cap { 0%,23%{opacity:0} 26%,35%{opacity:1} 37%,100%{opacity:0} }
+    /* values appear on their own after the scan (the payoff), reset softly at loop end */
+    @keyframes reg-fill-1 { 0%,40%{opacity:0} 45%,92%{opacity:1} 98%,100%{opacity:0} }
+    @keyframes reg-fill-2 { 0%,44%{opacity:0} 49%,92%{opacity:1} 98%,100%{opacity:0} }
+
+    .reg__tap {
+      position: absolute; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(27,117,204,0.22); border: 1.5px solid rgba(27,117,204,0.45);
+      opacity: 0; transform: translate(-50%,-50%) scale(0.8); pointer-events: none;
+      animation: reg-tap 9s infinite;
+    }
+    @keyframes reg-tap {
+      0%,10%    { opacity:0; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
+      13%       { opacity:1; top:136px; left:160px; transform:translate(-50%,-50%) scale(1); }
+      16%       { opacity:0.9; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.62); }
+      19%,100%  { opacity:0; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reg__scanner, .reg-new__scan, .reg-old__cam, .reg__tap { animation: none; }
+      .reg__scanner, .reg__tap { display: none; }
+      .reg-new__fvalue { animation: none; opacity: 1; }
+    }
+
     .page-end { height: 120px; }
 
     @media (max-width: 900px) {
@@ -612,9 +735,87 @@
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/dromfines/registration.png" alt="Drom Fines registration screen redesign" loading="lazy" />
-      </figure>
+      <div class="pay-demo">
+        <figure class="pay-demo__item">
+          <div class="pay-phone-scale"><div class="pay-phone">
+            <div class="pay-phone__screen" aria-label="The old Drom Fines registration screen — underline fields with scanning hidden in a small camera icon">
+              <div class="reg reg--old">
+                <div class="ios__sb">
+                  <span class="ios__sb-time">9:41</span>
+                  <span class="ios__sb-right">
+                    <svg class="ios__sb-cell" width="17" height="11" viewBox="0 0 17 11" fill="#030303" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="4.8" width="3" height="6.2" rx="1"/><rect x="9.2" y="2.4" width="3" height="8.6" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>
+                    <svg class="ios__sb-wifi" width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#030303"/></svg>
+                    <span class="ios__sb-bat"></span>
+                  </span>
+                </div>
+                <div class="ios__island" aria-hidden="true"></div>
+                <div class="ios__home" aria-hidden="true"></div>
+                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
+                <div class="reg-old__label reg-old__f1-label">License plate</div>
+                <div class="reg-old__value reg-old__f1-value">М999ММ&nbsp;125</div>
+                <div class="reg-old__line reg-old__f1-line"></div>
+                <div class="reg-old__label reg-old__f2-label">Registration certificate</div>
+                <div class="reg-old__value reg-old__f2-value">22&nbsp;АВ&nbsp;323555</div>
+                <svg class="reg-old__cam" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4V8z" stroke="#8b8b8b" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="#8b8b8b" stroke-width="1.6"/></svg>
+                <div class="reg-old__line reg-old__f2-line"></div>
+                <div class="ios__paypanel"><div class="ios__pay">Continue</div></div>
+              </div>
+            </div>
+          </div></div>
+          <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> scanning hid in a tiny icon; most people typed</figcaption>
+        </figure>
+
+        <div class="pay-demo__arrow" aria-hidden="true">
+          <svg width="104" height="44" viewBox="0 0 104 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.5 27.2C17.8 21.4 34.6 17.6 51.9 18.1C66.3 18.5 80.2 21.4 92.6 25.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C88.5 20.9 84.3 15.8 80.9 10.6" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C86.8 28.1 80.1 30.6 73.9 33.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <figure class="pay-demo__item">
+          <div class="pay-phone-scale"><div class="pay-phone">
+            <div class="pay-phone__screen" aria-label="Redesigned registration screen: Scan documents is the primary button and fills the fields automatically">
+              <div class="reg reg--new">
+                <div class="ios__sb">
+                  <span class="ios__sb-time">9:41</span>
+                  <span class="ios__sb-right">
+                    <svg class="ios__sb-cell" width="17" height="11" viewBox="0 0 17 11" fill="#030303" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="4.8" width="3" height="6.2" rx="1"/><rect x="9.2" y="2.4" width="3" height="8.6" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>
+                    <svg class="ios__sb-wifi" width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#030303"/></svg>
+                    <span class="ios__sb-bat"></span>
+                  </span>
+                </div>
+                <div class="ios__island" aria-hidden="true"></div>
+                <div class="ios__home" aria-hidden="true"></div>
+                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
+                <div class="reg-new__scan">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/><path d="M4 12h16" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  Scan documents
+                </div>
+                <div class="reg-new__field reg-new__f1">
+                  <span class="reg-new__flabel">License plate</span>
+                  <span class="reg-new__fvalue">М999ММ&nbsp;125</span>
+                </div>
+                <div class="reg-new__field reg-new__field--active reg-new__f2">
+                  <span class="reg-new__flabel">Registration certificate</span>
+                  <span class="reg-new__fvalue">22&nbsp;АВ&nbsp;323555</span>
+                </div>
+                <div class="ios__paypanel"><div class="ios__pay">Continue</div></div>
+
+                <div class="reg__scanner">
+                  <div class="reg__scan-box">
+                    <span></span><span></span><span></span><span></span>
+                    <div class="reg__scan-line"></div>
+                    <div class="reg__scan-cap">Scanning…</div>
+                  </div>
+                </div>
+                <div class="reg__tap"></div>
+              </div>
+            </div>
+          </div></div>
+          <figcaption class="pay-demo__cap"><span class="pay-demo__tag pay-demo__tag--after">After</span> scan once — the fields fill themselves</figcaption>
+        </figure>
+      </div>
     </section>
 
     <!-- ── Case 03 — Making Payment Effortless ── -->
