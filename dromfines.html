@@ -281,9 +281,14 @@
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 17px; font-weight: 500;
     }
-    .reg--old .ios__pay { border-radius: 4px; font-size: 16px; }   /* old secondary-button: radius 4, 16px, 48 tall */
+    /* DS primary-button (node 9:605): radius 4, 16px Medium, subtle shadow.
+       The redesign only changes height: old 48 (node 3:320) → new 56. */
+    .reg .ios__pay {
+      border-radius: 4px; font-size: 16px;
+      box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.24);
+    }
     .reg--old .ios__paypanel { height: 102px; }
-    .reg--new .ios__paypanel { height: 110px; }   /* new primary-button/regular (node 9:465): radius 5, 17px, 56 tall */
+    .reg--new .ios__paypanel { height: 110px; }
     .ios__paybox { position: relative; height: 100%; }
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
