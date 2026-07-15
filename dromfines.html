@@ -474,12 +474,16 @@
        Reuses the pay-demo stage / phone frame / status bar / island / home
        indicator / arrow. Screens coded from Figma (old: node 3:320, new: 3:460). */
     .reg { position: absolute; inset: 0; }
-    .reg__logo {
-      position: absolute; left: 16px; top: 54px;
-      display: flex; align-items: center; gap: 7px;
-    }
-    .reg__logo-round { width: 28px; height: 28px; display: block; flex-shrink: 0; }
-    .reg__logo-text { width: 158px; height: 29px; display: block; }   /* viewBox 169×30.93 (both explicit — SVG root is 100%/100%) */
+    .reg__logo { position: absolute; left: 16px; top: 54px; }
+    .reg__logo img { display: block; }
+    .reg--old .reg__logo img { width: 210px; height: 32px; }   /* old appbar logo: 210×32 */
+    .reg--new .reg__logo img { width: 158px; height: 24px; }   /* new: smaller, 24 tall */
+    /* Scanner glyph (fines/ic_scanner_24) tinted with the button colour via a mask */
+    .reg-new__scan-ic {
+      width: 20px; height: 20px; flex-shrink: 0; background: #1b75cc;
+      -webkit-mask: url("assets/dromfines/ic-scanner.svg") center / contain no-repeat;
+      mask: url("assets/dromfines/ic-scanner.svg") center / contain no-repeat;
+    }   /* viewBox 169×30.93 (both explicit — SVG root is 100%/100%) */
 
     /* Old screen — Material underline fields, scanning hidden in a tiny camera icon */
     .reg-old__label { position: absolute; left: 16px; font-size: 12px; line-height: 16px; }
@@ -753,7 +757,7 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><img class="reg__logo-round" src="assets/dromfines/drom-round.svg" alt="" /><img class="reg__logo-text" src="assets/dromfines/drom-text.svg" alt="drom fines" /></div>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
                 <div class="reg-old__label reg-old__f1-label">License plate</div>
                 <div class="reg-old__value reg-old__f1-value">М999ММ&nbsp;125</div>
                 <div class="reg-old__line reg-old__f1-line"></div>
@@ -790,9 +794,9 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><img class="reg__logo-round" src="assets/dromfines/drom-round.svg" alt="" /><img class="reg__logo-text" src="assets/dromfines/drom-text.svg" alt="drom fines" /></div>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
                 <div class="reg-new__scan">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/><path d="M4 12h16" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  <span class="reg-new__scan-ic" aria-hidden="true"></span>
                   Scan documents
                 </div>
                 <div class="reg-new__field reg-new__f1">
