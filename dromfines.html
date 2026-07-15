@@ -511,14 +511,22 @@
       position: absolute; left: 16px; right: 16px; height: 56px;
       border: 1px solid #c1c1c1; border-radius: 8px;
     }
-    .reg-new__field--active { border: 1.5px solid #1b75cc; }
     .reg-new__f1 { top: 184px; }
     .reg-new__f2 { top: 256px; }
+    /* empty + unfocused: placeholder sits INSIDE, grey (Figma node 11:1038) */
+    .reg-new__fph {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; line-height: 20px; color: #8b8b8b;
+    }
+    .reg-new__f1 .reg-new__fph { animation: reg-ph-1 9s infinite; }
+    .reg-new__f2 .reg-new__fph { animation: reg-ph-2 9s infinite; }
+    /* once a value exists, the label floats up into the border notch */
     .reg-new__flabel {
       position: absolute; left: 12px; top: -8px; background: #fff; padding: 0 5px;
-      font-size: 12px; line-height: 16px; color: #8b8b8b;
+      font-size: 12px; line-height: 16px; color: #8b8b8b; opacity: 0;
     }
-    .reg-new__field--active .reg-new__flabel { color: #1b75cc; }
+    .reg-new__f1 .reg-new__flabel { animation: reg-fill-1 9s infinite; }
+    .reg-new__f2 .reg-new__flabel { animation: reg-fill-2 9s infinite; }
     .reg-new__fvalue {
       position: absolute; left: 15px; top: 18px; font-size: 16px; line-height: 20px; color: #181818;
       opacity: 0;
@@ -606,6 +614,8 @@
     /* values appear on their own after the scan (the payoff), reset softly at loop end */
     @keyframes reg-fill-1 { 0%,40%{opacity:0} 45%,92%{opacity:1} 98%,100%{opacity:0} }
     @keyframes reg-fill-2 { 0%,44%{opacity:0} 49%,92%{opacity:1} 98%,100%{opacity:0} }
+    @keyframes reg-ph-1 { 0%,40%{opacity:1} 45%,92%{opacity:0} 98%,100%{opacity:1} }
+    @keyframes reg-ph-2 { 0%,44%{opacity:1} 49%,92%{opacity:0} 98%,100%{opacity:1} }
 
     .reg__tap {
       position: absolute; width: 40px; height: 40px; border-radius: 50%;
@@ -622,7 +632,8 @@
     @media (prefers-reduced-motion: reduce) {
       .reg__scanner, .reg-new__scan, .reg-old__cam, .reg__tap { animation: none; }
       .reg__scanner, .reg__tap { display: none; }
-      .reg-new__fvalue { animation: none; opacity: 1; }
+      .reg-new__fvalue, .reg-new__flabel { animation: none; opacity: 1; }
+      .reg-new__fph { animation: none; opacity: 0; }
     }
 
     .page-end { height: 120px; }
@@ -833,10 +844,12 @@
                   Scan documents
                 </div>
                 <div class="reg-new__field reg-new__f1">
+                  <span class="reg-new__fph">License plate</span>
                   <span class="reg-new__flabel">License plate</span>
                   <span class="reg-new__fvalue">М999ММ&nbsp;125</span>
                 </div>
-                <div class="reg-new__field reg-new__field--active reg-new__f2">
+                <div class="reg-new__field reg-new__f2">
+                  <span class="reg-new__fph">Registration certificate</span>
                   <span class="reg-new__flabel">Registration certificate</span>
                   <span class="reg-new__fvalue">22&nbsp;АВ&nbsp;323555</span>
                 </div>
