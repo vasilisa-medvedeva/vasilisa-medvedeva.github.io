@@ -476,13 +476,10 @@
     .reg { position: absolute; inset: 0; }
     .reg__logo {
       position: absolute; left: 16px; top: 54px;
-      display: flex; align-items: center; gap: 5px;
-      font-family: "Archivo", -apple-system, sans-serif; font-weight: 800;
-      font-size: 17px; line-height: 20px; letter-spacing: -0.3px;
+      display: flex; align-items: center; gap: 7px;
     }
-    .reg__logo-dot { width: 20px; height: 20px; border-radius: 50%; background: #e21b22; flex-shrink: 0; }
-    .reg__logo b { color: #181818; }
-    .reg__logo i { color: #e21b22; font-style: normal; }
+    .reg__logo-round { width: 28px; height: 28px; display: block; flex-shrink: 0; }
+    .reg__logo-text { width: 158px; height: 29px; display: block; }   /* viewBox 169×30.93 (both explicit — SVG root is 100%/100%) */
 
     /* Old screen — Material underline fields, scanning hidden in a tiny camera icon */
     .reg-old__label { position: absolute; left: 16px; font-size: 12px; line-height: 16px; }
@@ -725,12 +722,12 @@
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
           <p>The app could scan documents instead of asking users to type the plate and registration certificate numbers, but almost nobody found it: scanning hid behind a small camera icon inside an input field. Most users took the slowest path through the very first screen of the product.</p>
-          <p>The input fields themselves looked dated and gave little feedback while typing.</p>
+          <p>The input fields themselves looked clunky and dated — bare underlines that gave little feedback as you typed.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
           <p>I rebuilt the hierarchy: scanning became the primary button at the top of the screen, manual fields the fallback below it. The scan builds on the system document-recognition pattern (VisionKit) rather than a custom camera, so plates and certificates read reliably.</p>
-          <p>The inputs moved from dated underline fields to outlined fields with permanent labels and visible focus states. The layout also reserves room for registering by driver&#8217;s license, which later became its own case.</p>
+          <p>The inputs moved from those dated underlines to modern outlined fields with permanent labels and visible focus states — a cleaner, more contemporary form. The layout also reserves room for registering by driver&#8217;s license, which later became its own case.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
@@ -756,7 +753,7 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
+                <div class="reg__logo"><img class="reg__logo-round" src="assets/dromfines/drom-round.svg" alt="" /><img class="reg__logo-text" src="assets/dromfines/drom-text.svg" alt="drom fines" /></div>
                 <div class="reg-old__label reg-old__f1-label">License plate</div>
                 <div class="reg-old__value reg-old__f1-value">М999ММ&nbsp;125</div>
                 <div class="reg-old__line reg-old__f1-line"></div>
@@ -793,7 +790,7 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
+                <div class="reg__logo"><img class="reg__logo-round" src="assets/dromfines/drom-round.svg" alt="" /><img class="reg__logo-text" src="assets/dromfines/drom-text.svg" alt="drom fines" /></div>
                 <div class="reg-new__scan">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/><path d="M4 12h16" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/></svg>
                   Scan documents
