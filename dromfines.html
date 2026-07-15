@@ -371,13 +371,15 @@
         /* Apple Pay payment mark — white badge with a black outline (Apple Pay Marks
        guidelines), sized into the same 32×16 slot as the card logos */
     .ios__ap {
-      position: absolute; left: 16px; top: 13px;
-      width: 36px; height: 18px;
+      position: absolute; left: 16px; top: 11.5px;
+      width: 44px; height: 21px;
       background: #fff; border: 1px solid #000; border-radius: 4px;
-      display: flex; align-items: center; justify-content: center; gap: 1.5px;
-      font-size: 10px; line-height: 10px; font-weight: 500; color: #000;
+      display: flex; align-items: center; justify-content: center; gap: 2px;
+      font-size: 12px; line-height: 12px; font-weight: 500; color: #000;
     }
-    .ios__ap svg { display: block; width: 7px; height: 8.5px; margin-top: -0.5px; }
+    .ios__ap svg { display: block; width: 8.5px; height: 10.5px; margin-top: -0.5px; }
+    /* the label clears the wider Apple Pay badge (same 8px gap as the cards) */
+    .ios__card--ap .ios__num, .ios__method-opt--ap .ios__num { left: 68px; }
     .ios__plus {
       position: absolute; left: 16px; top: 11px; width: 36px;
       text-align: center; color: #1b75cc; font-size: 21px; line-height: 22px; font-weight: 500;
