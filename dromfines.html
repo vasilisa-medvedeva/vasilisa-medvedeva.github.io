@@ -543,37 +543,20 @@
       opacity: 0; animation: reg-scanner 9s infinite;
     }
     .reg__floor {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        repeating-linear-gradient(3deg, #ac8b62 0 38px, #9d7c54 38px 40px, #b48f64 40px 78px, #9d7c54 78px 80px),
-        #ac8b62;
+      position: absolute; inset: 0; z-index: 0; background: #eef0f2;   /* white table */
     }
     .reg__floor::after {
       content: ""; position: absolute; inset: 0;
-      background: radial-gradient(125% 95% at 50% 46%, transparent 38%, rgba(0,0,0,0.5) 100%);
+      background: radial-gradient(135% 100% at 50% 46%, transparent 48%, rgba(0,0,0,0.13) 100%);
     }
     .reg__sts {
       position: absolute; left: 50%; top: 50%; z-index: 1;
-      transform: translate(-50%,-50%) rotate(-3.5deg);
-      width: 196px; height: 138px; padding: 9px 11px; overflow: hidden;
-      border-radius: 5px;
-      background: linear-gradient(135deg, #f7d9e7 0%, #efc2d7 55%, #e6afcc 100%);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
-      color: #7a2648; font-family: -apple-system, "Helvetica Neue", sans-serif;
+      transform: translate(-50%,-50%) rotate(-3deg);
+      width: 170px; height: auto; display: block;
+      border-radius: 8px; box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
-    .reg__sts::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background:
-        repeating-linear-gradient(46deg, rgba(255,255,255,0.16) 0 1px, transparent 1px 4px),
-        repeating-linear-gradient(-46deg, rgba(122,38,72,0.06) 0 1px, transparent 1px 5px);
-    }
-    .reg__sts-h { font-size: 5.5px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; opacity: 0.85; line-height: 1.3; width: 120px; }
-    .reg__sts-num { position: absolute; right: 11px; top: 9px; font-size: 8px; font-weight: 800; color: #c0392b; }
-    .reg__sts-plate { font-size: 19px; font-weight: 800; letter-spacing: 0.5px; margin-top: 5px; color: #5e1c39; }
-    .reg__sts-row { font-size: 7px; line-height: 1.65; margin-top: 4px; opacity: 0.92; }
-    .reg__sts-row b { font-weight: 700; }
     .reg__scan-box {
-      position: relative; z-index: 2; width: 214px; height: 150px; border-radius: 12px;
+      position: relative; z-index: 2; width: 190px; height: 250px; border-radius: 12px;
       animation: reg-scan-pulse 9s infinite;
     }
     .reg__scan-box span {
@@ -607,8 +590,8 @@
     @keyframes reg-scan-sweep {
       0%,23%   { top:8px; opacity:0 }
       25%      { top:8px; opacity:1 }
-      34%      { top:140px; opacity:1 }
-      36%,100% { top:140px; opacity:0 }
+      34%      { top:240px; opacity:1 }
+      36%,100% { top:240px; opacity:0 }
     }
     @keyframes reg-scan-cap { 0%,23%{opacity:0} 26%,35%{opacity:1} 37%,100%{opacity:0} }
     /* values appear on their own after the scan (the payoff), reset softly at loop end */
@@ -857,15 +840,7 @@
 
                 <div class="reg__scanner">
                   <div class="reg__floor"></div>
-                  <div class="reg__sts">
-                    <div class="reg__sts-h">Свидетельство о регистрации ТС</div>
-                    <div class="reg__sts-num">22 АВ 323555</div>
-                    <div class="reg__sts-plate">М999ММ 125</div>
-                    <div class="reg__sts-row"><b>VIN</b> JTDKB20U693520114</div>
-                    <div class="reg__sts-row"><b>Марка</b> TOYOTA COROLLA · 2019</div>
-                    <div class="reg__sts-row"><b>Тип</b> легковой · <b>цвет</b> белый</div>
-                    <div class="reg__sts-row"><b>Двигатель</b> 1598 см³ · 132 л.с.</div>
-                  </div>
+                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" />
                   <div class="reg__scan-box">
                     <span></span><span></span><span></span><span></span>
                     <div class="reg__scan-line"></div>
