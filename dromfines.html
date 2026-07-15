@@ -281,6 +281,7 @@
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 17px; font-weight: 500;
     }
+    .reg .ios__pay { border-radius: 4px; font-size: 16px; }   /* Figma reg button: radius 4, 16px */
     .ios__paybox { position: relative; height: 100%; }
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
@@ -487,10 +488,8 @@
     .reg-old__f2-value { top: 232px; }
     .reg-old__f2-line  { top: 260px; height: 2px; background: #1b75cc; }
     .reg-old__cam {
-      position: absolute; right: 16px; top: 226px; width: 24px; height: 24px; opacity: 0.5;
-      animation: reg-cam-hint 2.6s ease-in-out infinite;   /* gently flags where scanning was buried */
+      position: absolute; right: 16px; top: 226px; width: 24px; height: 24px; opacity: 0.3;   /* Figma: bounds at 30% */
     }
-    @keyframes reg-cam-hint { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.75;transform:scale(1.12)} }
 
     /* New screen — scan is a primary button; fields are labelled outlined boxes */
     .reg-new__scan {
