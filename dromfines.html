@@ -281,7 +281,9 @@
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 17px; font-weight: 500;
     }
-    .reg .ios__pay { border-radius: 4px; font-size: 16px; }   /* Figma reg button: radius 4, 16px */
+    .reg--old .ios__pay { border-radius: 4px; font-size: 16px; }   /* old secondary-button: radius 4, 16px, 48 tall */
+    .reg--old .ios__paypanel { height: 102px; }
+    .reg--new .ios__paypanel { height: 110px; }   /* new primary-button/regular (node 9:465): radius 5, 17px, 56 tall */
     .ios__paybox { position: relative; height: 100%; }
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
