@@ -289,6 +289,7 @@
     }
     .reg--old .ios__paypanel { height: 102px; }
     .reg--new .ios__paypanel { height: 110px; }
+    .reg--new .ios__pay { border-radius: 8px; }   /* new screen: everything on radius 8 */
     .ios__paybox { position: relative; height: 100%; }
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
@@ -501,15 +502,15 @@
 
     /* New screen — scan is a primary button; fields are labelled outlined boxes */
     .reg-new__scan {
-      position: absolute; left: 16px; right: 16px; top: 112px; height: 48px;
-      border: 1.5px solid #1b75cc; border-radius: 10px;
+      position: absolute; left: 16px; right: 16px; top: 112px; height: 56px;
+      border: 1.5px solid #1b75cc; border-radius: 8px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
       color: #1b75cc; font-size: 16px; font-weight: 500;
       animation: reg-scan-hl 9s infinite;
     }
     .reg-new__field {
       position: absolute; left: 16px; right: 16px; height: 56px;
-      border: 1px solid #c1c1c1; border-radius: 10px;
+      border: 1px solid #c1c1c1; border-radius: 8px;
     }
     .reg-new__field--active { border: 1.5px solid #1b75cc; }
     .reg-new__f1 { top: 184px; }
