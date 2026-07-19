@@ -25,9 +25,7 @@
 <path d="M233.164 280.367C233.166 280.367 233.169 280.367 234.259 280.367C235.349 280.367 237.527 280.367 239.783 280.35" stroke="black" stroke-width="2" stroke-linecap="round"/>
 <path d="M86.0215 304.66C86.0215 304.683 86.0215 304.705 114.799 304.209C143.576 303.712 201.131 302.696 261.417 302" stroke="black" stroke-width="2" stroke-linecap="round"/>
 </g>
-<path d="M212 114C242 104 258 78 254 54C250 34 239 27 219 26" stroke="black" stroke-width="2" stroke-linecap="round"/>
-<g transform="rotate(-30 219 26)">
-<path d="M219 26C226 21 233 18 240 16" stroke="black" stroke-width="2" stroke-linecap="round"/>
-<path d="M219 26C225 32 230 38 235 43" stroke="black" stroke-width="2" stroke-linecap="round"/>
-</g>
+<path d="M208 122C214 116 221 107 221 90C222 60 221 40 222 22" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<path d="M222 22C218 27 215 32 213 37" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<path d="M222 22C226 27 229 32 231 37" stroke="black" stroke-width="2" stroke-linecap="round"/>
 </svg>
