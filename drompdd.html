@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDY8SF935T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    if (localStorage.getItem('ga_optout') === '1') {
+      window['ga-disable-G-PDY8SF935T'] = true;
+    }
+    gtag('config', 'G-PDY8SF935T');
+  </script>
   <title>Drom PDD — Vasilisa Medvedeva</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
@@ -1082,5 +1093,6 @@
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
+  <script src="scripts/analytics.js"></script>
 </body>
 </html>
