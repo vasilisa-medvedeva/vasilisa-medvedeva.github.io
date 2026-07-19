@@ -66,5 +66,5 @@ The molecule mirrors the Figma component's 4 props — `type` · `emoji` · `row
 - Reaction pills, SendTime, and BubbleComments follow the accessibility rules of their own atoms.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

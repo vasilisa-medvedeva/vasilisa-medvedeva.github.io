@@ -36,6 +36,10 @@
   --color-brand-red-transparent-8: #F9EDEB;
   --color-brand-red-transparent-4: #FCF6F5;
 
+  /* Accent Orange (header hover rounds) */
+  --color-accent-orange: #FF7C00;
+  --color-accent-orange-pressed: #E56F00;
+
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;
   --color-brand-yellow-secondary: #FFB928;

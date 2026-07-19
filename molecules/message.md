@@ -62,5 +62,5 @@ Grouping: the sender **name** shows on the first bubble (top/alone); the **avata
 - Forward/reaction/time controls follow their atoms' accessibility rules.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

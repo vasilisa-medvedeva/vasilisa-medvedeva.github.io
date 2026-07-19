@@ -16,7 +16,7 @@
   <!-- Archivo — used for flow-card copy (same as the flow pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -38,6 +38,15 @@
     .hero {
       padding: 88px 0 0;                 /* side gutters come from .main, same as the cards */
       display: flex; flex-direction: column; gap: 24px;
+    }
+    .hero__eyebrow {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
     }
     .hero__title {
       font-family: "Archivo", sans-serif;
@@ -68,95 +77,90 @@
     }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
 
-    /* ── Flows grid (korolev-style tiles) ── */
-    .flows-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;   /* left cards wider, right narrower */
-      gap: 10px;
-      align-items: start;
-      margin-top: 20px;
-      padding-bottom: 50px;            /* room for the offset right column */
+    /* ── Case sections — same rhythm and type as the other project pages ── */
+    .case {
+      margin-top: 120px;
+      display: flex; flex-direction: column; gap: 32px;
     }
-    /* Staggered columns: the right card sits 40px lower */
-    .flows-grid > .flow-card:nth-child(even) { position: relative; top: 40px; }
-
-    .flow-card {
-      position: relative;
-      display: flex; flex-direction: column;
-      background: var(--color-constant-primary);
-      border: 1px solid var(--color-primary-transparent-08);
-      border-radius: 24px;
-      padding: 5px;
-      overflow: hidden;
-      text-decoration: none; color: inherit;
-      /* reveal-on-scroll start state */
-      opacity: 0;
-      transform: translateY(36px) scale(0.98);
-      transition: opacity 0.7s ease,
-                  transform 0.7s cubic-bezier(0.16, 0.84, 0.24, 1),
-                  box-shadow 0.4s ease;
-      will-change: transform, opacity;
-    }
-    .flow-card.is-revealed { opacity: 1; transform: none; }
-    .flow-card.is-revealed:hover {
-      transform: scale(0.95);
-      box-shadow: var(--elevation-4);
-      z-index: 2;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .flow-card { opacity: 1; transform: none; transition: none; }
-    }
-
-    .flow-card__head { display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 0; }
-    .flow-card__name {
+    .case__index {
       font-family: "Archivo", sans-serif;
-      font-size: var(--text-headline-medium-font-size);
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    .case__title {
+      font-family: "Archivo", sans-serif;
       font-weight: 900;
-      line-height: var(--text-headline-medium-line-height);
-      letter-spacing: -0.02em;   /* matches the flow-page title (-0.88px at 44px) */
+      font-size: clamp(32px, 3.4vw, 52px);
+      line-height: 1.02; letter-spacing: -0.02em;
       color: var(--color-primary-transparent-87);
       text-transform: uppercase;
+      margin-top: 4px;
     }
 
-    /* Stage — device on a soft gradient-blob backdrop */
-    .flow-card__stage {
-      position: relative;
-      margin-top: 16px;
-      height: 510px;
-      border-radius: 20px;
+    /* Case demo — the full flow composition embedded live (?embed=full):
+       the copy column, the hand-drawn Demo button, the "try it yourself"
+       arrow, the restart doodle and the interactive phone, minus the site
+       chrome. The flow page scales its own stage to fit the frame. */
+    .case-demo {
+      margin: 0;
+      background: var(--color-primary-transparent-04); border-radius: 20px;
       overflow: hidden;
-      background: var(--color-primary-transparent-04);
+    }
+    .case-demo iframe {
+      display: block; width: 100%; height: 700px; border: 0;
+    }
+    @media (max-width: 900px) {
+      .case-demo iframe { height: 940px; }    /* stacked phone + doodles + button, no inner scroll */
+    }
+    /* Problem / Solution / Outcome grid — same as the other project pages */
+    .case__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .case__label {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500;
+      font-size: var(--text-label-medium-font-size);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+      margin-bottom: 12px;
+    }
+    .case__col p,
+    .case__col li {
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .case__col p + p { margin-top: 10px; }
+    .case__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .case__col ul li { padding-left: 20px; position: relative; }
+    .case__col ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 6px;
+      width: 11px; height: 11px;
+      background: url("assets/point-doodle.svg") no-repeat center / contain;
     }
 
-    .flow-card__device {
-      position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
-      width: 54%; max-width: 220px;
-      aspect-ratio: 360 / 780;
-      border-radius: 30px; overflow: hidden;
-      box-shadow: var(--elevation-4);
-      z-index: 1;
+    /* Design system — the one card left on the page, linking to the library.
+       Real library CSS classes/markup are copied in below so the wall looks
+       exactly like the library. */
+    .ds-card {
+      position: relative; display: block; height: 510px;
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--color-primary-transparent-08);
+      background: var(--color-constant-primary);
+      transition: box-shadow 0.3s ease;
     }
-    .flow-card__device iframe {
-      position: absolute; top: 0; left: 0;
-      width: 360px; height: 780px; border: 0;
-      transform-origin: top left; pointer-events: none;
-    }
-
-    .flow-card--empty .flow-card__stage {
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-      border: 1.5px dashed var(--color-primary-transparent-16);
-      border-radius: 16px;
-    }
-    .flow-card--empty .flow-card__stage span {
-      font-size: var(--text-body-large-font-size);
-      color: var(--color-primary-transparent-32);
-    }
-
-    /* Design system card — wall of components (spans two columns). Real library
-       CSS classes/markup are copied in below so they look exactly like the library. */
-    .flow-card--ds .flow-card__stage { background: var(--color-constant-primary); }
-    /* Screenshot overlay — shown when assets/design-system.png exists, else removed (wall fallback) */
+    .ds-card:hover { box-shadow: var(--elevation-4); }
+    /* Screenshot overlay — shown when assets/design-system-preview.png exists, else removed (wall fallback) */
     .ds-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: translateX(-20px) scale(1.2); transform-origin: center; z-index: 2; }
     .ds-wall {
       position: absolute; inset: 0; padding: 28px 32px; overflow: hidden;
@@ -262,18 +266,21 @@
     .ds-wall .ds-video__play { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: var(--color-constant-primary); display: flex; align-items: center; justify-content: center; font-size: 9px; }
     .ds-wall .ds-thumb { width: 64px; height: 48px; border-radius: 8px; background: var(--color-primary-transparent-08); flex-shrink: 0; }
 
+    .page-end { height: 120px; }
+
     /* ── Mobile ── */
     @media (max-width: 900px) {
       /* Hero aside drops below the title at full width */
       .hero__aside { width: 100%; align-self: stretch; margin-top: 8px; }
-      /* Flows stack; drop the staggered offset and the extra bottom room */
-      .flows-grid { grid-template-columns: 1fr; padding-bottom: 20px; }
-      .flows-grid > .flow-card:nth-child(even) { top: 0; }
+      .case { margin-top: 72px; }
+      .case__grid { grid-template-columns: 1fr; gap: 20px; }
     }
     @media (max-width: 600px) {
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
-      .flow-card__head { padding: 16px 16px 0; }
+      .case { margin-top: 56px; gap: 24px; }
+      .ds-card { height: 420px; }
+      .page-end { height: 56px; }
     }
   </style>
 </head>
@@ -287,13 +294,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -318,6 +324,7 @@
 
   <main class="main">
     <section class="hero">
+      <span class="hero__eyebrow">Pyroblast · iOS / Android / Desktop</span>
       <h1 class="hero__title">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
       <div class="hero__aside">
         <p>No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
@@ -325,37 +332,14 @@
       </div>
     </section>
 
-    <div class="flows-grid">
-      <!-- Live animated flow -->
-      <a class="flow-card" href="flows/login.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Log in</span>
-        </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/login.html?embed=1" title="Log in flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
-        </div>
-      </a>
-
-      <a class="flow-card flow-card--chats" href="flows/create-chats.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Create Chats</span>
-        </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/create-chats.html?embed=1" title="Create Chats flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
-        </div>
-      </a>
-
-      <!-- Design system — entry to the component library -->
-      <a class="flow-card flow-card--ds" href="atoms.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Design system</span>
-        </div>
-        <div class="flow-card__stage">
-          <!-- Drop a screenshot at assets/design-system.png and it shows here automatically;
+    <!-- ── Design system — the one card left, linking to the component library ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 01</span>
+        <h2 class="case__title">Design System</h2>
+      </div>
+      <a class="ds-card" href="atoms.html" aria-label="Open the Pyroblast component library">
+          <!-- Drop a screenshot at assets/design-system-preview.png and it shows here automatically;
                until the file exists, onerror removes the img and the component wall below shows. -->
           <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()">
           <div class="ds-wall">
@@ -417,20 +401,102 @@
             <span class="notification-counter"><span class="notification-counter__number">7</span></span>
             <span class="ds-avatar">EM</span>
           </div>
-        </div>
       </a>
+    </section>
 
-      <a class="flow-card flow-card--attach" href="flows/attach-photo.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Attach Photo</span>
+    <!-- ── Case 02 — Chat Organization ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 02</span>
+        <h2 class="case__title">Chat Organization</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/create-chats.html?embed=full" title="Chat Organization flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Gaming communities can grow from a small group into dozens of conversations within weeks. Without a clear structure, chats become noisy and difficult to navigate, causing members to mute channels or disengage.</p>
+          <p>The challenge was supporting both sides of growth: helping new communities start from zero and helping established ones stay organized as they scale.</p>
         </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/attach-photo.html?embed=1" title="Attach Photo flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I designed two complementary experiences.</p>
+          <p>The first guides a founder from an empty space to the first conversation and creation of the first sub-channel, making the initial setup feel simple and actionable.</p>
+          <p>The second helps mature communities manage complexity through folders, search, drag-and-drop organization, and renaming &#8212; adding structure without changing existing chat habits.</p>
         </div>
-      </a>
-    </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>Enabled communities to evolve from a single chat into organized spaces</li>
+            <li>Reduced friction when creating and managing multiple conversations</li>
+            <li>Added structure for large communities while keeping the familiar chat experience intact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Case 03 — Rich Photo Layouts ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 03</span>
+        <h2 class="case__title">Rich Photo Layouts</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/attach-photo.html?embed=full" title="Rich Photo Layouts flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>In most chat apps, photos are simply attached to a message. Images and text are treated as separate blocks, making it difficult to create structured posts, guides, or announcements where visuals and text work together.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I designed a flexible photo composer that lets users choose how an image is displayed within a message. Photos can be inserted in different layouts, while text flows naturally around them instead of being limited to a caption below.</p>
+          <p>This gives users editorial control over message composition, making it possible to create rich, well-structured content directly inside the chat.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>Turned photo attachments into a content creation tool rather than a simple file upload</li>
+            <li>Enabled users to create visually structured posts without leaving the conversation</li>
+            <li>Expanded the messaging experience beyond plain text and attachments</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Case 04 — Log in/Sign up ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 04</span>
+        <h2 class="case__title">Log in/Sign up</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/login.html?embed=full" title="Log in/Sign up flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p>Traditional sign up flows ask users to create an account before they experience any value. In messaging apps, that friction often leads to abandonment before users understand why they should register.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p>I redesigned onboarding to reduce the barrier to entry. Instead of opening with a sign up form, the app lets visitors explore the product first: they can browse public chats, search conversations, and experience the interface without creating an account.</p>
+          <p>Actions that require identity &#8212; such as sending messages &#8212; remain locked until registration. When users decide to join, sign up and log in are combined into a single flow, passwords are replaced with a one-time verification code, and profile setup is postponed until after the account is created.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li>Reduced friction at the first touchpoint by delaying registration until users had experienced the product</li>
+            <li>Allowed visitors to explore public content without an account while protecting interactive features</li>
+            <li>Simplified authentication by replacing passwords with one-time verification codes and deferring profile setup</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-end"></div>
   </main>
 
   <script>
@@ -440,63 +506,6 @@
     window.scrollTo(0, 0);
     window.addEventListener('load', function () { window.scrollTo(0, 0); });
 
-    // Scale each embedded flow (natural 360px wide) to fill its card
-    function fitFlows() {
-      document.querySelectorAll('.flow-card__device iframe').forEach(function (f) {
-        f.style.transform = 'scale(' + (f.parentElement.clientWidth / 360) + ')';
-      });
-    }
-    window.addEventListener('load', fitFlows);
-    window.addEventListener('resize', fitFlows);
-
-
-    // Play each card's embedded flow demo only while the card is hovered; reset on leave.
-    // Same-origin iframes → we can drive the flow's own window functions directly.
-    (function () {
-      document.querySelectorAll('.flow-card').forEach(function (card) {
-        var iframe = card.querySelector('.flow-card__device iframe');
-        if (!iframe) return;
-        function call (fn) {
-          try { var w = iframe.contentWindow; if (w && typeof w[fn] === 'function') w[fn](); } catch (e) {}
-        }
-        card.addEventListener('mouseenter', function () { call('playDemo'); });
-        card.addEventListener('mouseleave', function () { call('restartManual'); });
-      });
-    })();
-
-
-    // Reveal cards as they scroll into view (staggered)
-    (function () {
-      var cards = document.querySelectorAll('.flow-card');
-      function reveal (el, delay) { setTimeout(function () { el.classList.add('is-revealed'); }, delay || 0); }
-      if (!('IntersectionObserver' in window)) {
-        cards.forEach(function (c) { reveal(c); });
-        return;
-      }
-      // threshold 0 → reveal the moment a card enters (robust even when a tall hero
-      // leaves the first card only slightly in view on load).
-      var io = new IntersectionObserver(function (entries) {
-        var shown = 0;
-        entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          reveal(e.target, shown * 110);
-          shown++;
-          io.unobserve(e.target);
-        });
-      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-      // Reveal anything already in (or above) the viewport right away — robust on
-      // reload and when a tall hero pushes the first cards down to the fold, where
-      // the observer's initial callback can otherwise miss them. Observe the rest.
-      var initial = 0;
-      cards.forEach(function (c) {
-        if (c.getBoundingClientRect().top < window.innerHeight) {
-          reveal(c, initial * 110);
-          initial++;
-        } else {
-          io.observe(c);
-        }
-      });
-    })();
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
 </body>

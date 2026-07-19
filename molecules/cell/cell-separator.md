@@ -55,5 +55,5 @@
 | icons/small/arrow-right.svg | 16px chevron (optional) |
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

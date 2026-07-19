@@ -40,5 +40,5 @@
 - Minimum touch target: 44×44pt — pad the surrounding area; the badge itself is ~20px.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

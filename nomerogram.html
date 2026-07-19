@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/site-header.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/video-timeline.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
@@ -81,7 +82,8 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .store-link:hover { background: var(--color-primary-transparent-04); }
+    .store-link:hover  { background: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -182,6 +184,309 @@
     }
     .case__figure img { display: block; width: 100%; height: auto; }
 
+    /* iOS device mockup with a Dynamic Island — a full app screenshot sits inside
+       the bezel; the island is an overlaid pill in the status-bar gap. The stage
+       is a row so more screens of the scan flow can sit side by side later. */
+    .scan-demo {
+      margin: 0;
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: 32px; flex-wrap: wrap;
+      padding: 44px 20px;
+      background: var(--color-primary-transparent-04); border-radius: 20px;
+    }
+    .scan-phone {
+      width: 262px; padding: 7px; flex-shrink: 0;
+      background: #0b0b0d; border-radius: 38px; box-shadow: var(--elevation-4);
+    }
+    .scan-phone__screen {
+      position: relative; width: 100%;
+      border-radius: 31px; overflow: hidden; background: #fff;  /* concentric: 38 − 7 */
+    }
+    .scan-phone__screen img,
+    .scan-phone__screen video { display: block; width: 100%; height: auto; }
+    .scan-phone__island {
+      position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+      width: 78px; height: 23px; background: #0b0b0d; border-radius: 12px; z-index: 6;
+    }
+    /* doodle timeline above each demo phone — same width as the mockup */
+    .scan-demo .video-timeline { max-width: 262px; }
+
+    /* ── Onboarding demo (Case 01, Figma node 27:1171): the search screen dims and
+       a bottom sheet presents with the iOS sheet curve. Values are the Figma frame's
+       (375-grid) scaled to this mockup's 248px screen. ── */
+    /* The open/close cycle is driven by script (one clock shared with the Lottie),
+       so a backgrounded tab can never freeze the sheet in a half state: the demo
+       restarts from the clean search screen every time the tab becomes visible. */
+    .onb-scrim {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.75); z-index: 2;
+      opacity: 0; transition: opacity 0.5s cubic-bezier(0.32,0.72,0,1);  /* dim rides the same curve as the sheet, like UIKit */
+    }
+    .onb-sheet {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 62.5%; z-index: 3;
+      background: #fff; border-radius: 10px 10px 0 0;
+      transform: translateY(102%);
+      transition: transform 0.5s cubic-bezier(0.32,0.72,0,1);  /* UIKit sheet: 0.5s, spring-like ease-out */
+      text-align: center;
+      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; color: #030303;
+    }
+    /* the dim has its own switch so it can stay up across the whole story —
+       sheet, dismissal and coach mark — without blinking in between */
+    .onb-stage--dim .onb-scrim { opacity: 1; }
+    .onb-stage--open .onb-sheet { transform: translateY(0); }
+
+    /* Coach mark shown after "OK" (Figma node 39:1197): the Add tab is spotlighted
+       in a white circle, with a hint and a doodle arrow; the shared scrim dims the rest */
+    .onb-coach {
+      position: absolute; inset: 0; z-index: 4; pointer-events: none;
+      opacity: 0; transition: opacity 0.45s ease;
+    }
+    .onb-stage--coach .onb-coach { opacity: 1; }
+    .onb-coach__x {
+      position: absolute; top: 10px; right: 10px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .onb-coach__hint {
+      position: absolute; left: 43.3%; right: 0%; top: 74.8%;
+      color: #fff; text-align: center;
+      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+      font-size: 10.5px; line-height: 14px; font-weight: 400;
+    }
+    .onb-coach__arrow { position: absolute; left: 47.3%; top: 81.8%; }
+    /* the spotlight circle sits dead on the real Add tab icon: its centre is
+       measured from the search screenshot's tab bar (icon centre = 39.3% / 93.8%) */
+    .onb-coach__btn {
+      position: absolute; left: 39.3%; top: 93.8%; transform: translate(-50%,-50%);
+      width: 52px; height: 52px; border-radius: 50%; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      transition: transform 0.12s ease, opacity 0.12s ease;  /* pressed under the finger, like the OK button */
+    }
+    .onb-stage--add-press .onb-coach__btn { transform: translate(-50%,-50%) scale(0.9); opacity: 0.75; }
+    /* the app's tab-bar icon (inlined to tint it the app blue), nudged up a touch
+       so it sits optically centred in the circle */
+    .onb-coach__ic { display: block; width: 20px; height: 20px; transform: translateY(-2px); }
+    /* HIG-style circular close button in the sheet's top-right corner */
+    .onb-sheet__close {
+      position: absolute; top: 10px; right: 10px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(116,116,128,0.12);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .onb-sheet__close svg { display: block; }
+    .onb-sheet__art {
+      display: block; width: 75%; margin: 23px auto 0;
+    }
+    .onb-sheet__art img, .onb-sheet__art svg { display: block; width: 100%; height: auto; }
+    .onb-sheet__title {
+      margin-top: 10px;
+      font-family: -apple-system, "SF Pro Display", system-ui, sans-serif;
+      font-size: 14.5px; line-height: 18px; font-weight: 500; letter-spacing: 0.25px;
+    }
+    .onb-sheet__text {
+      margin: 5px auto 0; width: 85%;
+      font-size: 10.5px; line-height: 14px; font-weight: 400; letter-spacing: -0.16px;
+    }
+    .onb-sheet__btn {
+      position: absolute; left: 10px; right: 10px; bottom: 21px; height: 37px;
+      background: #1b75cc; border-radius: 3px;
+      color: #fff; font-size: 11px; line-height: 37px; font-weight: 500; letter-spacing: -0.16px;
+      transition: opacity 0.12s ease;  /* UIButton-style highlight: dims while the finger is down */
+    }
+    .onb-stage--ok-press .onb-sheet__btn { opacity: 0.6; }
+    /* Tapping the spotlighted Add tab behaves like a real UITabBar switch: the
+       content is swapped instantly, no push or modal slide. Only the way back —
+       the demo-loop fade to the search screen — is animated. */
+    .onb-upload {
+      position: absolute; inset: 0; z-index: 5; background: #fff;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .onb-upload img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .onb-stage--upload .onb-upload { opacity: 1; transition: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .onb-scrim { transition: none; opacity: 1; }
+      .onb-sheet { transition: none; transform: translateY(0); }
+    }
+
+    /* English overlays over the Russian baked into the app screenshots: a plate
+       matched to the underlying surface hides the original word, English on top.
+       Values are fractions of the 248px screen, so they hold at any scale. */
+    .ru-cover {
+      position: absolute; z-index: 1; display: flex;
+      align-items: center; justify-content: center; text-align: center; line-height: 1;
+      overflow: hidden; font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+    }
+    /* search screen caption ("Всего … млн фото") — sits on the #f5f5f5 surface */
+    .ru-caption { left: 7%; right: 7%; top: 14.7%; height: 2.5%; background: #f5f5f5; color: #3d3d3d; font-size: 7px; }
+    /* upload screen: title, disabled Upload pill, and the two source tiles */
+    .ru-add     { left: 37%; right: 37%; top: 7.3%; height: 3.2%; background: #fdfdfd; color: #111; font-size: 9px; font-weight: 600; }
+    .ru-upload  { left: 68.4%; right: 4.9%; top: 6.4%; height: 4.6%; background: #cecece; color: #fff; font-size: 7px; font-weight: 500; border-radius: 20px; }
+    /* the tile covers span the whole source tile edge-to-edge (up to the white
+       divider), so the plate's edges land on the tile's own borders — no seam */
+    .ru-camera  { left: 0.6%; right: 50.1%; top: 12.1%; height: 22.8%; background: #3f3e3c; color: #fff; font-size: 8px; }
+    .ru-gallery { left: 50.2%; right: 0.5%; top: 12.1%; height: 22.8%; background: #656565; color: #fff; font-size: 8px; }
+
+    /* Tap ripples over the screen recording — spawned by script in sync with the
+       video timeline, marking where the finger lands */
+    .vid-tap {
+      position: absolute; z-index: 5;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(90,150,230,0.35); border: 1.5px solid rgba(90,150,230,0.6);
+      transform: translate(-50%,-50%); pointer-events: none;
+      animation: vid-tap 0.55s ease-out forwards;
+    }
+    @keyframes vid-tap {
+      0%   { opacity: 0;   transform: translate(-50%,-50%) scale(0.45); }
+      25%  { opacity: 0.9; transform: translate(-50%,-50%) scale(0.75); }
+      100% { opacity: 0;   transform: translate(-50%,-50%) scale(1.25); }
+    }
+    /* Scan icon overlaid just to the right of the plate field (matching the app).
+       Selector is scoped past ".scan-phone__screen img" so the 100% width there
+       doesn't blow the icon up to full screen size. */
+    .scan-phone__screen img.scan-phone__scanicon {
+      position: absolute; top: 10.2%; left: 79%; transform: translateY(-50%);
+      width: 20px; height: 20px; z-index: 3;
+    }
+
+    /* ── Scan flow: one looped demo. Tapping the scan icon presents the camera
+       scanner over the search screen. The camera dims everything except a framing
+       square (Figma node 16:1143) and a line sweeps that square. ── */
+    .scan-stage { position: relative; overflow: hidden; }
+    /* the search scene defines the stage height and is its own stacking context
+       below the camera, so its scan icon can't poke through the presented camera */
+    .scan-scene--search { position: relative; z-index: 1; }
+    /* the camera scene is layered over the search screen. Per the HIG a capture
+       screen is a self-contained task, so it presents modally — sliding up from
+       the bottom — while the report later pushes in from the right */
+    .scan-scene--camera {
+      position: absolute; inset: 0; z-index: 2; overflow: hidden;  /* clip the scrim so it can't bleed onto the search screen while off-stage */
+      transform: translateY(101%);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.18);
+      animation: scan-present 12s cubic-bezier(0.32,0.72,0,1) infinite;
+    }
+    /* after the scan, the car's report pushes in over the camera the same way */
+    .scan-scene--result {
+      position: absolute; inset: 0; z-index: 3; overflow: hidden; background: #fff;
+      transform: translateX(101%);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.18);
+      animation: scan-result 12s cubic-bezier(0.32,0.72,0,1) infinite;
+    }
+    .scan-scene--result img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    @keyframes scan-result {
+      /* pushes in right after the single scan sweep finishes (~27%) */
+      0%,29%   { transform: translateX(101%); opacity: 1; }
+      33.5%,86% { transform: translateX(0); opacity: 1; }
+      /* a soft fade back to the search screen closes the story */
+      90%,97%  { transform: translateX(0); opacity: 0; }
+      100%     { transform: translateX(101%); opacity: 0; }
+    }
+    .scan-scene--camera img.scan-cam {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: 100% 50%;  /* bring the plate toward centre */
+    }
+    /* the camera chrome fades in after the modal slide lands, so its status bar
+       doesn't travel through the middle of the screen during the presentation */
+    .scan-cam__ui { position: absolute; inset: 0; animation: scan-ui 12s ease infinite; }
+    @keyframes scan-ui {
+      0%,12.5% { opacity: 0; }
+      14.5%,84% { opacity: 1; }
+      84.2%,100% { opacity: 0; }
+    }
+    /* framing square + surrounding dim: the huge box-shadow IS the scrim, so the
+       square stays a clear window while everything around it is darkened */
+    /* text + framing square as one centred column, 8px apart */
+    .scan-cam__frame {
+      position: absolute; left: 50%; top: 63%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%;
+    }
+    .scan-cam__zone {
+      position: relative; z-index: 1;
+      width: 46%; aspect-ratio: 137 / 84;
+      border: 1.5px solid rgba(255,255,255,0.92); border-radius: 5px;
+      box-shadow: 0 0 0 2000px rgba(26,26,30,0.5);
+      overflow: hidden;
+    }
+    .scan-cam__line {
+      position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, rgba(120,205,255,0.95), transparent);
+      box-shadow: 0 0 8px 1px rgba(120,205,255,0.6);
+      animation: scan-line 12s ease-in-out infinite;  /* synced to the loop: one sweep per scan */
+    }
+    @keyframes scan-line {
+      0%,17%   { top: 6%;  opacity: 0; }
+      19%      { opacity: 1; }
+      27%      { top: 90%; opacity: 1; }
+      28%,100% { top: 90%; opacity: 0; }
+    }
+    .scan-cam__hint {
+      position: relative; z-index: 3; text-align: center;
+      color: #fff; font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+      font-size: 10px; font-weight: 400; text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+    }
+    .scan-cam__ctl {
+      position: absolute; z-index: 2; color: #fff;
+      font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+      /* iOS bar-button text is 17pt; at this mockup scale (~248px ≈ 375pt) that's ~11px */
+      font-weight: 400; font-size: 11px; text-shadow: 0 1px 3px rgba(0,0,0,0.4); white-space: nowrap;
+    }
+    .scan-cam__back    { top: 5.6%; left: 6%; }
+    .scan-cam__flash   { top: 5.6%; right: 5.5%; }
+    .scan-cam__gallery { bottom: 8%; left: 7%; }
+    .scan-cam__shutter {
+      position: absolute; z-index: 2; left: 50%; bottom: 4.2%; transform: translateX(-50%);
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 2.5px solid #fff; background: transparent;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));
+    }
+    .scan-cam__shutter::after {
+      content: ""; position: absolute; inset: 3px; border-radius: 50%; background: #fff;
+    }
+    /* white status bar on the camera screen (the search screen has its own baked in) */
+    .scan-cam__sb { position: absolute; top: 0; left: 0; right: 0; height: 34px; z-index: 2;
+      color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+    .scan-cam__sb-time { position: absolute; left: 18px; top: 13px;
+      font: 600 9px/1 -apple-system,"SF Pro Text",system-ui,sans-serif; letter-spacing: 0.02em; }
+    .scan-cam__sb-icons { position: absolute; right: 16px; top: 13px; display: flex; align-items: center; gap: 3px; }
+    .scan-cam__sb-icons svg { display: block; }
+    .scan-cam__bat { position: relative; width: 18px; height: 9px;
+      border: 1px solid rgba(255,255,255,0.65); border-radius: 2.5px; }
+    .scan-cam__bat::before { content: ""; position: absolute; inset: 1.3px; width: 60%; background: #fff; border-radius: 1px; }
+    .scan-cam__bat::after { content: ""; position: absolute; right: -2.3px; top: 2.6px; width: 1.3px; height: 3.4px;
+      background: rgba(255,255,255,0.65); border-radius: 0 1px 1px 0; }
+
+    /* tap ripple on the scan icon, right before the camera opens */
+    .scan-tap {
+      position: absolute; top: 10.2%; left: 83%; transform: translate(-50%,-50%);
+      width: 26px; height: 26px; border-radius: 50%; z-index: 3;
+      background: rgba(90,150,230,0.35); border: 1.5px solid rgba(90,150,230,0.6);
+      opacity: 0; animation: scan-tap 12s ease-out infinite;
+    }
+    @keyframes scan-tap {
+      0%,4.5% { opacity: 0; transform: translate(-50%,-50%) scale(0.4); }
+      5.5%    { opacity: 0.9; transform: translate(-50%,-50%) scale(0.7); }
+      8%      { opacity: 0; transform: translate(-50%,-50%) scale(1.4); }
+      100%    { opacity: 0; }
+    }
+    @keyframes scan-present {
+      /* parked below the screen */
+      0%,8%      { transform: translateY(101%); }
+      /* modal slide-up (~0.55s, close to the native 0.5s); stays under the result */
+      12.5%,84%  { transform: translateY(0); }
+      /* snaps away while fully covered by the report, so the report's fade
+         reveals the search screen (with the scan icon) directly */
+      84.2%,100% { transform: translateY(101%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scan-scene--camera { animation: none; transform: translateY(0); }
+      .scan-scene--result { animation: none; }   /* stays parked off-screen */
+      .scan-cam__ui { animation: none; opacity: 1; }
+      .scan-cam__line { animation: none; top: 46%; opacity: 0.9; }
+      .scan-tap { display: none; }
+    }
+
     .page-end { height: 120px; }
 
     @media (max-width: 900px) {
@@ -201,6 +506,9 @@
       .case__grid { gap: 20px; }
       .page-end { height: 56px; }
     }
+
+    /* looping demos idle until the user scrolls to them (scripts/demo-anim.js) */
+    [data-anim]:not(.anim-live) * { animation-play-state: paused !important; }
   </style>
 </head>
 <body>
@@ -213,13 +521,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -258,93 +565,185 @@
     <section class="role">
       <div>
         <h2 class="section-title">My Role and Responsibilities</h2>
-        <p class="role__team">The team: a product manager, an analyst, two iOS and two Android engineers, and a QA engineer, with backend owned by a separate team.</p>
+        <p class="role__team">Extensive experience collaborating in cross-functional teams with PMs, analysts, engineers, and QA.</p>
       </div>
       <ul class="role__list">
         <li>Owned UX for the iOS and Android apps: search, history, and the photo contribution flows.</li>
-        <li>Turned analytics findings into features: history clutter among heavy users became the case for Favorites.</li>
+        <li>Turned analytics findings into features: history clutter among heavy users became the case for Saved Cars.</li>
         <li>Ran in-depth interviews and hallway tests to pick between prototyped concepts before development.</li>
         <li>Worked with the product manager and analyst to prioritize the roadmap by impact.</li>
         <li>Prototyped key flows in Figma, including edge cases for camera-based plate recognition.</li>
       </ul>
     </section>
 
-    <!-- ── Case 01 — Onboarding to Boost Photo Uploads ── -->
+    <!-- ── Case 01 — Photo Contribution ── -->
     <section class="case">
       <div>
         <span class="case__index">Case 01</span>
-        <h2 class="case__title">Onboarding to Boost Photo Uploads</h2>
+        <h2 class="case__title">Photo Contribution</h2>
       </div>
+      <figure class="scan-demo">
+        <div class="video-timeline-row">
+          <div class="video-timeline" data-video-timeline data-duration="11" aria-hidden="true"></div>
+        </div>
+        <div class="scan-phone">
+          <div class="scan-phone__screen onb-stage">
+            <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" />
+            <span class="ru-cover ru-caption">686.7M photos total · +6.9M in July</span>
+            <div class="onb-scrim" aria-hidden="true"></div>
+            <div class="onb-sheet" aria-hidden="true">
+              <span class="onb-sheet__close">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#7c7c80" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <div class="onb-sheet__art" id="onbLottie" aria-hidden="true">
+                <img src="assets/nomerogram/onb-illustration.png" alt="" /><!-- static fallback; replaced by the Lottie -->
+              </div>
+              <div class="onb-sheet__title">Photograph a damaged car</div>
+              <p class="onb-sheet__text">Help the future owner avoid&nbsp;junk</p>
+              <div class="onb-sheet__btn">OK</div>
+            </div>
+            <!-- Coach mark after OK: spotlight on the Add tab (Figma node 39:1197) -->
+            <div class="onb-coach" aria-hidden="true">
+              <span class="onb-coach__x">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#7c7c80" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <div class="onb-coach__hint">Tap to upload one<br />or more photos</div>
+              <svg class="onb-coach__arrow" width="34" height="30" viewBox="0 0 34 30" fill="none">
+                <path d="M29 3C25 13 18 20 8 25" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 25l7-1M8 25l3-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="onb-coach__btn">
+                <svg class="onb-coach__ic" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M11.0342 6C11.2788 7.84525 12.8574 9.26953 14.7695 9.26953H15.1631C15.2208 11.3396 16.916 13 19 13C19.732 13 20.416 12.7949 20.998 12.4395C20.9982 12.4774 21 12.513 21 12.5459V20.7275C21 21.6337 20.9997 24 18 24H3C0.000292024 24 2.89751e-08 21.6342 6.15083e-10 20.7275V12.5459C-6.57154e-07 11.7277 7.81793e-08 9.27246 3 9.27246C3.87241 9.27246 5.1282 8.64293 5.69922 7.9541L6.28516 7.24609C6.85549 6.5578 8.02338 6.00007 8.92383 6H11.0342ZM10.5 13C8.567 13 7 14.567 7 16.5C7 18.433 8.56701 20 10.5 20C12.433 20 14 18.433 14 16.5C14 14.567 12.433 13 10.5 13Z" fill="#1b75cc"/>
+                  <rect x="17.6001" width="2.4" height="9.6" rx="1.2" fill="#1b75cc"/>
+                  <rect x="23.6" y="3.59998" width="2.4" height="9.6" rx="1.2" transform="rotate(90 23.6 3.59998)" fill="#1b75cc"/>
+                </svg>
+              </span>
+            </div>
+            <!-- The upload screen the coach mark leads to: one tap on Add and the user is here -->
+            <div class="onb-upload" aria-hidden="true">
+              <img src="assets/nomerogram/upload-screen.png" alt="The photo upload screen — camera and gallery tiles on top, recent car photos below, with an Upload button in the navigation bar" loading="lazy" />
+              <span class="ru-cover ru-add">Add</span>
+              <span class="ru-cover ru-upload">Upload</span>
+              <span class="ru-cover ru-camera">Camera</span>
+              <span class="ru-cover ru-gallery">Gallery</span>
+            </div>
+            <div class="scan-phone__island" aria-hidden="true"></div>
+          </div>
+        </div>
+      </figure>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>Uploading photos sat outside the app&#8217;s core flow: only 12.7% of users ever reached the upload screen, and just 1.5% of those who searched for cars uploaded a photo.</p>
-          <p>Discoverability wasn&#8217;t the whole problem &#8212; users saw no reason to contribute.</p>
+          <p>Photos are the product&#8217;s key asset &#8212; how good a car check is depends directly on the images behind it. But adding a photo sat outside the core flow.</p>
+          <p>Only 12.7% of users ever opened the upload screen, and among users who searched for cars, just 1.5% uploaded a photo.</p>
+          <p>That showed the real problem wasn&#8217;t discoverability &#8212; it was a lack of motivation to share photos.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>Instead of telling users <em>what</em> they could do (&#8220;Upload photos&#8221;), the onboarding told them <em>why</em> it mattered. The screen says it plainly: &#8220;Photograph a damaged car &#8212; help the future owner avoid junk.&#8221;</p>
-          <p>One lightweight screen, shown on the user&#8217;s fifth or sixth visit, once the app had proven its value. Like every change we shipped, it went through an A/B test.</p>
+          <p>Together with the PM, we reframed the problem: it wasn&#8217;t that users couldn&#8217;t find the upload feature &#8212; it was that they didn&#8217;t see its value.</p>
+          <p>I redesigned the onboarding: instead of simply showing that photo upload was possible, we explained to the user why it mattered.</p>
+          <p>We tested several illustration-and-message variants in an A/B test. The winning variant was shown after a few visits to the app, once the user was already familiar with the product.</p>
+          <p>I built the illustration&#8217;s animation myself in LottieFiles, so handoff cost nothing &#8212; developers just dropped the JSON into the code.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>Visits to the upload screen grew by 27%</li>
+            <li>A month-long A/B test showed a +27% increase in visits to the upload screen</li>
             <li>Uploaded photos nearly doubled</li>
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/nomerogram/onboarding.png" alt="Photo upload onboarding on iOS and Android: a screen asking users to photograph a damaged car to help the future owner, and a coach mark pointing to the Add tab where photos are uploaded" loading="lazy" />
-      </figure>
     </section>
 
-    <!-- ── Case 02 — License Plate Recognition from Photo ── -->
+    <!-- ── Case 02 — Plate Scanner ── -->
     <section class="case">
       <div>
         <span class="case__index">Case 02</span>
-        <h2 class="case__title">License Plate Recognition from Photo</h2>
+        <h2 class="case__title">Plate Scanner</h2>
       </div>
+      <figure class="scan-demo" data-anim>
+        <div class="video-timeline-row">
+          <div class="video-timeline" data-video-timeline data-duration="12" aria-hidden="true"></div>
+        </div>
+        <div class="scan-phone">
+          <div class="scan-phone__screen scan-stage">
+            <!-- Search screen (base) — defines the stage height -->
+            <div class="scan-scene scan-scene--search">
+              <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" />
+              <img class="scan-phone__scanicon" src="assets/scan.svg" alt="Scan a plate with the camera" />
+              <span class="ru-cover ru-caption">686.7M photos total · +6.9M in July</span>
+            </div>
+            <span class="scan-tap" aria-hidden="true"></span>
+            <!-- Camera scanner — presented over the search screen on tap -->
+            <div class="scan-scene scan-scene--camera" aria-hidden="true">
+              <img class="scan-cam" src="assets/nomerogram/scan-camera.png" alt="The camera check — pointing the phone at a car so the app can read its plate" loading="lazy" />
+              <div class="scan-cam__ui">
+                <div class="scan-cam__sb" aria-hidden="true">
+                  <span class="scan-cam__sb-time">16:55</span>
+                  <span class="scan-cam__sb-icons">
+                    <svg width="15" height="9" viewBox="0 0 15 9" fill="#fff"><rect x="0" y="6" width="2.5" height="3" rx="0.6"/><rect x="4" y="4" width="2.5" height="5" rx="0.6"/><rect x="8" y="2" width="2.5" height="7" rx="0.6"/><rect x="12" y="0" width="2.5" height="9" rx="0.6"/></svg>
+                    <svg width="13" height="9" viewBox="0 0 15 11" fill="none"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#fff"/></svg>
+                    <span class="scan-cam__bat"></span>
+                  </span>
+                </div>
+                <div class="scan-cam__frame">
+                  <span class="scan-cam__hint">Position the plate in the frame</span>
+                  <div class="scan-cam__zone"><div class="scan-cam__line"></div></div>
+                </div>
+                <span class="scan-cam__ctl scan-cam__back">Back</span>
+                <span class="scan-cam__ctl scan-cam__flash">Flash</span>
+                <span class="scan-cam__ctl scan-cam__gallery">Gallery</span>
+                <span class="scan-cam__shutter"></span>
+              </div>
+            </div>
+            <!-- Recognized: the car's report pushes in over the camera -->
+            <div class="scan-scene scan-scene--result" aria-hidden="true">
+              <img src="assets/nomerogram/scan-result.png" alt="The car report opened from the scan — BMW X5 M Competition 2020 with registration periods, average price and photos found by the plate" loading="lazy" />
+            </div>
+            <div class="scan-phone__island" aria-hidden="true"></div>
+          </div>
+        </div>
+      </figure>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>The only way to check a car was to type the plate by hand. In the most common real-world scenario, standing next to a car on the street, that meant photographing the plate and then switching screens to retype the number.</p>
-          <p>Extra effort landed at exactly the moment users were most motivated.</p>
+          <p>Photos were an important source of content for the product, and the team needed to grow the volume of user-submitted car photos. Users already had a natural scenario for it: driving, or just passing by, and noticing an interesting car they wanted to know more about.</p>
+          <p>The only way to check it was to photograph the plate, then type the number into search by hand &#8212; an extra step landing right at the moment the user was most motivated to check.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I designed a camera-first check: point the camera at a plate inside the on-screen frame, the app recognizes the number and starts the check. No typing, no screen switching.</p>
-          <p>Recognition didn&#8217;t have to be perfect. In production the engine read 97% of plates correctly, and I designed the flow around the remaining 3%: the app pre-filled every character it did read into the plate input, and the user corrected the rest instead of starting over.</p>
+          <p>I designed a camera-first check: point the camera at the plate inside the on-screen frame, and the app reads the number and opens the report right away.</p>
+          <p>The frame was deliberately kept small: to fit the plate, the user naturally held the whole car in the shot. That did double duty &#8212; it made the check simpler, and it fed the product&#8217;s photo library with additional car shots.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>Checking a car became a one-step action in street scenarios</li>
-            <li>Manual plate entry no longer blocked the core flow</li>
-            <li>A misread plate cost the user a one-character fix, not a retyped number</li>
+            <li>Checking a car on the street collapsed to a single action: point the camera and get the result</li>
+            <li>After launch, scanning became a noticeable way to check plates on the go &#8212; improving the experience while also feeding the product&#8217;s car-photo library</li>
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/nomerogram/plate-recognition.png" alt="Three screens of the camera check: a scan icon next to the plate input, an intro screen saying photographing a car is easier than typing the number, and the camera with a framing zone for the plate" loading="lazy" />
-      </figure>
-      <!-- Fallback figure — waiting for Figma exports. Drop the file at
-           assets/nomerogram/plate-fallback.png (suggested frames, left to right:
-           1) camera with a real plate inside the framing zone, 2) plate input
-           pre-filled with the recognized characters and the plate keyboard open,
-           3) "couldn't read the plate" state), then uncomment:
-      <figure class="case__figure">
-        <img src="assets/nomerogram/plate-fallback.png" alt="Fallback states of the camera check: a partially recognized number pre-filled into the plate input for correction, and the state shown when the plate could not be read" loading="lazy" />
-      </figure>
-      -->
     </section>
 
-    <!-- ── Case 03 — Search History ── -->
+    <!-- ── Case 03 — Saved Cars ── -->
     <section class="case">
       <div>
         <span class="case__index">Case 03</span>
-        <h2 class="case__title">Search History</h2>
+        <h2 class="case__title">Saved Cars</h2>
       </div>
+      <figure class="scan-demo">
+        <div class="video-timeline-row">
+          <div class="video-timeline" data-video-timeline aria-hidden="true"></div>
+        </div>
+        <div class="scan-phone">
+          <div class="scan-phone__screen">
+            <video src="assets/nomerogram/search-history.mp4"
+                   autoplay muted loop playsinline preload="metadata"
+                   aria-label="Screen recording of the Saved Cars flow: saving a car from the search history and returning to it from the Saved Cars tab"></video>
+          </div>
+        </div>
+      </figure>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
@@ -354,25 +753,179 @@
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
           <p>Analytics and interviews pointed to the same need: a way to save a car deliberately, separate from the automatic history.</p>
-          <p>I prototyped several concepts and tested them in hallway sessions and in-depth interviews. Favorites won: save a car, return to it any time.</p>
+          <p>I built several prototypes and tested them in quick usability tests and hallway sessions. Saved Cars won.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>In the A/B test, 15% of users adopted Favorites within a month</li>
+            <li>In the A/B test, 15% of users adopted Saved Cars within a month</li>
             <li>No complaints in reviews or support after release</li>
             <li>History stayed manageable even for those checking dozens of plates a session</li>
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/nomerogram/search-history.png" alt="Four Nomerogram screens: the History tab with recent plate searches, an action sheet with an Add to Favorites option, the Favorites tab with starred cars, and a confirmation dialog for removing a car from Favorites" loading="lazy" />
-      </figure>
     </section>
 
     <div class="page-end"></div>
   </main>
 
   <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/demo-anim.js"></script>
+  <script src="scripts/video-timeline.js"></script>
+  <script src="scripts/lottie.min.js"></script>
+  <script>
+    /* Onboarding demo (Case 01): one script drives the whole cycle — scrim, sheet
+       and the Lottie share a single clock, so they can never drift apart. Whenever
+       the tab becomes visible again, the demo restarts from the clean search screen. */
+    (function () {
+      var stage = document.querySelector('.onb-stage');
+      var box = document.getElementById('onbLottie');
+      if (!stage || !box) return;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var anim = null;
+      if (window.lottie) {
+        anim = lottie.loadAnimation({
+          container: box, renderer: 'svg', loop: false, autoplay: false,
+          path: 'assets/nomerogram/onb-upload.json'
+        });
+        anim.addEventListener('DOMLoaded', function () {
+          var img = box.querySelector('img');
+          if (img) img.remove();                   /* drop the static fallback */
+          if (reduced) anim.goToAndStop(299, true);
+        });
+      }
+      if (reduced) { stage.classList.add('onb-stage--open'); return; }
+
+      var timers = [];
+      function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+      function clearAll() { timers.forEach(clearTimeout); timers = []; }
+      function ripple(x, y) {
+        var el = document.createElement('span');
+        el.className = 'vid-tap';
+        el.style.left = x + '%';
+        el.style.top = y + '%';
+        stage.appendChild(el);
+        el.addEventListener('animationend', function () { el.remove(); });
+      }
+
+      function cycle() {
+        /* keep the doodle timeline's clock in step with this demo's clock */
+        stage.dispatchEvent(new CustomEvent('demo-cycle', { bubbles: true }));
+        stage.classList.add('onb-stage--dim');                     /* the dim stays up for the whole story */
+        stage.classList.add('onb-stage--open');                    /* slide the sheet up */
+        later(function () { if (anim) anim.goToAndPlay(0, true); }, 0);           /* lottie starts with the slide-up */
+        later(function () { ripple(50, 92.6); }, 2900);            /* tap OK right after the hand settles into frame (Lottie ~2.7s) */
+        later(function () { stage.classList.add('onb-stage--ok-press'); }, 2900);     /* OK dims to 60% under the finger */
+        later(function () { stage.classList.remove('onb-stage--ok-press'); }, 3250);  /* finger lifts just before dismissal */
+        later(function () { stage.classList.remove('onb-stage--open'); }, 3400);  /* sheet dismisses; dim stays */
+        later(function () { stage.classList.add('onb-stage--coach'); }, 3900);    /* coach mark on the Add tab */
+        later(function () { ripple(39.3, 93.8); }, 5900);          /* tap the real Add tab position */
+        later(function () { stage.classList.add('onb-stage--add-press'); }, 5900);    /* the Add button squeezes under the finger */
+        later(function () { stage.classList.add('onb-stage--upload'); }, 6000);   /* tab switch: the screen swaps instantly, like UITabBar */
+        later(function () { stage.classList.remove('onb-stage--add-press'); }, 6150); /* finger lifts, already under cover */
+        later(function () {
+          stage.classList.remove('onb-stage--coach');              /* coach and dim leave under cover of the upload screen */
+          stage.classList.remove('onb-stage--dim');
+        }, 6900);
+        later(function () { stage.classList.remove('onb-stage--upload'); }, 9700);   /* soft fade back to search closes the story */
+        later(cycle, 11000);                                       /* short clean beat after the fade, then the flow restarts */
+      }
+      /* the cycle starts only when the demo scrolls into view, like the CSS demos */
+      var started = false;
+      function start() { if (!started) { started = true; later(cycle, 700); } }
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { start(); io.disconnect(); }
+          });
+        }, { threshold: 0.3 });
+        io.observe(stage);
+      } else {
+        start();
+      }
+
+      /* a backgrounded tab throttles timers — restart cleanly whenever it's shown */
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden || !started) return;
+        clearAll();
+        stage.classList.remove('onb-stage--open');
+        stage.classList.remove('onb-stage--ok-press');
+        stage.classList.remove('onb-stage--coach');
+        stage.classList.remove('onb-stage--add-press');
+        stage.classList.remove('onb-stage--upload');
+        stage.classList.remove('onb-stage--dim');
+        if (anim) anim.goToAndStop(0, true);
+        later(cycle, 700);
+      });
+    })();
+  </script>
+  <script>
+    /* Play case videos only while they're on screen (reliable where the
+       autoplay attribute is ignored, and it saves data off-screen). */
+    (function () {
+      var vids = document.querySelectorAll('.scan-demo video');
+      if (!vids.length) return;
+      if (!('IntersectionObserver' in window)) {
+        vids.forEach(function (v) { v.play().catch(function () {}); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) e.target.play().catch(function () {});
+          else e.target.pause();
+        });
+      }, { threshold: 0.25 });
+      vids.forEach(function (v) { io.observe(v); });
+    })();
+  </script>
+  <script>
+    /* Tap ripples synced to the Saved Cars recording — each entry marks the
+       moment (s) and spot (% of the screen) where the finger lands. */
+    (function () {
+      var video = document.querySelector('.scan-demo video');
+      var screen = video && video.closest('.scan-phone__screen');
+      if (!video || !screen) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      /* Each tap fires 0.4s before its UI reaction (reactions measured by frame
+         diffing the recording at 0.1s steps): the ripple flashes first, and only
+         a beat later the interface responds — like a real finger. */
+      var taps = [
+        { t: 0.02, x: 72, y: 18.5 },   /* Saved Cars tab           (UI reacts at 0.3s)  */
+        { t: 1.7,  x: 93, y: 25.5 },   /* star on the saved car    (dialog at 2.1s)     */
+        { t: 3.0,  x: 68, y: 55   },   /* "Удалить" in the dialog  (dismiss at 3.4s)    */
+        { t: 6.0,  x: 22, y: 18.5 },   /* History tab              (UI reacts at 6.4s)  */
+        { t: 7.5,  x: 50, y: 25.5 },   /* the X 017 XX row         (loading at 7.9s)    */
+        { t: 13.4, x: 93, y: 16   },   /* ⋯ menu on the report     (menu at 13.8s)      */
+        { t: 14.5, x: 46, y: 14.5 },   /* "Добавить в избранное"   (closes at 14.9s)    */
+        { t: 16.3, x: 13, y: 93   },   /* Search tab               (search at 16.7s)    */
+        { t: 17.3, x: 72, y: 18.5 }    /* Saved Cars tab again     (UI reacts at 17.7s) */
+      ];
+      var shown = taps.map(function () { return false; });
+      var last = 0;
+      function ripple(x, y) {
+        var el = document.createElement('span');
+        el.className = 'vid-tap';
+        el.style.left = x + '%';
+        el.style.top = y + '%';
+        screen.appendChild(el);
+        el.addEventListener('animationend', function () { el.remove(); });
+      }
+      function tick() {
+        var t = video.currentTime;
+        if (t < last - 0.5) shown = taps.map(function () { return false; });  /* loop restarted */
+        for (var i = 0; i < taps.length; i++) {
+          /* fire on crossing the mark — robust even if rAF is throttled */
+          if (!shown[i] && last <= taps[i].t && t > taps[i].t) {
+            shown[i] = true;
+            ripple(taps[i].x, taps[i].y);
+          }
+        }
+        last = t;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
 </body>
 </html>

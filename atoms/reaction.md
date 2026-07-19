@@ -44,5 +44,5 @@
 - Count text contrast meets WCAG AA on all three backgrounds.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

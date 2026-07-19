@@ -1,0 +1,53 @@
+/* Doodle video timeline — a hand-drawn progress line under case videos.
+   Same craft language as the doodle arrows / buttons: wobbly strokes,
+   round caps, currentColor-free token colours. Mount markup:
+   <div class="video-timeline" data-video-timeline aria-hidden="true"></div>
+   scripts/video-timeline.js draws the SVG and drives it from playback. */
+
+.video-timeline {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; max-width: 300px;
+}
+.video-timeline__svg {
+  flex: 1 1 auto; min-width: 0; height: 20px;
+  display: block; overflow: visible;
+}
+/* non-scaling-stroke keeps the line a constant 2px — the same weight as the
+   hand-drawn doodle buttons — no matter how the SVG fit-scales to its slot. */
+.video-timeline__track {
+  fill: none; stroke: var(--color-primary-transparent-24);
+  stroke-width: 2; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.video-timeline__fill {
+  fill: none; stroke: var(--color-primary);
+  stroke-width: 2; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1 1; stroke-dashoffset: 1;
+}
+.video-timeline__time {
+  font-family: "Archivo", sans-serif; font-weight: 500;
+  font-size: 11px; letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  min-width: 44px; text-align: right; white-space: nowrap;
+}
+
+/* Controlled (one-shot) timelines — the Pyroblast flow demos: invisible until
+   the Demo button starts the run, fade out when it ends or the user takes over. */
+.video-timeline--controlled {
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.video-timeline--controlled.is-live { opacity: 1; }
+
+/* Full-width row inside a single-phone flex stage (.scan-demo / .pdd-demo):
+   forces the timeline onto its own top line and centres it over the phone.
+   Negative margins compensate each stage's own padding and flex gap, so the
+   timeline sits ~20px above the phone. (Before/after stages instead float the
+   timeline over just the animated mockup — see each page's own rules.) */
+.video-timeline-row {
+  flex: 0 0 100%; display: flex; justify-content: center;
+}
+.scan-demo .video-timeline-row { margin: -14px 0 -2px; }   /* ~30px above the phone */
+.pdd-demo  .video-timeline-row { margin: -14px 0 -8px; }   /* ~34px above the phone (40px stage gap floors it lower) */

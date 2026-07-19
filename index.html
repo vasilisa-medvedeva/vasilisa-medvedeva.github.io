@@ -66,6 +66,7 @@
       grid-template-columns: 1.4fr 1fr;   /* project card wider, placeholder narrower */
       gap: 10px;
       align-items: start;
+      margin-top: 80px;   /* lower the cards away from the hero */
       padding-bottom: 50px;
     }
     .projects-grid > .project-card:nth-child(even) { position: relative; top: 40px; }
@@ -118,13 +119,14 @@
       max-width: 560px;
     }
 
-    /* Meta chips — same skin as the library tag-chip, non-interactive */
-    .project-card__meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    /* Tool chips — hand-drawn (crafted) look: black, slightly wobbly borders on
+       white, each corner radius a touch different so they read as sketched */
     .meta-chip {
       display: inline-flex; align-items: center;
-      border: 1.5px solid var(--color-primary-transparent-87);
-      border-radius: 12px;
-      padding: 4px 10px;
+      border: 2px solid var(--color-primary-transparent-87);
+      border-radius: 16px 11px 15px 12px / 12px 15px 11px 16px;
+      background: var(--color-constant-primary);
+      padding: 5px 12px;
       font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
       font-weight: var(--text-label-medium-font-weight);
       font-size: var(--text-label-medium-font-size);
@@ -133,10 +135,8 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    .meta-chip--accent {
-      background: var(--color-brand-yellow-primary);
-    }
-
+    .tools-group__chips .meta-chip:nth-child(2n)  { border-radius: 11px 16px 12px 15px / 15px 12px 16px 11px; }
+    .tools-group__chips .meta-chip:nth-child(3n)  { border-radius: 15px 12px 16px 11px / 11px 16px 12px 15px; }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
@@ -173,7 +173,7 @@
       display: grid;
       grid-template-columns: 1fr 1.4fr;   /* narrow title column, wide content */
       gap: 10px;
-      padding: 56px 20px;
+      padding: 56px 0;   /* title flush with the header avatar / hero at the 10px main gutter */
     }
     .info-section, .projects-grid { scroll-margin-top: 72px; }
 
@@ -201,6 +201,15 @@
       text-decoration: underline;
       text-underline-offset: 3px;
     }
+    /* Hand-drawn dancing doodle in Bit About Me — floats beside the copy, wraps on mobile */
+    .about-doodle {
+      display: block;
+      width: 150px; height: auto;
+      margin: 24px 0 0;          /* sits directly under the Bit About Me heading, flush-left */
+    }
+    @media (max-width: 600px) {
+      .about-doodle { width: 120px; margin: 16px 0 0; }
+    }
     .info-muted {
       font-family: "Archivo", sans-serif;
       font-weight: 500;
@@ -209,6 +218,70 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--color-primary-transparent-48);
+    }
+
+    /* Two-truths-and-a-lie mini game in Bit About Me */
+    .guess { margin-top: 6px; }
+    .guess .guess__intro {
+      font-family: "Archivo", sans-serif;
+      font-weight: 700;
+      font-size: 22px; line-height: 28px;
+      color: var(--color-primary-transparent-87);
+      margin-bottom: 16px;
+    }
+    .guess__options { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+    /* Hand-drawn plates: black, slightly wobbly (uneven) borders on white — each
+       corner radius differs so they read as sketched, not machine-drawn */
+    .guess__option {
+      display: flex; align-items: flex-start; gap: 12px;
+      width: 100%;
+      padding: 14px 16px;
+      text-align: left;
+      font-family: "Archivo", sans-serif;
+      font-weight: 300; font-size: 18px; line-height: 26px;
+      color: var(--color-primary-transparent-87);
+      background: var(--color-constant-primary);
+      border: 2px solid var(--color-primary-transparent-87);
+      border-radius: 18px 12px 20px 14px / 14px 20px 12px 18px;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+    .guess__option:nth-child(2) { border-radius: 12px 20px 14px 22px / 20px 12px 22px 14px; }
+    .guess__option:nth-child(3) { border-radius: 20px 14px 22px 12px / 12px 22px 14px 20px; }
+    /* orange hover only while the game is unanswered — once revealed, the
+       red / green highlight must stay put even under the cursor */
+    .guess:not(.is-done) .guess__option:hover { background: var(--color-accent-orange); }
+    /* Mark holds a small black SVG icon (empty circle → tick / cross on reveal) */
+    .guess__mark {
+      flex: 0 0 auto;
+      width: 24px; height: 24px; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .guess__mark img { display: block; width: 100%; height: 100%; }
+    .guess.is-done .guess__option { cursor: default; }
+
+    /* Revealed states — the plate stays white; the border (line) and the icon
+       turn bright green (correct) / red (wrong). Swap --guess-green / --guess-red to retint. */
+    .guess { --guess-green: #00963A; --guess-red: #F01800; }
+    .guess__option.is-lie    { border-color: var(--guess-green); }
+    .guess__option.is-missed { border-color: var(--guess-red); }
+    .guess__option.is-truth  { opacity: 0.55; border-color: var(--color-primary-transparent-16); }
+    .guess__result {
+      margin-top: 14px;
+      font-family: "Archivo", sans-serif;
+      font-weight: 500; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+      max-width: 560px;
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+    .guess__result.is-shown { opacity: 1; }
+    .guess__replay {
+      background: none; border: none; padding: 0;
+      color: var(--color-primary-transparent-87);
+      font: inherit;
+      text-decoration: underline; text-underline-offset: 3px;
+      cursor: pointer;
     }
 
     /* Experience entries */
@@ -277,30 +350,40 @@
     @media (max-width: 600px) {
       .main { padding: 8px; }
       .hero { padding: 24px 0 0; gap: 16px; }
-      .info-section { padding: 40px 12px; gap: 20px; }
+      .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
       .project-card__stage { height: 420px; }
       .footer { padding: 32px 12px 48px; }
     }
 
-    /* ── Footer ── */
+    /* ── Footer — a big closing sign-off; contacts already live in the header ── */
     .footer {
-      display: flex; align-items: baseline; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
-      padding: 40px 20px 56px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+      padding: 96px 20px 56px;
     }
-    .footer__note {
+    .footer__big {
       font-family: "Archivo", sans-serif;
-      font-weight: 300; font-size: 16px; line-height: 24px;
-      color: var(--color-primary-transparent-60);
-    }
-    .footer__links { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
-    .footer__mail {
-      font-family: "Archivo", sans-serif;
-      font-weight: 500; font-size: 16px; line-height: 24px;
+      font-weight: 900;
+      font-size: clamp(34px, 4.6vw, 64px);
+      line-height: 1.0; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer__big:hover { color: var(--color-accent-orange); }
+    /* hand-drawn arrow after the CTA — inherits colour, so it turns orange on hover */
+    .footer__arrow {
+      display: inline-block;
+      width: 0.92em; height: auto;
+      vertical-align: middle;   /* centred on the middle of the "Let’s talk" line */
+      margin-left: 0.12em;
+    }
+    .footer__colophon {
+      font-family: "Archivo", sans-serif;
+      font-weight: 500; font-size: 14px; line-height: 20px;
+      letter-spacing: 0.02em;
+      color: var(--color-primary-transparent-48);
     }
   </style>
 </head>
@@ -314,13 +397,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -345,11 +427,10 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title">Hi! I&#8217;ve been working <span class="hero__nowrap">as a product</span> designer <span class="hero__nowrap">for four years.</span></h1>
+      <h1 class="hero__title">Hi! I&#8217;ve been working <span class="hero__nowrap">as a product</span> designer <span class="hero__nowrap">for five years.</span></h1>
       <div class="hero__aside">
         <p>I create scalable, flexible interfaces that simplify user experiences and help businesses grow &mdash; balancing UX, business goals, and technical constraints.</p>
         <p>I rapidly test hypotheses and run user interviews to uncover the root causes of behavior, turning insights into clear, valuable solutions.</p>
-        <img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" aria-hidden="true" />
       </div>
     </section>
 
@@ -358,7 +439,7 @@
       <a class="project-card" href="home.html">
         <div class="project-card__head">
           <span class="project-card__name">Pyroblast</span>
-          <span class="project-card__desc">A messenger for gamers: chats, channels and streams in one place. Designed solo: the design system, the core messaging experience, and every flow as a live prototype.</span>
+          <span class="project-card__desc">A messenger for gamers: chats, channels and streams in one place. Designed and documented solo: a 57-component library with tokens, states, motion and accessibility specs.</span>
         </div>
         <div class="project-card__stage">
           <div class="project-card__device">
@@ -371,14 +452,11 @@
         <div class="project-card__head">
           <span class="project-card__name">Nomerogram</span>
           <span class="project-card__desc">Check a car&#8217;s sale history and photos by its license plate. I owned the search, history and photo contribution flows on iOS and Android; onboarding nearly doubled photo uploads.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">UX research</span>
-            <span class="meta-chip">3 case studies</span>
-          </span>
         </div>
         <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/nomerogram/search-history.png" alt="Nomerogram app screens" loading="lazy" />        </div>
+          <div class="project-card__device">
+            <iframe src="flows/nomerogram-scan.html?embed=1" title="Nomerogram — plate scan flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
       </a>
 
       <!-- Drom PDD — driving theory exam prep -->
@@ -386,31 +464,23 @@
         <div class="project-card__head">
           <span class="project-card__name">Drom PDD</span>
           <span class="project-card__desc">An app for learning traffic rules and passing the driving theory exam, with 10M+ downloads. I redesigned the home screen into a scalable layout and shipped dark mode as part of the design system.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">Redesign</span>
-            <span class="meta-chip">Dark mode</span>
-            <span class="meta-chip">10M+ downloads</span>
-          </span>
         </div>
         <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/drompdd/redesign.png" alt="Drom PDD app screens" loading="lazy" />        </div>
+          <div class="project-card__device">
+            <iframe src="flows/drompdd-paid.html?embed=1" title="Drom PDD — paid content flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
       </a>
 
       <!-- Drom Fines — traffic fines check & payment -->
       <a class="project-card" href="dromfines.html">
         <div class="project-card__head">
           <span class="project-card__name">Drom Fines</span>
-          <span class="project-card__desc">Check and pay traffic fines through the official government database. I redesigned payments, registration and onboarding; payment conversion doubled and fines revenue grew 5&times;.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">Payments UX</span>
-            <span class="meta-chip">Lottie onboarding</span>
-            <span class="meta-chip">2&times; payment conversion</span>
-          </span>
+          <span class="project-card__desc">Check and pay traffic fines through the official government database. I redesigned payments, registration and onboarding; payment conversion doubled.</span>
         </div>
         <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/dromfines/payment.png" alt="Drom Fines app screens" loading="lazy" />        </div>
+          <div class="project-card__device">
+            <iframe src="flows/dromfines-payment.html?embed=1" title="Drom Fines — Payment flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
       </a>
 
     </div>
@@ -419,6 +489,13 @@
     <section class="info-section" id="experience">
       <h2 class="section-title">Work Experience</h2>
       <div class="info-section__body">
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company">Career Break</span>
+            <span class="xp__years">May 2024&#8202;&#8211;&#8202;Present</span>
+          </div>
+          <p>Improved professional English while maintaining product design practice and mastering AI-assisted workflows with Claude, Midjourney, ChatGPT, and Figma Make.</p>
+        </article>
         <article class="xp">
           <div class="xp__head">
             <span class="xp__company">Pyroblast</span>
@@ -434,7 +511,7 @@
             <span class="xp__years">2019&#8202;&#8211;&#8202;2022</span>
           </div>
           <p>Worked on an application for driving theory learning and exam preparation. Redesigned the main screen from a static layout into a scrollable, modular one, opening the app up to new sections and cross-promo. The PDD app consistently ranked among the top positions on Google Play and reached over 10 million downloads.</p>
-          <p>Also worked on a traffic fines payment app. After the payment and registration redesign, payment conversion doubled and fines revenue grew 5&times;; an A/B-tested onboarding brought 16% more registrations.</p>
+          <p>Also worked on a traffic fines payment app. After the payment and registration redesign, payment conversion doubled; an A/B-tested onboarding brought 16% more registrations.</p>
           <p>At Nomerogram, an app for checking a car&#8217;s history by its license plate, I owned the search, history and photo contribution flows. A redesigned photo upload onboarding nearly doubled the number of uploaded photos.</p>
         </article>
         <article class="xp">
@@ -510,6 +587,7 @@
         <div class="tools-group">
           <div class="tools-group__label">Collaboration and Documentation</div>
           <div class="tools-group__chips">
+            <span class="meta-chip">Jira</span>
             <span class="meta-chip">Confluence</span>
           </div>
         </div>
@@ -526,23 +604,39 @@
 
     <!-- ── Bit About Me ── -->
     <section class="info-section" id="about">
-      <h2 class="section-title">Bit About Me</h2>
+      <div>
+        <h2 class="section-title">Bit About Me</h2>
+        <img class="about-doodle" src="assets/dancing-doodle.svg" alt="Hand-drawn doodle of a smiling figure dancing" />
+      </div>
       <div class="info-section__body">
-        <p>I enjoy listening to lectures on history and art, and I love painting with watercolors. Staying active is important to me — I play tennis and recently ran my first half marathon. For the past couple of years, I&#8217;ve also been a big fan of Dungeons &amp; Dragons.</p>
-        <p>More of me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a> and <a href="https://www.behance.net/vasilisameba82" target="_blank" rel="noopener">Behance</a>.</p>
+        <p>I enjoy listening to lectures on history and art, and I love painting with watercolors. Staying active is important to me. I recently ran my first half marathon, and I enjoy hiking and exploring the outdoors. I&#8217;m also part of two book clubs, love playing poker, and have been a big fan of Dungeons &amp; Dragons.</p>
+        <p>More of me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>.</p>
+
+        <div class="guess" id="guess">
+          <p class="guess__intro">Two truths and a lie. Can you spot the false one?</p>
+          <div class="guess__options">
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I was vegetarian from birth until I was 18 years old.</span>
+            </button>
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I had two female goats who were a couple.</span>
+            </button>
+            <button class="guess__option" type="button" data-lie>
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I grew up with five sisters.</span>
+            </button>
+          </div>
+          <p class="guess__result" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span class="footer__note">Want the full story behind a project? Say hi.</span>
-    <span class="footer__links">
-      <a class="footer__mail" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
-      <a class="footer__mail" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="footer__mail" href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>
-      <a class="footer__mail" href="https://www.behance.net/vasilisameba82" target="_blank" rel="noopener">Behance</a>
-      <a class="footer__mail" href="mailto:medvedeva_vas@icloud.com">medvedeva_vas@icloud.com</a>
-    </span>
+    <a class="footer__big" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Let&#8217;s talk&nbsp;<svg class="footer__arrow" viewBox="0 0 52 26" fill="none" aria-hidden="true"><path d="M3 13.4C13 12.6 27 13 48 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <span class="footer__colophon">© 2026 Vasilisa Medvedeva · Product Designer</span>
   </footer>
 
   <script>
@@ -599,6 +693,61 @@
         } else {
           io.observe(c);
         }
+      });
+    })();
+
+    // Two truths and a lie — reveal the false fact on click
+    (function () {
+      var game = document.getElementById('guess');
+      if (!game) return;
+      var options = Array.prototype.slice.call(game.querySelectorAll('.guess__option'));
+      var result = game.querySelector('.guess__result');
+      // Reserve the hint's height up front (invisible), so revealing it never
+      // pushes the layout below — nothing jumps when the answer is picked.
+      var RESERVE = 'Nope, that one’s true! The lie is the five sisters. I grew up with three. The vegetarian years and the goat couple are both real.';
+      function reserveResult () { result.textContent = RESERVE; result.setAttribute('aria-hidden', 'true'); result.classList.remove('is-shown'); }
+      reserveResult();
+      // black mark icons (renamed from Group 13/14/15): empty circle → tick / cross
+      var ICON = { empty: 'assets/guess-circle.svg', tick: 'assets/guess-tick.svg', cross: 'assets/guess-cross.svg' };
+      function setIcon (o, name) { var img = o.querySelector('.guess__mark img'); if (img) img.src = ICON[name]; }
+
+      function reset () {
+        game.classList.remove('is-done');
+        options.forEach(function (o) {
+          o.classList.remove('is-lie', 'is-truth', 'is-missed');
+          o.disabled = false;
+          setIcon(o, 'empty');
+        });
+        reserveResult();
+      }
+
+      function pick (chosen) {
+        if (game.classList.contains('is-done')) return;
+        game.classList.add('is-done');
+        var gotIt = chosen.hasAttribute('data-lie');
+
+        options.forEach(function (o) {
+          o.disabled = true;
+          if (o.hasAttribute('data-lie')) {
+            o.classList.add('is-lie');
+            setIcon(o, 'tick');
+          } else if (o === chosen) {
+            o.classList.add('is-missed');
+            setIcon(o, 'cross');
+          } else {
+            o.classList.add('is-truth');
+          }
+        });
+
+        result.innerHTML = (gotIt
+          ? 'Correct! I actually grew up with three sisters, not five. I really was a lifelong vegetarian and my goats really were a couple.'
+          : 'Nope, that one’s true! The lie is the five sisters. I grew up with three. The vegetarian years and the goat couple are both real.');
+        result.removeAttribute('aria-hidden');
+        result.classList.add('is-shown');
+      }
+
+      options.forEach(function (o) {
+        o.addEventListener('click', function () { pick(o); });
       });
     })();
   </script>

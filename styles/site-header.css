@@ -45,11 +45,17 @@
   color: var(--color-primary-transparent-87);
   white-space: nowrap;
 }
-/* Hover/press feedback — grey pill behind the whole area (negative margins keep
-   the 60px header height: the padding grows inward, not outward) */
-.site-header__identity { padding: 4px 12px 4px 4px; margin: -4px -12px -4px -4px; }
-.site-header__identity:hover  { background: var(--color-primary-transparent-04); }
-.site-header__identity:active { background: var(--color-primary-transparent-08); }
+/* Hover/press feedback — an orange circle behind the round avatar, matching the
+   circular hover on the nav items (negative margins keep the 60px header height) */
+.site-header__identity { position: relative; z-index: 0; padding: 4px 12px 4px 4px; margin: -4px -12px -4px -4px; }
+.site-header__identity::before {
+  content: "";
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  z-index: -1;
+}
+.site-header__identity:hover::before  { background: var(--color-accent-orange); }
+.site-header__identity:active::before { background: var(--color-accent-orange-pressed); }
 .site-header__identity:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -77,12 +83,23 @@
   color: var(--color-primary-transparent-87);
   text-decoration: none;
   padding: 8px 10px;
-  border-radius: 30px;
   white-space: nowrap;
+  /* round hover: a true circle behind the label, as wide as the button itself —
+     it spills out of the 60px header and gets cropped by the top of the screen */
+  position: relative;
+  z-index: 0;
 }
-.menu-item:hover .menu-item__trigger,
-.menu-item:focus-within .menu-item__trigger { background: var(--color-primary-transparent-04); }
-.menu-item__trigger:active { background: var(--color-primary-transparent-08); }
+.menu-item__trigger::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.menu-item:hover .menu-item__trigger::before,
+.menu-item:focus-within .menu-item__trigger::before { background: var(--color-accent-orange); }
+.menu-item__trigger:active::before { background: var(--color-accent-orange-pressed); }
 .menu-item__trigger:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -160,11 +177,21 @@
   text-decoration: none;
   text-underline-offset: 3px;
   padding: 8px 10px;
-  border-radius: 30px;
   white-space: nowrap;
+  /* round hover: a true circle, as wide as the link (see .menu-item__trigger) */
+  position: relative;
+  z-index: 0;
 }
-.site-header__link:hover  { background: var(--color-primary-transparent-04); }
-.site-header__link:active { background: var(--color-primary-transparent-08); }
+.site-header__link::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.site-header__link:hover::before  { background: var(--color-accent-orange); }
+.site-header__link:active::before { background: var(--color-accent-orange-pressed); }
 .site-header__link:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -191,21 +218,35 @@
   }
 }
 
-/* CV — kept visible as the primary recruiter action (yellow pill) */
+/* CV — kept visible as the primary recruiter action, plain text like the desktop links */
 .site-header__cv {
   display: inline-flex; align-items: center;
   font-family: "Archivo", sans-serif;
-  font-weight: 700; font-size: 14px; line-height: 20px;
+  font-weight: 500; font-size: 15px; line-height: 20px;
   color: var(--color-primary-transparent-87);
   text-decoration: none;
-  padding: 7px 14px;
-  border-radius: var(--radius-full, 9999px);
-  background: var(--color-brand-yellow-primary);
+  padding: 7px 10px;
   white-space: nowrap;
+  /* round hover: a true circle, as wide as the link (see .site-header__link) */
+  position: relative;
+  z-index: 0;
 }
-.site-header__cv:active { opacity: 0.8; }
+.site-header__cv::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.site-header__cv:hover::before  { background: var(--color-accent-orange); }
+.site-header__cv:active::before { background: var(--color-accent-orange-pressed); }
+.site-header__cv:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
 
-/* Burger toggle */
+/* Burger toggle — already a true circle, so the hover/press fill needs no pseudo-element */
 .site-header__burger {
   all: unset;
   box-sizing: border-box;
@@ -215,7 +256,8 @@
   cursor: pointer;
   flex-shrink: 0;
 }
-.site-header__burger:active { background: var(--color-primary-transparent-08); }
+.site-header__burger:hover  { background: var(--color-accent-orange); }
+.site-header__burger:active { background: var(--color-accent-orange-pressed); }
 .site-header__burger:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
