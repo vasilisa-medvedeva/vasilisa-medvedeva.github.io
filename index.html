@@ -9,6 +9,13 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
+    // Self-traffic opt-out: open the site once with ?ga_optout=1 to stop being
+    // counted in this browser (persists); ?ga_optout=0 re-enables tracking.
+    try {
+      var gaOpt = new URLSearchParams(location.search).get('ga_optout');
+      if (gaOpt === '1') { localStorage.setItem('ga_optout', '1'); }
+      else if (gaOpt === '0') { localStorage.removeItem('ga_optout'); }
+    } catch (e) {}
     if (localStorage.getItem('ga_optout') === '1') {
       window['ga-disable-G-PDY8SF935T'] = true;
     }
