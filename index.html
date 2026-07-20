@@ -90,6 +90,13 @@
     }
     .hero__nowrap { white-space: nowrap; }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
+    /* hand-drawn accent circle around a hero word — same doodle language as the site */
+    .hero__circle { position: relative; display: inline-block; }
+    .hero__circle > svg {
+      position: absolute; left: -0.36em; right: -0.36em; top: -0.14em; bottom: -0.12em;
+      width: auto; height: auto; overflow: visible; pointer-events: none;
+      color: var(--color-primary-transparent-87);
+    }
 
     /* ── Projects grid — korolev-style tiles, same rhythm as the flows grid ── */
     .projects-grid {
@@ -467,7 +474,7 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title">Hi! I&#8217;ve been working <span class="hero__nowrap">as a product</span> designer <span class="hero__nowrap">for five years.</span></h1>
+      <h1 class="hero__title">Hi! I&#8217;ve been working <span class="hero__nowrap">as a product</span> designer <span class="hero__nowrap">for <span class="hero__circle">five<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
       <div class="hero__aside">
         <p>I create scalable, flexible interfaces that simplify user experiences and help businesses grow &mdash; balancing UX, business goals, and technical constraints.</p>
         <p>I rapidly test hypotheses and run user interviews to uncover the root causes of behavior, turning insights into clear, valuable solutions.</p>
