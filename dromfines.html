@@ -269,8 +269,8 @@
     /* Fine-details redesign: two exported screens (node 13:821 old, 13:1023 new)
        compared on the same soft stage. Each tall screen sits in a phone mockup the
        same size as the other cases' phones, and scrolls by hand. */
-    .detail-demo { align-items: center; }
-    .detail-demo .pay-demo__arrow { margin-top: 0; }
+    /* phones and the arrow inherit the base pay-demo layout: phones top-aligned,
+       the arrow centred on the 640px phone by the base margin-top: 298px */
     /* Same frame as .pay-phone (320-wide screen, 0.9065 scale) — but no notch / island */
     .detail-scale { position: relative; width: 303px; height: 640px; flex-shrink: 0; }
     .detail-phone {
