@@ -193,6 +193,17 @@
     .ds-card:hover { box-shadow: var(--elevation-4); }
     /* Screenshot overlay — shown when assets/design-system-preview.png exists, else removed (wall fallback) */
     .ds-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: translateX(-20px) scale(1.2); transform-origin: center; z-index: 2; }
+    /* Darkening overlay + centred "View" CTA over the design-system preview */
+    .ds-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-primary-transparent-48);   /* darken the preview to focus the button */
+    }
+    /* hand-drawn "View" button — inlined so the fill can flip to orange on hover, like the Demo button */
+    .ds-view { display: block; width: 200px; height: auto; color: var(--color-primary-transparent-87); transition: transform 0.2s ease; }
+    .ds-view__bg { fill: var(--color-constant-primary); transition: fill 0.15s ease; }
+    .ds-card:hover .ds-view { transform: scale(1.05); }
+    .ds-card:hover .ds-view__bg { fill: var(--color-accent-orange); }
     .ds-wall {
       position: absolute; inset: 0; padding: 28px 32px; overflow: hidden;
       display: flex; flex-wrap: wrap; gap: 14px; align-content: flex-start; align-items: center;
@@ -336,10 +347,10 @@
         <div class="menu-item">
           <a class="menu-item__trigger" href="index.html#projects">My projects</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="home.html">Pyroblast</a>
             <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
-            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
             <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
           </div>
         </div>
       </nav>
@@ -373,6 +384,21 @@
           <!-- Drop a screenshot at assets/design-system-preview.png and it shows here automatically;
                until the file exists, onerror removes the img and the component wall below shows. -->
           <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()">
+          <div class="ds-overlay" aria-hidden="true">
+            <svg class="ds-view" viewBox="0 0 208 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <rect class="ds-view__bg" x="2" y="2" width="203" height="52"/>
+              <path d="M1.14331 0.863402C1.14331 0.846418 1.14331 -0.29871 1.14331 6.36636C1.14331 13.0314 1.14331 26.3791 1.17947 33.5151C1.21563 40.6511 1.28795 41.1711 1.32521 43.2514C1.36247 45.3316 1.36247 48.9564 1.36247 52.6911" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M204.028 1.84875C204.045 1.86574 204.062 1.88272 204.086 6.98628C204.111 12.0898 204.142 22.2795 204.411 29.4287C204.824 40.3978 205.759 45.8067 205.868 48.3488C205.988 49.8763 206.09 50.871 206.198 51.8954C206.271 52.4388 206.379 53.03 206.694 54.7033" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M204.22 1.78556C204.22 1.80199 204.22 1.81843 178.15 2.12495C152.081 2.43147 99.9409 3.02757 68.5593 2.82484C37.1777 2.62211 7.96288 1.54964 1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M206.956 54.7846C206.925 54.7846 206.893 54.7846 180.342 54.4857C153.792 54.1868 100.723 53.5891 67.2599 53.2247C33.7965 52.8604 21.5463 52.7475 14.928 52.7562C6.17227 53.3716 3.55153 53.1538 1 53.2247" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M71.49 20.7721C71.5069 21.0851 71.6906 22.3449 72.591 24.909C73.2694 26.8411 74.5903 29.9839 75.3259 31.7671C76.1943 33.872 76.4626 34.2804 76.6101 34.3727C76.6807 34.3651 76.7426 34.2469 77.6533 31.9943C78.5639 29.7417 80.3215 25.3583 82.1323 20.7618" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M86.6289 24.6633C86.6289 24.6689 86.6289 24.6745 86.6298 26.0842C86.6307 27.4939 86.6326 30.3075 86.6578 31.895C86.6831 33.4825 86.7317 33.7587 86.8256 34.1432" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M86.8663 20.9672C86.8587 20.9672 86.8512 20.9672 86.8825 20.9311C86.9138 20.895 86.9841 20.8228 86.9872 20.7235" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M91.2985 29.4252C91.3066 29.4252 92.9133 29.4118 95.9895 29.3738C97.4631 29.3556 98.759 29.3139 99.4283 29.2401C100.098 29.1663 100.101 29.0551 99.9807 28.6778C99.6524 27.6481 99.1639 26.6588 98.6831 25.9399C97.6957 24.4635 96.773 24.1251 95.9975 23.821C95.2379 23.5232 94.3075 23.798 93.4782 24.2174C92.3447 24.7905 91.6255 26.1786 91.2269 27.0648C90.731 28.1675 91.2019 29.9582 91.7673 31.1289C92.5067 32.66 93.8583 33.371 94.3914 33.6298C95.4161 34.1271 97.2762 33.7871 98.2514 33.4027C98.5172 33.2764 98.7689 33.1347 98.9406 33.033C99.1123 32.9314 99.1964 32.874 99.283 32.8149" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M102.31 24.5006C102.314 24.6721 102.355 25.1095 102.853 26.6691C103.286 28.0256 104.209 30.4876 104.778 31.9532C105.504 33.8267 105.904 34.3524 106.143 34.5279C106.241 34.6007 106.384 34.434 106.921 33.1903C107.457 31.9467 108.406 29.5784 108.968 28.0923C109.529 26.6063 109.675 26.0744 109.755 25.6358C109.835 25.1971 109.845 24.8679 109.856 24.5287" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M109.475 26.1588C109.475 26.1666 109.5 26.2737 110.115 27.6416C110.686 28.9142 111.854 31.3297 112.507 32.5049C113.161 33.6802 113.283 33.534 113.781 32.4936C114.28 31.4533 115.151 29.5233 115.722 28.1062C116.537 25.8433 116.819 24.8229 116.875 24.5457C116.901 24.4175 116.921 24.3147 116.968 23.9287" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="ds-wall">
             <span class="btn btn--primary">Button</span>
             <span class="btn btn--secondary">Button</span>
