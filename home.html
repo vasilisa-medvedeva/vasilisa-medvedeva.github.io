@@ -588,5 +588,61 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>
+  <script>
+    /* Prototype-interaction analytics for GA4 (gtag is configured in <head>).
+       Real selectors (no markup is changed):
+         • prototype iframes → iframe[src*="flows/"]  (create-chats, attach-photo, login)
+         • design-system link → a[href="atoms.html"] */
+    (function () {
+      'use strict';
+      function send(name, params) {
+        if (typeof window.gtag === 'function' && name) { window.gtag('event', name, params || {}); }
+      }
+      // flow filename → prototype name
+      function protoName(src) {
+        if (!src) { return null; }
+        if (src.indexOf('create-chats') !== -1) { return 'chat_organization'; }
+        if (src.indexOf('attach-photo')  !== -1) { return 'photo_layouts'; }
+        if (src.indexOf('login')         !== -1) { return 'login'; }
+        return null;
+      }
+
+      // 1) Messages posted by the embedded prototypes: { source:'proto', event, prototype, detail }
+      //    Accept only same-origin messages coming from one of our own prototype iframes,
+      //    so foreign scripts / frames / extensions can't inject fake analytics events.
+      window.addEventListener('message', function (e) {
+        var d = e && e.data;
+        if (!d || typeof d !== 'object' || d.source !== 'proto') { return; }
+        if (e.origin !== location.origin && e.origin !== 'null') { return; }   // same origin (file:// reports "null")
+        var fromProto = false, ifr = document.querySelectorAll('iframe[src*="flows/"]');
+        for (var i = 0; i < ifr.length; i++) { if (ifr[i].contentWindow === e.source) { fromProto = true; break; } }
+        if (!fromProto) { return; }
+        send(d.event, { prototype: d.prototype, detail: d.detail });
+      });
+
+      // 2) prototype_view — fire once when each prototype iframe is first ≥50% visible
+      var frames = document.querySelectorAll('iframe[src*="flows/"]');
+      if (frames.length && 'IntersectionObserver' in window) {
+        var viewed = new WeakSet();
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || entry.intersectionRatio < 0.5 || viewed.has(entry.target)) { return; }
+            var name = protoName(entry.target.getAttribute('src'));
+            if (!name) { return; }
+            viewed.add(entry.target);
+            send('prototype_view', { prototype: name });
+            io.unobserve(entry.target);
+          });
+        }, { threshold: 0.5 });
+        Array.prototype.forEach.call(frames, function (f) { io.observe(f); });
+      }
+
+      // 3) design_system_open — click on the atoms.html link (navigation is not blocked)
+      var dsLink = document.querySelector('a[href="atoms.html"]');
+      if (dsLink) {
+        dsLink.addEventListener('click', function () { send('design_system_open'); });
+      }
+    })();
+  </script>
 </body>
 </html>
