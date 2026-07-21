@@ -3963,6 +3963,19 @@
     function hidePoint(){ if (pointEl) pointEl.classList.add('is-hidden'); }
 
     window.playDemo = function(){ stopAuto(); hideRestart(); hidePoint(); if (fadeEl) fadeEl.classList.remove('is-black'); document.dispatchEvent(new CustomEvent('demo-start')); loop(300); };
+
+    // Pyroblast case embed (embed-full): fully remove the Demo button and its
+    // "or watch the" label (display:none — no dangling label, no empty gap) while
+    // the auto-play runs AND after it ends. They return only once the visitor taps
+    // in to drive the prototype themselves, offering a replay.
+    if (document.body.classList.contains('embed-full')) {
+      var _demoEls = [document.querySelector('.flow-btn--demo'), document.querySelector('.flow-orwatch')];
+      var _demoShow = function (show) {
+        _demoEls.forEach(function (el) { if (el) { el.style.display = show ? '' : 'none'; } });
+      };
+      document.addEventListener('demo-start', function () { _demoShow(false); });
+      document.addEventListener('demo-stop',  function () { _demoShow(true); });
+    }
     window.startManual  = function(){ stopAuto(); document.dispatchEvent(new CustomEvent('demo-stop')); showPoint(); if (fadeEl) fadeEl.classList.remove('is-black'); resetPhone(); };
     // Pulse the compose icon (flow entry point) as tap feedback when Start is pressed.
     var composeBtn = document.querySelector('.top-bar .icon-btn');
@@ -3985,7 +3998,7 @@
     };
     var phoneEl = document.querySelector('.phone');
     if (phoneEl && !document.body.classList.contains('embed')) {
-      phoneEl.addEventListener('click', function(){ if (auto.synthetic) return; showRestart(); if (!auto.cancelled) window.takeControl(); }, true);
+      phoneEl.addEventListener('click', function(e){ if (auto.synthetic) return; if (!auto.cancelled) { e.stopPropagation(); e.preventDefault(); window.restartManual(); } showRestart(); }, true);
     }
   })();
   </script>

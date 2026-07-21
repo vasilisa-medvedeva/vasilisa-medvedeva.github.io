@@ -2023,6 +2023,19 @@
 
     window.playDemo = function(){ stopAuto(); hideRestart(); if (fadeEl) fadeEl.classList.remove('is-black'); document.dispatchEvent(new CustomEvent('demo-start')); autoplayLoop(300); };
 
+    // Pyroblast case embed (embed-full): fully remove the Demo button and its
+    // "or watch the" label (display:none — no dangling label, no empty gap) while
+    // the auto-play runs AND after it ends. They return only once the visitor taps
+    // in to drive the prototype themselves, offering a replay.
+    if (document.body.classList.contains('embed-full')) {
+      var _demoEls = [document.querySelector('.flow-btn--demo'), document.querySelector('.flow-orwatch')];
+      var _demoShow = function (show) {
+        _demoEls.forEach(function (el) { if (el) { el.style.display = show ? '' : 'none'; } });
+      };
+      document.addEventListener('demo-start', function () { _demoShow(false); });
+      document.addEventListener('demo-stop',  function () { _demoShow(true); });
+    }
+
     // Tapping the phone while the demo plays hands control to the user: stop the
     // auto-play and leave the current screen in place (clearing any half-finished
     // press/fade the interrupted loop left behind) so they can drive from here.
@@ -2035,9 +2048,10 @@
     };
     var phoneEl = document.querySelector('.phone');
     if (phoneEl && !document.body.classList.contains('embed')) {
-      phoneEl.addEventListener('click', function(){
+      phoneEl.addEventListener('click', function(e){
+        // tapping during the demo hands control over by jumping to the start of the flow
+        if (!auto.cancelled) { e.stopPropagation(); e.preventDefault(); window.restartManual(); }
         showRestart();
-        if (!auto.cancelled) window.takeControl();
       }, true);   // capture: stop the demo before any tapped in-phone control reacts
     }
 

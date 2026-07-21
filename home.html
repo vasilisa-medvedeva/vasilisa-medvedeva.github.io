@@ -537,6 +537,28 @@
     window.scrollTo(0, 0);
     window.addEventListener('load', function () { window.scrollTo(0, 0); });
 
+    // Auto-play each case flow's demo once it scrolls into view. The embedded
+    // flows expose window.playDemo; each hides its own Demo button while playing
+    // and restores it when the demo ends or the visitor taps in to drive.
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      function tryPlay (iframe, tries) {
+        try {
+          var w = iframe.contentWindow;
+          if (w && typeof w.playDemo === 'function') { w.playDemo(); return; }
+        } catch (e) {}
+        if (tries > 0) setTimeout(function () { tryPlay(iframe, tries - 1); }, 200);
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.target.__demoStarted) return;
+          e.target.__demoStarted = true;
+          tryPlay(e.target, 30);   // retry ~6s to cover lazy-load + flow init
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.case-demo iframe').forEach(function (f) { io.observe(f); });
+    })();
+
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>
