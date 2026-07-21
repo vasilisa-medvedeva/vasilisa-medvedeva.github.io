@@ -2142,5 +2142,44 @@
   </script>
   <script src="../scripts/video-timeline.js"></script>
   <script src="../scripts/page-transition.js?v=4"></script>
+  <script>
+    /* Prototype-interaction tracking → posted to the parent (home.html forwards to GA4).
+       No GA inside the prototype. Real selectors: demo → .flow-btn--demo, phone → .phone,
+       steps → #screen classes (login/signup/verify/newacc/success). */
+    (function () {
+      'use strict';
+      var PROTO = 'login';
+      var STEPS = ['login-open', 'signup-open', 'verify-open', 'newacc-open', 'success-open'];
+      function trackProto(event, detail) {
+        try {
+          window.parent.postMessage({ source: 'proto', event: event, prototype: PROTO, detail: detail || '' }, '*');
+        } catch (err) {}
+      }
+      var screenEl = document.getElementById('screen');
+      var phone = document.querySelector('.phone');
+      function openSteps() {   // set of step screens currently open (they can stack, e.g. verify+newacc)
+        var out = [];
+        if (screenEl) { for (var i = 0; i < STEPS.length; i++) { if (screenEl.classList.contains(STEPS[i])) { out.push(STEPS[i]); } } }
+        return out;
+      }
+      var interacted = false;
+      // One delegated click listener in capture phase — runs before the prototype's own
+      // handlers, so their stopPropagation can't hide the click. Never calls preventDefault.
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.closest) { return; }
+        if (t.closest('.flow-btn--demo')) { trackProto('demo_click'); }             // Demo button
+        if (!interacted && phone && phone.contains(t)) {                            // first drive of the prototype
+          interacted = true; trackProto('prototype_interact');
+        }
+        var before = openSteps();                                                  // which step screens does this click newly open?
+        Promise.resolve().then(function () {
+          openSteps().forEach(function (s) {
+            if (before.indexOf(s) === -1) { trackProto('prototype_step', s.replace('-open', '')); }
+          });
+        });
+      }, true);
+    })();
+  </script>
 </body>
 </html>
