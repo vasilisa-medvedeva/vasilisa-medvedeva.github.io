@@ -58,15 +58,26 @@
     each(document.querySelectorAll('a[href*="t.me"]'), function (a) {
       a.addEventListener('click', function () { send('contact_telegram'); });
     });
+    // Instagram: the "Bit About Me" link (and anywhere else it appears).
+    each(document.querySelectorAll('a[href*="instagram"]'), function (a) {
+      a.addEventListener('click', function () { send('contact_instagram'); });
+    });
 
     // ── index.html only: quiz + project links ──
     if (isIndex) {
       // (а) quiz_click — the "two truths and a lie" answer buttons (About section)
       var quiz = document.getElementById('guess');
       if (quiz) {
-        each(quiz.querySelectorAll('.guess__option'), function (btn) {
+        each(quiz.querySelectorAll('.guess__option'), function (btn, i) {
           btn.addEventListener('click', function () {
-            send('quiz_click', { location: 'about_section' });
+            var label = btn.querySelector('span:not(.guess__mark)');
+            var answer = (label ? label.textContent : btn.textContent).trim();
+            send('quiz_click', {
+              location: 'about_section',
+              answer: answer,                                             // which statement they picked
+              option_index: i + 1,                                        // 1-based position
+              outcome: btn.hasAttribute('data-lie') ? 'correct' : 'wrong' // did they spot the lie?
+            });
           });
         });
       }
