@@ -406,6 +406,8 @@
     @media (max-width: 600px) {
       .main { padding: 8px; }
       .hero { padding: 24px 0 0; gap: 16px; }
+      /* at the clamped 48px hero size the hand-drawn circle rides too high — nudge it down (same size, shifted ~0.14em) */
+      .hero__circle > svg { top: 0; bottom: -0.26em; }
       .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
       .project-card__stage { height: 520px; }                    /* taller so the whole phone shows */
@@ -465,10 +467,10 @@
         <div class="menu-item">
           <a class="menu-item__trigger" href="index.html#projects">My projects</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="home.html">Pyroblast</a>
             <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
-            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
             <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
           </div>
         </div>
       </nav>
