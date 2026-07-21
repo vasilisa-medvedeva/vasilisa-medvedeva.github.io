@@ -156,6 +156,15 @@
       color: var(--color-primary-transparent-87);
       max-width: 560px;
     }
+    /* Metric pills on the cards — reuse the Tools chips' hand-drawn wobbly outline */
+    .project-card__pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 14px;
+    }
+    /* alternate the corner wobble so neighbouring pills don't read as stamped-identical */
+    .project-card__pills .meta-chip:nth-child(even) {
+      border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
+    }
 
     /* Tool chips — hand-drawn (crafted) look: black, slightly wobbly borders on
        white, each corner radius a touch different so they read as sketched */
@@ -399,7 +408,8 @@
       .hero { padding: 24px 0 0; gap: 16px; }
       .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
-      .project-card__stage { height: 420px; }
+      .project-card__stage { height: 520px; }                    /* taller so the whole phone shows */
+      .project-card__device { width: 220px; max-width: 220px; }  /* bigger, fixed-width phone that never clips */
       .footer { padding: 32px 12px 48px; }
     }
 
@@ -483,39 +493,19 @@
     </section>
 
     <div class="projects-grid" id="projects">
-      <!-- Pyroblast — messenger for gamers -->
-      <a class="project-card" href="home.html">
-        <div class="project-card__head">
-          <span class="project-card__name">Pyroblast</span>
-          <span class="project-card__desc">A messenger for gamers: chats, channels and streams in one place. Designed and documented solo: a 57-component library with tokens, states, motion and accessibility specs.</span>
-        </div>
-        <div class="project-card__stage">
-          <div class="project-card__device">
-            <iframe src="flows/login.html?embed=1" title="Pyroblast — Log in flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>        </div>
-      </a>
-
       <!-- Nomerogram — vehicle check by license plate -->
       <a class="project-card" href="nomerogram.html">
         <div class="project-card__head">
           <span class="project-card__name">Nomerogram</span>
           <span class="project-card__desc">Check a car&#8217;s sale history and photos by its license plate. I owned the search, history and photo contribution flows on iOS and Android; onboarding nearly doubled photo uploads.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip">Photo uploads &times;2</span>
+            <span class="meta-chip">Insight: it wasn&#8217;t the button</span>
+          </div>
         </div>
         <div class="project-card__stage">
           <div class="project-card__device">
             <iframe src="flows/nomerogram-scan.html?embed=1" title="Nomerogram — plate scan flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>        </div>
-      </a>
-
-      <!-- Drom PDD — driving theory exam prep -->
-      <a class="project-card" href="drompdd.html">
-        <div class="project-card__head">
-          <span class="project-card__name">Drom PDD</span>
-          <span class="project-card__desc">An app for learning traffic rules and passing the driving theory exam, with 10M+ downloads. I redesigned the home screen into a scalable layout and shipped dark mode as part of the design system.</span>
-        </div>
-        <div class="project-card__stage">
-          <div class="project-card__device">
-            <iframe src="flows/drompdd-paid.html?embed=1" title="Drom PDD — paid content flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
           </div>        </div>
       </a>
 
@@ -524,10 +514,46 @@
         <div class="project-card__head">
           <span class="project-card__name">Drom Fines</span>
           <span class="project-card__desc">Check and pay traffic fines through the official government database. I redesigned payments, registration and onboarding; payment conversion doubled.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip">Payment conversion &times;2</span>
+            <span class="meta-chip">+16% sign-ups</span>
+          </div>
         </div>
         <div class="project-card__stage">
           <div class="project-card__device">
             <iframe src="flows/dromfines-payment.html?embed=1" title="Drom Fines — Payment flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
+      </a>
+
+      <!-- Pyroblast — messenger for gamers -->
+      <a class="project-card" href="home.html">
+        <div class="project-card__head">
+          <span class="project-card__name">Pyroblast</span>
+          <span class="project-card__desc">A messenger for gamers: chats, channels and streams in one place. Designed and documented solo: a 57-component library with tokens, states, motion and accessibility specs.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip">Design system</span>
+            <span class="meta-chip">Project from scratch</span>
+          </div>
+        </div>
+        <div class="project-card__stage">
+          <div class="project-card__device">
+            <iframe src="flows/login.html?embed=1" title="Pyroblast — Log in flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
+      </a>
+
+      <!-- Drom PDD — driving theory exam prep -->
+      <a class="project-card" href="drompdd.html">
+        <div class="project-card__head">
+          <span class="project-card__name">Drom PDD</span>
+          <span class="project-card__desc">An app for learning traffic rules and passing the driving theory exam, with 10M+ downloads. I redesigned the home screen into a scalable layout and shipped dark mode as part of the design system.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip">10M+ downloads</span>
+            <span class="meta-chip">60% chose dark mode</span>
+          </div>
+        </div>
+        <div class="project-card__stage">
+          <div class="project-card__device">
+            <iframe src="flows/drompdd-paid.html?embed=1" title="Drom PDD — paid content flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
           </div>        </div>
       </a>
 
@@ -581,33 +607,34 @@
       </div>
     </section>
 
-    <!-- ── Education ── -->
-    <section class="info-section" id="education">
-      <h2 class="section-title">Education</h2>
+    <!-- ── Bit About Me ── -->
+    <section class="info-section" id="about">
+      <div>
+        <h2 class="section-title">Bit About Me</h2>
+        <img class="about-doodle" src="assets/dancing-doodle.svg" alt="Hand-drawn doodle of a smiling figure dancing" />
+      </div>
       <div class="info-section__body">
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">NSU CADE</span>
-            <span class="xp__role">Graphic Designer in Advertising</span>
-            <span class="xp__years">2021</span>
+        <p>I enjoy listening to lectures on history and art, and&nbsp;I&nbsp;love&nbsp;painting&nbsp;with&nbsp;watercolors. Staying active is&nbsp;important&nbsp;to&nbsp;me. I recently ran my&nbsp;first half marathon, and&nbsp;I&nbsp;enjoy hiking and&nbsp;exploring the outdoors. I&#8217;m also part of&nbsp;two book clubs, love playing poker, and&nbsp;have&nbsp;been&nbsp;a&nbsp;big&nbsp;fan&nbsp;of&nbsp;Dungeons&nbsp;&amp;&nbsp;Dragons.</p>
+        <p>More of me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>.</p>
+
+        <div class="guess" id="guess">
+          <p class="guess__intro">Two truths and a lie. Can you spot the false one?</p>
+          <div class="guess__options">
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I was vegetarian from birth until I was 18 years old.</span>
+            </button>
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I had two female goats who were a couple.</span>
+            </button>
+            <button class="guess__option" type="button" data-lie>
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span>I grew up with five sisters.</span>
+            </button>
           </div>
-          <p>Novosibirsk State University Center for Professional Education.</p>
-        </article>
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">NSPU</span>
-            <span class="xp__role">Bachelor&#8217;s degree</span>
-            <span class="xp__years">2018</span>
-          </div>
-          <p>Novosibirsk State Pedagogical University. Developmental and Child Psychologist specializing in Special Education.</p>
-        </article>
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">Courses</span>
-          </div>
-          <p>Bang Bang Education — Design Systems, 2023.</p>
-          <p>WDI — Web design intensive, 2019.</p>
-        </article>
+          <p class="guess__result" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 
@@ -658,34 +685,33 @@
       </div>
     </section>
 
-    <!-- ── Bit About Me ── -->
-    <section class="info-section" id="about">
-      <div>
-        <h2 class="section-title">Bit About Me</h2>
-        <img class="about-doodle" src="assets/dancing-doodle.svg" alt="Hand-drawn doodle of a smiling figure dancing" />
-      </div>
+    <!-- ── Education ── -->
+    <section class="info-section" id="education">
+      <h2 class="section-title">Education</h2>
       <div class="info-section__body">
-        <p>I enjoy listening to lectures on history and art, and I love painting with watercolors. Staying active is important to me. I recently ran my first half marathon, and I enjoy hiking and exploring the outdoors. I&#8217;m also part of two book clubs, love playing poker, and have been a big fan of Dungeons &amp; Dragons.</p>
-        <p>More of me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>.</p>
-
-        <div class="guess" id="guess">
-          <p class="guess__intro">Two truths and a lie. Can you spot the false one?</p>
-          <div class="guess__options">
-            <button class="guess__option" type="button">
-              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
-              <span>I was vegetarian from birth until I was 18 years old.</span>
-            </button>
-            <button class="guess__option" type="button">
-              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
-              <span>I had two female goats who were a couple.</span>
-            </button>
-            <button class="guess__option" type="button" data-lie>
-              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
-              <span>I grew up with five sisters.</span>
-            </button>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company">NSU CADE</span>
+            <span class="xp__role">Graphic Designer in Advertising</span>
+            <span class="xp__years">2021</span>
           </div>
-          <p class="guess__result" role="status" aria-live="polite"></p>
-        </div>
+          <p>Novosibirsk State University Center for Professional Education.</p>
+        </article>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company">NSPU</span>
+            <span class="xp__role">Bachelor&#8217;s degree</span>
+            <span class="xp__years">2018</span>
+          </div>
+          <p>Novosibirsk State Pedagogical University. Developmental and Child Psychologist specializing in Special Education.</p>
+        </article>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company">Courses</span>
+          </div>
+          <p>Bang Bang Education — Design Systems, 2023.</p>
+          <p>WDI — Web design intensive, 2019.</p>
+        </article>
       </div>
     </section>
   </main>
@@ -722,6 +748,29 @@
         card.addEventListener('mouseenter', function () { call('playDemo'); });
         card.addEventListener('mouseleave', function () { call('restartManual'); });
       });
+    })();
+
+    // Touch devices (no hover): autoplay each card's flow once it scrolls into view,
+    // since mouseenter never fires. CSS-only flows (e.g. nomerogram) already loop on load.
+    (function () {
+      if (!(window.matchMedia && window.matchMedia('(hover: none)').matches)) return;
+      if (!('IntersectionObserver' in window)) return;
+      function tryPlay (iframe, tries) {
+        try {
+          var w = iframe.contentWindow;
+          if (w && typeof w.playDemo === 'function') { w.playDemo(); return; }
+        } catch (e) {}
+        if (tries > 0) setTimeout(function () { tryPlay(iframe, tries - 1); }, 200);
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.target.__demoStarted) return;
+          e.target.__demoStarted = true;
+          var iframe = e.target.querySelector('.project-card__device iframe');
+          if (iframe) { tryPlay(iframe, 25); }   // retry ~5s to cover lazy-load + flow init
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.project-card').forEach(function (card) { io.observe(card); });
     })();
 
     // Reveal cards as they scroll into view (staggered)
