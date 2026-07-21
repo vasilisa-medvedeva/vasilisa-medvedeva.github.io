@@ -71,7 +71,8 @@
   // Sections (About me / My projects and their dropdown items)
   var menu = inner.querySelector('.site-header__menu');
   if (menu) {
-    var items = menu.querySelectorAll('.menu-item');
+    // Mobile panel surfaces projects first — reverse the desktop nav order (About me, My projects)
+    var items = Array.prototype.slice.call(menu.querySelectorAll('.menu-item')).reverse();
     for (var i = 0; i < items.length; i++) {
       var trigger = items[i].querySelector('.menu-item__trigger');
       if (trigger) addLink(trigger.getAttribute('href'), trigger.textContent.trim(), false);
