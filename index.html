@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/site-header.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/guide-buddy.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;900&family=Roboto:wght@400;500;700&display=swap" />
@@ -860,5 +861,20 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>
+  <script src="scripts/guide-buddy.js"></script>
+  <script>
+    // Guide buddy tour — the stickman runs along the bottom edge and points
+    // at each stop. Edit the steps freely: target is any CSS selector,
+    // say is the bubble line, hold is how long he stays (ms).
+    // Auto-plays once per session; the bottom-right chip replays it.
+    GuideBuddy.setTour([
+      { target: '.hero__circle',                                    say: 'Five years in product design — and counting.',        hold: 3200 },
+      { target: '#projects .project-card:nth-child(1)',             say: 'Every case opens with a live, tappable flow.',        hold: 3400 },
+      { target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Pyroblast: a 57-component design system, built solo.', hold: 3600 },
+      { target: '#experience',                                      say: 'Three products, 10M+ downloads between them.',        hold: 3400 },
+      { target: '#guess',                                           say: 'Two truths and a lie — can you spot it?',             hold: 3400 },
+      { target: '.footer__big',                                     say: 'Like what you see? Let’s talk!',                 hold: 3200 }
+    ], { auto: true, delay: 1600 });
+  </script>
 </body>
 </html>

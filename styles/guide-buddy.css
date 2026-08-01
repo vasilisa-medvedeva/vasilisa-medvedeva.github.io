@@ -1,0 +1,135 @@
+/* Guide buddy — a hand-drawn stickman that runs along the bottom of the
+   viewport and points at whatever the tour script tells him to. Same doodle
+   language as the rest of the site: black wobbly strokes, round caps.
+   Markup is injected by scripts/guide-buddy.js. */
+
+.gb {
+  position: fixed;
+  left: 0;
+  bottom: 2px;
+  z-index: 200;
+  width: 78px;
+  height: 108px;
+  pointer-events: none;
+  color: var(--color-primary-transparent-87);
+  will-change: transform;
+}
+
+.gb__sprite { width: 100%; height: 100%; }
+.gb--left .gb__sprite { transform: scaleX(-1); }
+.gb__sprite svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.gb__figure { transition: transform 0.3s ease; }
+
+/* Limbs pivot at the shoulder / hip (viewBox units).
+   Arms are drawn pointing forward (+x) and hang at rest via rotation,
+   so the same rotation math is reused for run swings and aimed pointing. */
+.gb__arm  { transform-origin: 50px 51px; transition: transform 0.38s cubic-bezier(0.3, 1.45, 0.45, 1); }
+.gb__leg  { transform-origin: 48px 84px; transition: transform 0.3s ease; }
+.gb__arm--front { transform: rotate(72deg); }
+.gb__arm--back  { transform: rotate(62deg); }
+
+/* Idle — gentle breathing sway */
+.gb:not(.gb--running):not(.gb--pointing) .gb__figure {
+  animation: gb-idle 3.2s ease-in-out infinite;
+}
+@keyframes gb-idle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2.5px); }
+}
+
+/* Run cycle — legs scissor, arms pump opposite, body bobs and leans in */
+.gb--running .gb__figure    { animation: gb-run-bob 0.42s linear infinite; }
+.gb--running .gb__leg--front { animation: gb-run-leg-f 0.42s linear infinite; }
+.gb--running .gb__leg--back  { animation: gb-run-leg-b 0.42s linear infinite; }
+.gb--running .gb__arm--front { animation: gb-run-arm-f 0.42s linear infinite; }
+.gb--running .gb__arm--back  { animation: gb-run-arm-b 0.42s linear infinite; }
+@keyframes gb-run-bob {
+  0%, 50%, 100% { transform: translateY(0) rotate(4deg); }
+  25%, 75%      { transform: translateY(-5px) rotate(4deg); }
+}
+@keyframes gb-run-leg-f {
+  0%, 100% { transform: rotate(-30deg); }
+  50%      { transform: rotate(32deg); }
+}
+@keyframes gb-run-leg-b {
+  0%, 100% { transform: rotate(30deg); }
+  50%      { transform: rotate(-28deg); }
+}
+@keyframes gb-run-arm-f {
+  0%, 100% { transform: rotate(50deg); }
+  50%      { transform: rotate(92deg); }
+}
+@keyframes gb-run-arm-b {
+  0%, 100% { transform: rotate(90deg); }
+  50%      { transform: rotate(46deg); }
+}
+
+/* Pointing — front arm rotates to the JS-computed aim angle, slight lean back */
+.gb--pointing .gb__arm--front { transform: rotate(var(--gb-aim, -40deg)); }
+.gb--pointing .gb__arm--back  { transform: rotate(70deg); }
+.gb--pointing .gb__figure     { transform: rotate(-2deg); }
+
+/* Speech bubble — same hand-drawn plate as the chips: white, wobbly black border */
+.gb__bubble {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  width: max-content;
+  max-width: 230px;
+  padding: 8px 13px;
+  background: var(--color-constant-primary);
+  border: 2px solid var(--color-primary-transparent-87);
+  border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+  font-family: "Archivo", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 21px;
+  text-align: center;
+  color: var(--color-primary-transparent-87);
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px) scale(0.9);
+  transform-origin: bottom center;
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.gb--talking .gb__bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+/* Keep the bubble on-screen when the buddy stands near an edge */
+.gb--bubble-left  .gb__bubble { left: 0; transform-origin: bottom left; }
+.gb--bubble-left  .gb__bubble,
+.gb--bubble-left.gb--talking .gb__bubble  { transform: translateX(0) translateY(6px) scale(0.9); }
+.gb--bubble-left.gb--talking .gb__bubble  { transform: translateX(0) translateY(0) scale(1); }
+.gb--bubble-right .gb__bubble { left: auto; right: 0; transform-origin: bottom right; }
+.gb--bubble-right .gb__bubble,
+.gb--bubble-right.gb--talking .gb__bubble { transform: translateX(0) translateY(6px) scale(0.9); }
+.gb--bubble-right.gb--talking .gb__bubble { transform: translateX(0) translateY(0) scale(1); }
+
+/* Tour toggle chip — same wobbly outline as the Tools chips, but clickable */
+.gb-chip {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 210;
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--color-primary-transparent-87);
+  border-radius: 16px 11px 15px 12px / 12px 15px 11px 16px;
+  background: var(--color-constant-primary);
+  padding: 7px 14px;
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-primary-transparent-87);
+  cursor: pointer;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.gb-chip:hover { background: var(--color-accent-orange); }
+.gb-chip:active { transform: scale(0.96); }
+
+/* No buddy on touch/small screens, and none at all for reduced motion */
+@media (max-width: 900px), (hover: none), (prefers-reduced-motion: reduce) {
+  .gb, .gb-chip { display: none; }
+}
