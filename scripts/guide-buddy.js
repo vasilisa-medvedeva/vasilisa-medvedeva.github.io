@@ -265,12 +265,13 @@
     return Math.max(EDGE, Math.min(window.innerWidth - WIDTH - EDGE, desired));
   }
 
-  // The one tour chip lives beside the greeter while he waves, and in the
-  // bottom-right corner the rest of the time.
+  // The one tour chip lives beside the greeter while he waves — raised to
+  // head height so it reads like a speech bubble — and in a bottom corner
+  // the rest of the time.
   function chipBeside() {
     chip.style.right = 'auto';
     chip.style.left = Math.round(x + WIDTH + 12) + 'px';
-    chip.style.bottom = '44px';
+    chip.style.bottom = '108px';
   }
 
   function chipCorner() {
