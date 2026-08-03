@@ -143,6 +143,7 @@
     chip = document.createElement('button');
     chip.className = 'gb-chip';
     chip.type = 'button';
+    chip.hidden = true;       // no chip until the buddy brings one in with him
     chip.textContent = 'Show me around';
     chip.addEventListener('click', function () {
       if (active) { stop(); } else { start(); }
@@ -265,30 +266,21 @@
     return Math.max(EDGE, Math.min(window.innerWidth - WIDTH - EDGE, desired));
   }
 
-  // The one tour chip lives beside the greeter while he waves — down at his
-  // feet — and in a bottom corner the rest of the time.
+  /* The one tour chip only ever lives on the left: it pops in at the
+     greeter's feet once he has run on, and rests in the bottom-left corner
+     the rest of the time. Never the right corner — that side stays clear. */
   function chipBeside() {
-    chip.style.right = 'auto';
     chip.style.left = Math.round(x + WIDTH + 12) + 'px';
     chip.style.bottom = '18px';
   }
 
-  // While a tour runs, the stop chip sits in the bottom-right corner.
   function chipCorner() {
-    chip.style.left = 'auto';
-    chip.style.right = '14px';
-    chip.style.bottom = '14px';
-  }
-
-  // Once the tour is closed, the call chip rests in the bottom-left corner.
-  function chipLeft() {
-    chip.style.right = 'auto';
     chip.style.left = '14px';
     chip.style.bottom = '14px';
   }
 
-  // Greeting: run on stage and stand there waving the hand, chip beside —
-  // the tour itself waits for a click.
+  // Greeting: run on from the left, stop and wave the hand — and only once
+  // he's standing does the chip pop in at his feet. The tour waits for a click.
   function greet() {
     if (disabled() || !tourSteps || !tourSteps.length) { return; }
     build();
@@ -296,6 +288,7 @@
     token++;
     var t = token;
     greeting = true;
+    chip.textContent = 'Show me around';
     chip.hidden = true;
     setX(-140);
     face(1);
@@ -303,8 +296,12 @@
     moveTo(Math.max(EDGE, Math.min(170, window.innerWidth * 0.16)), t).then(function () {
       if (t !== token) { return; }
       root.classList.add('gb--waving');
-      chipBeside();
-      chip.hidden = false;
+      return delay(320, t).then(function () {
+        if (t !== token) { return; }
+        chipBeside();
+        chip.hidden = false;
+        chip.classList.add('gb-chip--pop');
+      });
     });
   }
 
@@ -339,8 +336,9 @@
 
   function resetChip() {
     if (!chip) { return; }
+    chip.classList.remove('gb-chip--pop');
     chip.textContent = 'Show me around';
-    chipLeft();
+    chipCorner();
     chip.hidden = false;
   }
 
@@ -352,6 +350,7 @@
     var t = token;
     active = true;
     greeting = false;
+    chip.classList.remove('gb-chip--pop');
     root.classList.remove('gb--waving');
     chipCorner();
     chip.hidden = false;

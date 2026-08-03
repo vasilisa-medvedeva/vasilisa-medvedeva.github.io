@@ -152,10 +152,11 @@
 .gb--bubble-right.gb--talking .gb__bubble { transform: translateX(0) translateY(6px) scale(0.9); }
 .gb--bubble-right.gb--talking .gb__bubble { transform: translateX(0) translateY(0) scale(1); }
 
-/* Tour toggle chip — same wobbly outline as the Tools chips, but clickable */
+/* Tour toggle chip — same wobbly outline as the Tools chips, but clickable.
+   Lives on the left only; JS moves it between the buddy's feet and the corner. */
 .gb-chip {
   position: fixed;
-  right: 14px;
+  left: 14px;
   bottom: 14px;
   z-index: 210;
   display: inline-flex;
@@ -175,6 +176,12 @@
 .gb-chip:hover { background: var(--color-accent-orange); }
 .gb-chip:active { transform: scale(0.96); }
 .gb-chip[hidden] { display: none; }
+/* Pops in once the greeter has arrived and started waving */
+.gb-chip--pop { animation: gb-chip-pop 0.34s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+@keyframes gb-chip-pop {
+  0%   { opacity: 0; transform: translateX(-8px) scale(0.86); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
 
 /* No buddy on touch/small screens, and none at all for reduced motion */
 @media (max-width: 900px), (hover: none), (prefers-reduced-motion: reduce) {
