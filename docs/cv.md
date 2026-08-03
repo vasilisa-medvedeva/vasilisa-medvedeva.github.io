@@ -1,6 +1,6 @@
 # VASILISA MEDVEDEVA
 
-Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · [phone] · **Portfolio: [portfolio URL]** · linkedin.com/in/vas-medvedeva
+Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · [phone] · **Portfolio: [vasilisa-medvedeva.github.io](https://vasilisa-medvedeva.github.io/)** · linkedin.com/in/vas-medvedeva
 
 ---
 
