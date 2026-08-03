@@ -274,13 +274,14 @@
     chip.style.bottom = '108px';
   }
 
+  // While a tour runs, the stop chip sits in the bottom-right corner.
   function chipCorner() {
     chip.style.left = 'auto';
     chip.style.right = '14px';
     chip.style.bottom = '14px';
   }
 
-  // While a tour runs, the stop chip sits in the bottom-left corner.
+  // Once the tour is closed, the call chip rests in the bottom-left corner.
   function chipLeft() {
     chip.style.right = 'auto';
     chip.style.left = '14px';
@@ -340,7 +341,7 @@
   function resetChip() {
     if (!chip) { return; }
     chip.textContent = 'Show me around';
-    chipCorner();
+    chipLeft();
     chip.hidden = false;
   }
 
@@ -353,7 +354,7 @@
     active = true;
     greeting = false;
     root.classList.remove('gb--waving');
-    chipLeft();
+    chipCorner();
     chip.hidden = false;
     chip.textContent = 'Stop the tour';
     send('guide_tour_start');
