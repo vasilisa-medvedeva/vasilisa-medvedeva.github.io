@@ -14,7 +14,8 @@
    stands there waving his hand, with a "Show me around" chip beside him.
    The tour itself only runs when that chip is clicked.
 
-   A tour step: { target: '#css-selector', say: 'bubble text', hold: ms }.
+   A tour step: { target: '#css-selector', say: 'bubble text', hold: ms,
+   id: 'short-name' } — id is optional and only names the stop in analytics.
    The buddy scrolls the page to the target if needed (running on the spot),
    runs under it, aims his arm at its centre and says the line.
    Any user wheel / touch / click or Escape aborts the tour; Escape also
@@ -100,9 +101,20 @@
   var active = false;       // a tour is running
   var greeting = false;     // standing at the edge waving, waiting for a click
   var tourSteps = null;
+  var seen = 0;             // stops actually shown in the current run
+  var seenId = '';          // id of the last stop shown
 
-  function send(name) {
-    if (typeof window.gtag === 'function') { window.gtag('event', name); }
+  /* GA4 events, no-ops when gtag never loaded. The funnel a run can produce:
+     guide_unavailable (he can't come out at all) → guide_greet → tour_start →
+     one tour_step per stop actually reached → tour_complete, or tour_stop
+     carrying how far he got and what ended the run. */
+  function send(name, params) {
+    if (typeof window.gtag === 'function') { window.gtag('event', name, params || {}); }
+  }
+
+  // Stable name for a stop in the reports: the step's own id, else its selector.
+  function stepId(step, i) {
+    return String(step.id || step.target || ('step_' + (i + 1))).slice(0, 90);
   }
 
   function build() {
@@ -122,19 +134,19 @@
 
     // Any real user input takes priority over the tour: abort gracefully.
     ['wheel', 'touchmove'].forEach(function (ev) {
-      window.addEventListener(ev, userAbort, { passive: true });
+      window.addEventListener(ev, function () { userAbort('scrolled_away'); }, { passive: true });
     });
     document.addEventListener('pointerdown', function (e) {
       if (e.target && e.target.closest && e.target.closest('.gb-chip')) { return; }
-      userAbort();
+      userAbort('clicked_page');
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { userAbort(); dismissGreet(); }
+      if (e.key === 'Escape') { userAbort('escape'); dismissGreet(); }
     });
     // The engine is rAF-driven and freezes in background tabs — if the user
     // switches away mid-tour, end it cleanly instead of resuming out of place.
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { userAbort(); }
+      if (document.hidden) { userAbort('tab_hidden'); }
     });
   }
 
@@ -146,7 +158,7 @@
     chip.hidden = true;       // no chip until the buddy brings one in with him
     chip.textContent = 'Show me around';
     chip.addEventListener('click', function () {
-      if (active) { stop(); } else { start(); }
+      if (active) { stop('chip'); } else { start(); }
     });
     document.body.appendChild(chip);
   }
@@ -315,7 +327,9 @@
     moveTo(-140, t);
   }
 
-  function doStep(step, t) {
+  // meta, when the step belongs to a tour run, logs the stop as reached — set
+  // only once he is standing there saying the line, never on a missing target.
+  function doStep(step, t, meta) {
     var el = document.querySelector(step.target);
     if (!el) { return Promise.resolve(); }
     return scrollToEl(el, t).then(function () {
@@ -324,6 +338,11 @@
         if (t !== token) { return; }
         aimAt(el);
         say(step.say);
+        if (meta) {
+          seen = meta.index;
+          seenId = meta.id;
+          send('guide_tour_step', { step_index: meta.index, step_total: meta.total, step_id: meta.id });
+        }
         return delay(step.hold || 3000, t).then(function () {
           if (t !== token) { return; }
           hideBubble();
@@ -350,46 +369,53 @@
     var t = token;
     active = true;
     greeting = false;
+    seen = 0;
+    seenId = '';
     chip.classList.remove('gb-chip--pop');
     root.classList.remove('gb--waving');
     chipCorner();
     chip.hidden = false;
     chip.textContent = 'Stop the tour';
-    send('guide_tour_start');
+    var total = tourSteps.length;
+    send('guide_tour_start', { step_total: total });
     if (x < -100) { setX(-140); face(1); }
     var chain = Promise.resolve();
-    tourSteps.forEach(function (step) {
+    tourSteps.forEach(function (step, i) {
       chain = chain.then(function () {
         if (t !== token) { return; }
-        return doStep(step, t);
+        return doStep(step, t, { index: i + 1, total: total, id: stepId(step, i) });
       });
     });
     chain.then(function () {
       if (t !== token) { return; }
-      // Done — run off the nearest edge and rest.
+      // Every stop is done. Close the run *before* the exit sprint, so a click
+      // while he trots off-stage can't book a finished tour as a drop-off.
+      active = false;
+      resetChip();
+      send('guide_tour_complete', { steps_seen: seen, step_total: total });
       var exitX = (x > window.innerWidth / 2) ? window.innerWidth + 60 : -140;
-      moveTo(exitX, t).then(function () {
-        if (t !== token) { return; }
-        active = false;
-        resetChip();
-        send('guide_tour_finish');
-      });
+      moveTo(exitX, t);
     });
   }
 
-  function stop() {
+  function stop(reason) {
     if (!active) { return; }
     token++;
     var t = token;
     active = false;
     resetChip();
-    send('guide_tour_stop');
+    send('guide_tour_stop', {
+      reason: reason || 'chip',                      // what ended the run
+      step_index: seen,                              // stops he had shown by then
+      step_total: tourSteps ? tourSteps.length : 0,
+      step_id: seenId || 'none'                      // 'none' = left before stop 1
+    });
     hideBubble();
     root.classList.remove('gb--pointing');
     moveTo(-140, t);   // trot off-screen
   }
 
-  function userAbort() { if (active) { stop(); } }
+  function userAbort(reason) { if (active) { stop(reason || 'user_input'); } }
 
   function pointAt(sel, text, hold) {
     if (disabled()) { return; }
@@ -428,7 +454,14 @@
             });
             return;
           }
-          if (!active && !greeting && !disabled()) { greet(); }
+          if (active || greeting) { return; }
+          // Log the visitors he can never greet, so a missing guide_greet in
+          // the funnel reads as "phone / reduced motion", not "left too fast".
+          if (disabled()) {
+            send('guide_unavailable', { reason: reduced.matches ? 'reduced_motion' : 'small_or_touch' });
+            return;
+          }
+          greet();
         };
         setTimeout(autoGreet, opts.delay || 1500);
       }
