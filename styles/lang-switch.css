@@ -1,0 +1,64 @@
+/* ── Language switch ────────────────────────────────────────────────────
+   A vertical pill: the two languages stacked, the live one solid, the other
+   dimmed, a hairline between them. It sits opposite the guide buddy, who
+   owns the bottom-left corner.
+   Colors and type come from the token files — nothing local. */
+
+.lang-switch {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  border-radius: 30px;
+  background: var(--color-constant-primary);
+  border: 1px solid var(--color-primary-transparent-16);
+  box-shadow: 0 6px 20px var(--color-primary-transparent-08);
+}
+
+.lang-switch__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  /* 44×44 is the touch target; the label inside is what you see */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: 24px;
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: var(--color-primary-transparent-48);
+  cursor: pointer;
+  transition: color .16s ease-out, background .16s ease-out;
+}
+.lang-switch__btn:hover { background: var(--color-primary-transparent-04); }
+.lang-switch__btn:active { background: var(--color-primary-transparent-08); }
+.lang-switch__btn:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
+
+/* the live language: full weight, full contrast — readable as state, not as
+   a second button */
+.lang-switch__btn[aria-current="true"] {
+  font-weight: 900;
+  color: var(--color-primary-transparent-87);
+}
+
+/* the hairline between the two, drawn inside the pill's padding */
+.lang-switch__rule {
+  height: 1px;
+  margin: 2px 10px;
+  background: var(--color-primary-transparent-16);
+}
+
+/* on a phone the buddy and the switch share the bottom edge; keep the switch
+   clear of the home indicator */
+@media (max-width: 720px) {
+  .lang-switch { bottom: max(14px, env(safe-area-inset-bottom)); }
+}

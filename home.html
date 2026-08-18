@@ -21,7 +21,7 @@
     }
     gtag('config', 'G-PDY8SF935T');
   </script>
-  <title>Pyroblast UI</title>
+  <title data-ru="Pyroblast UI">Pyroblast UI</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/lang-switch.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <!-- Archivo — used for flow-card copy (same as the flow pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -366,11 +367,11 @@
 
   <main class="main">
     <section class="hero">
-      <span class="hero__eyebrow">Pyroblast · iOS / Android / Desktop</span>
-      <h1 class="hero__title">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
+      <span class="hero__eyebrow" data-ru="Pyroblast · iOS / Android / Десктоп">Pyroblast · iOS / Android / Desktop</span>
+      <h1 class="hero__title" data-ru="Pyroblast: чаты, каналы и&amp;nbsp;стримы для&amp;nbsp;геймеров.">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
       <div class="hero__aside">
-        <p>No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
-        <p>Designed for desktop, iOS and Android; the prototypes below are the mobile flows. Built at an early-stage startup that ran out of funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
+        <p data-ru="Не нужно поднимать сервер и продираться через шум. Я спроектировала всё целиком, &lt;span class=&quot;hero__circled&quot;&gt;одна&lt;svg viewBox=&quot;0 0 104 52&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4&quot; stroke=&quot;black&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;: дизайн-систему, ядро переписки и каждый сценарий ниже. Все они — живые прототипы. Потыкайте.">No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
+        <p data-ru="Проектировала для десктопа, iOS и Android; прототипы ниже — мобильные сценарии. Делала в раннем стартапе, у которого закончились деньги до запуска. Продукт не вышел, а&amp;nbsp;мышление за ним — вот оно.">Designed for desktop, iOS and Android; the prototypes below are the mobile flows. Built at an early-stage startup that ran out of funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
       </div>
     </section>
 
@@ -378,7 +379,7 @@
     <section class="case">
       <div>
         <span class="case__index">Case 01</span>
-        <h2 class="case__title">Design System</h2>
+        <h2 class="case__title" data-ru="Дизайн-система">Design System</h2>
       </div>
       <a class="ds-card" href="atoms.html" aria-label="Open the Pyroblast component library">
           <!-- Drop a screenshot at assets/design-system-preview.png and it shows here automatically;
@@ -400,26 +401,26 @@
             </svg>
           </div>
           <div class="ds-wall">
-            <span class="btn btn--primary">Button</span>
-            <span class="btn btn--secondary">Button</span>
-            <span class="btn btn--only-text">Button</span>
-            <span class="btn btn--accent">Button</span>
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+            <span class="btn btn--primary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent" data-ru="Кнопка">Button</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;Поиск"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
 
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="notification-counter"><span class="notification-counter__number">34</span></span>
             <span class="ds-avatar">ML</span>
             <span class="ds-avatar ds-avatar--ch">P</span>
             <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
 
-            <span class="btn btn--primary s-pressed">Button</span>
-            <span class="btn btn--secondary s-pressed">Button</span>
-            <span class="btn btn--only-text s-pressed">Button</span>
-            <span class="btn btn--accent s-pressed">Button</span>
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true"><span style="color:var(--color-primary-transparent-87)">Coffee</span></span>
+            <span class="btn btn--primary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-pressed" data-ru="Кнопка">Button</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;&lt;span style=&quot;color:var(--color-primary-transparent-87)&quot;&gt;Кофе&lt;/span&gt;"><img src="icons/general/search.svg" alt="" aria-hidden="true"><span style="color:var(--color-primary-transparent-87)">Coffee</span></span>
 
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
@@ -427,11 +428,11 @@
             <span class="ds-thumb"></span>
             <span class="ds-video"><span class="ds-video__play">↓</span>0:32 · 102 MB</span>
 
-            <span class="btn btn--primary s-disabled">Button</span>
-            <span class="btn btn--secondary s-disabled">Button</span>
-            <span class="btn btn--only-text s-disabled">Button</span>
-            <span class="btn btn--accent s-disabled">Button</span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="btn btn--primary s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-disabled" data-ru="Кнопка">Button</span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
 
@@ -439,20 +440,20 @@
             <span class="ds-avatar ds-avatar--ch">G</span>
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
             <span class="notification-counter"><span class="notification-counter__number">12</span></span>
-            <span class="btn btn--primary">Button</span>
-            <span class="btn btn--accent">Button</span>
+            <span class="btn btn--primary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent" data-ru="Кнопка">Button</span>
 
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;Поиск"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
             <span class="ds-thumb"></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
-            <span class="btn btn--secondary">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
 
-            <span class="btn btn--primary s-pressed">Button</span>
-            <span class="btn btn--secondary">Button</span>
-            <span class="btn btn--only-text">Button</span>
-            <span class="btn btn--accent s-disabled">Button</span>
+            <span class="btn btn--primary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-disabled" data-ru="Кнопка">Button</span>
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
             <span class="notification-counter"><span class="notification-counter__number">7</span></span>
@@ -465,7 +466,7 @@
     <section class="case">
       <div>
         <span class="case__index">Case 02</span>
-        <h2 class="case__title">Chat Organization</h2>
+        <h2 class="case__title" data-ru="Порядок в чатах">Chat Organization</h2>
       </div>
       <figure class="case-demo">
         <iframe src="flows/create-chats.html?embed=full" title="Chat Organization flow — live prototype" loading="lazy"></iframe>
@@ -473,21 +474,21 @@
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>Gaming communities can grow from a small group into dozens of conversations within weeks. Without a clear structure, chats become noisy and difficult to navigate, causing members to mute channels or disengage.</p>
-          <p>The challenge was supporting both sides of growth: helping new communities start from zero and helping established ones stay organized as they scale.</p>
+          <p data-ru="Игровое сообщество за недели вырастает из небольшой компании в десятки переписок. Без внятной структуры чаты шумят и в них трудно ориентироваться — люди отключают уведомления или уходят.">Gaming communities can grow from a small group into dozens of conversations within weeks. Without a clear structure, chats become noisy and difficult to navigate, causing members to mute channels or disengage.</p>
+          <p data-ru="Сложность была в том, чтобы поддержать обе стороны роста: помочь новым сообществам стартовать с нуля, а сложившимся — не потерять порядок при масштабировании.">The challenge was supporting both sides of growth: helping new communities start from zero and helping established ones stay organized as they scale.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I designed two complementary experiences.</p>
-          <p>The first guides a founder from an empty space to the first conversation and creation of the first sub-channel, making the initial setup feel simple and actionable.</p>
-          <p>The second helps mature communities manage complexity through folders, search, drag-and-drop organization, and renaming &#8212; adding structure without changing existing chat habits.</p>
+          <p data-ru="Я спроектировала два дополняющих друг друга сценария.">I designed two complementary experiences.</p>
+          <p data-ru="Первый ведёт основателя от пустого пространства к первой переписке и созданию первого подканала, превращая начальную настройку в понятные шаги.">The first guides a founder from an empty space to the first conversation and creation of the first sub-channel, making the initial setup feel simple and actionable.</p>
+          <p data-ru="Второй помогает зрелым сообществам справляться со сложностью: папки, поиск, перетаскивание и переименование — структура, которая не ломает привычки в чатах.">The second helps mature communities manage complexity through folders, search, drag-and-drop organization, and renaming &#8212; adding structure without changing existing chat habits.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>Enabled communities to evolve from a single chat into organized spaces</li>
-            <li>Reduced friction when creating and managing multiple conversations</li>
-            <li>Added structure for large communities while keeping the familiar chat experience intact</li>
+            <li data-ru="Сообщества смогли вырасти из одного чата в организованные пространства">Enabled communities to evolve from a single chat into organized spaces</li>
+            <li data-ru="Меньше трения при создании и ведении множества переписок">Reduced friction when creating and managing multiple conversations</li>
+            <li data-ru="Большие сообщества получили структуру, а привычный опыт чата остался нетронутым">Added structure for large communities while keeping the familiar chat experience intact</li>
           </ul>
         </div>
       </div>
@@ -497,7 +498,7 @@
     <section class="case">
       <div>
         <span class="case__index">Case 03</span>
-        <h2 class="case__title">Rich Photo Layouts</h2>
+        <h2 class="case__title" data-ru="Гибкая вёрстка с фото">Rich Photo Layouts</h2>
       </div>
       <figure class="case-demo">
         <iframe src="flows/attach-photo.html?embed=full" title="Rich Photo Layouts flow — live prototype" loading="lazy"></iframe>
@@ -505,19 +506,19 @@
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>In most chat apps, photos are simply attached to a message. Images and text are treated as separate blocks, making it difficult to create structured posts, guides, or announcements where visuals and text work together.</p>
+          <p data-ru="В большинстве мессенджеров фотография просто прикрепляется к сообщению. Картинка и текст живут отдельными блоками, поэтому трудно собрать структурированный пост, гайд или анонс, где визуальное и текст работают вместе.">In most chat apps, photos are simply attached to a message. Images and text are treated as separate blocks, making it difficult to create structured posts, guides, or announcements where visuals and text work together.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I designed a flexible photo composer that lets users choose how an image is displayed within a message. Photos can be inserted in different layouts, while text flows naturally around them instead of being limited to a caption below.</p>
-          <p>This gives users editorial control over message composition, making it possible to create rich, well-structured content directly inside the chat.</p>
+          <p data-ru="Я спроектировала гибкий сборщик сообщений с фото: человек сам выбирает, как картинка показана внутри сообщения. Фотографии вставляются в разных раскладках, а текст естественно обтекает их, вместо того чтобы ютиться подписью снизу.">I designed a flexible photo composer that lets users choose how an image is displayed within a message. Photos can be inserted in different layouts, while text flows naturally around them instead of being limited to a caption below.</p>
+          <p data-ru="Это даёт редакторский контроль над сообщением: насыщенный, хорошо собранный контент можно делать прямо в чате.">This gives users editorial control over message composition, making it possible to create rich, well-structured content directly inside the chat.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>Turned photo attachments into a content creation tool rather than a simple file upload</li>
-            <li>Enabled users to create visually structured posts without leaving the conversation</li>
-            <li>Expanded the messaging experience beyond plain text and attachments</li>
+            <li data-ru="Вложенные фото превратились из простой загрузки файла в инструмент создания контента">Turned photo attachments into a content creation tool rather than a simple file upload</li>
+            <li data-ru="Визуально структурированные посты стало возможно собирать, не выходя из переписки">Enabled users to create visually structured posts without leaving the conversation</li>
+            <li data-ru="Опыт переписки вышел за пределы простого текста и вложений">Expanded the messaging experience beyond plain text and attachments</li>
           </ul>
         </div>
       </div>
@@ -527,7 +528,7 @@
     <section class="case">
       <div>
         <span class="case__index">Case 04</span>
-        <h2 class="case__title">Log in/Sign up</h2>
+        <h2 class="case__title" data-ru="Вход и регистрация">Log in/Sign up</h2>
       </div>
       <figure class="case-demo">
         <iframe src="flows/login.html?embed=full" title="Log in/Sign up flow — live prototype" loading="lazy"></iframe>
@@ -535,19 +536,19 @@
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>Traditional sign up flows ask users to create an account before they experience any value. In messaging apps, that friction often leads to abandonment before users understand why they should register.</p>
+          <p data-ru="Обычная регистрация просит завести аккаунт раньше, чем человек увидит хоть какую-то пользу. В мессенджерах это трение часто приводит к уходу до того, как станет понятно, зачем вообще регистрироваться.">Traditional sign up flows ask users to create an account before they experience any value. In messaging apps, that friction often leads to abandonment before users understand why they should register.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I redesigned onboarding to reduce the barrier to entry. Instead of opening with a sign up form, the app lets visitors explore the product first: they can browse public chats, search conversations, and experience the interface without creating an account.</p>
-          <p>Actions that require identity &#8212; such as sending messages &#8212; remain locked until registration. When users decide to join, sign up and log in are combined into a single flow, passwords are replaced with a one-time verification code, and profile setup is postponed until after the account is created.</p>
+          <p data-ru="Я переработала онбординг, чтобы снизить порог входа. Вместо формы регистрации на старте приложение даёт сначала осмотреться: можно листать публичные чаты, искать по переписке и пощупать интерфейс без аккаунта.">I redesigned onboarding to reduce the barrier to entry. Instead of opening with a sign up form, the app lets visitors explore the product first: they can browse public chats, search conversations, and experience the interface without creating an account.</p>
+          <p data-ru="Действия, которым нужна личность, — например, отправка сообщений — остаются закрытыми до регистрации. Когда человек решает присоединиться, вход и регистрация сливаются в один сценарий, пароль заменяется одноразовым кодом, а настройка профиля откладывается на потом.">Actions that require identity &#8212; such as sending messages &#8212; remain locked until registration. When users decide to join, sign up and log in are combined into a single flow, passwords are replaced with a one-time verification code, and profile setup is postponed until after the account is created.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>Reduced friction at the first touchpoint by delaying registration until users had experienced the product</li>
-            <li>Allowed visitors to explore public content without an account while protecting interactive features</li>
-            <li>Simplified authentication by replacing passwords with one-time verification codes and deferring profile setup</li>
+            <li data-ru="Меньше трения в первой точке контакта: регистрация отложена до момента, когда продукт уже пощупали">Reduced friction at the first touchpoint by delaying registration until users had experienced the product</li>
+            <li data-ru="Публичный контент доступен без аккаунта, а интерактивные возможности остаются защищёнными">Allowed visitors to explore public content without an account while protecting interactive features</li>
+            <li data-ru="Аутентификация проще: одноразовый код вместо пароля и отложенная настройка профиля">Simplified authentication by replacing passwords with one-time verification codes and deferring profile setup</li>
           </ul>
         </div>
       </div>
@@ -588,6 +589,7 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>
+  <script src="scripts/i18n.js"></script>
   <script>
     /* Prototype-interaction analytics for GA4 (gtag is configured in <head>).
        Real selectors (no markup is changed):
