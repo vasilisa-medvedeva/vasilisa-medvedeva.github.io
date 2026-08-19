@@ -15,7 +15,8 @@
    The tour itself only runs when that chip is clicked.
 
    A tour step: { target: '#css-selector', say: 'bubble text', hold: ms,
-   id: 'short-name' } — id is optional and only names the stop in analytics.
+   id: 'short-name', sayRu: 'реплика' } — id is optional and only names the
+   stop in analytics; sayRu is the line he uses while the site is in Russian.
    The buddy scrolls the page to the target if needed (running on the spot),
    runs under it, aims his arm at its centre and says the line.
    Any user wheel / touch / click or Escape aborts the tour; Escape also
@@ -91,6 +92,18 @@
       '</g>' +
     '</svg>';
 
+  /* The buddy's own two labels. Copy a script writes at runtime can't sit in
+     data-ru (see scripts/i18n.js), so it reads the live language instead and
+     redraws when the switch fires. A tour step carries its Russian beside its
+     English, as sayRu, so both lines stay in one place in the page. */
+  var CHIP = {
+    en: { start: 'Show me around',    stop: 'Stop the tour' },
+    ru: { start: 'Проведи экскурсию',  stop: 'Остановить экскурсию' }
+  };
+  function lang() { return (typeof window.lang === 'function' && window.lang() === 'ru') ? 'ru' : 'en'; }
+  function chipText(key) { return CHIP[lang()][key]; }
+  function stepLine(step) { return (lang() === 'ru' && step.sayRu) ? step.sayRu : step.say; }
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   var small = window.matchMedia('(max-width: 900px), (hover: none)');
   function disabled() { return reduced.matches || small.matches; }
@@ -101,6 +114,7 @@
   var active = false;       // a tour is running
   var greeting = false;     // standing at the edge waving, waiting for a click
   var tourSteps = null;
+  var current = null;       // the step whose line is on screen, for a language swap
   var seen = 0;             // stops actually shown in the current run
   var seenId = '';          // id of the last stop shown
 
@@ -156,7 +170,7 @@
     chip.className = 'gb-chip';
     chip.type = 'button';
     chip.hidden = true;       // no chip until the buddy brings one in with him
-    chip.textContent = 'Show me around';
+    chip.textContent = chipText('start');
     chip.addEventListener('click', function () {
       if (active) { stop('chip'); } else { start(); }
     });
@@ -187,7 +201,14 @@
     root.classList.add('gb--talking');
   }
 
-  function hideBubble() { root.classList.remove('gb--talking'); }
+  function hideBubble() { current = null; root.classList.remove('gb--talking'); }
+
+  /* Switching language mid-visit: relabel the chip he is holding and redraw
+     the line he is in the middle of saying. */
+  document.addEventListener('langchange', function () {
+    if (chip) { chip.textContent = chipText(active ? 'stop' : 'start'); }
+    if (current && root.classList.contains('gb--talking')) { say(stepLine(current)); }
+  });
 
   function delay(ms, t) {
     return new Promise(function (res) {
@@ -300,7 +321,7 @@
     token++;
     var t = token;
     greeting = true;
-    chip.textContent = 'Show me around';
+    chip.textContent = chipText('start');
     chip.hidden = true;
     setX(-140);
     face(1);
@@ -337,7 +358,8 @@
       return moveTo(standXFor(el), t).then(function () {
         if (t !== token) { return; }
         aimAt(el);
-        say(step.say);
+        current = step;
+        say(stepLine(step));
         if (meta) {
           seen = meta.index;
           seenId = meta.id;
@@ -356,7 +378,7 @@
   function resetChip() {
     if (!chip) { return; }
     chip.classList.remove('gb-chip--pop');
-    chip.textContent = 'Show me around';
+    chip.textContent = chipText('start');
     chipCorner();
     chip.hidden = false;
   }
@@ -375,7 +397,7 @@
     root.classList.remove('gb--waving');
     chipCorner();
     chip.hidden = false;
-    chip.textContent = 'Stop the tour';
+    chip.textContent = chipText('stop');
     var total = tourSteps.length;
     send('guide_tour_start', { step_total: total });
     if (x < -100) { setX(-140); face(1); }

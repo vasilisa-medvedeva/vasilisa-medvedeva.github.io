@@ -491,7 +491,7 @@
       <!-- Nomerogram — vehicle check by license plate -->
       <a class="project-card" href="nomerogram.html">
         <div class="project-card__head">
-          <span class="project-card__name">Nomerogram</span>
+          <span class="project-card__name" data-ru="Номерограм">Nomerogram</span>
           <span class="project-card__desc" data-ru="Проверка истории продаж и фотографий автомобиля по госномеру. Вела поиск, историю и загрузку фотографий на iOS и Android; онбординг почти удвоил число загрузок.">Check a car&#8217;s sale history and photos by its license plate. I owned the search, history and photo contribution flows on iOS and Android; onboarding nearly doubled photo uploads.</span>
           <div class="project-card__pills">
             <span class="meta-chip" data-ru="Загрузки фото ×2">Photo uploads &times;2</span>
@@ -507,7 +507,7 @@
       <!-- Drom Fines — traffic fines check & payment -->
       <a class="project-card" href="dromfines.html">
         <div class="project-card__head">
-          <span class="project-card__name">Drom Fines</span>
+          <span class="project-card__name" data-ru="Дром Штрафы">Drom Fines</span>
           <span class="project-card__desc" data-ru="Проверка и оплата штрафов ГИБДД по официальной базе. Переработала оплату, регистрацию и онбординг; конверсия в оплату выросла вдвое.">Check and pay traffic fines through the official government database. I redesigned payments, registration and onboarding; payment conversion doubled.</span>
           <div class="project-card__pills">
             <span class="meta-chip" data-ru="Конверсия в оплату ×2">Payment conversion &times;2</span>
@@ -539,7 +539,7 @@
       <!-- Drom PDD — driving theory exam prep -->
       <a class="project-card" href="drompdd.html">
         <div class="project-card__head">
-          <span class="project-card__name">Drom PDD</span>
+          <span class="project-card__name" data-ru="Дром ПДД">Drom PDD</span>
           <span class="project-card__desc" data-ru="Приложение для изучения ПДД и сдачи теории, 10 млн+ загрузок. Перестроила главный экран в масштабируемую сетку и выпустила тёмную тему как часть дизайн-системы.">An app for learning traffic rules and passing the driving theory exam, with 10M+ downloads. I redesigned the home screen into a scalable layout and shipped dark mode as part of the design system.</span>
           <div class="project-card__pills">
             <span class="meta-chip" data-ru="10 млн+ загрузок">10M+ downloads</span>
@@ -875,12 +875,12 @@
     // Auto-plays once per session; the bottom-right chip replays it.
     // id names the stop in the GA4 reports (guide_tour_step / guide_tour_stop).
     GuideBuddy.setTour([
-      { id: 'hero',       target: '.hero__circle',                                    say: 'Five years in. The receipts are further down.',       hold: 3200 },
-      { id: 'nomerogram', target: '#projects .project-card:nth-child(1)',             say: 'Photo uploads doubled — and it wasn’t the button.',   hold: 3400 },
-      { id: 'prototype',  target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Every case opens with a prototype you can actually tap.', hold: 3600 },
-      { id: 'experience', target: '#experience',                                      say: 'Three apps at Drom. 10M+ downloads between them.',    hold: 3400 },
-      { id: 'quiz',       target: '#guess',                                           say: 'One of these three is false. Your move.',             hold: 3400 },
-      { id: 'footer',     target: '.footer__big',                                     say: 'That’s everything. My Telegram’s one tap away.',       hold: 3400 }
+      { id: 'hero',       target: '.hero__circle',                                    say: 'Five years in. The receipts are further down.',       sayRu: 'Пять лет в профессии. Доказательства — ниже.',            hold: 3200 },
+      { id: 'nomerogram', target: '#projects .project-card:nth-child(1)',             say: 'Photo uploads doubled — and it wasn’t the button.',   sayRu: 'Загрузок фото стало вдвое больше — и дело не в кнопке.',  hold: 3400 },
+      { id: 'prototype',  target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Every case opens with a prototype you can actually tap.', sayRu: 'Каждый кейс открывается прототипом, его можно потыкать.', hold: 3600 },
+      { id: 'experience', target: '#experience',                                      say: 'Three apps at Drom. 10M+ downloads between them.',    sayRu: 'Три приложения в Дроме. 10 млн+ загрузок на всех.',       hold: 3400 },
+      { id: 'quiz',       target: '#guess',                                           say: 'One of these three is false. Your move.',             sayRu: 'Одно из трёх — неправда. Ваш ход.',                      hold: 3400 },
+      { id: 'footer',     target: '.footer__big',                                     say: 'That’s everything. My Telegram’s one tap away.',       sayRu: 'Это всё. Телеграм — в одно касание.',                    hold: 3400 }
     ], { auto: true, delay: 1600 });
   </script>
 </body>
