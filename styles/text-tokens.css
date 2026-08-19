@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+/* ── Display face, per language ─────────────────────────────────────────
+   Archivo carries the display voice — hero, header, nav, buttons — but the
+   family Google serves has no Cyrillic at all (latin, latin-ext, vietnamese
+   only), so in Russian every Archivo line silently dropped to whatever sans
+   the OS had: Helvetica on a Mac, Arial on Windows.
+
+   Onest takes over for Russian: Cyrillic by design, and it carries the same
+   300 / 500 / 700 / 900 the site uses, so no weight has to be approximated.
+   i18n.js sets html[lang] as it switches, so the face follows the language
+   with no duplicated rules. Body copy stays Roboto in both — it has Cyrillic.
+
+   Onest is fetched only once Russian is actually chosen; see i18n.js. */
+:root { --font-display: "Archivo", sans-serif; }
+:root[lang="ru"] { --font-display: "Onest", "Archivo", sans-serif; }
+
 :root {
   /* Headline */
   --text-headline-medium-font-family: "Roboto";

@@ -36,6 +36,19 @@
     '.site-header__links': 'Резюме и контакты'
   };
 
+  /* Archivo, the display face, has no Cyrillic — Onest carries the Russian
+     (the note in text-tokens.css has the reasoning). It is fetched the moment
+     Russian is first chosen, so an English reader never pays for the file. */
+  var FACE_RU = 'https://fonts.googleapis.com/css2?family=Onest:wght@300;500;700;900&display=swap';
+  function loadFace() {
+    if (document.querySelector('link[data-face="ru"]')) return;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = FACE_RU;
+    link.setAttribute('data-face', 'ru');
+    document.head.appendChild(link);
+  }
+
   function stored() {
     try { return localStorage.getItem(KEY); } catch (e) { return null; }
   }
@@ -45,6 +58,7 @@
 
   function apply(lang) {
     var ru = lang === 'ru';
+    if (ru) loadFace();
 
     /* fold the shared header into the same data-ru mechanism, once */
     Object.keys(CHROME).forEach(function (sel) {

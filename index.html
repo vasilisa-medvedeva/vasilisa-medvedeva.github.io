@@ -72,7 +72,7 @@
       display: flex; flex-direction: column; gap: 24px;
     }
     .hero__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
       font-size: clamp(48px, 7.6vw, 104px);
       line-height: 0.96; letter-spacing: -0.025em;
@@ -86,7 +86,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .hero__aside p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
@@ -143,7 +143,7 @@
       padding: 24px 20px 0;
     }
     .project-card__name {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -152,7 +152,7 @@
       text-transform: uppercase;
     }
     .project-card__desc {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300;
       font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
@@ -227,7 +227,7 @@
     .info-section, .projects-grid { scroll-margin-top: 72px; }
 
     .section-title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -240,7 +240,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .info-section__body p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
@@ -251,7 +251,7 @@
       text-underline-offset: 3px;
     }
     .info-muted {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: var(--text-label-large-line-height);
@@ -263,7 +263,7 @@
     /* Two-truths-and-a-lie mini game in Bit About Me */
     .guess { margin-top: 6px; }
     .guess .guess__intro {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 700;
       font-size: 22px; line-height: 28px;
       color: var(--color-primary-transparent-87);
@@ -277,7 +277,7 @@
       width: 100%;
       padding: 14px 16px;
       text-align: left;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 26px;
       color: var(--color-primary-transparent-87);
       background: var(--color-constant-primary);
@@ -308,7 +308,7 @@
     .guess__option.is-truth  { opacity: 0.55; border-color: var(--color-primary-transparent-16); }
     .guess__result {
       margin-top: 14px;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 560px;
@@ -332,7 +332,7 @@
       margin-bottom: 8px;
     }
     .xp__company {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
       font-size: 22px; line-height: 26px;
       letter-spacing: -0.01em;
@@ -340,13 +340,13 @@
       color: var(--color-primary-transparent-87);
     }
     .xp__role {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-60);
     }
     .xp__years {
       margin-left: auto;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: 24px;
@@ -354,7 +354,7 @@
       color: var(--color-primary-transparent-48);
     }
     .xp p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
@@ -364,7 +364,7 @@
       list-style: disc; margin: 8px 0 0; padding-left: 20px; max-width: 720px;
     }
     .xp li {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
     }
@@ -374,7 +374,7 @@
     .tools-group { padding: 14px 0; border-top: 1px solid var(--color-primary-transparent-16); }
     .tools-group:first-child { border-top: none; padding-top: 0; }
     .tools-group__label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-medium-font-size);
       line-height: var(--text-label-medium-line-height);
@@ -415,7 +415,7 @@
       padding: 96px 20px 56px;
     }
     .footer__big {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
       font-size: clamp(34px, 4.6vw, 64px);
       line-height: 1.0; letter-spacing: -0.025em;
@@ -432,7 +432,7 @@
       margin-left: 0.12em;
     }
     .footer__colophon {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500; font-size: 14px; line-height: 20px;
       letter-spacing: 0.02em;
       color: var(--color-primary-transparent-48);

@@ -127,7 +127,7 @@
   background: var(--color-constant-primary);
   border: 2px solid var(--color-primary-transparent-87);
   border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 300;
   font-size: 15px;
   line-height: 21px;
@@ -165,7 +165,7 @@
   border-radius: 16px 11px 15px 12px / 12px 15px 11px 16px;
   background: var(--color-constant-primary);
   padding: 7px 14px;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
