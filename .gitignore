@@ -12,3 +12,6 @@ IMG_*.png
 IMG_*.jpg
 Screenshot *.png
 ScreenRecording*
+
+# Local symlink to a neighbouring project — breaks the Pages build if committed
+.spotware-preview
