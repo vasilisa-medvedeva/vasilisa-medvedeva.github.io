@@ -37,12 +37,16 @@
     '.site-header__link[href$=".pdf"]':          'Резюме',
     '.site-header__link[href^="mailto:"]':       'Почта'
   };
+  /* the phone panel writes these two itself (scripts/page-transition.js) */
+  var CHROME_MOBILE = { '.mobile-nav__label': 'Контакты' };
   /* case scaffolding repeats on every case page and inside every case */
   var LABELS = { 'Problem': 'Проблема', 'Solution': 'Решение', 'Outcome': 'Результат' };
 
   var CHROME_ARIA = {
-    '.site-header__menu':  'Разделы сайта',
-    '.site-header__links': 'Резюме и контакты'
+    '.site-header__menu':   'Разделы сайта',
+    '.site-header__links':  'Резюме и контакты',
+    '.site-header__burger': 'Меню',
+    '.mobile-nav':          'Меню'
   };
 
   /* Archivo, the display face, has no Cyrillic — Onest carries the Russian
@@ -85,13 +89,35 @@
     if (ru) loadFace();
 
     /* fold the shared header into the same data-ru mechanism, once */
-    Object.keys(CHROME).forEach(function (sel) {
+    Object.keys(CHROME).concat(Object.keys(CHROME_MOBILE)).forEach(function (sel) {
       var el = document.querySelector(sel);
-      if (el && el.dataset.ru === undefined) el.dataset.ru = CHROME[sel];
+      var ru = CHROME[sel] || CHROME_MOBILE[sel];
+      if (el && el.dataset.ru === undefined) el.dataset.ru = ru;
     });
     Object.keys(CHROME_ARIA).forEach(function (sel) {
       var el = document.querySelector(sel);
       if (el && !el.hasAttribute('data-ru-aria')) el.setAttribute('data-ru-aria', CHROME_ARIA[sel]);
+    });
+
+    /* The phone panel and the CV pill are clones of header links, taken by
+       page-transition.js before any of this ran, so they carry no data-ru of
+       their own — and a clone made from English text would stay English for
+       good. Copy it across by href, now that the header's own copy is filled
+       in above. Names that are the same in both languages (Telegram, the
+       product names in Latin) have no data-ru and are left alone. */
+    document.querySelectorAll('.mobile-nav__link, .site-header__cv').forEach(function (el) {
+      if (el.dataset.ru !== undefined) { return; }
+      var href = el.getAttribute('href'), en = el.textContent.trim();
+      if (!href) { return; }
+      var sources = document.querySelectorAll('.site-header__inner [href][data-ru]');
+      for (var i = 0; i < sources.length; i++) {
+        var src = sources[i];
+        if (src.getAttribute('href') !== href) { continue; }
+        /* index.html#about is both a section and an item inside it, so the href
+           alone can't tell them apart — the English text can. */
+        var srcEn = (src.dataset.en !== undefined ? src.dataset.en : src.innerHTML).trim();
+        if (srcEn === en) { el.dataset.ru = src.dataset.ru; return; }
+      }
     });
 
     document.querySelectorAll('.case__label').forEach(function (el) {
