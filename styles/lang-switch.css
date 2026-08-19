@@ -1,32 +1,29 @@
 /* ── Language switch ────────────────────────────────────────────────────
-   A vertical pill: the two languages stacked, the live one solid, the other
-   dimmed, a hairline between them. It sits opposite the guide buddy, who
-   owns the bottom-left corner.
+   The two languages side by side, the live one solid, the other dimmed, a
+   hairline between them. It rides at the end of the header row — where a
+   reader looks for a language — and the header is sticky, so it stays
+   reachable the whole way down the page. On a page with no header it falls
+   back to the floating pill in the bottom-right corner.
    Colors and type come from the token files — nothing local. */
 
 .lang-switch {
-  position: fixed;
-  right: 14px;
-  bottom: 14px;
-  z-index: 210;
-  display: flex;
-  flex-direction: column;
-  padding: 4px;
-  border-radius: 30px;
-  background: var(--color-constant-primary);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 20px;
   border: 1px solid var(--color-primary-transparent-16);
-  box-shadow: 0 6px 20px var(--color-primary-transparent-08);
+  background: var(--color-constant-primary);
 }
 
 .lang-switch__btn {
   appearance: none;
   border: 0;
   background: transparent;
-  /* 44×44 is the touch target; the label inside is what you see */
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 10px;
-  border-radius: 24px;
+  position: relative;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 20px;
   font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
   font-size: 14px;
@@ -35,6 +32,15 @@
   color: var(--color-primary-transparent-48);
   cursor: pointer;
   transition: color .16s ease-out, background .16s ease-out;
+}
+/* The 44px touch target, hung off the button so the pill can stay short and
+   the header keeps its 60px height. */
+.lang-switch__btn::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
 }
 .lang-switch__btn:hover { background: var(--color-primary-transparent-04); }
 .lang-switch__btn:active { background: var(--color-primary-transparent-08); }
@@ -50,15 +56,24 @@
   color: var(--color-primary-transparent-87);
 }
 
-/* the hairline between the two, drawn inside the pill's padding */
+/* the hairline between the two */
 .lang-switch__rule {
-  height: 1px;
-  margin: 2px 10px;
+  width: 1px;
+  height: 18px;
   background: var(--color-primary-transparent-16);
 }
 
-/* on a phone the buddy and the switch share the bottom edge; keep the switch
-   clear of the home indicator */
-@media (max-width: 720px) {
-  .lang-switch { bottom: max(14px, env(safe-area-inset-bottom)); }
+/* Fallback for a page that has no site header: the pill returns to the
+   bottom-right corner, stacked, clear of the guide buddy on the left. */
+.lang-switch--floating {
+  position: fixed;
+  right: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 210;
+  flex-direction: column;
+  padding: 4px;
+  border-radius: 30px;
+  box-shadow: 0 6px 20px var(--color-primary-transparent-08);
 }
+.lang-switch--floating .lang-switch__btn { min-width: 44px; height: 44px; }
+.lang-switch--floating .lang-switch__rule { width: auto; height: 1px; margin: 2px 10px; align-self: stretch; }

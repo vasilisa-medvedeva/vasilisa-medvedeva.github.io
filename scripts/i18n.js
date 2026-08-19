@@ -9,7 +9,13 @@
      <title data-ru="…">…</title>            the tab, too
 
    The English is captured into data-en the first time an element is
-   translated, so switching back needs no second copy in the markup. */
+   translated, so switching back needs no second copy in the markup.
+
+   Linking to one language: ?lang=ru or ?lang=en opens the page in that
+   language whatever the reader chose last, so a link sent to a Russian
+   recruiter lands in Russian and one sent abroad lands in English. The
+   switch keeps that parameter in the address bar, so whatever is on screen
+   is what gets shared when the URL is copied. */
 (function () {
   var KEY  = 'lang';
   var ATTR = { alt: 'alt', aria: 'aria-label', title: 'title', placeholder: 'placeholder' };
@@ -25,6 +31,9 @@
     '.menu-item__link[href$="#education"]':      'Образование',
     '.menu-item__link[href$="#tools"]':          'Инструменты',
     '.menu-item__link[href$="#about"]':          'Немного о себе',
+    '.menu-item__link[href$="nomerogram.html"]': 'Номерограм',
+    '.menu-item__link[href$="dromfines.html"]':  'Дром Штрафы',
+    '.menu-item__link[href$="drompdd.html"]':    'Дром ПДД',
     '.site-header__link[href$=".pdf"]':          'Резюме',
     '.site-header__link[href^="mailto:"]':       'Почта'
   };
@@ -54,6 +63,21 @@
   }
   function remember(lang) {
     try { localStorage.setItem(KEY, lang); } catch (e) {}
+  }
+
+  /* ?lang=ru / ?lang=en — a link that opens in a named language. It outranks
+     the remembered choice: the sender decided what this reader should see. */
+  function fromUrl() {
+    var m = /[?&]lang=(ru|en)\b/i.exec(window.location.search);
+    return m ? m[1].toLowerCase() : null;
+  }
+
+  /* Keep the address bar honest, so copying it shares what is on screen. */
+  function writeUrl(lang) {
+    if (!window.history || !history.replaceState) { return; }
+    var url = new URL(window.location.href);
+    url.searchParams.set(KEY, lang);
+    try { history.replaceState(null, '', url.toString()); } catch (e) {}
   }
 
   function apply(lang) {
@@ -119,15 +143,29 @@
       if (!btn) return;
       var next = btn.dataset.lang;
       remember(next);
+      writeUrl(next);
       apply(next);
       /* the deck reports which language its readers actually pick */
       if (typeof window.track === 'function') window.track('lang_switch', { lang: next });
     });
-    document.body.appendChild(box);
+    /* The header is where a reader looks for a language, and it is sticky —
+       the switch stays reachable the whole way down the page. It goes last in
+       the row, after the contacts, but ahead of the phone-sized cluster so
+       the burger keeps the corner. A page with no header keeps the old
+       floating pill in the bottom-right. */
+    var inner = document.querySelector('.site-header__inner');
+    if (inner) {
+      inner.insertBefore(box, inner.querySelector('.site-header__mobile'));
+    } else {
+      box.classList.add('lang-switch--floating');
+      document.body.appendChild(box);
+    }
     apply(lang);
   }
 
-  var lang = stored() === 'ru' ? 'ru' : 'en';   /* English is the default */
+  /* the link's language, else the one this reader chose last, else English */
+  var lang = fromUrl() || (stored() === 'ru' ? 'ru' : 'en');
+  if (fromUrl()) { remember(lang); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { mount(lang); });
   } else {
