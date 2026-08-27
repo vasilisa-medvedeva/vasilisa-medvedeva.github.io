@@ -50,11 +50,46 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;900&family=Roboto:wght@400;500;700&display=swap" />
   <style>
+    /* ── Dark experiment — this page only ─────────────────────────────
+       Nothing here restyles a component. It swaps the two token families
+       the page already speaks: ink that reads --color-primary-* turns
+       white, surfaces painted --color-constant-primary turn black. Every
+       linked stylesheet (header, guide buddy, lang switch) inherits the
+       flip for free, and no other page loads this block. */
+    :root {
+      --color-constant-primary: #242424;   /* surfaces: cards, header, bubbles */
+      --page-bg: #1A1A1A;                  /* the page sits below its surfaces */
+      --color-primary: #FFFFFF;
+      --color-primary-transparent-87: rgba(255, 255, 255, 0.87);
+      --color-primary-transparent-70: rgba(255, 255, 255, 0.70);
+      --color-primary-transparent-60: rgba(255, 255, 255, 0.60);
+      --color-primary-transparent-48: rgba(255, 255, 255, 0.48);
+      --color-primary-transparent-32: rgba(255, 255, 255, 0.32);
+      --color-primary-transparent-24: rgba(255, 255, 255, 0.24);
+      --color-primary-transparent-16: rgba(255, 255, 255, 0.16);
+      --color-primary-transparent-08: rgba(255, 255, 255, 0.08);
+      --color-primary-transparent-04: rgba(255, 255, 255, 0.04);
+    }
+    /* Doodle SVGs are authored as black ink and can't inherit currentColor
+       through <img>, so they get flipped directly. The photo is left alone. */
+    .hero__arrow,
+    .guess__mark img { filter: invert(1); }
+    /* The guide buddy is drawn with the light palette baked into the SVG:
+       white sclera painted with --color-constant-primary, black ink on
+       currentColor. The flip turned his eyes black, so the sprite keeps the
+       original values — his bubble still follows the dark page. */
+    .gb__sprite {
+      --color-constant-primary: #FFFFFF;
+      --color-primary-transparent-87: rgba(0, 0, 0, 0.87);
+    }
+    /* Only the pupils are painted with currentColor, and they inherit the
+       page ink from .gb — which is now white, leaving him blank-eyed. */
+    .gb__sprite [fill="currentColor"] { fill: rgba(0, 0, 0, 0.87); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-constant-primary);
+      background: var(--page-bg);
       color: var(--color-primary);
       min-height: 100vh;
     }
