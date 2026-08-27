@@ -16,9 +16,9 @@ Product Designer with 4+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Moved to an AI-native process: learned Claude Code and now ship working coded prototypes instead of static mockups.
-- Full-cycle design for small businesses: landing pages, menus, identity.
-- Personal project: a 100-card board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
+- Integrated AI tools (Claude, Midjourney, Figma Make) into the design workflow to speed up ideation and concept exploration.
+- Full-cycle design: landing pages, menus, identity.
+- A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
 
 ### Product Designer — Pyroblast
 
