@@ -443,33 +443,8 @@
 </head>
 <body>
 
-  <!-- Slow drifting brand light behind the page; sits at z-index -1.
-       Violet by default; ?aurora=amber switches to the warm palette for comparison. -->
+  <!-- Slow drifting violet light behind the page; sits at z-index -1 -->
   <div class="bg-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
-  <script>
-    try {
-      var q = new URLSearchParams(location.search);
-      if (q.get('aurora') === 'amber') {
-        document.querySelector('.bg-aurora').classList.add('bg-aurora--amber');
-      }
-      /* Violet tryouts — ?violet=lavender|purple|indigo recolors the accent
-         and the aurora in one go (default stays the electric #8B5CF6).
-         Comparison-only helper; the winner gets baked into the tokens. */
-      var VIOLETS = {
-        lavender: { accent: '#A78BFA', pressed: '#8B5CF6', aurora: '#A78BFA', magenta: '#C084FC' },
-        purple:   { accent: '#A855F7', pressed: '#9333EA', aurora: '#A855F7', magenta: '#D946EF' },
-        indigo:   { accent: '#6366F1', pressed: '#4F46E5', aurora: '#6366F1', magenta: '#8B5CF6' }
-      };
-      var v = VIOLETS[q.get('violet')];
-      if (v) {
-        var r = document.documentElement.style;
-        r.setProperty('--color-accent-orange', v.accent);
-        r.setProperty('--color-accent-orange-pressed', v.pressed);
-        r.setProperty('--aurora-violet', v.aurora);
-        r.setProperty('--aurora-magenta', v.magenta);
-      }
-    } catch (e) {}
-  </script>
 
   <header class="site-header">
     <div class="site-header__inner">
@@ -915,7 +890,9 @@
     // say is the bubble line, hold is how long he stays (ms).
     // Auto-plays once per session; the bottom-right chip replays it.
     // id names the stop in the GA4 reports (guide_tour_step / guide_tour_stop).
-    GuideBuddy.setTour([
+    // The buddy script is commented out above; the guard keeps this page
+    // error-free until he's invited back.
+    window.GuideBuddy && GuideBuddy.setTour([
       { id: 'hero',       target: '.hero__circle',                                    say: 'Five years in. The receipts are further down.',       sayRu: 'Пять лет в профессии. Доказательства — ниже.',            hold: 3200 },
       { id: 'nomerogram', target: '#projects .project-card:nth-child(1)',             say: 'Photo uploads doubled — and it wasn’t the button.',   sayRu: 'Загрузок фото стало вдвое больше — и дело не в кнопке.',  hold: 3400 },
       { id: 'prototype',  target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Every case opens with a prototype you can actually tap.', sayRu: 'Каждый кейс открывается прототипом, его можно потыкать.', hold: 3600 },

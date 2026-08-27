@@ -79,18 +79,6 @@
   to   { transform: translate3d(22vw, 20vh, 0) scale(1.15); }
 }
 
-/* ── Comparison variant: ?aurora=amber brings back the warm palette ──
-   (index.html adds the class from the URL param; violet is the default) */
-.bg-aurora--amber i:nth-child(1) {
-  background: radial-gradient(closest-side, var(--color-brand-yellow-secondary), transparent 70%);
-  opacity: 0.16;
-}
-.bg-aurora--amber i:nth-child(2) {
-  background: radial-gradient(closest-side, var(--color-brand-red-primary), transparent 70%);
-  opacity: 0.13;
-}
-.bg-aurora--amber i:nth-child(3) { opacity: 0.10; }
-
 /* Motion-sensitive visitors get the light, not the drift */
 @media (prefers-reduced-motion: reduce) {
   .bg-aurora i { animation: none; }
