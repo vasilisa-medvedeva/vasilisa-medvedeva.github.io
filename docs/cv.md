@@ -48,7 +48,7 @@ Worked within a dedicated cross-functional team on each product: a product manag
 
 Payments UX · Onboarding and activation · A/B testing · Design systems and tokens · iOS and Android platform patterns · UX research · Usability testing · Information architecture · Accessibility · Motion design (Lottie) · UX writing basics · Agile/Scrum · AI-assisted workflows · AI art direction
 
-**Tools:** Figma, Tokens Studio, Sketch, Illustrator, ProtoPie, Principle, Lottie, After Effects, Maze, Miro, Confluence · **AI:** Claude, ChatGPT, Figma Make
+**Tools:** Figma, Tokens Studio, Sketch, Illustrator, ProtoPie, Principle, Lottie, After Effects, Maze, Miro, Confluence · **AI:** Claude, Claude Code, Midjourney, ChatGPT, Figma Make
 
 ---
 
