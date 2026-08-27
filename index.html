@@ -69,6 +69,10 @@
       --color-primary-transparent-16: rgba(255, 255, 255, 0.16);
       --color-primary-transparent-08: rgba(255, 255, 255, 0.08);
       --color-primary-transparent-04: rgba(255, 255, 255, 0.04);
+      /* The accent moves from orange to the brand amber: on a dark page the
+         orange reads as a warning, and dark text on it never clears AA. */
+      --color-accent-orange: #FFB928;          /* brand-yellow-secondary */
+      --color-accent-orange-pressed: #EAA01B;  /* brand-yellow-tertiary */
     }
     /* Doodle SVGs are authored as black ink and can't inherit currentColor
        through <img>, so they get flipped directly. The photo is left alone. */
@@ -93,6 +97,11 @@
     /* The avatar's ring exists to separate the photo from a white header.
        On dark it just draws a bright halo, so it goes. */
     .site-header__avatar { border: none; }
+    /* Hover paints the accent behind the label. The page ink is white now,
+       which would leave 1.9:1 on amber, so anything on the accent goes dark. */
+    .site-header__link:hover,
+    .site-header__link:active,
+    .guess:not(.is-done) .guess__option:hover { color: rgba(0, 0, 0, 0.87); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
