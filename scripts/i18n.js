@@ -168,13 +168,34 @@
     box.innerHTML =
       '<button class="lang-switch__btn" type="button" data-lang="en" lang="en">EN' + RING + '</button>' +
       '<button class="lang-switch__btn" type="button" data-lang="ru" lang="ru">RU' + RING + '</button>';
+    /* The swap breathes: the page softens out for a beat, the words change
+       while nothing is quite readable, and it fades back in — where the ring
+       then draws itself around the new language. Instant when the reader
+       prefers reduced motion, and clicks during the beat are ignored. */
+    var swapping = false;
+    function applyAnimated(next) {
+      var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || swapping) { if (!swapping) apply(next); return; }
+      swapping = true;
+      document.documentElement.classList.add('lang-swapping');
+      setTimeout(function () {
+        apply(next);
+        /* one more beat so the swapped words paint while still faded out
+           (a timer, not rAF — rAF stalls in background tabs) */
+        setTimeout(function () {
+          document.documentElement.classList.remove('lang-swapping');
+          swapping = false;
+        }, 40);
+      }, 180);
+    }
     box.addEventListener('click', function (e) {
       var btn = e.target.closest('.lang-switch__btn');
       if (!btn) return;
       var next = btn.dataset.lang;
+      if (btn.getAttribute('aria-current') === 'true') return;   /* already live */
       remember(next);
       writeUrl(next);
-      apply(next);
+      applyAnimated(next);
       /* the deck reports which language its readers actually pick */
       if (typeof window.track === 'function') window.track('lang_switch', { lang: next });
     });

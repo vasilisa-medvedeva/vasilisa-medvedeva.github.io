@@ -80,6 +80,19 @@
   .lang-switch__btn[aria-current="true"] .lang-switch__ring path { animation: none; }
 }
 
+/* ── The swap itself ──
+   While html carries .lang-swapping the page content softens out — a short
+   fade with a whisper of blur — the words change under it, and it breathes
+   back in. The switch stays crisp so the reader keeps their anchor. */
+body > *:not(.lang-switch):not(.site-header):not(.bg-aurora) {
+  transition: opacity .24s ease, filter .24s ease;
+}
+html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-aurora) {
+  opacity: 0;
+  filter: blur(6px);
+  transition-duration: .18s;
+}
+
 /* Fallback for a page that has no site header: the switch returns to the
    bottom-right corner, stacked, on a small surface so it stays legible
    over content; clear of the guide buddy on the left. */
