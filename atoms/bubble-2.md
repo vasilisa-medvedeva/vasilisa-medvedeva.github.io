@@ -1,4 +1,4 @@
-# Bubble2.0
+# Bubble
 
 > A chat message bubble drawn as one continuous outline so the body and tail never seam; its width and height follow the content while the tail keeps a fixed shape.
 

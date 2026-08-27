@@ -2091,7 +2091,7 @@
     }
 
 
-    /* ── Atoms reused by BubbleBottom 2.0 (copies from atoms.html) ── */
+    /* ── Atoms reused by BubbleBottom (copies from atoms.html) ── */
 
     .send-time { display: inline-flex; align-items: flex-end; gap: 2px; padding: 1px 4px; }
     .send-time__label, .send-time__time {
@@ -2164,7 +2164,7 @@
     }
     .bubble-comments__arrow { flex-shrink: 0; display: block; width: 16px; height: 16px; }
 
-    /* ── Molecule: BubbleBottom 2.0 ── */
+    /* ── Molecule: BubbleBottom ── */
     /* Transparent bottom strip of a chat bubble: reactions + time (+ comments
        for recipient). No bubble chrome of its own — only the atoms carry colour. */
     .bubble-bottom-2 {
@@ -2206,7 +2206,7 @@
 
     /* ── Atoms reused by Message (copies from atoms.html) ── */
 
-    /* Bubble2.0 — shape (single dynamic SVG path); positions/left are JS-driven. */
+    /* Bubble — shape (single dynamic SVG path); positions/left are JS-driven. */
     .bubble2 {
       --b2-fill: var(--color-brand-yellow-16);
       --b2-stroke: var(--color-brand-yellow-32);
@@ -2281,8 +2281,8 @@
     }
 
     /* ── Molecule: Message ── */
-    /* A full chat message: Bubble2.0 shape filled with [name][forward]text +
-       BubbleBottom 2.0, plus an AvatarPlaceholder for channel messages. */
+    /* A full chat message: Bubble shape filled with [name][forward]text +
+       BubbleBottom, plus an AvatarPlaceholder for channel messages. */
     .message {
       display: flex;
       align-items: flex-end;
@@ -6628,11 +6628,11 @@
 
     <div class="section-divider"></div>
 
-    <!-- BubbleBottom 2.0 -->
+    <!-- BubbleBottom -->
     <div id="bubble-bottom-2" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">BubbleBottom 2.0</div>
+          <div class="component-block__preview-title">BubbleBottom</div>
           <button class="code-toggle-btn" onclick="toggleCode('bubble-bottom-2')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
@@ -6802,7 +6802,7 @@
 
       <!-- Docs panel -->
       <div class="docs" id="docs-bubble-bottom-2">
-        <div class="docs__name">BubbleBottom 2.0</div>
+        <div class="docs__name">BubbleBottom</div>
         <span class="docs__type">molecule</span>
 
         <div class="docs__section">
@@ -6869,7 +6869,7 @@
       </div>
 
     </div>
-    <!-- /BubbleBottom 2.0 -->
+    <!-- /BubbleBottom -->
 
     <div class="section-divider"></div>
 
@@ -6906,8 +6906,8 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Uses atoms / molecules</div>
-          <div class="docs__row"><span class="docs__row-label">Bubble2.0</span><span class="docs__row-value">shape · white/left · top/mid/last</span></div>
-          <div class="docs__row"><span class="docs__row-label">BubbleBottom 2.0</span><span class="docs__row-value">time / reactions strip</span></div>
+          <div class="docs__row"><span class="docs__row-label">Bubble</span><span class="docs__row-value">shape · white/left · top/mid/last</span></div>
+          <div class="docs__row"><span class="docs__row-label">BubbleBottom</span><span class="docs__row-value">time / reactions strip</span></div>
           <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">forward variant (link)</span></div>
           <div class="docs__row"><span class="docs__row-label">AvatarPlaceholder</span><span class="docs__row-value">S · channel avatar</span></div>
         </div>
@@ -7620,10 +7620,10 @@
     })();
   </script>
 
-  <!-- Message: data-driven 36-variant builder + Bubble2.0 shape drawing -->
+  <!-- Message: data-driven 36-variant builder + Bubble shape drawing -->
   <script>
   (function () {
-    // ---- Bubble2.0 shape (ported from atoms.html) ----
+    // ---- Bubble shape (ported from atoms.html) ----
     var R = 16, R4 = 4;
     var TAIL = "c0 0.162 -0.003 0.323 -0.008 0.483c-0.073 3.301 -0.678 10.185 4.683 14.938c0.127 0.112 0.069 0.325 -0.098 0.352c-6.699 1.085 -9.605 -2.288 -10.916 -3.018c-0.008 0.006 -0.017 0.011 -0.025 0.018c-0.143 0.108 -0.288 0.212 -0.434 0.315c-0.04 0.028 -0.08 0.056 -0.12 0.084c-0.306 0.211 -0.619 0.412 -0.94 0.603c-0.036 0.021 -0.072 0.043 -0.108 0.064c-0.164 0.095 -0.329 0.188 -0.497 0.277c-0.008 0.005 -0.016 0.01 -0.024 0.014c-0.164 0.087 -0.329 0.171 -0.496 0.253c-0.027 0.013 -0.053 0.026 -0.079 0.039c-0.163 0.078 -0.327 0.154 -0.493 0.226c-0.042 0.019 -0.085 0.038 -0.128 0.056c-0.168 0.072 -0.337 0.143 -0.507 0.209c-0.025 0.01 -0.05 0.018 -0.075 0.027c-0.15 0.058 -0.302 0.114 -0.455 0.167c-0.045 0.016 -0.09 0.033 -0.135 0.048c-0.162 0.055 -0.325 0.106 -0.489 0.156c-0.057 0.017 -0.114 0.034 -0.171 0.05c-0.175 0.051 -0.351 0.101 -0.529 0.146c-0.016 0.004 -0.031 0.008 -0.047 0.012c-0.18 0.045 -0.361 0.087 -0.543 0.126c-0.028 0.006 -0.056 0.012 -0.085 0.018c-0.186 0.039 -0.373 0.073 -0.561 0.106c-0.043 0.007 -0.085 0.014 -0.128 0.021c-0.186 0.03 -0.373 0.058 -0.562 0.082c-0.03 0.004 -0.061 0.007 -0.092 0.011c-0.163 0.02 -0.328 0.037 -0.493 0.052c-0.051 0.004 -0.103 0.009 -0.155 0.013c-0.187 0.015 -0.374 0.027 -0.562 0.035c-0.041 0.002 -0.081 0.004 -0.122 0.005c-0.201 0.008 -0.403 0.013 -0.606 0.013";
 
