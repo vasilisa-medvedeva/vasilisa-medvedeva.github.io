@@ -8,6 +8,9 @@
     { id: 'nav-styles', label: 'Styles', items: [
       ['typography.html', 'Typography'],
       ['colors.html', 'Colors'],
+      ['spacing.html', 'Spacing'],
+      ['radius.html', 'Radius'],
+      ['elevation.html', 'Elevation'],
     ]},
     { id: 'nav-icons', label: 'Icons', items: [
       ['icons.html', 'Tab bar'],
@@ -151,6 +154,11 @@
                 : page === 'atoms.html'       ? 'nav-atoms'
                 : page === 'molecules.html'   ? 'nav-molecules'
                 : page === 'organisms.html'   ? 'nav-components'
+                : page === 'typography.html'  ? 'nav-styles'
+                : page === 'colors.html'      ? 'nav-styles'
+                : page === 'spacing.html'     ? 'nav-styles'
+                : page === 'radius.html'      ? 'nav-styles'
+                : page === 'elevation.html'   ? 'nav-styles'
                 : null;
     if (groupId) {
       var openGroup = document.getElementById(groupId);

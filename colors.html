@@ -84,6 +84,25 @@
       line-height: 1.3;
       word-break: break-word;
     }
+
+    /* Token value (hex/rgba) — resolved from the live CSS variable by script,
+       so this page can never drift from styles/color-tokens.css */
+    .swatch__value {
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: 8px;
+      color: var(--color-primary-transparent-48);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .color-group__use {
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 21px;
+      color: var(--color-primary-transparent-60);
+      max-width: 640px;
+      margin: -8px 0 16px;
+    }
   </style>
 </head>
 <body>
@@ -131,6 +150,7 @@
     <!-- Primary -->
     <div class="color-group">
       <div class="color-group__label">Primary</div>
+      <p class="color-group__use">Text, icons and strokes on light surfaces. The alpha steps are the hierarchy: 87 body text, 60 secondary, 48 hints, 32 strokes, 16–04 dividers and fills.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-87)"></div><div class="swatch__name">transparent‑87</div></div>
@@ -148,6 +168,7 @@
     <!-- Constant -->
     <div class="color-group">
       <div class="color-group__label">Constant</div>
+      <p class="color-group__use">Stays light no matter what it sits on — surfaces, and content on dark or colored fills.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-primary);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-87);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑87</div></div>
@@ -165,6 +186,7 @@
     <!-- Brand Red -->
     <div class="color-group">
       <div class="color-group__label">Brand Red</div>
+      <p class="color-group__use">The brand voice: accent buttons, avatars, the notification counter.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -183,6 +205,7 @@
     <!-- Brand Yellow -->
     <div class="color-group">
       <div class="color-group__label">Brand Yellow</div>
+      <p class="color-group__use">Action and selection: primary buttons, checked states, highlights.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -201,6 +224,7 @@
     <!-- Warning -->
     <div class="color-group">
       <div class="color-group__label">Warning</div>
+      <p class="color-group__use">Errors, destructive actions and the Live badge.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -219,6 +243,7 @@
     <!-- Info -->
     <div class="color-group">
       <div class="color-group__label">Info</div>
+      <p class="color-group__use">Informational accents: links, channel avatars, info states.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -237,6 +262,21 @@
   </main>
 
   <script src="scripts/nav.js"></script>
+  <script>
+    // Print each token's real value under its swatch, resolved from the CSS
+    // variable itself — the page stays in sync with color-tokens.css for free.
+    document.querySelectorAll('.swatch').forEach(function (sw) {
+      var tile = sw.querySelector('.swatch__tile');
+      var m = (tile.getAttribute('style') || '').match(/var\((--[a-z0-9-]+)\)/i);
+      if (!m) return;
+      var val = getComputedStyle(document.documentElement).getPropertyValue(m[1]).trim();
+      if (!val) return;
+      var el = document.createElement('div');
+      el.className = 'swatch__value';
+      el.textContent = val.replace(/\s+/g, '').replace(/0\./g, '.');
+      sw.appendChild(el);
+    });
+  </script>
   <script src="scripts/page-transition.js?v=4"></script>
 </body>
 </html>
