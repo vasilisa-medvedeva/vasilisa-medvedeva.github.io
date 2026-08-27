@@ -29,14 +29,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Vasilisa Medvedeva" />
   <meta property="og:title" content="Vasilisa Medvedeva — Product Designer" />
-  <meta property="og:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5 years of experience." />
+  <meta property="og:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5+ years of experience." />
   <meta property="og:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://vasilisa-medvedeva.github.io/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Vasilisa Medvedeva — Product Designer" />
-  <meta name="twitter:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5 years of experience." />
+  <meta name="twitter:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5+ years of experience." />
   <meta name="twitter:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
   <link rel="stylesheet" href="styles/color-tokens.css" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
@@ -97,8 +97,14 @@
     /* hand-drawn accent circle around a hero word — same doodle language as the site */
     .hero__circle { position: relative; display: inline-block; }
     .hero__circle > svg {
-      position: absolute; left: -0.36em; right: -0.36em; top: -0.14em; bottom: -0.12em;
-      width: auto; height: auto; overflow: visible; pointer-events: none;
+      /* An SVG is a replaced element: with height:auto it ignores `bottom` and
+         takes its height from the viewBox ratio, so the ring used to be half as
+         tall as it was wide — fine around a long word, shorter than the line
+         around a short one like "5+". Sizing it explicitly ties the ring to the
+         word's own box instead of to its length. */
+      position: absolute; left: -0.36em; top: -0.14em;
+      width: calc(100% + 0.72em); height: calc(100% + 0.26em);
+      overflow: visible; pointer-events: none;
       color: var(--color-accent-orange);
     }
 
@@ -402,7 +408,7 @@
       .main { padding: 8px; }
       .hero { padding: 24px 0 0; gap: 16px; }
       /* at the clamped 48px hero size the hand-drawn circle rides too high — nudge it down (same size, shifted ~0.14em) */
-      .hero__circle > svg { top: 0; bottom: -0.26em; }
+      .hero__circle > svg { top: 0; }   /* same ring, nudged down at the clamped hero size */
       .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
       .project-card__stage { height: 520px; }                    /* taller so the whole phone shows */
@@ -484,7 +490,7 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;пять&lt;svg viewBox=&quot;0 0 200 100&quot; preserveAspectRatio=&quot;none&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">five<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
+      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;svg viewBox=&quot;0 0 200 100&quot; preserveAspectRatio=&quot;none&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
       <div class="hero__aside">
         <p data-ru="Проектирую масштабируемые гибкие интерфейсы: они упрощают жизнь пользователю и&amp;nbsp;помогают бизнесу расти — на&amp;nbsp;балансе UX, целей бизнеса и&amp;nbsp;технических ограничений.">I create scalable, flexible interfaces that simplify user experiences and&nbsp;help businesses grow &mdash; balancing UX, business goals, and&nbsp;technical constraints.</p>
         <p data-ru="Быстро проверяю гипотезы и&amp;nbsp;провожу интервью, чтобы добраться до&amp;nbsp;настоящих причин поведения, — и&amp;nbsp;превращаю находки в&amp;nbsp;понятные, полезные решения.">I rapidly test hypotheses and&nbsp;run user interviews to&nbsp;uncover the&nbsp;root causes of&nbsp;behavior, turning insights into&nbsp;clear, valuable solutions.</p>
@@ -893,7 +899,7 @@
     // The buddy script is commented out above; the guard keeps this page
     // error-free until he's invited back.
     window.GuideBuddy && GuideBuddy.setTour([
-      { id: 'hero',       target: '.hero__circle',                                    say: 'Five years in. The receipts are further down.',       sayRu: 'Пять лет в профессии. Доказательства — ниже.',            hold: 3200 },
+      { id: 'hero',       target: '.hero__circle',                                    say: '5+ years in. The receipts are further down.',       sayRu: '5+ лет в профессии. Доказательства — ниже.',            hold: 3200 },
       { id: 'nomerogram', target: '#projects .project-card:nth-child(1)',             say: 'Photo uploads doubled — and it wasn’t the button.',   sayRu: 'Загрузок фото стало вдвое больше — и дело не в кнопке.',  hold: 3400 },
       { id: 'prototype',  target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Every case opens with a prototype you can actually tap.', sayRu: 'Каждый кейс открывается прототипом, его можно потыкать.', hold: 3600 },
       { id: 'experience', target: '#experience',                                      say: 'Three apps at Drom. 10M+ downloads between them.',    sayRu: 'Три приложения в Дроме. 10 млн+ загрузок на всех.',       hold: 3400 },
