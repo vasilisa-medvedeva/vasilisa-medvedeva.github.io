@@ -94,42 +94,8 @@
     }
     .hero__nowrap { white-space: nowrap; }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
-    /* hand-drawn accent circle around a hero word — same doodle language as the site */
+    /* the "5+" wrapper — kept as the mascot's anchor point in the hero line */
     .hero__circle { position: relative; display: inline-block; }
-    .hero__circle > svg {
-      /* An SVG is a replaced element: with height:auto it ignores `bottom` and
-         takes its height from the viewBox ratio, so the ring used to be half as
-         tall as it was wide — fine around a long word, shorter than the line
-         around a short one like "5+". Sizing it explicitly ties the ring to the
-         word's own box instead of to its length. */
-      position: absolute; left: -0.36em; top: -0.14em;
-      width: calc(100% + 0.72em); height: calc(100% + 0.26em);
-      overflow: visible; pointer-events: none;
-      color: var(--color-accent-orange);
-      /* a slight counter-clockwise tilt sells the hand-drawn gesture */
-      transform: rotate(-7deg);
-    }
-    /* The ring draws itself on load: pathLength="1" normalises the curve so
-       one dash unit covers it exactly, and the offset pulls the stroke through.
-       Re-inserting the node (the language switch does) replays the draw.
-       The keyframes trace a hand's ballistics rather than a tween: the pen
-       bites slowly, rushes through the long arc, brakes as the loop closes,
-       and drops the little tail hook without hurry. */
-    .hero__circle > svg path {
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-      animation: hero-ring-draw 1.1s linear 0.45s forwards;
-    }
-    @keyframes hero-ring-draw {
-      0%   { stroke-dashoffset: 1;    animation-timing-function: ease-in; }
-      16%  { stroke-dashoffset: 0.92; animation-timing-function: cubic-bezier(0.3, 0, 0.4, 1); }
-      62%  { stroke-dashoffset: 0.18; animation-timing-function: ease-out; }
-      84%  { stroke-dashoffset: 0.05; animation-timing-function: ease-in-out; }
-      100% { stroke-dashoffset: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero__circle > svg path { animation: none; stroke-dashoffset: 0; }
-    }
 
     /* ── Projects grid — korolev-style tiles, same rhythm as the flows grid ── */
     .projects-grid {
@@ -319,9 +285,9 @@
     }
     .guess__option:nth-child(2) { border-radius: 12px 20px 14px 22px / 20px 12px 22px 14px; }
     .guess__option:nth-child(3) { border-radius: 20px 14px 22px 12px / 12px 22px 14px 20px; }
-    /* orange hover only while the game is unanswered — once revealed, the
+    /* muted violet hover only while the game is unanswered — once revealed, the
        red / green highlight must stay put even under the cursor */
-    .guess:not(.is-done) .guess__option:hover { background: var(--color-accent-orange); }
+    .guess:not(.is-done) .guess__option:hover { background: var(--color-accent-orange-muted); }
     /* Mark holds a small black SVG icon (empty circle → tick / cross on reveal) */
     .guess__mark {
       flex: 0 0 auto;
@@ -430,8 +396,6 @@
     @media (max-width: 600px) {
       .main { padding: 8px; }
       .hero { padding: 24px 0 0; gap: 16px; }
-      /* at the clamped 48px hero size the hand-drawn circle rides too high — nudge it down (same size, shifted ~0.14em) */
-      .hero__circle > svg { top: 0; }   /* same ring, nudged down at the clamped hero size */
       .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
       .project-card__stage { height: 520px; }                    /* taller so the whole phone shows */
@@ -513,7 +477,7 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;svg viewBox=&quot;0 0 200 100&quot; preserveAspectRatio=&quot;none&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path pathLength=&quot;1&quot; d=&quot;M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path pathLength="1" d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
+      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+</span> years.</span></h1>
       <div class="hero__aside">
         <p data-ru="Проектирую масштабируемые гибкие интерфейсы: они упрощают жизнь пользователю и&amp;nbsp;помогают бизнесу расти — на&amp;nbsp;балансе UX, целей бизнеса и&amp;nbsp;технических ограничений.">I create scalable, flexible interfaces that simplify user experiences and&nbsp;help businesses grow &mdash; balancing UX, business goals, and&nbsp;technical constraints.</p>
         <p data-ru="Быстро проверяю гипотезы и&amp;nbsp;провожу интервью, чтобы добраться до&amp;nbsp;настоящих причин поведения, — и&amp;nbsp;превращаю находки в&amp;nbsp;понятные, полезные решения.">I rapidly test hypotheses and&nbsp;run user interviews to&nbsp;uncover the&nbsp;root causes of&nbsp;behavior, turning insights into&nbsp;clear, valuable solutions.</p>

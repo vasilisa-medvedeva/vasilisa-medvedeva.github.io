@@ -47,6 +47,9 @@
      Dark text on #8B5CF6 clears AA at 4.9:1. */
   --color-accent-orange: #8B5CF6;
   --color-accent-orange-pressed: #7C3AED;
+  /* A dustier violet for large filled surfaces, where the full accent shouts.
+     White text on #8064C4 clears AA at 4.6:1 (better than the accent itself). */
+  --color-accent-orange-muted: #8064C4;
 
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;
