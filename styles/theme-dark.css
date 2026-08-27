@@ -38,11 +38,12 @@
    On dark it draws a bright halo instead, so it goes. */
 .site-header__avatar { border: none; }
 
-/* Hover paints the accent behind the label. The page ink is white now,
-   which would leave 1.9:1 on amber, so anything on the accent goes dark. */
+/* Hover paints the accent behind the label. On the violet accent the label
+   stays light — dark ink was an amber-era necessity and reads alien now.
+   Solid white, not the 87% page ink, to keep every bit of contrast. */
 .site-header__link:hover,
 .site-header__link:active,
-.guess:not(.is-done) .guess__option:hover { color: rgba(0, 0, 0, 0.87); }
+.guess:not(.is-done) .guess__option:hover { color: #FFFFFF; }
 
 /* Doodle SVGs are authored as black ink and arrive through <img>, so they
    cannot inherit currentColor. Photos are left alone. */
@@ -84,16 +85,16 @@
   --color-primary-transparent-04: rgba(0, 0, 0, 0.04);
 }
 
-/* ── Amber hand ───────────────────────────────────────────────────────
+/* ── Accent hand ───────────────────────────────────────────────────────
    The project cards get a filled cursor on hover: the same doodle hand,
-   its white fill remapped to the accent (the outline and its antialiasing
+   its white fill remapped to the violet accent (the outline and its antialiasing
    are kept by blending toward black). PNG, so it has to be a second asset
    rather than a colour swap. */
 :root {
-  --hand-amber-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAYAAAB836/YAAABmklEQVR42rWVMU7DMBSGv6QgUMQYia0wVgzpEeJOXCKVuETmOHNPgcolqg5xjtBMjFXnLCxew1CncgrEpgJPkeN8+v3+/73A+BJABXSAxGMFjvedXMYAyHXrc96prus2s65aTTuj0rnCMaBIol+rCL2k/gI8ChTzf1Jom2RcF5cA0/MNuYwRSSSAwoC/ROnKR5ZqNABFFpMmGpUfhEgiVKPPlcqrSzNVraaoRrPID4WBX1TDH+HVagqQhlaIhc/HdaNPMbKfe05oClu5evanLJ5HKwRSuYzpNrPexd7BAcxciTSJThC10wPlgBqYUmQxRQbB87sY6xpbbZHFNrwOgVKuW8q3dlBkXzP6WBmX5QTYA7Vq9EsQHBU83l8j5hF3t6F6erh5dIFftx+oRpeAmpi9PRCoRgsb6gMDWOQHgNoGAqgeKuZHoG8XvW4/ABbfBVsC5SI/nJLvk0ugHBsOElDluvVTuNNe06b0VWjOKRdQ2VPGNYV8gINDfzaxa4fC+uy6zgF7LHj7pfCX/uj7Ud+H9rtyCCsZAHwCj1KkKkYyfqkAAAAASUVORK5CYII=");
-  --hand-amber-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA2CAYAAAC1ItuGAAAC+klEQVR42u2YPY6bQBiGXzDb0KQZKUmzcukKH8HjJrmEkfYQSc1Q7yGiyHsJVwxHiKuU3nSWXLtxQYowm8/DDBgYMMWOhISxZZ55v/8B+i8BICuvovw8maWg9ItPAU4oIB6FhYhZwaNQAWZTACwAFCJmRbFbFMVuUYiYURWdLL+HegCAVRTCdH9vwLfFB4ByBtgAx+8JuAIAvgwHd/SugKOlER8TX34f9VZR+K7gkIAJqSqd63MwQprh5F5MRkEehRAxo5tICLC4P+AyRLJhSGKm1++MmF8MGsX6yvfnSl3mUVjnCkkT5ChRTCuOiBmK3UI3vdB6SzGKD9Z1PNnzow7JTcqOoiA1PQWn/mkJKn7XRE3Bk5gh2bCKspOpJLZAGgVQ/jobIWzP6yoJDXlZXv1BSlPq/aPtuQmQGyYxlfnTsWddvgzf4H0dziB3cuusq5SgikgSCCb1mtq2gL6YRpDcn5HvzxDbEx3S17Xty4ZhpVUOWz60pR4A9J15oOYLLQddlSgNMm0bjaLMd6bvmqbCgDp4sjGrokEmrRvDDbMHlBYg6cvpam8zAK8Ang7HCzzPvkvPq/qTiFnnQJh/esDr8YIf3z5fA25POBwvKjilX6aSVKmk7eBKBZdDOo9CZM+PlcDRRfBJ/pONkD0Ua1v6VGqbkQc/y4iey/3ZaO75xwd43r/7py8fnB97rL//Acm9UgeE8kcltwmSR6GCU9E8dwGXvpyoeXMFqNdiSXOd2J6sibZLNHc5PfNq2vrMlMBNRcHFUYj39TdMpdWveema+kaNkrxtU2Eyr/bum9qtCuRIh0myTT8oaWlrgOzucP+rVKWMzm7ckQeA11UbR9GbAjh06agFrTY1/ujUvG1bfkHrpetxwNYltZ1J0romtBNgw3/5XU0woJndAOYOALVNSldjp9R8x1X3It+PgF2mlz6A+QApxr2CjqM4d3mILvVeUIc1RbhJrVs2GTjq4QZbXRVs06TKG9o062+8nm25bAFTV9+th1N/Aa6+PwIscmYQAAAAAElFTkSuQmCC");
+  --hand-accent-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAYAAAB836/YAAABtElEQVR42rWVvUoDQRSFPzcRjGAjVhaibApFEKyzccfClL5C2uQNttpsUqhvoK34DhaxyOSvs1FIl4CVLxBQCCyxcCasq+tOFj3VMnPncOecM3fhdwigA8yBAAOspOzPa1UfgJvblkk9+ZTusEOP940BprB+IyyXBMvCMikqTJ2/ITwsnvxPh1GTlOsiC6EbX6hVfcolIYCGIg6WcXkB7bIdemwfOfSHUpRLgv5QxjsN8mTE+d49Z0cD/OtKQ5Fn0jCRvFVvA7hWJMRGoXt9G6DzGf3WPJYStpP2ZpNCHo9WHnBrVR879JjkrhiNe43+ULrxYJ/v3QOwve5AEQhhNO4tCF/fBgDyi4Z26OmDiRIUpg526H05A5/kQNcCmje3LSa5q0WREtjIDB0r5XJgARI4jZIWpg6teputwoE0NQpoAuTU2guw8vjUFfZxjs25w+psh7XZ/q4J4eVdBaAb1zDQ119m/kVqg5+CHQBN/7piTBq9btJLCQD58HxhRKjcTZ02Tf0206DqZBqhjOmTpp80mYcyy6CwDARP25fGA3Y07kHxu/BZf/R61OvQ/iSHiGYQ4APkN6EloJGNwgAAAABJRU5ErkJggg==");
+  --hand-accent-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA2CAYAAAC1ItuGAAADZUlEQVR42u1Yy07bQBQ9iVNVqUAVWXaRghyJBVKkLCsMdZFgwYIfoCIswx9EVIqdLChSPwC2Uf+BRVkwKWHHhkrdlYqHxA9EolVVy13EQ8fj8SS2xzFSeyWLMAT7+N455547QPKwAZx4l+v9/miCguIvU9UDtISZ2waApUUT6ytbKE7lcHN7BQCzALoqABYS/K8FAI16C7rTBBwAFeD0jEBlBvMJsgcAePHMgOhz1gAfojgwUt3kiQAuLUoraWYJ8DUALFSWU5eJuABNTCjyeOSRT5K9NFj7T2QwipC7Xju0s+gkozTQZH6avMBnnsGlRRONeovVSosBbGcOcKGyDN1pYrW6yy7TklvjWrNELObj7r4f6MvFgSHrONYokBNhMdtxGvUWPry950tvc97STh0gSyCR49mYO+JBmqLMTiSDbOlZ4Oz+DCGVmalQs8BXq7vQnWYgs4+mk4Rp6kQAfv32Wegfw9ZlnYSlPPGuxEC8OWXIZmf0uiiDpkdvi7kym3NZWcp74E4kNt4ad9alN2Yf8GO6L/wuuy6zbQX2wZ2dTygODGzMDW9wd9/HYbfDDulvZAB1p4nOjuHb8AE9HMilBwD7zF6BzheNeitwYx0GGnXwINtR2diot0L/NmLw+stiusFFWaEP4FzJ2KE7zeFwLyAUP3hdavs+0moArgFs39xeQa9pKLnBtyy5BvSahvOLnm99rfouNhHK5Zf4/fQWr54f+Nb73/fo8UkbAMl7UtKmtefewJeFUeWIKswbc0cB4lDp4UtsU82TgeS8Xaqtj8obe7rV9Rg9e37RE5b7ya8y9JqG4lQO6ytbwu2QJN5/XKMf2zRh/PHbNT1SCwNZcg3Mz2yi5BqUzbMqwF1q++we71GAfC8mrNYddjuhQhuHzXFOz0RmwQeydbAmA2lG7ddhwWhtexw3M1GQHCnJuHYrAHJCh0kkyhn1FYAcBfBz+gzzM5vKN5yIvVEMq033xekZCdXINMobxVHbbLeR7Eel5Y1q+R+of/xlT/k4EOaSos4kbdaqq4hR98rHLUGKZVYDkGvssYJ7SaJq7CQyg5vAvZD/R8Aq5SUJwF4KEqM+gyqlRvbShZjlsCRsFDJclC3FL+lzLq7iy1adQRLBYpExbFrod3IJbTmJAEbW30MPqP4AB+1XiTv3BX8AAAAASUVORK5CYII=");
 }
 .project-card, .project-card * {
-  cursor: -webkit-image-set(var(--hand-amber-1x) 1x, var(--hand-amber-2x) 2x) 10 1, pointer !important;
-  cursor: image-set(var(--hand-amber-1x) 1x, var(--hand-amber-2x) 2x) 10 1, pointer !important;
+  cursor: -webkit-image-set(var(--hand-accent-1x) 1x, var(--hand-accent-2x) 2x) 10 1, pointer !important;
+  cursor: image-set(var(--hand-accent-1x) 1x, var(--hand-accent-2x) 2x) 10 1, pointer !important;
 }
