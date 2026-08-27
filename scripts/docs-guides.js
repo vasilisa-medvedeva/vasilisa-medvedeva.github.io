@@ -106,15 +106,21 @@
     return out;
   }
 
-  // Render a section body (lists, paragraphs, table rows) to HTML
+  // Render a section body (lists, paragraphs, tables, fenced code) to HTML
   function renderBody(bodyLines) {
-    var html = '', list = [];
+    var html = '', list = [], fence = null;
     function flushList() {
       if (!list.length) return;
       html += '<ul>' + list.map(function (li) { return '<li>' + inline(li) + '</li>'; }).join('') + '</ul>';
       list = [];
     }
     bodyLines.forEach(function (line) {
+      if (/^```/.test(line.trim())) {
+        if (fence === null) { flushList(); fence = []; }
+        else { html += '<pre>' + esc(fence.join('\n')) + '</pre>'; fence = null; }
+        return;
+      }
+      if (fence !== null) { fence.push(line); return; }
       if (!line.trim()) { flushList(); return; }
       if (/^\|/.test(line)) {                              // table row → "label — value" bullet
         if (/^\|[\s:-]+\|/.test(line.replace(/\|/g, '|').trim()) && /^[|\s:-]+$/.test(line)) return;
@@ -166,11 +172,23 @@
     return html;
   }
 
+  // Guidelines and Code behave as an accordion: some code panels live outside
+  // the component grid, so a tall open guide would push the code panel far
+  // below the fold — one panel at a time keeps both reachable.
+  function closeCode(id) {
+    var code = document.getElementById('code-' + id);
+    if (!code || !code.classList.contains('is-open')) return;
+    code.classList.remove('is-open');
+    var btn = document.querySelector('#' + id + ' .code-toggle-btn:not(.guides-btn)');
+    if (btn) btn.classList.remove('is-active');
+  }
+
   function toggleGuides(id, btn) {
     var panel = document.getElementById('guides-' + id);
     if (!panel) return;
     var open = panel.classList.toggle('is-open');
     btn.classList.toggle('is-active', open);
+    if (open) closeCode(id);
     if (!open || panel.__loaded) return;
     panel.__loaded = true;
     fetch(DOCS[id]).then(function (r) {
@@ -184,6 +202,23 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    // The other half of the accordion: opening Code closes the guide.
+    var origToggleCode = window.toggleCode;
+    if (typeof origToggleCode === 'function') {
+      window.toggleCode = function (id) {
+        var code = document.getElementById('code-' + id);
+        if (code && !code.classList.contains('is-open')) {
+          var gp = document.getElementById('guides-' + id);
+          if (gp && gp.classList.contains('is-open')) {
+            gp.classList.remove('is-open');
+            var gbtn = document.querySelector('#' + id + ' .guides-btn');
+            if (gbtn) gbtn.classList.remove('is-active');
+          }
+        }
+        origToggleCode(id);
+      };
+    }
+
     Object.keys(DOCS).forEach(function (id) {
       var block = document.getElementById(id);
       if (!block || !block.classList.contains('component-block')) return;
