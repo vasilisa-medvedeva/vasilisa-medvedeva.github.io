@@ -112,26 +112,23 @@
     /* The ring draws itself on load: pathLength="1" normalises the curve so
        one dash unit covers it exactly, and the offset pulls the stroke through.
        Re-inserting the node (the language switch does) replays the draw.
-       The easing is pen-like — it bites slowly, rushes through the loop and
-       eases out on the little tail hook — and when the stroke closes, the
-       whole ring settles with a tiny press, like a hand finishing a gesture. */
+       The keyframes trace a hand's ballistics rather than a tween: the pen
+       bites slowly, rushes through the long arc, brakes as the loop closes,
+       and drops the little tail hook without hurry. */
     .hero__circle > svg path {
       stroke-dasharray: 1;
       stroke-dashoffset: 1;
-      animation: hero-ring-draw 0.95s cubic-bezier(0.6, 0.05, 0.2, 1) 0.45s forwards;
+      animation: hero-ring-draw 1.1s linear 0.45s forwards;
     }
-    @keyframes hero-ring-draw { to { stroke-dashoffset: 0; } }
-    .hero__circle > svg {
-      animation: hero-ring-settle 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 1.34s;
-    }
-    @keyframes hero-ring-settle {
-      0%   { transform: rotate(-7deg) scale(1); }
-      55%  { transform: rotate(-6.4deg) scale(1.045); }
-      100% { transform: rotate(-7deg) scale(1); }
+    @keyframes hero-ring-draw {
+      0%   { stroke-dashoffset: 1;    animation-timing-function: ease-in; }
+      16%  { stroke-dashoffset: 0.92; animation-timing-function: cubic-bezier(0.3, 0, 0.4, 1); }
+      62%  { stroke-dashoffset: 0.18; animation-timing-function: ease-out; }
+      84%  { stroke-dashoffset: 0.05; animation-timing-function: ease-in-out; }
+      100% { stroke-dashoffset: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
       .hero__circle > svg path { animation: none; stroke-dashoffset: 0; }
-      .hero__circle > svg { animation: none; }
     }
 
     /* ── Projects grid — korolev-style tiles, same rhythm as the flows grid ── */
