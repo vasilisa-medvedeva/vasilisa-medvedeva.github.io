@@ -381,7 +381,7 @@
         <span class="case__index">Case 01</span>
         <h2 class="case__title" data-ru="Дизайн-система">Design System</h2>
       </div>
-      <a class="ds-card" href="atoms.html" aria-label="Open the Pyroblast component library">
+      <a class="ds-card" href="overview.html" aria-label="Open the Pyroblast design system overview">
           <!-- Drop a screenshot at assets/design-system-preview.png and it shows here automatically;
                until the file exists, onerror removes the img and the component wall below shows. -->
           <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()">
@@ -613,7 +613,7 @@
     /* Prototype-interaction analytics for GA4 (gtag is configured in <head>).
        Real selectors (no markup is changed):
          • prototype iframes → iframe[src*="flows/"]  (create-chats, attach-photo, login)
-         • design-system link → a[href="atoms.html"] */
+         • design-system link → a[href="overview.html"] */
     (function () {
       'use strict';
       function send(name, params) {
@@ -658,8 +658,8 @@
         Array.prototype.forEach.call(frames, function (f) { io.observe(f); });
       }
 
-      // 3) design_system_open — click on the atoms.html link (navigation is not blocked)
-      var dsLink = document.querySelector('a[href="atoms.html"]');
+      // 3) design_system_open — click on the overview.html link (navigation is not blocked)
+      var dsLink = document.querySelector('a[href="overview.html"]');
       if (dsLink) {
         dsLink.addEventListener('click', function () { send('design_system_open'); });
       }

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Overview</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      background: var(--color-constant-primary);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px 80px;
+      max-width: 980px;
+    }
+
+    .page-title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: var(--text-headline-medium-line-height);
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+
+    .lede {
+      max-width: 640px;
+      margin-bottom: 56px;
+    }
+    .lede p {
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 27px;
+      color: var(--color-primary-transparent-87);
+    }
+    .lede p + p { margin-top: 10px; }
+
+    .ov-section { margin-bottom: 56px; }
+
+    .ov-label {
+      font-family: "Roboto", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-primary-transparent-16);
+    }
+
+    .ov-section p,
+    .ov-section li {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .ov-section > p { max-width: 640px; }
+    .ov-section > p + p { margin-top: 8px; }
+
+    code {
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: var(--text-body-small-font-size);
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 4px;
+      padding: 1px 5px;
+      white-space: nowrap;
+    }
+
+    /* ── Principles ── */
+    .principles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .principle {
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .principle h3 {
+      font-size: var(--text-title-medium-font-size);
+      font-weight: 700;
+      line-height: var(--text-title-medium-line-height);
+      margin-bottom: 6px;
+    }
+
+    /* ── Structure levels ── */
+    .levels { display: flex; flex-direction: column; gap: 10px; }
+    .level {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 12px 16px;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: box-shadow 0.2s ease;
+    }
+    .level:hover { box-shadow: var(--elevation-2); }
+    .level__name {
+      flex-shrink: 0;
+      width: 120px;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .level__desc {
+      font-weight: 300;
+      font-size: var(--text-body-large-font-size);
+      line-height: var(--text-body-large-line-height);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* Composition chain */
+    .chain {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
+      margin-top: 20px;
+    }
+    .chain__card {
+      border: 1.5px solid var(--color-primary-transparent-87);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-decoration: none;
+      background: var(--color-constant-primary);
+      transition: box-shadow 0.2s ease;
+    }
+    .chain__card:hover { box-shadow: var(--elevation-2); }
+    .chain__name {
+      display: block;
+      font-size: var(--text-title-small-font-size);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .chain__type {
+      display: block;
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-label-small-font-size);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    .chain__arrow { color: var(--color-primary-transparent-48); font-size: 18px; }
+    .chain__note {
+      width: 100%;
+      font-weight: 300;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Token anatomy ── */
+    .token-anatomy {
+      display: inline-flex; align-items: flex-start; flex-wrap: wrap;
+      gap: 6px;
+      margin: 16px 0 20px;
+    }
+    .token-part { text-align: center; }
+    .token-part__chunk {
+      display: block;
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: var(--text-body-medium-font-size);
+      padding: 6px 10px;
+      border: 1px solid var(--color-primary-transparent-16);
+      border-radius: 6px;
+      background: var(--color-primary-transparent-04);
+      color: var(--color-primary-transparent-87);
+    }
+    .token-part__chunk--role { background: var(--color-brand-yellow-8); border-color: var(--color-brand-yellow-32); }
+    .token-part__chunk--alpha { background: var(--color-brand-yellow-16); border-color: var(--color-brand-yellow-32); }
+    .token-part__caption {
+      display: block;
+      margin-top: 6px;
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-label-small-font-size);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
+    .token-rules { max-width: 640px; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .token-rules li { padding-left: 20px; position: relative; }
+    .token-rules li::before {
+      content: "";
+      position: absolute; left: 0; top: 7px;
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 1.5px solid var(--color-primary-transparent-48);
+    }
+
+    /* ── Component doc legend ── */
+    .doc-legend { max-width: 640px; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .doc-legend li { display: flex; gap: 12px; align-items: baseline; }
+    .doc-legend__tag {
+      flex-shrink: 0;
+      width: 110px;
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-label-small-font-size);
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
+    }
+
+    /* ── Statuses ── */
+    .statuses { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
+    .status-row { display: flex; gap: 14px; align-items: baseline; }
+    .status-chip {
+      flex-shrink: 0;
+      display: inline-block;
+      width: 92px;
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+      font-size: var(--text-label-small-font-size);
+      font-weight: var(--text-label-small-font-weight);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .status-chip--draft      { background: var(--color-primary-transparent-08); color: var(--color-primary-transparent-60); }
+    .status-chip--stable     { background: var(--color-info-transparent-16); color: var(--color-info-tertiary); }
+    .status-chip--deprecated { background: var(--color-warning-transparent-8); color: var(--color-warning-secondary); }
+
+    /* ── CTA ── */
+    .ov-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: var(--text-title-medium-font-size);
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: none;
+      border-bottom: 2px solid var(--color-brand-yellow-primary);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .ov-cta:hover { border-color: var(--color-brand-yellow-tertiary); }
+
+    /* The library pages keep the fixed 220px sidebar at every width — so does this one.
+       Only the card grids adapt inside the remaining column. */
+    @media (max-width: 1100px) {
+      .principles { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="sidebar"></nav>
+
+  <main class="main">
+    <h1 class="page-title">Pyroblast UI</h1>
+
+    <div class="lede">
+      <p>The mobile design system of Pyroblast — a messenger for gamers — rebuilt live in code. Every component on these pages is real HTML driven by the same tokens it documents: what you inspect is what the system is.</p>
+      <p>Pyroblast had a design system per platform in Figma — desktop, iOS and Android. This library is the mobile one.</p>
+    </div>
+
+    <section class="ov-section">
+      <h2 class="ov-label">Principles</h2>
+      <div class="principles">
+        <div class="principle">
+          <h3>Tokens first</h3>
+          <p>No raw hex, no ad-hoc font sizes. Components reference named color, text and elevation tokens — change the token, and every screen follows.</p>
+        </div>
+        <div class="principle">
+          <h3>Documented, including the gaps</h3>
+          <p>Each component states its variants, states and rules. Where a state was never designed, the doc says so explicitly — a flagged gap beats a silent one.</p>
+        </div>
+        <div class="principle">
+          <h3>Assembled, not drawn</h3>
+          <p>Atoms compose into molecules, molecules into organisms. A new screen is picked from documented parts, not drawn from zero.</p>
+        </div>
+        <div class="principle">
+          <h3>Accessible by default</h3>
+          <p>44&times;44pt touch targets, ARIA roles and contrast requirements are part of each component's spec — not an afterthought.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ov-section">
+      <h2 class="ov-label">How the library is organized</h2>
+      <div class="levels">
+        <a class="level" href="typography.html"><span class="level__name">Styles</span><span class="level__desc">Foundations — typography and the color palette, defined as tokens</span></a>
+        <a class="level" href="icons.html"><span class="level__name">Icons</span><span class="level__desc">The icon set, grouped by where it's used: tab bar, chats, menus, general</span></a>
+        <a class="level" href="atoms.html"><span class="level__name">Atoms</span><span class="level__desc">The smallest parts — buttons, toggles, avatars, chips, counters</span></a>
+        <a class="level" href="molecules.html"><span class="level__name">Molecules</span><span class="level__desc">Atoms combined into working units — cells, fields, bars, messages</span></a>
+        <a class="level" href="organisms.html"><span class="level__name">Organisms</span><span class="level__desc">Complete interface blocks — profile cards, dialogs, the meet bar</span></a>
+      </div>
+      <div class="chain">
+        <a class="chain__card" href="atoms.html#avatar"><span class="chain__name">Avatar</span><span class="chain__type">atom</span></a>
+        <span class="chain__arrow" aria-hidden="true">&rarr;</span>
+        <a class="chain__card" href="molecules.html#cell-contact"><span class="chain__name">CellContact</span><span class="chain__type">molecule</span></a>
+        <span class="chain__arrow" aria-hidden="true">&rarr;</span>
+        <a class="chain__card" href="organisms.html#card-profile"><span class="chain__name">CardProfile</span><span class="chain__type">organism</span></a>
+        <span class="chain__note">One real chain: the same Avatar atom serves a contact cell, which serves the profile card — fix the atom once, and every level inherits it.</span>
+      </div>
+    </section>
+
+    <section class="ov-section">
+      <h2 class="ov-label">How to read a token</h2>
+      <div class="token-anatomy" aria-label="Token name broken into parts">
+        <span class="token-part"><span class="token-part__chunk">--color</span><span class="token-part__caption">group</span></span>
+        <span class="token-part"><span class="token-part__chunk--role token-part__chunk">primary</span><span class="token-part__caption">family</span></span>
+        <span class="token-part"><span class="token-part__chunk--alpha token-part__chunk">transparent-60</span><span class="token-part__caption">step</span></span>
+      </div>
+      <ul class="token-rules">
+        <li><strong>primary</strong> is the content color; <strong>constant</strong> stays fixed regardless of what it sits on. The split was groundwork for theming — the product closed before a dark theme was needed.</li>
+        <li>Each family runs an alpha scale — 87, 60, 48, 32, 24, 16, 08, 04 — so hierarchy comes from steps of one color, not from new colors.</li>
+        <li>Brand and signal families (yellow, red, warning, info) follow the same pattern: solid roles first, then the scale.</li>
+        <li>Text tokens mirror Figma names: the style <em>Label/Medium &middot; 12/14</em> becomes <code>--text-label-medium-*</code> — one token each for family, size, weight, line height and letter spacing.</li>
+        <li>Shadows live in elevation tokens (<code>--elevation-1</code>&hairsp;&ndash;&hairsp;<code>--elevation-4</code>) instead of hand-written box-shadows.</li>
+      </ul>
+    </section>
+
+    <section class="ov-section">
+      <h2 class="ov-label">How each component is documented</h2>
+      <p>Every component page follows the same layout, so you always know where to look:</p>
+      <ul class="doc-legend" style="margin-top:16px">
+        <li><span class="doc-legend__tag">Preview</span><p>The live component, in all its variants and states — real HTML, not screenshots</p></li>
+        <li><span class="doc-legend__tag">Spec panel</span><p>Variants, states, the exact tokens used, and the component's status</p></li>
+        <li><span class="doc-legend__tag">Guidelines</span><p>The full guide: when to use it, anatomy, do / don't, accessibility — and states that are still missing, flagged rather than hidden</p></li>
+        <li><span class="doc-legend__tag">Code</span><p>Copy-ready markup for the component</p></li>
+      </ul>
+    </section>
+
+    <section class="ov-section">
+      <h2 class="ov-label">Statuses</h2>
+      <div class="statuses">
+        <div class="status-row"><span class="status-chip status-chip--draft">draft</span><p>Documented and usable, but still open to review — most of the library sits here, honestly</p></div>
+        <div class="status-row"><span class="status-chip status-chip--stable">stable</span><p>Reviewed and frozen: changes would go through a version bump</p></div>
+        <div class="status-row"><span class="status-chip status-chip--deprecated">deprecated</span><p>Kept for reference, not for new screens — the doc names the replacement</p></div>
+      </div>
+    </section>
+
+    <a class="ov-cta" href="atoms.html">Start with Atoms &rarr;</a>
+  </main>
+
+  <script src="scripts/nav.js"></script>
+  <script src="scripts/page-transition.js?v=4"></script>
+</body>
+</html>

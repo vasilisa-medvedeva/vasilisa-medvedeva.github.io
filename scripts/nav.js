@@ -103,7 +103,9 @@
     }).join('');
   }
   function buildSidebar() {
-    var html = NAV.map(function (g) {
+    // Standalone entry point above the groups — the library's intro page
+    var html = '<a class="sidebar__link sidebar__link--top" href="overview.html">Overview</a>';
+    html += NAV.map(function (g) {
       return '<div class="nav-group" id="' + g.id + '">' +
         '<button class="nav-group__header" onclick="toggleGroup(\'' + g.id + '\')">' + g.label +
         chevron('nav-group__chevron') + '</button>' +

@@ -83,6 +83,16 @@
   color: var(--color-primary);
 }
 
+/* Standalone top-level link (Overview) — sits above the groups, styled like a group header */
+.sidebar__link--top {
+  padding: 12px 20px;
+  font-size: var(--text-title-medium-font-size);
+  font-weight: var(--text-title-medium-font-weight);
+  line-height: var(--text-title-medium-line-height);
+  letter-spacing: var(--text-title-medium-letter-spacing);
+  color: var(--color-primary);
+}
+
 /* ── Level 2.5: nested subgroup (e.g. Cell) inside a nav-group ── */
 .nav-subgroup {
   display: flex;
