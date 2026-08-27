@@ -874,7 +874,11 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>
-  <script src="scripts/guide-buddy.js"></script>
+  <!-- Guide buddy is off for now. He builds his own chip and runs his own
+       tour, so hiding him in CSS would leave both running; the switch is
+       this line. Uncomment to bring him back — theme-dark.css still keeps
+       his eyes working on the dark page. -->
+  <!-- <script src="scripts/guide-buddy.js"></script> -->
   <script src="scripts/i18n.js"></script>
   <script>
     // Guide buddy tour — the stickman runs along the bottom edge and points
