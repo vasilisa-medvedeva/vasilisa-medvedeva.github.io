@@ -109,6 +109,30 @@
       /* a slight counter-clockwise tilt sells the hand-drawn gesture */
       transform: rotate(-7deg);
     }
+    /* The ring draws itself on load: pathLength="1" normalises the curve so
+       one dash unit covers it exactly, and the offset pulls the stroke through.
+       Re-inserting the node (the language switch does) replays the draw.
+       The easing is pen-like — it bites slowly, rushes through the loop and
+       eases out on the little tail hook — and when the stroke closes, the
+       whole ring settles with a tiny press, like a hand finishing a gesture. */
+    .hero__circle > svg path {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: hero-ring-draw 0.95s cubic-bezier(0.6, 0.05, 0.2, 1) 0.45s forwards;
+    }
+    @keyframes hero-ring-draw { to { stroke-dashoffset: 0; } }
+    .hero__circle > svg {
+      animation: hero-ring-settle 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 1.34s;
+    }
+    @keyframes hero-ring-settle {
+      0%   { transform: rotate(-7deg) scale(1); }
+      55%  { transform: rotate(-6.4deg) scale(1.045); }
+      100% { transform: rotate(-7deg) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero__circle > svg path { animation: none; stroke-dashoffset: 0; }
+      .hero__circle > svg { animation: none; }
+    }
 
     /* ── Projects grid — korolev-style tiles, same rhythm as the flows grid ── */
     .projects-grid {
@@ -492,7 +516,7 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;svg viewBox=&quot;0 0 200 100&quot; preserveAspectRatio=&quot;none&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
+      <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;svg viewBox=&quot;0 0 200 100&quot; preserveAspectRatio=&quot;none&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path pathLength=&quot;1&quot; d=&quot;M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+<svg viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" aria-hidden="true"><path pathLength="1" d="M30 68C14 52 22 22 66 14C120 5 180 14 186 44C192 70 150 90 96 88C42 90 10 74 20 50C25 38 30 32 40 26" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> years.</span></h1>
       <div class="hero__aside">
         <p data-ru="Проектирую масштабируемые гибкие интерфейсы: они упрощают жизнь пользователю и&amp;nbsp;помогают бизнесу расти — на&amp;nbsp;балансе UX, целей бизнеса и&amp;nbsp;технических ограничений.">I create scalable, flexible interfaces that simplify user experiences and&nbsp;help businesses grow &mdash; balancing UX, business goals, and&nbsp;technical constraints.</p>
         <p data-ru="Быстро проверяю гипотезы и&amp;nbsp;провожу интервью, чтобы добраться до&amp;nbsp;настоящих причин поведения, — и&amp;nbsp;превращаю находки в&amp;nbsp;понятные, полезные решения.">I rapidly test hypotheses and&nbsp;run user interviews to&nbsp;uncover the&nbsp;root causes of&nbsp;behavior, turning insights into&nbsp;clear, valuable solutions.</p>
