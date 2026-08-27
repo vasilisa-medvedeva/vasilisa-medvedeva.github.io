@@ -85,6 +85,11 @@
     /* Only the pupils are painted with currentColor, and they inherit the
        page ink from .gb — which is now white, leaving him blank-eyed. */
     .gb__sprite [fill="currentColor"] { fill: rgba(0, 0, 0, 0.87); }
+
+    /* The header is a surface only because the light theme needed it to be
+       one against white. On dark it just makes a seam, so it takes the page
+       tone; the dropdown panel stays a surface so it still reads as a layer. */
+    .site-header { background: var(--page-bg); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
