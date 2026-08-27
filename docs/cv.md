@@ -6,7 +6,7 @@ Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · t.me/vamedve
 
 ## Summary
 
-Product Designer with 5+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Now freelance, working in an AI-native process and shipping working prototypes built in Claude Code.
+Product Designer with 5+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Now freelance, working in an AI-native process end to end — from research synthesis to working prototypes built in Claude Code.
 
 ---
 
@@ -16,9 +16,10 @@ Product Designer with 5+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Moved to an AI-native process: brought Claude into my design workflow, and now ship working prototypes built in Claude Code.
+- Moved to an AI-native process: research synthesis and concepts with Claude, working prototypes built in Claude Code.
 - Full-cycle design: landing pages, menus, identity.
 - A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
+- Automated design-system documentation: components documented to a fixed template and QA-checked against Figma.
 
 ### Product Designer — Pyroblast
 
@@ -46,7 +47,7 @@ Worked within a dedicated cross-functional team on each product: a product manag
 
 ## Skills
 
-Payments UX · Onboarding and activation · A/B testing · Design systems and tokens · iOS and Android platform patterns · UX research · Usability testing · Information architecture · Accessibility · Motion design (Lottie) · UX writing basics · Agile/Scrum · AI-assisted workflows · AI art direction
+Payments UX · Onboarding and activation · A/B testing · Design systems and tokens · iOS and Android platform patterns · UX research · Usability testing · Information architecture · Accessibility · Motion design (Lottie) · UX writing basics · Agile/Scrum · AI-assisted workflows · AI prototyping (Claude Code) · Prompt engineering · AI art direction
 
 **Tools:** Figma, Tokens Studio, Sketch, Illustrator, ProtoPie, Principle, Lottie, After Effects, Maze, Miro, Confluence · **AI:** Claude, Claude Code, Midjourney, ChatGPT, Figma Make
 

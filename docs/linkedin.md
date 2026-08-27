@@ -26,7 +26,7 @@ I'm a product designer who turns payment flows and onboarding into numbers. 5 ye
 
 My portfolio is a live product, not screenshots: interactive flow prototypes and a fully documented design system → vasilisa-medvedeva.github.io
 
-Since 2024 I've been freelancing: full-cycle design for small businesses — landing pages, menus, identity — and a move to an AI-native process, shipping working prototypes built in Claude Code.
+Since 2024 I've been freelancing: full-cycle design for small businesses — landing pages, menus, identity — and a move to an AI-native process: research synthesis with Claude, working prototypes built in Claude Code.
 
 Open to on-site product design roles in Cyprus; open to Europe and remote as well.
 
@@ -37,9 +37,10 @@ Open to on-site product design roles in Cyprus; open to Europe and remote as wel
 ### Freelance Designer
 *2024 – Present · Limassol, Cyprus*
 
-• Moved to an AI-native process: brought Claude into my design workflow, and now ship working prototypes built in Claude Code.
+• Moved to an AI-native process: research synthesis and concepts with Claude, working prototypes built in Claude Code.
 • Full-cycle design: landing pages, menus, identity.
 • A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
+• Automated design-system documentation: components documented to a fixed template and QA-checked against Figma.
 
 📎 Attach media: link to the portfolio site + one live flow prototype.
 
