@@ -42,8 +42,11 @@
   --color-brand-red-transparent-4: #FCF6F5;
 
   /* Accent Orange (header hover rounds) */
-  --color-accent-orange: #FF7C00;
-  --color-accent-orange-pressed: #E56F00;
+  /* Site accent — violet (token keeps its historical name; every page
+     references it, so the name stays put while the color moved on).
+     Dark text on #8B5CF6 clears AA at 4.9:1. */
+  --color-accent-orange: #8B5CF6;
+  --color-accent-orange-pressed: #7C3AED;
 
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;

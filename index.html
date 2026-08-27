@@ -443,8 +443,33 @@
 </head>
 <body>
 
-  <!-- Slow drifting brand light behind the page; sits at z-index -1 -->
+  <!-- Slow drifting brand light behind the page; sits at z-index -1.
+       Violet by default; ?aurora=amber switches to the warm palette for comparison. -->
   <div class="bg-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <script>
+    try {
+      var q = new URLSearchParams(location.search);
+      if (q.get('aurora') === 'amber') {
+        document.querySelector('.bg-aurora').classList.add('bg-aurora--amber');
+      }
+      /* Violet tryouts — ?violet=lavender|purple|indigo recolors the accent
+         and the aurora in one go (default stays the electric #8B5CF6).
+         Comparison-only helper; the winner gets baked into the tokens. */
+      var VIOLETS = {
+        lavender: { accent: '#A78BFA', pressed: '#8B5CF6', aurora: '#A78BFA', magenta: '#C084FC' },
+        purple:   { accent: '#A855F7', pressed: '#9333EA', aurora: '#A855F7', magenta: '#D946EF' },
+        indigo:   { accent: '#6366F1', pressed: '#4F46E5', aurora: '#6366F1', magenta: '#8B5CF6' }
+      };
+      var v = VIOLETS[q.get('violet')];
+      if (v) {
+        var r = document.documentElement.style;
+        r.setProperty('--color-accent-orange', v.accent);
+        r.setProperty('--color-accent-orange-pressed', v.pressed);
+        r.setProperty('--aurora-violet', v.aurora);
+        r.setProperty('--aurora-magenta', v.magenta);
+      }
+    } catch (e) {}
+  </script>
 
   <header class="site-header">
     <div class="site-header__inner">

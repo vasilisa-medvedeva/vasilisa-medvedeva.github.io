@@ -23,10 +23,10 @@
   --color-primary-transparent-08: rgba(255, 255, 255, 0.08);
   --color-primary-transparent-04: rgba(255, 255, 255, 0.04);
 
-  /* The accent moves from orange to the brand amber: on a dark page the
-     orange reads as a warning, and dark text on it never clears AA. */
-  --color-accent-orange: #FFB928;          /* brand-yellow-secondary */
-  --color-accent-orange-pressed: #EAA01B;  /* brand-yellow-tertiary */
+  /* The accent is violet site-wide (see color-tokens.css); it works on the
+     dark page as-is — dark text on #8B5CF6 clears AA at 4.9:1 — so the dark
+     theme no longer overrides it. Pyroblast's own brand yellow is untouched:
+     that's the product's identity, not the site's accent. */
 }
 
 /* The header is a surface only because the light theme needed it to be one

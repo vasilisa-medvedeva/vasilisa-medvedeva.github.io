@@ -8,6 +8,14 @@
    all content. Cards and surfaces are opaque, so the glow lives in the
    page's dark gaps — brightest around the hero. */
 
+/* The aurora's own palette — violet tones live only here (the site's token
+   set has no violet); tune the mix in one place. The cool counterweight
+   still comes from the shared tokens. */
+:root {
+  --aurora-violet: #8B5CF6;    /* main violet */
+  --aurora-magenta: #C026D3;   /* warmer purple for depth */
+}
+
 .bg-aurora {
   position: fixed;
   inset: 0;
@@ -22,31 +30,30 @@
   will-change: transform;
 }
 
-/* Amber — the site's accent, biggest and brightest, upper right where the
-   hero aside sits */
+/* Violet — biggest and brightest, upper right where the hero aside sits */
 .bg-aurora i:nth-child(1) {
   width: 56vw; height: 56vw;
   top: -18vw; right: -12vw;
-  background: radial-gradient(closest-side, var(--color-brand-yellow-secondary), transparent 70%);
-  opacity: 0.16;
+  background: radial-gradient(closest-side, var(--aurora-violet), transparent 70%);
+  opacity: 0.20;
   animation: aurora-drift-a 21s ease-in-out infinite alternate;
 }
 
-/* Warm red — lower left, meets the amber in the middle of the hero */
+/* Magenta — lower left, meets the violet in the middle of the hero */
 .bg-aurora i:nth-child(2) {
   width: 48vw; height: 48vw;
   bottom: -20vw; left: -10vw;
-  background: radial-gradient(closest-side, var(--color-brand-red-primary), transparent 70%);
-  opacity: 0.13;
+  background: radial-gradient(closest-side, var(--aurora-magenta), transparent 70%);
+  opacity: 0.14;
   animation: aurora-drift-b 27s ease-in-out infinite alternate;
 }
 
-/* Cool counterweight — faint, keeps the mix from going flat orange */
+/* Cool blue counterweight — faint, keeps the mix from going flat purple */
 .bg-aurora i:nth-child(3) {
   width: 40vw; height: 40vw;
   top: 30vh; left: 34vw;
   background: radial-gradient(closest-side, var(--color-info-primary), transparent 70%);
-  opacity: 0.10;
+  opacity: 0.12;
   animation: aurora-drift-c 33s ease-in-out infinite alternate;
 }
 
@@ -71,6 +78,18 @@
   75%  { transform: translate3d(14vw, 6vh, 0) scale(0.9); }
   to   { transform: translate3d(22vw, 20vh, 0) scale(1.15); }
 }
+
+/* ── Comparison variant: ?aurora=amber brings back the warm palette ──
+   (index.html adds the class from the URL param; violet is the default) */
+.bg-aurora--amber i:nth-child(1) {
+  background: radial-gradient(closest-side, var(--color-brand-yellow-secondary), transparent 70%);
+  opacity: 0.16;
+}
+.bg-aurora--amber i:nth-child(2) {
+  background: radial-gradient(closest-side, var(--color-brand-red-primary), transparent 70%);
+  opacity: 0.13;
+}
+.bg-aurora--amber i:nth-child(3) { opacity: 0.10; }
 
 /* Motion-sensitive visitors get the light, not the drift */
 @media (prefers-reduced-motion: reduce) {
