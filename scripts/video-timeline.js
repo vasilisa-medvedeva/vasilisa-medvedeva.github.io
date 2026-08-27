@@ -25,7 +25,7 @@
   }
 
   function fmt(seconds) {
-    var s = Math.max(0, Math.ceil(seconds));
+    var s = Math.max(0, Math.floor(seconds));
     return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
   }
 
@@ -48,9 +48,9 @@
     mount.appendChild(svg);
     mount.appendChild(time);
 
-    function paint(progress, remaining) {
+    function paint(progress, elapsed) {
       fill.style.strokeDashoffset = String(1 - Math.min(1, progress));
-      time.textContent = '–' + fmt(remaining);
+      time.textContent = fmt(elapsed);
     }
 
     if (clockDur) {
@@ -58,17 +58,17 @@
       var controlled = mount.hasAttribute('data-controlled');
       var startAt = null;
       var raf = 0;
-      paint(0, clockDur);
+      paint(0, 0);
       function tick(now) {
         var t = (now - startAt) / 1000;
         /* a one-shot demo holds just short of done until 'demo-end' confirms */
         t = controlled ? Math.min(t, clockDur - 0.5) : t % clockDur;
-        paint(t / clockDur, clockDur - t);
+        paint(t / clockDur, t);
         raf = requestAnimationFrame(tick);
       }
       function restart() {
         startAt = performance.now();
-        paint(0, clockDur);
+        paint(0, 0);
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
       }
@@ -81,7 +81,7 @@
         });
         document.addEventListener('demo-end', function () {
           cancelAnimationFrame(raf);
-          paint(1, 0);
+          paint(1, clockDur);
           hideTimer = setTimeout(function () { mount.classList.remove('is-live'); }, 900);
         });
         document.addEventListener('demo-stop', function () {
@@ -107,7 +107,7 @@
     function render() {
       var d = video.duration;
       if (!isFinite(d) || !d) return;
-      paint(video.currentTime / d, d - video.currentTime);
+      paint(video.currentTime / d, video.currentTime);
     }
 
     paint(0, 0);

@@ -30,7 +30,8 @@
   font-size: 11px; letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
   color: var(--color-primary);
-  min-width: 44px; text-align: right; white-space: nowrap;
+  /* room for 0:00–9:59 with tabular figures; longer clips just push it wider */
+  min-width: 34px; text-align: right; white-space: nowrap;
 }
 
 /* Controlled (one-shot) timelines — the Pyroblast flow demos: invisible until
