@@ -37,10 +37,9 @@ Open to on-site product design roles in Cyprus; open to Europe and remote as wel
 ### Freelance Designer
 *2024 – Present · Limassol, Cyprus*
 
-• Moved to an AI-native process: research synthesis and concepts with Claude, working prototypes built in Claude Code.
+• AI-native process: research synthesis and concepts with Claude, working prototypes in Claude Code.
 • Full-cycle design: landing pages, menus, identity.
-• A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
-• Automated design-system documentation: components documented to a fixed template and QA-checked against Figma.
+• A board game — 100 cards art-directed in Midjourney, one style throughout.
 
 📎 Attach media: link to the portfolio site + one live flow prototype.
 

@@ -6,7 +6,7 @@ Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · t.me/vamedve
 
 ## Summary
 
-Product Designer with 5+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Now freelance, working in an AI-native process end to end — from research synthesis to working prototypes built in Claude Code.
+Product Designer with 5+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Now freelance: an AI-native process from research synthesis to prototypes built in Claude Code.
 
 ---
 
@@ -16,10 +16,9 @@ Product Designer with 5+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Moved to an AI-native process: research synthesis and concepts with Claude, working prototypes built in Claude Code.
+- AI-native process: research synthesis and concepts with Claude, working prototypes in Claude Code.
 - Full-cycle design: landing pages, menus, identity.
-- A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
-- Automated design-system documentation: components documented to a fixed template and QA-checked against Figma.
+- A board game — 100 cards art-directed in Midjourney, one style throughout.
 
 ### Product Designer — Pyroblast
 
