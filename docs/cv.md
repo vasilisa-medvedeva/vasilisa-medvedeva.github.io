@@ -16,7 +16,7 @@ Product Designer with 4+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Integrated AI tools (Claude, Midjourney, Figma Make) into the design workflow to speed up ideation and concept exploration.
+- Moved to an AI-native process: brought Claude, Midjourney and Figma Make into my design workflow, and now ship working coded prototypes built in Claude Code.
 - Full-cycle design: landing pages, menus, identity.
 - A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
 
