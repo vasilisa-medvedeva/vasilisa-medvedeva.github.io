@@ -233,8 +233,16 @@
         '<path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5C4.7 20 4 19.3 4 18.5V5.5ZM20 5.5C20 4.7 19.3 4 18.5 4H13v16h5.5c.8 0 1.5-.7 1.5-1.5V5.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Guidelines';
       btn.addEventListener('click', function () { toggleGuides(id, btn); });
 
+      /* The action chips live at the bottom of the preview card: the header
+         keeps the component's name, actions sit where a reader ends up after
+         looking at the component. The Code button moves out of the header. */
+      var actions = document.createElement('div');
+      actions.className = 'comp-actions';
+      actions.appendChild(btn);
       var codeBtn = header.querySelector('.code-toggle-btn');
-      if (codeBtn) header.insertBefore(btn, codeBtn); else header.appendChild(btn);
+      if (codeBtn) actions.appendChild(codeBtn);
+      var preview = block.querySelector('.component-block__preview');
+      (preview || block).appendChild(actions);
 
       var panel = document.createElement('div');
       panel.className = 'guides-panel';

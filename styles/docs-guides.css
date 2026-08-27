@@ -7,6 +7,15 @@
 .component-block__preview-header { gap: 8px; }
 .component-block__preview-header .component-block__preview-title { margin-right: auto; }
 
+/* Action chips row at the bottom of the preview card (built by docs-guides.js:
+   the Guidelines chip plus the Code chip moved out of the header) */
+.comp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
 /* Guidelines button — same shape as Code, but hover/active go brand-yellow:
    yellow = design guidance, dark = code. Ties to the panel's yellow accent. */
 .code-toggle-btn.guides-btn:hover {
