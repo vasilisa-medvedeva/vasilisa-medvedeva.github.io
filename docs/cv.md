@@ -6,11 +6,18 @@ Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · [phone] · *
 
 ## Summary
 
-Product Designer with 4+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Currently returning to product design after a planned career break (May 2024 – present) focused on professional English and portfolio projects.
+Product Designer with 4+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Freelancing on client projects since May 2024, while bringing my English to working level and building new portfolio work.
 
 ---
 
 ## Experience
+
+### Freelance Designer
+
+Limassol, Cyprus · May 2024 – Present
+
+- Delivered for client projects.
+- Integrated AI tools (Claude, Midjourney, Figma Make) into the design workflow to speed up ideation and concept exploration.
 
 ### Product Designer — Pyroblast
 
