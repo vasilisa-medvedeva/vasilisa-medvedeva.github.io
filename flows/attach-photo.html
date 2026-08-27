@@ -109,6 +109,16 @@
     body.embed-full .flow-arrow,
     body.embed-full .flow-restart img { filter: invert(1); }
     /* .flow-point stays black — it sits on the phone's red topbar, not on the stage */
+    /* The Demo button is an inline SVG drawn with black ink straight in the
+       markup, so neither a filter nor a token reaches it — repaint the frame
+       and the word for the dark stage. Its hover fill stays on the accent. */
+    body.embed-full .flow-btn svg [stroke="black"] { stroke: var(--color-constant-primary); }
+    body.embed-full .flow-btn svg [fill="black"]   { fill:   var(--color-constant-primary); }
+    /* The demo scrubber inherits the flow page's light-theme ink (the flows
+       never load theme-dark.css) — repaint it for the dark stage as well. */
+    body.embed-full .video-timeline__track { stroke: var(--color-constant-transparent-48); }
+    body.embed-full .video-timeline__fill  { stroke: var(--color-constant-primary); }
+    body.embed-full .video-timeline__time  { color:  var(--color-constant-primary); }
     body.embed-full .flow-desc { width: auto; }             /* the column shrinks to the hand-drawn Demo button */
     body.embed-full .flow-orwatch { margin-top: 0; }
     @media (min-width: 901px) {
