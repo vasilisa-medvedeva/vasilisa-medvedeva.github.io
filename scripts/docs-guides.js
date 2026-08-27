@@ -8,6 +8,9 @@
   var DOCS = {
     // atoms.html
     'chips':                'atoms/videochip.md',
+    'button':               'atoms/button.md',
+    'button-icon':          'atoms/button-icon.md',
+    'chip-live':            'atoms/chip-live.md',
     'preview':              'atoms/preview.md',
     'preview-doc-chat':     'atoms/preview-doc-chat.md',
     'toggle':               'atoms/toggle.md',
@@ -44,6 +47,8 @@
     'tf-s':                 'molecules/text-fields-s.md',
     'tf-l':                 'molecules/text-fields-l.md',
     'tf-bar':               'molecules/text-fields-bar.md',
+    'photo-placeholder':    'molecules/photo-placeholder.md',
+    'segmented-control':    'molecules/segmented-control.md',
     'gallery':              'molecules/gallery.md',
     'card-profile-text':    'molecules/card-profile-text.md',
     'tabs':                 'molecules/tabs.md',
@@ -59,6 +64,7 @@
     // organisms.html
     'card-profile':         'organisms/card-profile.md',
     'confirm-dialog':       'organisms/confirm-dialog.md',
+    'meet-bar':             'organisms/meet-bar.md',
     'dropdown-row':         'organisms/dropdown-row.md'
   };
 
