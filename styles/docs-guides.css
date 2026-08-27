@@ -1,0 +1,107 @@
+/* ── Guidelines panel — renders the component's .md guide inside the viewer ──
+   Injected by scripts/docs-guides.js next to the Code button. The panel shows
+   the sections the compact aside doesn't: description, When to use, Anatomy,
+   Do / Don't, Accessibility, and any ⚠️ missing-state flags. */
+
+/* Keep the title left and pack the (Guidelines, Code) buttons on the right */
+.component-block__preview-header { gap: 8px; }
+.component-block__preview-header .component-block__preview-title { margin-right: auto; }
+
+/* Guidelines button — same shape as Code, but hover/active go brand-yellow:
+   yellow = design guidance, dark = code. Ties to the panel's yellow accent. */
+.code-toggle-btn.guides-btn:hover {
+  background: var(--color-brand-yellow-8);
+  border-color: var(--color-brand-yellow-tertiary);
+  color: var(--color-primary-transparent-87);
+}
+.code-toggle-btn.guides-btn.is-active {
+  background: var(--color-brand-yellow-primary);
+  border-color: transparent;
+  color: var(--color-primary-transparent-87);
+}
+
+.guides-panel {
+  grid-column: 1 / -1;
+  display: none;
+  background: var(--color-constant-primary);
+  border: 1px solid var(--color-primary-transparent-16);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-top: -24px;
+}
+.guides-panel.is-open { display: block; }
+
+.guides-panel__inner { max-width: 720px; }
+
+.guides-panel__desc {
+  font-family: var(--text-body-large-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-body-large-font-size);
+  font-weight: var(--text-body-large-font-weight);
+  line-height: var(--text-body-large-line-height);
+  letter-spacing: var(--text-body-large-letter-spacing);
+  color: var(--color-primary-transparent-87);
+  padding-left: 12px;
+  border-left: 3px solid var(--color-brand-yellow-primary);
+  margin-bottom: 20px;
+}
+
+.guides-panel__section { margin-bottom: 20px; }
+.guides-panel__section:last-child { margin-bottom: 0; }
+
+.guides-panel__title {
+  font-size: var(--text-label-medium-font-size);
+  font-weight: var(--text-label-medium-font-weight);
+  letter-spacing: var(--text-label-medium-letter-spacing);
+  line-height: var(--text-label-medium-line-height);
+  color: var(--color-primary-transparent-60);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.guides-panel p,
+.guides-panel li {
+  font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-body-medium-font-size);
+  font-weight: var(--text-body-medium-font-weight);
+  line-height: var(--text-body-medium-line-height);
+  letter-spacing: var(--text-body-medium-letter-spacing);
+  color: var(--color-primary-transparent-87);
+}
+.guides-panel p + p { margin-top: 6px; }
+
+.guides-panel ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+}
+
+.guides-panel code {
+  font-family: "Roboto Mono", "Fira Code", monospace;
+  font-size: var(--text-body-small-font-size);
+  background: var(--color-primary-transparent-04);
+  border: 1px solid var(--color-primary-transparent-16);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* ⚠️ missing-state flags pulled out of the States table */
+.guides-panel__gaps li {
+  background: var(--color-brand-yellow-8);
+  border: 1px solid var(--color-brand-yellow-32);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.guides-panel__error {
+  font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
+  font-size: var(--text-body-medium-font-size);
+  line-height: var(--text-body-medium-line-height);
+  color: var(--color-primary-transparent-60);
+}
+
+@media (max-width: 900px) {
+  .guides-panel { padding: 20px; }
+}
