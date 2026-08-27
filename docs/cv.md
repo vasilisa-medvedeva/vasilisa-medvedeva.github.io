@@ -1,12 +1,12 @@
 # VASILISA MEDVEDEVA
 
-Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · [phone] · **Portfolio: [vasilisa-medvedeva.github.io](https://vasilisa-medvedeva.github.io/)** · linkedin.com/in/vas-medvedeva
+Product Designer · Limassol, Cyprus · medvedeva_vas@icloud.com · t.me/vamedvedeva · **Portfolio: [vasilisa-medvedeva.github.io](https://vasilisa-medvedeva.github.io/)** · linkedin.com/in/vas-medvedeva
 
 ---
 
 ## Summary
 
-Product Designer with 4+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Freelancing on client projects since May 2024, while bringing my English to working level and building new portfolio work.
+Product Designer with 5+ years of experience shipping iOS, Android, and web products used by millions. Redesigned key flows that doubled payment conversion and contributed to 5× revenue growth. Strong in design systems, user research, A/B testing, and data-driven UX decisions. Now freelance, working in an AI-native process and shipping working prototypes built in Claude Code.
 
 ---
 
