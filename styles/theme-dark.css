@@ -1,0 +1,85 @@
+/* Dark theme — site-wide.
+
+   Nothing here restyles a component. It reassigns the two token families
+   every page already speaks: ink that reads --color-primary-* turns white,
+   surfaces painted --color-constant-primary turn #242424, and the page sits
+   one step below them at --page-bg so cards read as raised.
+
+   Link it after color-tokens.css. Pages set their own body background to
+   var(--page-bg) — an inline <style> would otherwise win over this file. */
+
+:root {
+  --color-constant-primary: #242424;   /* surfaces: cards, header panels, bubbles */
+  --page-bg: #1A1A1A;                  /* the page sits below its surfaces */
+
+  --color-primary: rgba(255, 255, 255, 0.87);
+  --color-primary-transparent-87: rgba(255, 255, 255, 0.87);
+  --color-primary-transparent-70: rgba(255, 255, 255, 0.70);
+  --color-primary-transparent-60: rgba(255, 255, 255, 0.60);
+  --color-primary-transparent-48: rgba(255, 255, 255, 0.48);
+  --color-primary-transparent-32: rgba(255, 255, 255, 0.32);
+  --color-primary-transparent-24: rgba(255, 255, 255, 0.24);
+  --color-primary-transparent-16: rgba(255, 255, 255, 0.16);
+  --color-primary-transparent-08: rgba(255, 255, 255, 0.08);
+  --color-primary-transparent-04: rgba(255, 255, 255, 0.04);
+
+  /* The accent moves from orange to the brand amber: on a dark page the
+     orange reads as a warning, and dark text on it never clears AA. */
+  --color-accent-orange: #FFB928;          /* brand-yellow-secondary */
+  --color-accent-orange-pressed: #EAA01B;  /* brand-yellow-tertiary */
+}
+
+/* The header is a surface only because the light theme needed it to be one
+   against white. On dark it just makes a seam, so it takes the page tone;
+   the dropdown panel stays a surface so it still reads as a layer. */
+.site-header { background: var(--page-bg); }
+
+/* The avatar's ring exists to separate the photo from a white header.
+   On dark it draws a bright halo instead, so it goes. */
+.site-header__avatar { border: none; }
+
+/* Hover paints the accent behind the label. The page ink is white now,
+   which would leave 1.9:1 on amber, so anything on the accent goes dark. */
+.site-header__link:hover,
+.site-header__link:active,
+.guess:not(.is-done) .guess__option:hover { color: rgba(0, 0, 0, 0.87); }
+
+/* Doodle SVGs are authored as black ink and arrive through <img>, so they
+   cannot inherit currentColor. Photos are left alone. */
+.hero__arrow,
+.guess__mark img { filter: invert(1); }
+
+/* The doodle arrows and the circled word are drawn with stroke="black"
+   straight in the markup, so no token can reach them. Arrows follow the page
+   ink; the circled word takes the accent, same as the one on the home page. */
+.pay-demo__arrow [stroke="black"],
+.pdd-demo__arrow [stroke="black"] { stroke: currentColor; }
+.hero__circled [stroke="black"] { stroke: var(--color-accent-orange); }
+
+/* The guide buddy's drawing bakes in the light palette: white sclera painted
+   with --color-constant-primary, black ink on currentColor. Without this he
+   goes black-eyed and then blank-eyed. */
+.gb__sprite {
+  --color-constant-primary: #FFFFFF;
+  --color-primary-transparent-87: rgba(0, 0, 0, 0.87);
+}
+.gb__sprite [fill="currentColor"] { fill: rgba(0, 0, 0, 0.87); }
+
+/* ── Light stages ──────────────────────────────────────────────────────
+   The product UI drawn inside a device mockup depicts a real, light-themed
+   screen. Re-theming it would show a design that was never shipped, so the
+   mockups get the original values back, scoped to themselves.
+   (The design-system pages don't load this file at all — they stay light.) */
+.project-card__device, .project-card__device * {
+  --color-constant-primary: #FFFFFF;
+  --color-primary: #000000;
+  --color-primary-transparent-87: rgba(0, 0, 0, 0.87);
+  --color-primary-transparent-70: rgba(0, 0, 0, 0.70);
+  --color-primary-transparent-60: rgba(0, 0, 0, 0.60);
+  --color-primary-transparent-48: rgba(0, 0, 0, 0.48);
+  --color-primary-transparent-32: rgba(0, 0, 0, 0.32);
+  --color-primary-transparent-24: #D6D6D6;
+  --color-primary-transparent-16: #EBEBEB;
+  --color-primary-transparent-08: rgba(0, 0, 0, 0.08);
+  --color-primary-transparent-04: rgba(0, 0, 0, 0.04);
+}

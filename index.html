@@ -46,62 +46,11 @@
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/guide-buddy.css" />
   <link rel="stylesheet" href="styles/lang-switch.css" />
+  <link rel="stylesheet" href="styles/theme-dark.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;900&family=Roboto:wght@400;500;700&display=swap" />
   <style>
-    /* ── Dark experiment — this page only ─────────────────────────────
-       Nothing here restyles a component. It swaps the two token families
-       the page already speaks: ink that reads --color-primary-* turns
-       white, surfaces painted --color-constant-primary turn black. Every
-       linked stylesheet (header, guide buddy, lang switch) inherits the
-       flip for free, and no other page loads this block. */
-    :root {
-      --color-constant-primary: #242424;   /* surfaces: cards, header, bubbles */
-      --page-bg: #1A1A1A;                  /* the page sits below its surfaces */
-      --color-primary: rgba(255, 255, 255, 0.87);
-      --color-primary-transparent-87: rgba(255, 255, 255, 0.87);
-      --color-primary-transparent-70: rgba(255, 255, 255, 0.70);
-      --color-primary-transparent-60: rgba(255, 255, 255, 0.60);
-      --color-primary-transparent-48: rgba(255, 255, 255, 0.48);
-      --color-primary-transparent-32: rgba(255, 255, 255, 0.32);
-      --color-primary-transparent-24: rgba(255, 255, 255, 0.24);
-      --color-primary-transparent-16: rgba(255, 255, 255, 0.16);
-      --color-primary-transparent-08: rgba(255, 255, 255, 0.08);
-      --color-primary-transparent-04: rgba(255, 255, 255, 0.04);
-      /* The accent moves from orange to the brand amber: on a dark page the
-         orange reads as a warning, and dark text on it never clears AA. */
-      --color-accent-orange: #FFB928;          /* brand-yellow-secondary */
-      --color-accent-orange-pressed: #EAA01B;  /* brand-yellow-tertiary */
-    }
-    /* Doodle SVGs are authored as black ink and can't inherit currentColor
-       through <img>, so they get flipped directly. The photo is left alone. */
-    .hero__arrow,
-    .guess__mark img { filter: invert(1); }
-    /* The guide buddy is drawn with the light palette baked into the SVG:
-       white sclera painted with --color-constant-primary, black ink on
-       currentColor. The flip turned his eyes black, so the sprite keeps the
-       original values — his bubble still follows the dark page. */
-    .gb__sprite {
-      --color-constant-primary: #FFFFFF;
-      --color-primary-transparent-87: rgba(0, 0, 0, 0.87);
-    }
-    /* Only the pupils are painted with currentColor, and they inherit the
-       page ink from .gb — which is now white, leaving him blank-eyed. */
-    .gb__sprite [fill="currentColor"] { fill: rgba(0, 0, 0, 0.87); }
-
-    /* The header is a surface only because the light theme needed it to be
-       one against white. On dark it just makes a seam, so it takes the page
-       tone; the dropdown panel stays a surface so it still reads as a layer. */
-    .site-header { background: var(--page-bg); }
-    /* The avatar's ring exists to separate the photo from a white header.
-       On dark it just draws a bright halo, so it goes. */
-    .site-header__avatar { border: none; }
-    /* Hover paints the accent behind the label. The page ink is white now,
-       which would leave 1.9:1 on amber, so anything on the accent goes dark. */
-    .site-header__link:hover,
-    .site-header__link:active,
-    .guess:not(.is-done) .guess__option:hover { color: rgba(0, 0, 0, 0.87); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
