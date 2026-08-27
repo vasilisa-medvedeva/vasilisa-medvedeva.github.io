@@ -160,10 +160,14 @@
     box.className = 'lang-switch';
     box.setAttribute('role', 'group');
     box.setAttribute('aria-label', 'Language / Язык');
+    /* Each button carries the same hand-drawn ring as the circled word in the
+       hero; CSS shows it only around the live language and draws it in. */
+    var RING = '<svg class="lang-switch__ring" viewBox="0 0 104 52" fill="none" aria-hidden="true">' +
+      '<path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" ' +
+      'stroke="var(--color-accent-orange)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     box.innerHTML =
-      '<button class="lang-switch__btn" type="button" data-lang="en" lang="en">EN</button>' +
-      '<span class="lang-switch__rule" aria-hidden="true"></span>' +
-      '<button class="lang-switch__btn" type="button" data-lang="ru" lang="ru">RU</button>';
+      '<button class="lang-switch__btn" type="button" data-lang="en" lang="en">EN' + RING + '</button>' +
+      '<button class="lang-switch__btn" type="button" data-lang="ru" lang="ru">RU' + RING + '</button>';
     box.addEventListener('click', function (e) {
       var btn = e.target.closest('.lang-switch__btn');
       if (!btn) return;
