@@ -16,8 +16,9 @@ Product Designer with 4+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Delivered for client projects.
-- Integrated AI tools (Claude, Midjourney, Figma Make) into the design workflow to speed up ideation and concept exploration.
+- Moved to an AI-native process: learned Claude Code and now ship working coded prototypes instead of static mockups.
+- Full-cycle design for small businesses: landing pages, menus, identity.
+- Personal project: a 100-card board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
 
 ### Product Designer — Pyroblast
 
@@ -45,7 +46,7 @@ Worked within a dedicated cross-functional team on each product: a product manag
 
 ## Skills
 
-Payments UX · Onboarding and activation · A/B testing · Design systems and tokens · iOS and Android platform patterns · UX research · Usability testing · Information architecture · Accessibility · Motion design (Lottie) · UX writing basics · Agile/Scrum
+Payments UX · Onboarding and activation · A/B testing · Design systems and tokens · iOS and Android platform patterns · UX research · Usability testing · Information architecture · Accessibility · Motion design (Lottie) · UX writing basics · Agile/Scrum · AI-assisted workflows · AI art direction
 
 **Tools:** Figma, Tokens Studio, Sketch, Illustrator, ProtoPie, Principle, Lottie, After Effects, Maze, Miro, Confluence · **AI:** Claude, ChatGPT, Figma Make
 
