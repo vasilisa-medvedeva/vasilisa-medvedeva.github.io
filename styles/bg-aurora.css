@@ -1,0 +1,81 @@
+/* ── Aurora background — slow drifting fields of brand light ──────────────
+   Three soft radial spots (amber, warm red, a faint cool counterweight)
+   wander behind the page. Softness comes from the gradient itself — no
+   filter: blur() — and motion is transform-only, so the layer stays cheap.
+
+   Markup: <div class="bg-aurora"><i></i><i></i><i></i></div> right after
+   <body>. The layer sits at z-index -1: above the body background, below
+   all content. Cards and surfaces are opaque, so the glow lives in the
+   page's dark gaps — brightest around the hero. */
+
+.bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-aurora i {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Amber — the site's accent, biggest and brightest, upper right where the
+   hero aside sits */
+.bg-aurora i:nth-child(1) {
+  width: 56vw; height: 56vw;
+  top: -18vw; right: -12vw;
+  background: radial-gradient(closest-side, var(--color-brand-yellow-secondary), transparent 70%);
+  opacity: 0.16;
+  animation: aurora-drift-a 37s ease-in-out infinite alternate;
+}
+
+/* Warm red — lower left, meets the amber in the middle of the hero */
+.bg-aurora i:nth-child(2) {
+  width: 48vw; height: 48vw;
+  bottom: -20vw; left: -10vw;
+  background: radial-gradient(closest-side, var(--color-brand-red-primary), transparent 70%);
+  opacity: 0.13;
+  animation: aurora-drift-b 43s ease-in-out infinite alternate;
+}
+
+/* Cool counterweight — faint, keeps the mix from going flat orange */
+.bg-aurora i:nth-child(3) {
+  width: 40vw; height: 40vw;
+  top: 30vh; left: 34vw;
+  background: radial-gradient(closest-side, var(--color-info-primary), transparent 70%);
+  opacity: 0.10;
+  animation: aurora-drift-c 53s ease-in-out infinite alternate;
+}
+
+/* Different durations (37/43/53s) keep the three from ever syncing up,
+   so the composition never visibly repeats. */
+@keyframes aurora-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-14vw, 12vh, 0) scale(1.15); }
+  to   { transform: translate3d(-4vw, 26vh, 0) scale(0.9); }
+}
+@keyframes aurora-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(16vw, -10vh, 0) scale(0.85); }
+  to   { transform: translate3d(6vw, -22vh, 0) scale(1.2); }
+}
+@keyframes aurora-drift-c {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-12vw, -14vh, 0) scale(1.25); }
+  to   { transform: translate3d(10vw, 8vh, 0) scale(0.95); }
+}
+
+/* Motion-sensitive visitors get the light, not the drift */
+@media (prefers-reduced-motion: reduce) {
+  .bg-aurora i { animation: none; }
+}
+
+/* On phones vw-sized spots shrink too much — size off the diagonal instead */
+@media (max-width: 600px) {
+  .bg-aurora i:nth-child(1) { width: 90vmax; height: 90vmax; top: -30vmax; right: -30vmax; }
+  .bg-aurora i:nth-child(2) { width: 80vmax; height: 80vmax; bottom: -30vmax; left: -30vmax; }
+  .bg-aurora i:nth-child(3) { display: none; }
+}
