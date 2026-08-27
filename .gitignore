@@ -15,7 +15,3 @@ ScreenRecording*
 
 # Local symlink to a neighbouring project — breaks the Pages build if committed
 .spotware-preview
-
-# Working documents — kept local, never served from the Pages site
-CLAUDE.md
-docs/
