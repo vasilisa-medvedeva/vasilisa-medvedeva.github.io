@@ -85,16 +85,3 @@
   --color-primary-transparent-04: rgba(0, 0, 0, 0.04);
 }
 
-/* ── Accent hand ───────────────────────────────────────────────────────
-   The project cards get a filled cursor on hover: the same doodle hand,
-   its white fill remapped to the violet accent (the outline and its antialiasing
-   are kept by blending toward black). PNG, so it has to be a second asset
-   rather than a colour swap. */
-:root {
-  --hand-accent-1x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAbCAYAAAB836/YAAABtElEQVR42rWVvUoDQRSFPzcRjGAjVhaibApFEKyzccfClL5C2uQNttpsUqhvoK34DhaxyOSvs1FIl4CVLxBQCCyxcCasq+tOFj3VMnPncOecM3fhdwigA8yBAAOspOzPa1UfgJvblkk9+ZTusEOP940BprB+IyyXBMvCMikqTJ2/ITwsnvxPh1GTlOsiC6EbX6hVfcolIYCGIg6WcXkB7bIdemwfOfSHUpRLgv5QxjsN8mTE+d49Z0cD/OtKQ5Fn0jCRvFVvA7hWJMRGoXt9G6DzGf3WPJYStpP2ZpNCHo9WHnBrVR879JjkrhiNe43+ULrxYJ/v3QOwve5AEQhhNO4tCF/fBgDyi4Z26OmDiRIUpg526H05A5/kQNcCmje3LSa5q0WREtjIDB0r5XJgARI4jZIWpg6teputwoE0NQpoAuTU2guw8vjUFfZxjs25w+psh7XZ/q4J4eVdBaAb1zDQ119m/kVqg5+CHQBN/7piTBq9btJLCQD58HxhRKjcTZ02Tf0206DqZBqhjOmTpp80mYcyy6CwDARP25fGA3Y07kHxu/BZf/R61OvQ/iSHiGYQ4APkN6EloJGNwgAAAABJRU5ErkJggg==");
-  --hand-accent-2x: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA2CAYAAAC1ItuGAAADZUlEQVR42u1Yy07bQBQ9iVNVqUAVWXaRghyJBVKkLCsMdZFgwYIfoCIswx9EVIqdLChSPwC2Uf+BRVkwKWHHhkrdlYqHxA9EolVVy13EQ8fj8SS2xzFSeyWLMAT7+N455547QPKwAZx4l+v9/miCguIvU9UDtISZ2waApUUT6ytbKE7lcHN7BQCzALoqABYS/K8FAI16C7rTBBwAFeD0jEBlBvMJsgcAePHMgOhz1gAfojgwUt3kiQAuLUoraWYJ8DUALFSWU5eJuABNTCjyeOSRT5K9NFj7T2QwipC7Xju0s+gkozTQZH6avMBnnsGlRRONeovVSosBbGcOcKGyDN1pYrW6yy7TklvjWrNELObj7r4f6MvFgSHrONYokBNhMdtxGvUWPry950tvc97STh0gSyCR49mYO+JBmqLMTiSDbOlZ4Oz+DCGVmalQs8BXq7vQnWYgs4+mk4Rp6kQAfv32Wegfw9ZlnYSlPPGuxEC8OWXIZmf0uiiDpkdvi7kym3NZWcp74E4kNt4ad9alN2Yf8GO6L/wuuy6zbQX2wZ2dTygODGzMDW9wd9/HYbfDDulvZAB1p4nOjuHb8AE9HMilBwD7zF6BzheNeitwYx0GGnXwINtR2diot0L/NmLw+stiusFFWaEP4FzJ2KE7zeFwLyAUP3hdavs+0moArgFs39xeQa9pKLnBtyy5BvSahvOLnm99rfouNhHK5Zf4/fQWr54f+Nb73/fo8UkbAMl7UtKmtefewJeFUeWIKswbc0cB4lDp4UtsU82TgeS8Xaqtj8obe7rV9Rg9e37RE5b7ya8y9JqG4lQO6ytbwu2QJN5/XKMf2zRh/PHbNT1SCwNZcg3Mz2yi5BqUzbMqwF1q++we71GAfC8mrNYddjuhQhuHzXFOz0RmwQeydbAmA2lG7ddhwWhtexw3M1GQHCnJuHYrAHJCh0kkyhn1FYAcBfBz+gzzM5vKN5yIvVEMq033xekZCdXINMobxVHbbLeR7Eel5Y1q+R+of/xlT/k4EOaSos4kbdaqq4hR98rHLUGKZVYDkGvssYJ7SaJq7CQyg5vAvZD/R8Aq5SUJwF4KEqM+gyqlRvbShZjlsCRsFDJclC3FL+lzLq7iy1adQRLBYpExbFrod3IJbTmJAEbW30MPqP4AB+1XiTv3BX8AAAAASUVORK5CYII=");
-}
-.project-card, .project-card * {
-  cursor: -webkit-image-set(var(--hand-accent-1x) 1x, var(--hand-accent-2x) 2x) 10 1, pointer !important;
-  cursor: image-set(var(--hand-accent-1x) 1x, var(--hand-accent-2x) 2x) 10 1, pointer !important;
-}
