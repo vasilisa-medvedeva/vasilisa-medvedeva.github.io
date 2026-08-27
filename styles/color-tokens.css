@@ -6,10 +6,15 @@
   --color-primary-transparent-60: rgba(0, 0, 0, 0.60);
   --color-primary-transparent-48: rgba(0, 0, 0, 0.48);
   --color-primary-transparent-32: rgba(0, 0, 0, 0.32);
+  /* ⚠️ Known deviation: -24 and -16 ship flattened one step lighter than their
+     names promise (#D6D6D6 ≈ 16% black, #EBEBEB ≈ 8% black on white). Every
+     hairline border on the site is tuned to these values — correcting them to
+     true 0.24/0.16 alphas is a visible, site-wide change that needs a QA pass
+     against Figma first. Flagged, not hidden. */
   --color-primary-transparent-24: #D6D6D6;
   --color-primary-transparent-16: #EBEBEB;
-  --color-primary-transparent-08: #EBEBEB;
-  --color-primary-transparent-04: #F5F5F5;
+  --color-primary-transparent-08: rgba(0, 0, 0, 0.08);
+  --color-primary-transparent-04: rgba(0, 0, 0, 0.04);
 
   /* Constant */
   --color-constant-primary: #FFFFFF;
