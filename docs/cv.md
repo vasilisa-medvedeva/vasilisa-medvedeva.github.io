@@ -16,7 +16,7 @@ Product Designer with 4+ years of experience shipping iOS, Android, and web prod
 
 Limassol, Cyprus · May 2024 – Present
 
-- Moved to an AI-native process: brought Claude into my design workflow, and now ship prototypes built in Claude Code.
+- Moved to an AI-native process: brought Claude into my design workflow, and now ship working prototypes built in Claude Code.
 - Full-cycle design: landing pages, menus, identity.
 - A board game — art-directed the whole illustration set in Midjourney, one style across all 100 cards.
 
