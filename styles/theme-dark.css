@@ -30,9 +30,13 @@
 }
 
 /* The header is a surface only because the light theme needed it to be one
-   against white. On dark it just makes a seam, so it takes the page tone;
-   the dropdown panel stays a surface so it still reads as a layer. */
-.site-header { background: var(--page-bg); }
+   against white. On dark it takes the page tone — at partial strength, so
+   the base sheet's backdrop blur frosts whatever scrolls beneath; the
+   dropdown panel stays a solid surface so it still reads as a layer. */
+.site-header { background: color-mix(in srgb, var(--page-bg) 72%, transparent); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { background: var(--page-bg); }
+}
 
 /* The avatar's ring exists to separate the photo from a white header.
    On dark it draws a bright halo instead, so it goes. */

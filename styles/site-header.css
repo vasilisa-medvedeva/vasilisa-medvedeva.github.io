@@ -6,7 +6,15 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--color-constant-primary);
+  /* frosted glass: the surface color at partial strength over a backdrop
+     blur, so scrolled content glows through without fighting the labels */
+  background: color-mix(in srgb, var(--color-constant-primary) 72%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+/* no backdrop-filter → no glass; fall back to the solid surface */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { background: var(--color-constant-primary); }
 }
 
 .site-header__inner {
