@@ -260,11 +260,9 @@
     }
     .guess__options { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
     /* Plates follow the project-card surface language: a quiet raised fill
-       and an even radius. The soft bevel started life as the browser's own
-       outset button border showing through once ours was removed — it looked
-       right, so it stays, drawn explicitly (light top edge, hard dark drop)
-       so every engine renders the same plate. border: none keeps the UA
-       default from stacking a second, engine-flavored bevel on top. */
+       and an even radius — the fill alone draws the edge. border: none
+       matters here: these are <button>s, and without it the UA's own outset
+       bevel shows through (it did once, and almost stayed). */
     .guess__option {
       display: flex; align-items: flex-start; gap: 12px;
       width: 100%;
@@ -276,12 +274,8 @@
       background: var(--color-primary-transparent-04);
       border: none;
       border-radius: 16px;
-      box-shadow:
-        inset 0 1px 0 var(--color-primary-transparent-16),
-        inset 1px 0 0 var(--color-primary-transparent-08),
-        0 3px 0 color-mix(in srgb, #000 45%, transparent);
       cursor: pointer;
-      transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+      transition: background 160ms ease, transform 160ms ease;
     }
     /* muted violet hover only while the game is unanswered — once revealed, the
        red / green highlight must stay put even under the cursor */
