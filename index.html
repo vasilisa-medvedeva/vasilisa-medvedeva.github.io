@@ -155,24 +155,20 @@
       color: var(--color-primary-transparent-87);
       max-width: 560px;
     }
-    /* Metric pills on the cards — reuse the Tools chips' hand-drawn wobbly outline */
+    /* Metric pills on the cards — same chips as the Tools section */
     .project-card__pills {
       display: flex; flex-wrap: wrap; gap: 8px;
       margin-top: 14px;
     }
-    /* alternate the corner wobble so neighbouring pills don't read as stamped-identical */
-    .project-card__pills .meta-chip:nth-child(even) {
-      border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
-    }
 
-    /* Tool chips — hand-drawn (crafted) look: black, slightly wobbly borders on
-       white, each corner radius a touch different so they read as sketched */
+    /* Tool chips follow the card surface language: a quiet raised fill,
+       a hairline border and a full-round pill shape */
     .meta-chip {
       display: inline-flex; align-items: center;
-      border: 2px solid var(--color-primary-transparent-87);
-      border-radius: 16px 11px 15px 12px / 12px 15px 11px 16px;
-      background: var(--color-constant-primary);
-      padding: 5px 12px;
+      border: 1px solid var(--color-primary-transparent-08);
+      border-radius: 100px;
+      background: var(--color-primary-transparent-04);
+      padding: 6px 13px;
       font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
       font-weight: var(--text-label-medium-font-weight);
       font-size: var(--text-label-medium-font-size);
@@ -181,8 +177,6 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    .tools-group__chips .meta-chip:nth-child(2n)  { border-radius: 11px 16px 12px 15px / 15px 12px 16px 11px; }
-    .tools-group__chips .meta-chip:nth-child(3n)  { border-radius: 15px 12px 16px 11px / 11px 16px 12px 15px; }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
@@ -267,8 +261,8 @@
       margin-bottom: 16px;
     }
     .guess__options { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
-    /* Hand-drawn plates: black, slightly wobbly (uneven) borders on white — each
-       corner radius differs so they read as sketched, not machine-drawn */
+    /* Plates follow the project-card surface language: a quiet raised fill,
+       a hairline border and an even radius — no hand-drawn wobble here */
     .guess__option {
       display: flex; align-items: flex-start; gap: 12px;
       width: 100%;
@@ -277,14 +271,12 @@
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 26px;
       color: var(--color-primary-transparent-87);
-      background: var(--color-constant-primary);
-      border: 2px solid var(--color-primary-transparent-87);
-      border-radius: 18px 12px 20px 14px / 14px 20px 12px 18px;
+      background: var(--color-primary-transparent-04);
+      border: 1px solid var(--color-primary-transparent-08);
+      border-radius: 16px;
       cursor: pointer;
       transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
     }
-    .guess__option:nth-child(2) { border-radius: 12px 20px 14px 22px / 20px 12px 22px 14px; }
-    .guess__option:nth-child(3) { border-radius: 20px 14px 22px 12px / 12px 22px 14px 20px; }
     /* muted violet hover only while the game is unanswered — once revealed, the
        red / green highlight must stay put even under the cursor */
     .guess:not(.is-done) .guess__option:hover { background: var(--color-accent-orange-transparent-87); }
@@ -297,12 +289,12 @@
     .guess__mark img { display: block; width: 100%; height: 100%; }
     .guess.is-done .guess__option { cursor: default; }
 
-    /* Revealed states — the plate stays white; the border (line) and the icon
-       turn bright green (correct) / red (wrong). Swap --guess-green / --guess-red to retint. */
+    /* Revealed states — the plate keeps its surface; the border turns
+       green (correct) / red (wrong). Swap --guess-green / --guess-red to retint. */
     .guess { --guess-green: #00963A; --guess-red: #F01800; }
-    .guess__option.is-lie    { border-color: var(--guess-green); }
-    .guess__option.is-missed { border-color: var(--guess-red); }
-    .guess__option.is-truth  { opacity: 0.55; border-color: var(--color-primary-transparent-16); }
+    .guess__option.is-lie    { border-color: var(--guess-green); box-shadow: inset 0 0 0 1px var(--guess-green); }
+    .guess__option.is-missed { border-color: var(--guess-red); box-shadow: inset 0 0 0 1px var(--guess-red); }
+    .guess__option.is-truth  { opacity: 0.55; }
     .guess__result {
       margin-top: 14px;
       font-family: var(--font-display, "Archivo", sans-serif);
