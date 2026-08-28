@@ -289,11 +289,19 @@
     .guess__mark img { display: block; width: 100%; height: 100%; }
     .guess.is-done .guess__option { cursor: default; }
 
-    /* Revealed states — the plate keeps its surface; the border turns
-       green (correct) / red (wrong). Swap --guess-green / --guess-red to retint. */
-    .guess { --guess-green: #00963A; --guess-red: #F01800; }
-    .guess__option.is-lie    { border-color: var(--guess-green); box-shadow: inset 0 0 0 1px var(--guess-green); }
-    .guess__option.is-missed { border-color: var(--guess-red); box-shadow: inset 0 0 0 1px var(--guess-red); }
+    /* Revealed states — a quiet verdict for a playful block, the Codecademy
+       way: on a dark surface a soft tinted fill reads calmer than a glowing
+       border, so the plate takes a 14% wash of a muted green / red and the
+       border follows in the same hue. Swap --guess-green / --guess-red to retint. */
+    .guess { --guess-green: #567F60; --guess-red: #A2594F; }
+    .guess__option.is-lie {
+      border-color: var(--guess-green);
+      background: color-mix(in srgb, var(--guess-green) 14%, transparent);
+    }
+    .guess__option.is-missed {
+      border-color: var(--guess-red);
+      background: color-mix(in srgb, var(--guess-red) 14%, transparent);
+    }
     .guess__option.is-truth  { opacity: 0.55; }
     .guess__result {
       margin-top: 14px;
