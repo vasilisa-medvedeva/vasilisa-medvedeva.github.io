@@ -259,18 +259,17 @@
       margin-bottom: 16px;
     }
     .guess__options { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
-    /* Plates follow the project-card surface language: a quiet raised fill,
-       a hairline border and an even radius — no hand-drawn wobble here */
+    /* Plates follow the project-card surface language: a quiet raised fill
+       and an even radius — like the cards, the fill alone draws the edge */
     .guess__option {
       display: flex; align-items: flex-start; gap: 12px;
       width: 100%;
-      padding: 14px 16px;
+      padding: 15px 17px;
       text-align: left;
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 26px;
       color: var(--color-primary-transparent-87);
       background: var(--color-primary-transparent-04);
-      border: 1px solid var(--color-primary-transparent-08);
       border-radius: 16px;
       cursor: pointer;
       transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
@@ -287,19 +286,12 @@
     .guess__mark img { display: block; width: 100%; height: 100%; }
     .guess.is-done .guess__option { cursor: default; }
 
-    /* Revealed states — a quiet verdict for a playful block, the Codecademy
-       way: on a dark surface a soft tinted fill reads calmer than a glowing
-       border, so the plate takes a 14% wash of a muted green / red and the
-       border follows in the same hue. Swap --guess-green / --guess-red to retint. */
+    /* Revealed states — a quiet verdict for a playful block: borderless like
+       the cards, so the wash of a muted green / red is the whole verdict and
+       the icons do the rest. Swap --guess-green / --guess-red to retint. */
     .guess { --guess-green: #567F60; --guess-red: #A2594F; }
-    .guess__option.is-lie {
-      border-color: var(--guess-green);
-      background: color-mix(in srgb, var(--guess-green) 14%, transparent);
-    }
-    .guess__option.is-missed {
-      border-color: var(--guess-red);
-      background: color-mix(in srgb, var(--guess-red) 14%, transparent);
-    }
+    .guess__option.is-lie    { background: color-mix(in srgb, var(--guess-green) 18%, transparent); }
+    .guess__option.is-missed { background: color-mix(in srgb, var(--guess-red) 18%, transparent); }
     .guess__option.is-truth  { opacity: 0.55; }
     .guess__result {
       margin-top: 14px;
