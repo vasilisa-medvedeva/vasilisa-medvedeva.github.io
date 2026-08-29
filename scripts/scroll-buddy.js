@@ -186,17 +186,25 @@
   }
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
-  var lastMd = null, idleTimer = null;
+  var lastMd = null, lastDir = 1, idleTimer = null;
   var gridEntryMd = null, gridExitMd = null;
 
   // place him (and his footsteps) at a path distance — shared by scroll
   // updates and the grid-escape glide
   function placeAt (md) {
+    // which way is he TRAVELLING? scrolling up walks him backwards along the
+    // path, and the facing has to follow that, not the path's own direction —
+    // otherwise he reads as running in reverse. A stop keeps the last facing.
+    if (lastMd !== null && Math.abs(md - lastMd) > 0.5) { lastDir = md > lastMd ? 1 : -1; }
     lastMd = md;
     var pt = motion.getPointAtLength(md);
-    var pA = motion.getPointAtLength(Math.max(0, md - 2));
-    var pB = motion.getPointAtLength(Math.min(pathLen, md + 2));
-    buddy.classList.toggle('gb--left', pB.x - pA.x < -0.5);
+    var pA = motion.getPointAtLength(Math.max(0, md - 6));
+    var pB = motion.getPointAtLength(Math.min(pathLen, md + 6));
+    var tx = (pB.x - pA.x) * lastDir;
+    var ty = (pB.y - pA.y) * lastDir;
+    // on the near-vertical margin stretch there is no sideways component to
+    // read, so the climb decides instead: going up faces left, down faces right
+    buddy.classList.toggle('gb--left', Math.abs(tx) > 0.6 ? tx < 0 : ty < 0);
     // feet on the path: sprite is 72×82, feet ≈ (36, 78) in its own box
     buddy.style.transform = 'translate(' + (pt.x - 36).toFixed(1) + 'px,' + (pt.y - 78).toFixed(1) + 'px)';
     // footprints — stepped, so a fast scroll seeds the span it jumped over

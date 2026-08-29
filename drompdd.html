@@ -38,7 +38,7 @@
   <meta name="twitter:title" content="Drom PDD — Vasilisa Medvedeva" />
   <meta name="twitter:description" content="Driving-theory exam prep with 10M+ downloads. Home-screen redesign into a scalable layout, plus dark mode in the design system." />
   <meta name="twitter:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
@@ -46,7 +46,7 @@
   <link rel="stylesheet" href="styles/lang-switch.css?v=2" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
-  <link rel="stylesheet" href="styles/theme-dark.css" />
+  <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
@@ -166,7 +166,7 @@
       line-height: var(--text-label-large-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
+      color: var(--color-primary-transparent-60);
     }
     .case__title {
       font-family: var(--font-display, "Archivo", sans-serif);
@@ -212,7 +212,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: var(--color-primary-transparent-04);
+      background: linear-gradient(180deg, #2F2941 0%, #232029 100%);
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
@@ -225,7 +225,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 40px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: var(--color-primary-transparent-04); border-radius: 20px;
+      background: linear-gradient(180deg, #2F2941 0%, #232029 100%); border-radius: 20px;
     }
     .pdd-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .pdd-demo .video-timeline { max-width: 262px; }   /* match the phone width */
@@ -1114,7 +1114,7 @@
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
-  <script src="scripts/analytics.js"></script>
+  <script src="scripts/analytics.js?v=2"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>
