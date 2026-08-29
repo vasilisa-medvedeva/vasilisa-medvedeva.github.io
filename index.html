@@ -555,6 +555,10 @@
       font-weight: 500; font-size: 14px; line-height: 20px;
       letter-spacing: 0.02em;
       color: var(--color-primary-transparent-48);
+      /* sink it a step below the CTA's baseline, into the bottom padding —
+         a quiet signature line, not a peer of "Let's talk" (transform, so
+         the flex row's wrap behaviour on narrow screens is untouched) */
+      transform: translateY(26px);
     }
   </style>
 </head>
