@@ -48,10 +48,11 @@
   animation: aurora-drift-b 27s ease-in-out infinite alternate;
 }
 
-/* Cool blue counterweight — faint, keeps the mix from going flat purple */
+/* Cool blue counterweight — faint, sits behind the headline so the glow
+   lights the statement rather than the empty middle of the hero */
 .bg-aurora i:nth-child(3) {
   width: 40vw; height: 40vw;
-  top: 30vh; left: 34vw;
+  top: 2vh; left: 18vw;
   background: radial-gradient(closest-side, var(--color-info-primary), transparent 70%);
   opacity: 0.12;
   animation: aurora-drift-c 33s ease-in-out infinite alternate;

@@ -178,9 +178,11 @@
 .site-header__link {
   font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
-  font-size: 15px;
+  /* contacts are utilities, not navigation — a step smaller and dimmer so
+     About me / My projects read as the page's only nav */
+  font-size: 14px;
   line-height: 20px;
-  color: var(--color-primary-transparent-87);
+  color: var(--color-primary-transparent-60);
   text-decoration: none;
   text-underline-offset: 3px;
   padding: 8px 10px;

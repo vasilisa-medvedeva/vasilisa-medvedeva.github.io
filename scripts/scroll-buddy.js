@@ -107,10 +107,13 @@
     var pts = [];
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
+    var stats = document.querySelector('.hero__stats');
     var titleEl = document.querySelector('.hero__title');
-    if (titleEl) {
-      // start ON the layout grid's left line, just under the headline
-      // (+28 centres his feet so the body's left edge sits flush with the text)
+    if (stats) {
+      // he stands beside his own numbers, their compere
+      var sr = stats.getBoundingClientRect();
+      pts.push([sr.right + window.scrollX + 62, sr.bottom + window.scrollY - 4]);
+    } else if (titleEl) {
       var tr = titleEl.getBoundingClientRect();
       pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
     }
