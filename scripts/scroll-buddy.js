@@ -119,9 +119,16 @@
       // …then he descends along the right side to the hero's foot before the
       // slalom starts — no long leftward drift across the hero
       var hero = document.querySelector('.hero');
+      var gridEl = document.querySelector('.projects-grid');
       if (hero) {
         var hr = hero.getBoundingClientRect();
         pts.push([lr.right + window.scrollX + 20, hr.bottom + window.scrollY - 12]);
+      }
+      if (gridEl) {
+        // one more near-vertical step at the grid's brim — it soaks up the
+        // Catmull overshoot so the left turn never kicks him backwards
+        var gb = gridEl.getBoundingClientRect();
+        pts.push([lr.right + window.scrollX - 30, gb.top + window.scrollY + 40]);
       }
     }
     if (grid) {

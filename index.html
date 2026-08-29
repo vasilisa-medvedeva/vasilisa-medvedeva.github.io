@@ -525,12 +525,11 @@
 
     @media (max-width: 900px) {
       .info-section { grid-template-columns: 1fr; }
-      /* Hero aside drops below the title at full width instead of a narrow side column */
-      .hero__aside {
-        width: 100%; align-self: stretch; margin-top: 4px;
-      }
-      /* Projects stack; drop the staggered offset on the even cards */
+      /* the right-column alignment folds away — subhead and stats go full width */
+      .hero__sub, .hero__stats { margin-left: 0; }
+      /* Projects stack; both staggered offsets drop */
       .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid > .project-card:nth-child(odd),
       .projects-grid > .project-card:nth-child(even) { top: 0; }
     }
 
@@ -630,7 +629,7 @@
     <section class="hero">
       <p class="hero__meta" data-ru="Лимассол, Кипр&nbsp;· открыта к&nbsp;удалённой, гибридной и&nbsp;офисной работе">Limassol, Cyprus&nbsp;&middot; open to&nbsp;remote, hybrid or&nbsp;on-site work</p>
       <h1 class="hero__title" data-ru="Привет! Я&nbsp;проектирую мобильные продукты&lt;br /&gt;для миллионов водителей">Hi! I&nbsp;design mobile products<br />used by&nbsp;millions of&nbsp;drivers</h1>
-      <p class="hero__sub" data-ru="Быстро проверяю гипотезы и&nbsp;говорю с&nbsp;пользователями, чтобы найти настоящие причины поведения, — а&nbsp;потом довожу решение до&nbsp;релиза.">Fast hypothesis tests and&nbsp;user interviews to&nbsp;uncover the&nbsp;real causes of&nbsp;behavior &mdash; then I&nbsp;ship the&nbsp;fix.</p>
+      <p class="hero__sub" data-ru="Быстро проверяю гипотезы и&nbsp;говорю с&nbsp;пользователями, чтобы найти настоящие причины поведения, а&nbsp;потом довожу решение до&nbsp;релиза.">Fast hypothesis tests and&nbsp;user interviews to&nbsp;uncover the&nbsp;real causes of&nbsp;behavior &mdash; then I&nbsp;ship the&nbsp;fix.</p>
       <div class="hero__stats">
         <div class="hero__stat"><span class="hero__stat-num">10M+</span><span class="hero__stat-label" data-ru="загрузок приложения">app downloads</span><span class="hero__stat-ctx" data-ru="Дром ПДД">Drom PDD</span></div>
         <div class="hero__stat"><span class="hero__stat-num">×2</span><span class="hero__stat-label" data-ru="конверсия в&nbsp;оплату">conversion</span><span class="hero__stat-ctx" data-ru="Дром Штрафы">Drom Fines</span></div>
@@ -902,6 +901,9 @@
       window.addEventListener('resize', refit);
       document.addEventListener('langchange', refit);
       if (document.fonts && document.fonts.ready) { document.fonts.ready.then(refit); }
+      // the Cyrillic face (Onest) arrives only when RU is first chosen —
+      // refit whenever any late font finishes loading
+      if (document.fonts && document.fonts.addEventListener) { document.fonts.addEventListener('loadingdone', refit); }
       fit();
     })();
 
