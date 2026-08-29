@@ -111,10 +111,10 @@
     var stats = document.querySelector('.hero__stats');
     var titleEl = document.querySelector('.hero__title');
     if (aside && stats) {
-      // he closes the stat band on its right, paired with the arrow
+      // he closes the stat band on its right, paired with the arrow —
+      // his feet share the arrow's own bottom line
       var ar = aside.getBoundingClientRect();
-      var sr = stats.getBoundingClientRect();
-      pts.push([ar.left + window.scrollX - 48, sr.bottom + window.scrollY - 4]);
+      pts.push([ar.left + window.scrollX - 48, ar.bottom + window.scrollY - 2]);
     } else if (titleEl) {
       var tr = titleEl.getBoundingClientRect();
       pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
