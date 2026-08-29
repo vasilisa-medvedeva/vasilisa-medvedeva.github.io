@@ -100,8 +100,16 @@
       display: flex; justify-content: space-between; align-items: flex-end;
       gap: 24px 32px; flex-wrap: wrap;
     }
-    .hero__stats { display: flex; flex-direction: column; gap: 16px; }
-    .hero__stat { display: flex; align-items: baseline; gap: 14px; }
+    /* the stat band: three equal columns across the hero's full width,
+       number over label — one line that ties the bottom together and lands
+       on the peeking cards it announces. The big 10M+ leads. */
+    .hero__stats {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 24px;
+    }
+    .hero__stat { display: flex; flex-direction: column; gap: 6px; }
     .hero__stat-num {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
@@ -633,9 +641,9 @@
       <p class="hero__sub" data-ru="Быстро проверяю гипотезы и&nbsp;говорю с&nbsp;пользователями, чтобы найти настоящие причины поведения, — а&nbsp;потом довожу решение до&nbsp;релиза.">Fast hypothesis tests and&nbsp;user interviews to&nbsp;uncover the&nbsp;real causes of&nbsp;behavior &mdash; then I&nbsp;ship the&nbsp;fix.</p>
       <div class="hero__row">
         <div class="hero__stats">
+          <div class="hero__stat"><span class="hero__stat-num">10M+</span><span class="hero__stat-label" data-ru="загрузок приложения">app downloads</span></div>
           <div class="hero__stat"><span class="hero__stat-num">×2</span><span class="hero__stat-label" data-ru="конверсия в&nbsp;оплату">payment conversion</span></div>
           <div class="hero__stat"><span class="hero__stat-num">×2</span><span class="hero__stat-label" data-ru="загрузки фото">photo uploads</span></div>
-          <div class="hero__stat"><span class="hero__stat-num">10M+</span><span class="hero__stat-label" data-ru="загрузок приложения">app downloads</span></div>
         </div>
         <div class="hero__aside">
           <a class="hero__arrow-link" href="#projects" aria-label="Scroll to the projects" data-ru-aria="К проектам"><img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" /></a>

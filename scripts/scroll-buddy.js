@@ -107,12 +107,14 @@
     var pts = [];
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
+    var aside = document.querySelector('.hero__aside');
     var stats = document.querySelector('.hero__stats');
     var titleEl = document.querySelector('.hero__title');
-    if (stats) {
-      // he stands beside his own numbers, their compere
+    if (aside && stats) {
+      // he closes the stat band on its right, paired with the arrow
+      var ar = aside.getBoundingClientRect();
       var sr = stats.getBoundingClientRect();
-      pts.push([sr.right + window.scrollX + 62, sr.bottom + window.scrollY - 4]);
+      pts.push([ar.left + window.scrollX - 48, sr.bottom + window.scrollY - 4]);
     } else if (titleEl) {
       var tr = titleEl.getBoundingClientRect();
       pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
