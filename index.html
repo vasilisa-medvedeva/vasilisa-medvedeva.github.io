@@ -175,6 +175,19 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
+    /* Metric chips on the project cards wear the site violet — the 87% accent
+       for the first number (the token color-tokens.css documents for exactly
+       this: white text on it clears AA at 5.1:1 over the dark page, where the
+       solid accent only manages 4.2), a quiet violet wash for the second, so
+       the pair reads ranked rather than striped. Kept off the tool chips:
+       those are an inventory, these are the sell. */
+    .project-card__pills .meta-chip:nth-child(1) {
+      background: var(--color-accent-orange-transparent-87);
+      color: var(--color-constant-transparent-87);
+    }
+    .project-card__pills .meta-chip:nth-child(2) {
+      background: color-mix(in srgb, var(--color-accent-orange) 22%, transparent);
+    }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
