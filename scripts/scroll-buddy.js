@@ -116,6 +116,13 @@
       range.selectNodeContents(lastText);
       var lr = range.getBoundingClientRect();
       pts.push([lr.right + window.scrollX + 52, lr.bottom + window.scrollY - 8]);
+      // …then he descends along the right side to the hero's foot before the
+      // slalom starts — no long leftward drift across the hero
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        var hr = hero.getBoundingClientRect();
+        pts.push([lr.right + window.scrollX + 20, hr.bottom + window.scrollY - 12]);
+      }
     }
     if (grid) {
       // slalom across the grid's centre gutter — the cards are its slopes
@@ -123,7 +130,7 @@
       var gx = g.left + window.scrollX, gy = g.top + window.scrollY;
       // the exit point sits left of centre so he emerges from under the
       // cards on the title-column side — clear of the sections' body text
-      [[0.66, 0.08], [0.42, 0.30], [0.68, 0.52], [0.40, 0.72], [0.38, 0.92]]
+      [[0.62, 0.10], [0.44, 0.34], [0.62, 0.56], [0.42, 0.78], [0.38, 0.92]]
         .forEach(function (s) { pts.push([gx + g.width * s[0], gy + g.height * s[1]]); });
     }
     // down the quiet column under each section title — except the About
