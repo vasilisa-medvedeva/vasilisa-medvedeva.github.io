@@ -122,9 +122,12 @@
       font-weight: 300; font-size: 16px;
       color: var(--color-primary-transparent-60);
     }
+    /* just the arrow now — it shrinks to content and closes the stat band's
+       right end, where the buddy stands beside it: one paired gesture of
+       "now go see the work" */
     .hero__aside {
-      width: calc((100% - 10px) / 2.4);
-      display: flex; flex-direction: column; gap: 14px;
+      width: auto;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
     }
     .hero__aside p {
       font-family: var(--font-display, "Archivo", sans-serif);
