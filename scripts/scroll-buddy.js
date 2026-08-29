@@ -107,12 +107,12 @@
     var pts = [];
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
-    var stats = document.querySelector('.hero__stats');
+    var aside = document.querySelector('.hero__aside');
     var titleEl = document.querySelector('.hero__title');
-    if (stats) {
-      // he stands beside his own numbers, their compere
-      var sr = stats.getBoundingClientRect();
-      pts.push([sr.right + window.scrollX + 62, sr.bottom + window.scrollY - 4]);
+    if (aside) {
+      // he stands on top of the method column, greeting from its roof
+      var ar = aside.getBoundingClientRect();
+      pts.push([ar.left + window.scrollX + 42, ar.top + window.scrollY - 12]);
     } else if (titleEl) {
       var tr = titleEl.getBoundingClientRect();
       pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
