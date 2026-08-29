@@ -105,7 +105,19 @@
     var circle = document.querySelector('.hero__circle');
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
-    if (circle) { pts.push(at(circle, 0.5, 1, 44, 30)); }   // at the 5+'s feet
+    if (circle) {
+      // start right under the word before the 5+ ("for" / «уже») — measured
+      // as a text range so his head tucks just beneath the headline's line
+      var start = null;
+      var wrap = circle.parentElement;
+      if (wrap && wrap.firstChild && wrap.firstChild.nodeType === 3) {
+        var range = document.createRange();
+        range.selectNodeContents(wrap.firstChild);
+        var r = range.getBoundingClientRect();
+        start = [r.left + r.width / 2 + window.scrollX, r.bottom + window.scrollY + 84];
+      }
+      pts.push(start || at(circle, 0.5, 1, 44, 30));
+    }
     if (grid) {
       // slalom across the grid's centre gutter — the cards are its slopes
       var g = grid.getBoundingClientRect();
@@ -180,7 +192,10 @@
     motion.setAttribute('d', smoothPath(pts));
     pathLen = motion.getTotalLength();
     clearDots();   // geometry moved — old footprints point at nothing
-    pathTopY = pts[0][1];
+    // p must start AT 0: at scrollY 0 the read-line already sits at 0.55·vh,
+    // which can be below the start anchor — clamp so he holds the start
+    // point (under "for") until the visitor actually scrolls
+    pathTopY = Math.max(pts[0][1], window.innerHeight * 0.55 + 2);
     // p must be able to reach 1: the read-line maxes out at
     // docHeight − 0.45·vh, and the footer anchor can sit below that
     pathBotY = Math.min(pts[pts.length - 1][1],
