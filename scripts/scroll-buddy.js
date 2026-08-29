@@ -47,11 +47,11 @@
   /* Footprints: he leaves at most MAX_STEPS behind him, one every
      STEP_EVERY px of path; each is a real element masked with a shoe print
      (assets/footstep.svg), mirrored into the opposite foot every other
-     step, aimed along his heading and set a touch off the centre line so
-     the tail reads as a walk rather than a dotted line. They are graded
+     step, aimed along his heading and set well off the centre line so the
+     tail reads as a wide, splayed walk rather than a dotted line. They are graded
      from faint (old) to solid (fresh), and the oldest fades out and leaves
      as new ones land — a dissolving tail instead of a drawn route. */
-  var MAX_STEPS = 6, STEP_EVERY = 30;
+  var MAX_STEPS = 6, STEP_EVERY = 18;
   var stepQueue = [], lastStepMd = null, footSide = 1;
   /* deg aims a print whose toes point up (−Y) at 0°; side ±1 is the foot */
   function dropStep (pt, deg) {
@@ -60,8 +60,8 @@
     step.className = 'buddy-step';
     step.style.transform =
       'translate(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px)' +
-      ' rotate(' + (deg + side * 7).toFixed(1) + 'deg)' +   // a little toe-out
-      ' translate(' + (side * 3.2).toFixed(1) + 'px,0)' +   // off the centre line
+      ' rotate(' + (deg + side * 16).toFixed(1) + 'deg)' +  // toe-out
+      ' translate(' + (side * 6.3).toFixed(1) + 'px,0)' +   // off the centre line
       ' scaleX(' + side + ') translate(-50%,-50%)';
     route.appendChild(step);
     stepQueue.push(step);
@@ -133,19 +133,27 @@
       range.selectNodeContents(lastText);
       var lr = range.getBoundingClientRect();
       pts.push([lr.right + window.scrollX + 52, lr.bottom + window.scrollY - 8]);
-      // …then he descends along the right side to the hero's foot before the
-      // slalom starts — no long leftward drift across the hero
+      // …then a wide right-hand loop: he swings out to the right margin,
+      // walks straight down it past the hero, and only curves back inwards
+      // over the grid's brim — no leftward drift across the hero copy
       var hero = document.querySelector('.hero');
       var gridEl = document.querySelector('.projects-grid');
+      // …but never so far out that the loop would fold inwards on a narrow
+      // window, and never past the edge
+      var cw = document.documentElement.clientWidth;
+      var lane = Math.min(Math.max(cw - 46, lr.right + 70), cw - 20) + window.scrollX;
       if (hero) {
         var hr = hero.getBoundingClientRect();
-        pts.push([lr.right + window.scrollX + 20, hr.bottom + window.scrollY - 12]);
+        var heroBot = hr.bottom + window.scrollY;
+        var markY = lr.bottom + window.scrollY - 8;
+        pts.push([lane, markY + (heroBot - markY) * 0.45]);   // out to the margin
+        pts.push([lane, heroBot + 8]);                        // down the margin
       }
       if (gridEl) {
-        // one more near-vertical step at the grid's brim — it soaks up the
-        // Catmull overshoot so the left turn never kicks him backwards
+        // the turn inwards, already heading left — it also soaks up the
+        // Catmull overshoot so the corner never kicks him backwards
         var gb = gridEl.getBoundingClientRect();
-        pts.push([lr.right + window.scrollX - 30, gb.top + window.scrollY + 40]);
+        pts.push([lane - 90, gb.top + window.scrollY + 55]);
       }
     }
     if (grid) {
@@ -236,9 +244,12 @@
     })();
   }
 
-  /* Entrance: on the first load he RUNS IN from beyond the left edge to his
-     mark beside the numbers, dropping footsteps, then stands and waves.
-     Timer-stepped; any real scroll cancels it and hands over to the route. */
+  /* Entrance: on the first load he RUNS IN from off the right edge — and
+     from ENTRY_RISE px higher up, so the run comes down on a slight diagonal
+     instead of sliding in flat — to his mark beside the headline, dropping
+     footprints, then stands and waves. Timer-stepped; any real scroll
+     cancels it and hands over to the route. */
+  var ENTRY_RISE = 90;
   var entranceDone = false, entering = false, entranceTimer = null;
   function cancelEntrance () {
     if (!entering) { return; }
@@ -250,7 +261,8 @@
     entranceDone = true;
     if (window.scrollY > 60) { update(true); return; }
     entering = true;
-    var x = document.documentElement.clientWidth + 90, lastStepX = x;
+    var startX = document.documentElement.clientWidth + 90;
+    var x = startX, y = null, lastStepX = x;
     buddy.classList.add('gb--left');   // he enters from the right, facing left
     buddy.classList.add('gb--running');
     (function step () {
@@ -262,10 +274,17 @@
       var dxT = target.x - x;
       buddy.classList.toggle('gb--left', dxT < 0);
       x += (dxT > 0 ? 4.5 : -4.5);   // an unhurried entrance
-      buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (target.y - 78).toFixed(1) + 'px)';
+      // the rise is spent over the run, so he lands exactly on the mark
+      var run = Math.abs(startX - target.x) || 1;
+      var left = Math.min(1, Math.abs(x - target.x) / run);
+      var prevY = y;
+      y = target.y - ENTRY_RISE * left;
+      buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (y - 78).toFixed(1) + 'px)';
       if (Math.abs(lastStepX - x) >= STEP_EVERY) {
         lastStepX = x;
-        dropStep({ x: x, y: target.y }, dxT > 0 ? 90 : -90);   // he runs flat
+        var dy = prevY === null ? 0 : y - prevY;
+        dropStep({ x: x, y: y },
+                 Math.atan2(dy, dxT > 0 ? 4.5 : -4.5) * 180 / Math.PI + 90);
       }
       if (Math.abs(dxT) <= 5) {
         entering = false;
