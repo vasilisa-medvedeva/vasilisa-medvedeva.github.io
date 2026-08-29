@@ -107,17 +107,15 @@
     var pts = [];
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
-    var aside = document.querySelector('.hero__aside');
-    var stats = document.querySelector('.hero__stats');
     var titleEl = document.querySelector('.hero__title');
-    if (aside && stats) {
-      // he closes the stat band on its right, paired with the arrow —
-      // his feet share the arrow's own bottom line
-      var ar = aside.getBoundingClientRect();
-      pts.push([ar.left + window.scrollX - 48, ar.bottom + window.scrollY - 2]);
-    } else if (titleEl) {
-      var tr = titleEl.getBoundingClientRect();
-      pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
+    if (titleEl) {
+      // his mark: right after the headline's last words — measured as a
+      // text range so he stands beside "drivers", feet on its baseline
+      var lastText = titleEl.childNodes[titleEl.childNodes.length - 1];
+      var range = document.createRange();
+      range.selectNodeContents(lastText);
+      var lr = range.getBoundingClientRect();
+      pts.push([lr.right + window.scrollX + 52, lr.bottom + window.scrollY - 8]);
     }
     if (grid) {
       // slalom across the grid's centre gutter — the cards are its slopes
