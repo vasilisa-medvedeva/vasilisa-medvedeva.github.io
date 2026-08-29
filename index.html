@@ -105,9 +105,8 @@
        on the peeking cards it announces. The big 10M+ leads. */
     .hero__stats {
       flex: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 24px;
+      display: flex; flex-wrap: wrap;
+      gap: 24px clamp(40px, 6vw, 88px);   /* the numbers stay in conversation, not scattered */
     }
     .hero__stat { display: flex; flex-direction: column; gap: 6px; }
     .hero__stat-num {
