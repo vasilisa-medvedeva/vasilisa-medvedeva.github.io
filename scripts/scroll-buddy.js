@@ -66,6 +66,20 @@
     dotQueue = [];
     lastDotMd = null;
   }
+  /* When he stops, the whole tail melts — oldest dot first, one beat apart.
+     A resumed run isn't interrupted by this: the melting dots are already
+     out of the queue, and fresh footsteps start a new tail behind him. */
+  function dissolveDots () {
+    var fading = dotQueue;
+    dotQueue = [];
+    lastDotMd = null;
+    fading.forEach(function (d, i) {
+      setTimeout(function () {
+        d.style.opacity = '0';
+        setTimeout(function () { d.remove(); }, 400);
+      }, i * 110);
+    });
+  }
 
   /* Catmull-Rom through the anchor points → one smooth bezier chain */
   function smoothPath (pts) {
@@ -146,6 +160,7 @@
       idleTimer = setTimeout(function () {
         buddy.classList.remove('gb--running');
         buddy.classList.toggle('gb--waving', atEdge(lastMd / pathLen));
+        dissolveDots();   // he stopped — the tail melts away behind him
       }, 170);
     } else if (!buddy.classList.contains('gb--running')) {
       buddy.classList.toggle('gb--waving', atEdge(p));
