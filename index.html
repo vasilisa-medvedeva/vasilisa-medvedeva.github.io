@@ -260,8 +260,10 @@
       background: var(--color-accent-orange);
       animation: splash-dot 1.2s ease-in-out infinite;
     }
-    .page-splash__dots i:nth-child(2) { background: var(--color-brand-yellow-primary); animation-delay: 0.15s; }
-    .page-splash__dots i:nth-child(3) { background: var(--color-brand-red-primary); animation-delay: 0.3s; }
+    /* three steps of the site violet — solid accent, its pressed depth, and
+       the 87% wash — so the trio reads as one hue breathing, not a traffic light */
+    .page-splash__dots i:nth-child(2) { background: var(--color-accent-orange-pressed); animation-delay: 0.15s; }
+    .page-splash__dots i:nth-child(3) { background: var(--color-accent-orange-transparent-87); animation-delay: 0.3s; }
     @keyframes splash-dot {
       0%, 100% { transform: translateY(0); opacity: 0.5; }
       50%      { transform: translateY(-4px); opacity: 1; }
