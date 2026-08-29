@@ -75,19 +75,21 @@
     .hero__eyebrow {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
-      font-size: var(--text-label-large-font-size);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: 0.14em;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-primary-transparent-60);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
     }
     .hero__title {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -140,7 +142,7 @@
        chrome. The flow page scales its own stage to fit the frame. */
     .case-demo {
       margin: 0;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%); border-radius: 20px;
+      background: #211E2A; border-radius: 20px;
       overflow: hidden;
     }
     .case-demo iframe {
@@ -369,7 +371,7 @@
   <main class="main">
     <section class="hero">
       <span class="hero__eyebrow" data-ru="Pyroblast · iOS / Android / Десктоп">Pyroblast · iOS / Android / Desktop</span>
-      <h1 class="hero__title" data-ru="Pyroblast: чаты, каналы и&amp;nbsp;стримы для&amp;nbsp;геймеров.">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
+      <h1 class="hero__title" data-ru="Pyroblast: чаты, каналы<br />и&amp;nbsp;стримы для&amp;nbsp;геймеров">Pyroblast: chats, channels<br />and&nbsp;streams for&nbsp;gamers</h1>
       <div class="hero__aside">
         <p data-ru="Не&amp;nbsp;нужно поднимать сервер и&amp;nbsp;продираться через&amp;nbsp;шум. Я спроектировала всё целиком, &lt;span class=&quot;hero__circled&quot;&gt;одна&lt;svg viewBox=&quot;0 0 104 52&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4&quot; stroke=&quot;black&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;: дизайн-систему, ядро переписки и&amp;nbsp;каждый сценарий ниже. Все они — живые прототипы. Потыкайте.">No servers to&nbsp;set up, no&nbsp;noise to&nbsp;fight through. I designed it&nbsp;end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the&nbsp;design system, the&nbsp;core messaging experience, and&nbsp;every flow below. Each one is&nbsp;a&nbsp;live prototype. Tap through.</p>
         <p data-ru="Проектировала для&amp;nbsp;десктопа, iOS и&amp;nbsp;Android; прототипы ниже — мобильные сценарии. Делала в&amp;nbsp;раннем стартапе, у&amp;nbsp;которого закончились деньги до&amp;nbsp;запуска. Продукт не&amp;nbsp;вышел, а&amp;nbsp;мышление за&amp;nbsp;ним — вот оно.">Designed for&nbsp;desktop, iOS and&nbsp;Android; the&nbsp;prototypes below are the&nbsp;mobile flows. Built at&nbsp;an&nbsp;early-stage startup that ran out of&nbsp;funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
@@ -609,6 +611,7 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

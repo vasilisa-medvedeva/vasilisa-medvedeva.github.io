@@ -75,19 +75,21 @@
     .hero__eyebrow {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
-      font-size: var(--text-label-large-font-size);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: 0.14em;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-primary-transparent-60);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
     }
     .hero__title {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -120,7 +122,9 @@
 
     /* ── Role section ── */
     .role {
-      margin-top: 96px;
+      /* the widest gap on the page: it separates the title zone from the body,
+         so it sits above the 120px the sections keep between themselves */
+      margin-top: 160px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
       gap: 10px;
@@ -212,7 +216,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%);
+      background: #211E2A;
     }
     .case__figure img { display: block; width: 100%; height: auto; }
 
@@ -224,7 +228,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 32px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%); border-radius: 20px;
+      background: #211E2A; border-radius: 20px;
     }
     .scan-phone {
       width: 262px; padding: 7px; flex-shrink: 0;
@@ -524,7 +528,7 @@
     @media (max-width: 900px) {
       .hero__aside { width: 100%; align-self: stretch; }
       .role, .case__grid { grid-template-columns: 1fr; }
-      .role { margin-top: 56px; }
+      .role { margin-top: 96px; }
       .case { margin-top: 72px; }
     }
 
@@ -532,7 +536,7 @@
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
-      .role { margin-top: 44px; }
+      .role { margin-top: 72px; }
       .role__team { margin-top: 12px; }
       .case { margin-top: 56px; gap: 24px; }
       .case__grid { gap: 20px; }
@@ -584,7 +588,7 @@
   <main class="main">
     <section class="hero">
       <span class="hero__eyebrow" data-ru="Номерограм · iOS / Android">Nomerogram · iOS / Android</span>
-      <h1 class="hero__title" data-ru="Номерограм показывает историю продаж и&amp;nbsp;фотографии автомобиля по&amp;nbsp;госномеру.">Nomerogram shows a&nbsp;car&#8217;s sale history and&nbsp;photos by&nbsp;its license plate.</h1>
+      <h1 class="hero__title" data-ru="Номерограм показывает историю продаж<br />и&amp;nbsp;фотографии автомобиля по&amp;nbsp;госномеру">Nomerogram shows a&nbsp;car&#8217;s sale history<br />and&nbsp;photos by&nbsp;its license plate</h1>
       <div class="hero__aside">
         <p data-ru="История собирается из&amp;nbsp;старых объявлений о&amp;nbsp;продаже, соцсетей и&amp;nbsp;открытых баз — и&amp;nbsp;от&amp;nbsp;самих водителей: сфотографируй машину, которая ведёт себя на&amp;nbsp;дороге плохо, и&amp;nbsp;снимок попадёт в&amp;nbsp;общедоступную карточку этого номера.">The history comes from&nbsp;old sale ads, social networks and&nbsp;open databases, and&nbsp;from&nbsp;drivers themselves: photograph a&nbsp;car behaving badly on&nbsp;the&nbsp;road, and&nbsp;the&nbsp;shot joins that plate&#8217;s public record.</p>
         <span class="hero__stores">
@@ -960,6 +964,7 @@
     })();
   </script>
   <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

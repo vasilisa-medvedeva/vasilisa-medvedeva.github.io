@@ -25,10 +25,10 @@
       matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
   var spriteSrc = document.getElementById('gb-sprite-src');
   if (!spriteSrc) { return; }
-  // the master copy sits in a hidden (display:none) holder, and a gradient
-  // there is not a usable paint server in Chrome — url(#…) would resolve to
-  // it and paint nothing. The live clone gets its own gradient id.
-  var spriteHTML = spriteSrc.innerHTML.split('gb-blob-grad').join('gb-blob-grad-live');
+  // The sprite is flat-filled, so the clone needs no id rewriting: the old
+  // copy carried a gradient, and a gradient inside a display:none holder is
+  // not a usable paint server in Chrome — url(#…) painted nothing.
+  var spriteHTML = spriteSrc.innerHTML;
 
   var route = document.createElement('div');
   route.className = 'buddy-route';

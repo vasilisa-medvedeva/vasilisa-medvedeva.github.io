@@ -75,19 +75,21 @@
     .hero__eyebrow {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
-      font-size: var(--text-label-large-font-size);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: 0.14em;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-primary-transparent-60);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
     }
     .hero__title {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -120,7 +122,9 @@
 
     /* ── Role section ── */
     .role {
-      margin-top: 96px;
+      /* the widest gap on the page: it separates the title zone from the body,
+         so it sits above the 120px the sections keep between themselves */
+      margin-top: 160px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
       gap: 10px;
@@ -212,7 +216,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%);
+      background: #211E2A;
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
@@ -240,7 +244,7 @@
       margin-top: 32px;
       display: flex; justify-content: center; align-items: flex-start;
       gap: 56px; flex-wrap: wrap;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%);
+      background: #211E2A;
       border-radius: 20px; padding: 56px 20px 40px;   /* extra top room for the floating timeline */
     }
     .pay-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
@@ -740,7 +744,7 @@
     @media (max-width: 900px) {
       .hero__aside { width: 100%; align-self: stretch; }
       .role, .case__grid { grid-template-columns: 1fr; }
-      .role { margin-top: 56px; }
+      .role { margin-top: 96px; }
       .case { margin-top: 72px; }
     }
 
@@ -748,7 +752,7 @@
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
-      .role { margin-top: 44px; }
+      .role { margin-top: 72px; }
       .role__team { margin-top: 12px; }
       .case { margin-top: 56px; gap: 24px; }
       .case__grid { gap: 20px; }
@@ -807,7 +811,7 @@
   <main class="main">
     <section class="hero">
       <span class="hero__eyebrow" data-ru="Дром Штрафы · iOS / Android">Drom Fines · iOS / Android</span>
-      <h1 class="hero__title" data-ru="Дром Штрафы позволяет водителям проверять и&amp;nbsp;оплачивать штрафы ГИБДД&amp;nbsp;онлайн.">Drom Fines lets drivers check and&nbsp;pay traffic fines&nbsp;online.</h1>
+      <h1 class="hero__title" data-ru="Дром Штрафы позволяет водителям проверять<br />и&amp;nbsp;оплачивать штрафы ГИБДД&amp;nbsp;онлайн">Drom Fines lets drivers check<br />and&nbsp;pay traffic fines&nbsp;online</h1>
       <div class="hero__aside">
         <p data-ru="Данные о&amp;nbsp;штрафах приходят напрямую из&amp;nbsp;официальной государственной базы (ГИС&amp;nbsp;ГМП). Оплата в&amp;nbsp;приложении даёт юридически значимое подтверждение и&amp;nbsp;помогает не&amp;nbsp;уйти в&amp;nbsp;просрочку.">Fine data comes straight from&nbsp;the&nbsp;official government database (GIS&nbsp;GMP). Paying in&nbsp;the&nbsp;app gives drivers legally valid confirmation and&nbsp;helps them avoid late fees.</p>
         <span class="hero__stores">
@@ -1238,6 +1242,7 @@
     })();
   </script>
   <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

@@ -84,10 +84,10 @@
    While html carries .lang-swapping the page content softens out — a short
    fade with a whisper of blur — the words change under it, and it breathes
    back in. The switch stays crisp so the reader keeps their anchor. */
-body > *:not(.lang-switch):not(.site-header):not(.bg-aurora) {
+body > *:not(.lang-switch):not(.site-header):not(.bg-grain) {
   transition: opacity .24s ease, filter .24s ease;
 }
-html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-aurora) {
+html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-grain) {
   opacity: 0;
   filter: blur(6px);
   transition-duration: .18s;

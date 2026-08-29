@@ -1,0 +1,25 @@
+/* ── Film grain — tooth on the flat dark ──────────────────────────────────
+   What's left of the aurora layer after the light went away. The noise was
+   originally there to break up banding in the gradient; over a flat fill
+   there is no banding to break, so its job now is the other half of what
+   grain does — it gives a large dead area a surface, so #1A1A1A reads as
+   a material rather than as an unlit screen.
+
+   One fixed layer, static, no animation: it is texture, not motion. Sits at
+   z-index -1 — above the body's background, below every piece of content.
+
+   The tile is desaturated fractalNoise, 160px, repeated. It is mid-grey, so
+   it does not only add tooth, it LIFTS the page's black point a little.
+   That lift is the reason opacity stays this low: at .03 the floor moves by
+   about three 8-bit levels, which is enough to feel and not enough to grey
+   out the dark. */
+
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'><filter%20id='n'><feTurbulence%20type='fractalNoise'%20baseFrequency='0.75'%20numOctaves='2'%20stitchTiles='stitch'/><feColorMatrix%20type='saturate'%20values='0'/></filter><rect%20width='160'%20height='160'%20filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+  opacity: 0.03;
+}

@@ -75,19 +75,21 @@
     .hero__eyebrow {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
-      font-size: var(--text-label-large-font-size);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: 0.14em;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-primary-transparent-60);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
     }
     .hero__title {
       font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -120,7 +122,9 @@
 
     /* ── Role section ── */
     .role {
-      margin-top: 96px;
+      /* the widest gap on the page: it separates the title zone from the body,
+         so it sits above the 120px the sections keep between themselves */
+      margin-top: 160px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
       gap: 10px;
@@ -212,7 +216,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%);
+      background: #211E2A;
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
@@ -225,7 +229,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 40px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: linear-gradient(180deg, #2F2941 0%, #232029 100%); border-radius: 20px;
+      background: #211E2A; border-radius: 20px;
     }
     .pdd-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .pdd-demo .video-timeline { max-width: 262px; }   /* match the phone width */
@@ -649,7 +653,7 @@
     @media (max-width: 900px) {
       .hero__aside { width: 100%; align-self: stretch; }
       .role, .case__grid { grid-template-columns: 1fr; }
-      .role { margin-top: 56px; }
+      .role { margin-top: 96px; }
       .case { margin-top: 72px; }
     }
 
@@ -657,7 +661,7 @@
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
-      .role { margin-top: 44px; }
+      .role { margin-top: 72px; }
       .role__team { margin-top: 12px; }
       .pdd-demo { gap: 32px; padding: 24px 12px; }
       .pdd-demo__arrow { align-self: center; margin: 16px 0; transform: rotate(90deg); }
@@ -707,7 +711,7 @@
   <main class="main">
     <section class="hero">
       <span class="hero__eyebrow" data-ru="Дром ПДД · iOS / Android / Веб">Drom PDD · iOS / Android / Web</span>
-      <h1 class="hero__title" data-ru="Дром ПДД помогает выучить правила и&amp;nbsp;сдать&amp;nbsp;теорию&amp;nbsp;в&amp;nbsp;ГИБДД.">Drom PDD helps drivers learn traffic rules and&nbsp;pass the&nbsp;theory&nbsp;exam.</h1>
+      <h1 class="hero__title" data-ru="Дром ПДД помогает выучить правила<br />и&amp;nbsp;сдать&amp;nbsp;теорию&amp;nbsp;в&amp;nbsp;ГИБДД">Drom PDD helps drivers learn traffic rules<br />and&nbsp;pass the&nbsp;theory&nbsp;exam</h1>
       <div class="hero__aside">
         <p data-ru="Теорию сдаёт каждый будущий водитель в&amp;nbsp;России, и&amp;nbsp;это одно из&amp;nbsp;крупнейших приложений для&amp;nbsp;подготовки: больше 10&amp;nbsp;миллионов загрузок и&amp;nbsp;стабильные верхние строчки в&amp;nbsp;разделе «Образование» Google Play.">Every future driver in&nbsp;Russia takes the&nbsp;same theory exam, and&nbsp;this is&nbsp;one of&nbsp;the&nbsp;biggest apps to&nbsp;prepare for&nbsp;it: over&nbsp;10&nbsp;million downloads, consistently at&nbsp;the&nbsp;top of&nbsp;Google Play&#8217;s education charts.</p>
         <span class="hero__stores">
@@ -1115,6 +1119,7 @@
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
   <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>
