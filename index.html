@@ -297,6 +297,27 @@
       .page-splash .gb .gb__eye { animation: none; }
     }
 
+    /* ── Scroll buddy route — the guide fella runs the page as you scroll
+       (built and steered by scripts/scroll-buddy.js; hidden with the rest
+       of .gb on touch / small screens / reduced motion). Sits above the
+       cards (their hover z-index is 2) but under the header and splash. ── */
+    .buddy-route {
+      position: absolute; left: 0; top: 0; width: 100%;
+      pointer-events: none; z-index: 3; overflow: hidden;
+    }
+    .buddy-route__trail { display: block; position: absolute; left: 0; top: 0; }
+    .buddy-route__trail #buddyTrailDots {
+      stroke: var(--color-accent-orange);
+      stroke-width: 3.5; stroke-linecap: round;
+      stroke-dasharray: 0.01 13;   /* round dots, not dashes */
+      opacity: 0.8;
+    }
+    .buddy-route .gb {
+      position: absolute; left: 0; top: 0;
+      width: 72px; height: 82px;
+      will-change: transform;
+    }
+
     /* Cover image stage — for projects without an embedded live flow.
        Anchor left so the first phone in the frame stays whole when cropped. */
     .project-card__cover {
@@ -539,7 +560,14 @@
     </div>
   </div>
   <script>
-    try { if (sessionStorage.getItem('plxSplash')) document.getElementById('page-splash').remove(); } catch (e) {}
+    // Stash the buddy drawing for scripts/scroll-buddy.js — the splash node
+    // (its only markup source) can be dismissed before that file loads.
+    // Then skip the splash entirely for repeat visits in this tab.
+    try {
+      var _splash = document.getElementById('page-splash');
+      window.__gbSpriteHTML = _splash.querySelector('.gb__sprite').innerHTML;
+      if (sessionStorage.getItem('plxSplash')) _splash.remove();
+    } catch (e) {}
   </script>
   <noscript><style>.page-splash { display: none; }</style></noscript>
 
@@ -1041,6 +1069,7 @@
        his eyes working on the dark page. -->
   <!-- <script src="scripts/guide-buddy.js"></script> -->
   <script src="scripts/i18n.js"></script>
+  <script src="scripts/scroll-buddy.js?v=1"></script>
   <script>
     // Guide buddy tour — the stickman runs along the bottom edge and points
     // at each stop. Edit the steps freely: target is any CSS selector,
