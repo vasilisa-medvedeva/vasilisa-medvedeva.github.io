@@ -107,12 +107,12 @@
     var pts = [];
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
-    var aside = document.querySelector('.hero__aside');
+    var stats = document.querySelector('.hero__stats');
     var titleEl = document.querySelector('.hero__title');
-    if (aside) {
-      // he stands on top of the method column, greeting from its roof
-      var ar = aside.getBoundingClientRect();
-      pts.push([ar.left + window.scrollX + 42, ar.top + window.scrollY - 12]);
+    if (stats) {
+      // he stands beside his own numbers, their compere
+      var sr = stats.getBoundingClientRect();
+      pts.push([sr.right + window.scrollX + 62, sr.bottom + window.scrollY - 4]);
     } else if (titleEl) {
       var tr = titleEl.getBoundingClientRect();
       pts.push([tr.left + window.scrollX + 28, tr.bottom + window.scrollY + 88]);
@@ -148,10 +148,47 @@
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
   var lastMd = null, idleTimer = null;
+
+  /* Entrance: on the first load he RUNS IN from beyond the left edge to his
+     mark beside the numbers, dropping footsteps, then stands and waves.
+     Timer-stepped; any real scroll cancels it and hands over to the route. */
+  var entranceDone = false, entering = false, entranceTimer = null;
+  function cancelEntrance () {
+    if (!entering) { return; }
+    entering = false;
+    clearTimeout(entranceTimer);
+    buddy.classList.remove('gb--running');
+  }
+  function runEntrance () {
+    entranceDone = true;
+    if (window.scrollY > 60) { update(true); return; }
+    entering = true;
+    var target = motion.getPointAtLength(0);
+    var x = -90, y = target.y, lastDotX = x;
+    buddy.classList.remove('gb--left');
+    buddy.classList.add('gb--running');
+    (function step () {
+      if (!entering) { return; }
+      x += 9;
+      buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (y - 78).toFixed(1) + 'px)';
+      if (x - lastDotX >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: y }); }
+      if (x >= target.x) {
+        entering = false;
+        buddy.classList.remove('gb--running');
+        lastMd = null;
+        update(true);        // settle on the route proper (and wave hello)
+        dissolveDots();      // the entrance footprints melt behind him
+        return;
+      }
+      entranceTimer = setTimeout(step, 16);
+    })();
+  }
   var quizZone = null, quizAim = null;
 
   function update (force) {
     if (!pathLen) { return; }
+    if (entering && !force) { cancelEntrance(); }
+    if (entering) { return; }
     // read-line just past mid-screen: he finishes each stretch as you read it
     var readY = window.scrollY + window.innerHeight * 0.55;
     var p = Math.max(0, Math.min(1, (readY - pathTopY) / (pathBotY - pathTopY)));
@@ -235,7 +272,9 @@
     pathBotY = Math.min(pts[pts.length - 1][1],
                         document.documentElement.scrollHeight - window.innerHeight * 0.45 - 4);
     lastMd = null;
-    update(true);
+    if (entering) { return; }            // mid-entrance rebuild: geometry only
+    if (!entranceDone) { runEntrance(); }
+    else { update(true); }
   }
 
   /* His googly pupils follow the visitor's cursor while he stands — the
