@@ -175,19 +175,18 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    /* Metric chips on the project cards wear the site violet — the 87% accent
-       for the first number (the token color-tokens.css documents for exactly
-       this: white text on it clears AA at 5.1:1 over the dark page, where the
-       solid accent only manages 4.2), a quiet violet wash for the second, so
-       the pair reads ranked rather than striped. Kept off the tool chips:
-       those are an inventory, these are the sell. */
-    .project-card__pills .meta-chip:nth-child(1) {
-      background: var(--color-accent-orange-transparent-87);
+    /* Metric chips on the project cards wear the cool family — four blues
+       and violets from the tokens, rotated by card parity so neighbouring
+       cards never repeat a pair. All four hold white text at AA (accent-87
+       is documented at 5.1:1; pressed violet ≈5.7, info blues ≥5.9). Kept
+       off the tool chips: those are an inventory, these are the sell. */
+    .project-card__pills .meta-chip {
       color: var(--color-constant-transparent-87);
     }
-    .project-card__pills .meta-chip:nth-child(2) {
-      background: color-mix(in srgb, var(--color-accent-orange) 22%, transparent);
-    }
+    .project-card__pills .meta-chip:nth-child(1) { background: var(--color-accent-orange-transparent-87); }
+    .project-card__pills .meta-chip:nth-child(2) { background: var(--color-info-secondary); }
+    .projects-grid > .project-card:nth-child(even) .project-card__pills .meta-chip:nth-child(1) { background: var(--color-info-tertiary); }
+    .projects-grid > .project-card:nth-child(even) .project-card__pills .meta-chip:nth-child(2) { background: var(--color-accent-orange-pressed); }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
@@ -334,6 +333,27 @@
       25%      { transform: scale(0.994, 1.014) rotate(0deg); }
       50%      { transform: scale(1.012, 0.988) rotate(1.2deg); }
       75%      { transform: scale(0.994, 1.014) rotate(0deg); }
+    }
+    /* ♪ toggle for the buddy's micro-sounds (scroll-buddy.js injects it
+       only where the runner itself lives) — quiet corner control, violet
+       when live */
+    .buddy-sound {
+      position: fixed; left: 16px; bottom: 14px; z-index: 90;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; line-height: 1;
+      background: var(--color-constant-primary);
+      color: var(--color-primary-transparent-48);
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+    .buddy-sound:hover { color: var(--color-primary-transparent-87); transform: scale(1.08); }
+    .buddy-sound.is-on { color: var(--color-accent-orange); }
+    /* standing, his pupils track the cursor (vars set by scroll-buddy.js);
+       on the run the googly spin from guide-buddy.css takes over */
+    .buddy-route .gb:not(.gb--running) .gb__pupil {
+      transform: translate(var(--look-x, 0px), var(--look-y, 0px));
+      transition: transform 0.12s ease-out;
     }
 
     /* Cover image stage — for projects without an embedded live flow.
