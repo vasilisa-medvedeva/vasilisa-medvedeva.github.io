@@ -330,21 +330,6 @@
       50%      { transform: scale(1.012, 0.988) rotate(1.2deg); }
       75%      { transform: scale(0.994, 1.014) rotate(0deg); }
     }
-    /* ♪ toggle for the buddy's micro-sounds (scroll-buddy.js injects it
-       only where the runner itself lives) — quiet corner control, violet
-       when live */
-    .buddy-sound {
-      position: fixed; left: 16px; bottom: 14px; z-index: 90;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px; line-height: 1;
-      background: var(--color-constant-primary);
-      color: var(--color-primary-transparent-48);
-      transition: color 0.15s ease, transform 0.15s ease;
-    }
-    .buddy-sound:hover { color: var(--color-primary-transparent-87); transform: scale(1.08); }
-    .buddy-sound.is-on { color: var(--color-accent-orange); }
     /* standing, his pupils track the cursor (vars set by scroll-buddy.js);
        on the run the googly spin from guide-buddy.css takes over */
     .buddy-route .gb:not(.gb--running) .gb__pupil {

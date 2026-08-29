@@ -26,62 +26,6 @@
   var spriteHTML = window.__gbSpriteHTML;
   if (!spriteHTML) { return; }
 
-  /* ── Micro-sounds — tiny synthesized SFX, no audio files, no licences.
-     Off by default behind the ♪ toggle (choice persisted); every gain is
-     whisper-level. The AudioContext is only created on the first enable
-     (a click — so autoplay policy is satisfied), and resumed on the first
-     gesture of a later visit if the toggle was left on. ── */
-  var Sound = (function () {
-    var KEY = 'plxSound';
-    var enabled = false;
-    try { enabled = localStorage.getItem(KEY) === '1'; } catch (e) {}
-    var ctx = null;
-    function ac () {
-      if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); }
-      if (ctx.state === 'suspended') { ctx.resume(); }
-      return ctx;
-    }
-    function tone (freq, dur, type, gain, delay, slideTo) {
-      if (!enabled) { return; }
-      try {
-        var c = ac(), t = c.currentTime + (delay || 0);
-        var o = c.createOscillator(), g = c.createGain();
-        o.type = type || 'sine';
-        o.frequency.setValueAtTime(freq, t);
-        if (slideTo) { o.frequency.exponentialRampToValueAtTime(slideTo, t + dur); }
-        g.gain.setValueAtTime(0.0001, t);
-        g.gain.linearRampToValueAtTime(gain, t + 0.008);
-        g.gain.exponentialRampToValueAtTime(0.0004, t + dur);
-        o.connect(g); g.connect(c.destination);
-        o.start(t); o.stop(t + dur + 0.02);
-      } catch (e) {}
-    }
-    return {
-      isOn: function () { return enabled; },
-      set: function (on) {
-        enabled = on;
-        try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) {}
-        if (on) { ac(); tone(440, 0.08, 'triangle', 0.05); tone(660, 0.1, 'triangle', 0.05, 0.08); }
-      },
-      wave: function () {   // a cartoonish two-syllable "hel-LO!" (English
-        // prosody: short rising pickup, then the higher, longer syllable
-        // easing down — not the flat «при-вет» pair)
-        tone(470, 0.09, 'triangle', 0.05, 0, 540);
-        tone(760, 0.16, 'triangle', 0.05, 0.1, 620);
-      },
-      plink: function (i) { // melting footstep dot, lower with each one
-        tone(Math.max(240, 640 - i * 60), 0.12, 'sine', 0.03);
-      }
-    };
-  })();
-  // a toggle left ON last visit needs one real gesture before audio may resume
-  ['pointerdown', 'keydown'].forEach(function (ev) {
-    window.addEventListener(ev, function once () {
-      window.removeEventListener(ev, once);
-      if (Sound.isOn()) { Sound.set(true); }
-    }, { once: true });
-  });
-
   var route = document.createElement('div');
   route.className = 'buddy-route';
   route.setAttribute('aria-hidden', 'true');
@@ -132,7 +76,6 @@
     fading.forEach(function (d, i) {
       setTimeout(function () {
         d.style.opacity = '0';
-        if (fading.length > 1) { Sound.plink(i); }
         setTimeout(function () { d.remove(); }, 400);
       }, i * 110);
     });
@@ -174,35 +117,12 @@
     document.querySelectorAll('.info-section .section-title').forEach(function (t, i) {
       pts.push(at(t, i % 2 ? 0.6 : 0.25, 1, 0, 90));
     });
-    if (footerBig) { pts.push(at(footerBig, 1, 0.45, 46, 0)); }   // beside "Let's talk →"
+    if (footerBig) { pts.push(at(footerBig, 0.19, 0, 0, -4)); }   // feet on top of the word "Let's"
     return pts;
   }
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
   var lastMd = null, idleTimer = null;
-
-  /* ♪ toggle — lives only while the runner does (same media conditions),
-     so touch and small screens never see a dead sound button */
-  var soundBtn = document.createElement('button');
-  soundBtn.type = 'button';
-  soundBtn.className = 'buddy-sound' + (Sound.isOn() ? ' is-on' : '');
-  soundBtn.textContent = '♪';
-  function labelSound () {
-    var ru = (typeof window.lang === 'function' && window.lang() === 'ru');
-    var label = Sound.isOn() ? (ru ? 'Выключить звук' : 'Sound off')
-                             : (ru ? 'Включить звук' : 'Sound on');
-    soundBtn.setAttribute('aria-label', label);
-    soundBtn.title = label;
-    soundBtn.setAttribute('aria-pressed', Sound.isOn() ? 'true' : 'false');
-  }
-  labelSound();
-  document.addEventListener('langchange', labelSound);
-  soundBtn.addEventListener('click', function () {
-    Sound.set(!Sound.isOn());
-    soundBtn.classList.toggle('is-on', Sound.isOn());
-    labelSound();
-  });
-  document.body.appendChild(soundBtn);
 
   function update (force) {
     if (!pathLen) { return; }
@@ -233,10 +153,7 @@
     // he WAVES at both ends of the route — greeting at the 5+, goodbye at
     // "Let's talk" — but never mid-run: the wave waits for the stand.
     function atEdge (pv) { return pv > 0.985 || pv < 0.04; }
-    function setWaving (on) {
-      if (on && !buddy.classList.contains('gb--waving')) { Sound.wave(); }
-      buddy.classList.toggle('gb--waving', on);
-    }
+    function setWaving (on) { buddy.classList.toggle('gb--waving', on); }
     if (moved) {
       buddy.classList.remove('gb--waving');
       buddy.classList.add('gb--running');
