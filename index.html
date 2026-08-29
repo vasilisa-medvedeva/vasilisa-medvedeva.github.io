@@ -54,6 +54,11 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* smooth anchor jumps (the hero arrow, the header menu) — instant for
+       readers who asked motion to stay quiet */
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
       background: var(--page-bg);
@@ -75,8 +80,8 @@
       /* stretch so the first project card's top edge peeks into the first
          viewport — the work itself is the scroll invitation (the doodle
          arrow used to do this job) */
-      min-height: calc(100vh - 250px);
-      min-height: calc(100svh - 250px);
+      min-height: calc(100vh - 110px);
+      min-height: calc(100svh - 110px);
     }
     .hero__title {
       font-family: var(--font-display, "Archivo", sans-serif);
@@ -96,12 +101,6 @@
       gap: 24px 32px; flex-wrap: wrap;
     }
     .hero__stats { display: flex; flex-direction: column; gap: 16px; }
-    .hero__label {
-      font-family: var(--font-display, "Archivo", sans-serif);
-      font-weight: 500; font-size: 12px; line-height: 16px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
-    }
     .hero__stat { display: flex; align-items: baseline; gap: 14px; }
     .hero__stat-num {
       font-family: var(--font-display, "Archivo", sans-serif);
@@ -126,9 +125,14 @@
     }
     .hero__nowrap { white-space: nowrap; }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
+    .hero__arrow-link { display: inline-block; width: fit-content; transition: transform 0.15s ease; }
+    .hero__arrow-link:hover { transform: translateY(4px); }
     /* location + work-mode tag — the recruiter's first question, answered
        before the paragraphs start */
-    .hero__aside .hero__meta {
+    .hero__meta {
+      margin-bottom: -6px;   /* tag line hugs its headline */
+    }
+    .hero__meta, .hero__aside .hero__meta {
       font-size: 13px; line-height: 18px;
       font-weight: 500; letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -615,19 +619,17 @@
 
   <main class="main">
     <section class="hero">
+      <p class="hero__meta" data-ru="Лимассол, Кипр&nbsp;· открыта к&nbsp;удалённой, гибридной и&nbsp;офисной работе">Limassol, Cyprus&nbsp;&middot; open to&nbsp;remote, hybrid or&nbsp;on-site work</p>
       <h1 class="hero__title" data-ru="Привет! Я&nbsp;проектирую мобильные продукты&lt;br /&gt;для миллионов водителей">Hi! I&nbsp;design mobile products<br />used by&nbsp;millions of&nbsp;drivers</h1>
       <div class="hero__row">
         <div class="hero__stats">
-          <p class="hero__label" data-ru="Что я&nbsp;выпустила">What I&nbsp;shipped</p>
           <div class="hero__stat"><span class="hero__stat-num">×2</span><span class="hero__stat-label" data-ru="конверсия в&nbsp;оплату">payment conversion</span></div>
           <div class="hero__stat"><span class="hero__stat-num">×2</span><span class="hero__stat-label" data-ru="загрузки фото">photo uploads</span></div>
           <div class="hero__stat"><span class="hero__stat-num">10M+</span><span class="hero__stat-label" data-ru="загрузок приложения">app downloads</span></div>
         </div>
         <div class="hero__aside">
-          <p class="hero__meta" data-ru="Лимассол, Кипр&nbsp;· открыта к&nbsp;удалённой, гибридной и&nbsp;офисной работе">Limassol, Cyprus&nbsp;&middot; open to&nbsp;remote, hybrid or&nbsp;on-site work</p>
-          <p class="hero__label" data-ru="Как я&nbsp;работаю">How I&nbsp;work</p>
           <p data-ru="Быстро проверяю гипотезы и&nbsp;говорю с&nbsp;пользователями, чтобы найти настоящие причины поведения, — а&nbsp;потом довожу решение до&nbsp;релиза.">Fast hypothesis tests and&nbsp;user interviews to&nbsp;uncover the&nbsp;real causes of&nbsp;behavior &mdash; then I&nbsp;ship the&nbsp;fix.</p>
-          <img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" aria-hidden="true" />
+          <a class="hero__arrow-link" href="#projects" aria-label="Scroll to the projects" data-ru-aria="К проектам"><img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" /></a>
         </div>
       </div>
     </section>
@@ -872,8 +874,10 @@
     // Always open at the top on reload — otherwise the browser restores the
     // previous scroll position and hides the 10px top offset.
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+    // behavior:'instant' matters — the page sets scroll-behavior:smooth, and a
+    // plain scrollTo would visibly animate the reset on every reload
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.addEventListener('load', function () { window.scrollTo({ top: 0, behavior: 'instant' }); });
 
     // Poster-fit hero: scale the headline so its longest line spans the full
     // content width at any viewport. Re-run on resize, on font arrival and on
