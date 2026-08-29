@@ -305,12 +305,16 @@
       pointer-events: none; z-index: 3; overflow: hidden;
     }
     .buddy-route__trail { display: block; position: absolute; left: 0; top: 0; }
-    /* footstep dots — a short dissolving tail (opacity is graded by age
-       from scroll-buddy.js; the transition is what makes them melt) */
-    .buddy-route .buddy-dot {
+    /* footprints — a short dissolving tail of shoe prints (assets/footstep.svg
+       masked in the accent colour; scroll-buddy.js mirrors every other one
+       into the opposite foot, aims it along the run and grades the opacity
+       by age — the transition is what makes them melt) */
+    .buddy-route .buddy-step {
       position: absolute; left: 0; top: 0;
-      width: 5px; height: 5px; border-radius: 50%;
+      width: 6.6px; height: 17px;
       background: var(--color-accent-orange);
+      -webkit-mask: url('assets/footstep.svg') no-repeat center / contain;
+              mask: url('assets/footstep.svg') no-repeat center / contain;
       opacity: 0;
       transition: opacity 0.35s ease;
     }

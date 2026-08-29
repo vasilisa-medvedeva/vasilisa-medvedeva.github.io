@@ -4,9 +4,10 @@
    The route is built from the page's real landmarks — the 5+ circle in the
    hero, a slalom through the projects grid, the empty column under each
    section title, and the footer CTA — so it survives any copy or layout
-   change that keeps those landmarks. He leaves a short tail of footstep
-   dots behind him — at most six, graded to transparent with age, the oldest
-   dissolving as new ones land.
+   change that keeps those landmarks. He leaves a short tail of footprints
+   behind him — at most six shoe prints, alternating feet and aimed along
+   his run, graded to transparent with age, the oldest dissolving as new
+   ones land.
 
    He RUNS while the scroll is moving his target distance, STANDS when it
    rests, and WAVES when he reaches the footer — guide-buddy.css's flipbook
@@ -43,39 +44,55 @@
   var motion = route.querySelector('#buddyMotionPath');
   var buddy = route.querySelector('.gb');
 
-  /* Footstep dots: he leaves at most MAX_DOTS behind him, one every
-     DOT_EVERY px of path; each is a real element, graded from faint (old)
-     to solid (fresh), and the oldest fades out and leaves as new ones
-     land — a dissolving tail instead of a permanent drawn route. */
-  var MAX_DOTS = 6, DOT_EVERY = 30;
-  var dotQueue = [], lastDotMd = null;
-  function dropDot (pt) {
-    var dot = document.createElement('i');
-    dot.className = 'buddy-dot';
-    dot.style.transform = 'translate(' + (pt.x - 2.5).toFixed(1) + 'px,' + (pt.y - 2.5).toFixed(1) + 'px)';
-    route.appendChild(dot);
-    dotQueue.push(dot);
-    if (dotQueue.length > MAX_DOTS) {
-      var old = dotQueue.shift();
+  /* Footprints: he leaves at most MAX_STEPS behind him, one every
+     STEP_EVERY px of path; each is a real element masked with a shoe print
+     (assets/footstep.svg), mirrored into the opposite foot every other
+     step, aimed along his heading and set a touch off the centre line so
+     the tail reads as a walk rather than a dotted line. They are graded
+     from faint (old) to solid (fresh), and the oldest fades out and leaves
+     as new ones land — a dissolving tail instead of a drawn route. */
+  var MAX_STEPS = 6, STEP_EVERY = 30;
+  var stepQueue = [], lastStepMd = null, footSide = 1;
+  /* deg aims a print whose toes point up (−Y) at 0°; side ±1 is the foot */
+  function dropStep (pt, deg) {
+    var side = (footSide = -footSide);
+    var step = document.createElement('i');
+    step.className = 'buddy-step';
+    step.style.transform =
+      'translate(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px)' +
+      ' rotate(' + (deg + side * 7).toFixed(1) + 'deg)' +   // a little toe-out
+      ' translate(' + (side * 3.2).toFixed(1) + 'px,0)' +   // off the centre line
+      ' scaleX(' + side + ') translate(-50%,-50%)';
+    route.appendChild(step);
+    stepQueue.push(step);
+    if (stepQueue.length > MAX_STEPS) {
+      var old = stepQueue.shift();
       old.style.opacity = '0';
       setTimeout(function () { old.remove(); }, 400);
     }
-    for (var i = 0; i < dotQueue.length; i++) {
-      dotQueue[i].style.opacity = (0.15 + 0.65 * (i + 1) / dotQueue.length).toFixed(2);
+    for (var i = 0; i < stepQueue.length; i++) {
+      stepQueue[i].style.opacity = (0.15 + 0.65 * (i + 1) / stepQueue.length).toFixed(2);
     }
   }
-  function clearDots () {
-    dotQueue.forEach(function (d) { d.remove(); });
-    dotQueue = [];
-    lastDotMd = null;
+  /* the run's heading at a path distance, as that same 0° = toes-up angle */
+  function headingAt (md, dir) {
+    var a = motion.getPointAtLength(Math.max(0, md - 3));
+    var b = motion.getPointAtLength(Math.min(pathLen, md + 3));
+    return Math.atan2((b.y - a.y) * dir, (b.x - a.x) * dir) * 180 / Math.PI + 90;
   }
-  /* When he stops, the whole tail melts — oldest dot first, one beat apart.
-     A resumed run isn't interrupted by this: the melting dots are already
-     out of the queue, and fresh footsteps start a new tail behind him. */
-  function dissolveDots () {
-    var fading = dotQueue;
-    dotQueue = [];
-    lastDotMd = null;
+  function clearSteps () {
+    stepQueue.forEach(function (d) { d.remove(); });
+    stepQueue = [];
+    lastStepMd = null;
+    footSide = 1;
+  }
+  /* When he stops, the whole tail melts — oldest print first, one beat
+     apart. A resumed run isn't interrupted by this: the melting prints are
+     already out of the queue, and fresh steps start a new tail behind him. */
+  function dissolveSteps () {
+    var fading = stepQueue;
+    stepQueue = [];
+    lastStepMd = null;
     fading.forEach(function (d, i) {
       setTimeout(function () {
         d.style.opacity = '0';
@@ -174,15 +191,16 @@
     buddy.classList.toggle('gb--left', pB.x - pA.x < -0.5);
     // feet on the path: sprite is 72×82, feet ≈ (36, 78) in its own box
     buddy.style.transform = 'translate(' + (pt.x - 36).toFixed(1) + 'px,' + (pt.y - 78).toFixed(1) + 'px)';
-    // footstep dots — stepped, so a fast scroll seeds the span it jumped over
-    if (lastDotMd === null) { lastDotMd = md; }
+    // footprints — stepped, so a fast scroll seeds the span it jumped over
+    if (lastStepMd === null) { lastStepMd = md; }
     var steps = 0;
-    while (Math.abs(md - lastDotMd) >= DOT_EVERY && steps < MAX_DOTS) {
-      lastDotMd += (md > lastDotMd ? DOT_EVERY : -DOT_EVERY);
-      dropDot(motion.getPointAtLength(lastDotMd));
+    var dir = md > lastStepMd ? 1 : -1;
+    while (Math.abs(md - lastStepMd) >= STEP_EVERY && steps < MAX_STEPS) {
+      lastStepMd += dir * STEP_EVERY;
+      dropStep(motion.getPointAtLength(lastStepMd), headingAt(lastStepMd, dir));
       steps++;
     }
-    if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
+    if (steps === MAX_STEPS) { lastStepMd = md; }   // huge jump — snap under his feet
     look();
   }
 
@@ -210,7 +228,7 @@
         placeAt(target);
         gliding = false;
         buddy.classList.remove('gb--running');
-        dissolveDots();
+        dissolveSteps();
         return;
       }
       placeAt(lastMd + (d > 0 ? 7 : -7));
@@ -232,7 +250,7 @@
     entranceDone = true;
     if (window.scrollY > 60) { update(true); return; }
     entering = true;
-    var x = document.documentElement.clientWidth + 90, lastDotX = x;
+    var x = document.documentElement.clientWidth + 90, lastStepX = x;
     buddy.classList.add('gb--left');   // he enters from the right, facing left
     buddy.classList.add('gb--running');
     (function step () {
@@ -245,13 +263,16 @@
       buddy.classList.toggle('gb--left', dxT < 0);
       x += (dxT > 0 ? 4.5 : -4.5);   // an unhurried entrance
       buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (target.y - 78).toFixed(1) + 'px)';
-      if (Math.abs(lastDotX - x) >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: target.y }); }
+      if (Math.abs(lastStepX - x) >= STEP_EVERY) {
+        lastStepX = x;
+        dropStep({ x: x, y: target.y }, dxT > 0 ? 90 : -90);   // he runs flat
+      }
       if (Math.abs(dxT) <= 5) {
         entering = false;
         buddy.classList.remove('gb--running');
         lastMd = null;
         update(true);        // settle on the route proper (and wave hello)
-        dissolveDots();      // the entrance footprints melt behind him
+        dissolveSteps();     // the entrance footprints melt behind him
         return;
       }
       entranceTimer = setTimeout(step, 16);
@@ -301,7 +322,7 @@
       idleTimer = setTimeout(function () {
         buddy.classList.remove('gb--running');
         standPose(lastMd / pathLen);
-        dissolveDots();   // he stopped — the tail melts away behind him
+        dissolveSteps();  // he stopped — the tail melts away behind him
         // (user's call: if he rests behind a card, he stays tucked there)
       }, 170);
     } else if (!buddy.classList.contains('gb--running')) {
@@ -335,7 +356,7 @@
       }
     }
     cancelGlide();
-    clearDots();   // geometry moved — old footprints point at nothing
+    clearSteps();  // geometry moved — old footprints point at nothing
     // p is anchored to the read-line's position AT scrollY 0 — so he holds
     // his mark on an unscrolled page and starts running with the very first
     // pixel of scroll, no dead zone while the read-line catches up to him
