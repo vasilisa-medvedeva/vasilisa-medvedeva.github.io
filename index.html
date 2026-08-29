@@ -201,28 +201,6 @@
       width: 360px; height: 780px; border: 0;
       transform-origin: top left; pointer-events: none;
     }
-    /* Flow-loading cover — the lazy iframes can land late; a blank "screen"
-       with the dancing doodle holds the phone until the flow document arrives.
-       Injected from JS: only JS can dismiss it, so it must never render without it. */
-    .device-loader {
-      position: absolute; inset: 0; z-index: 2;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--color-constant-primary);
-      pointer-events: none;
-      transition: opacity 0.45s ease;
-    }
-    .device-loader img {
-      width: 64px; height: 64px;
-      animation: device-loader-dance 1.2s ease-in-out infinite;
-    }
-    @keyframes device-loader-dance {
-      0%, 100% { transform: translateY(0) rotate(-5deg); }
-      50%      { transform: translateY(-7px) rotate(5deg); }
-    }
-    .project-card__device.is-loaded .device-loader { opacity: 0; }
-    @media (prefers-reduced-motion: reduce) {
-      .device-loader img { animation: none; }
-    }
 
     /* ── First-load splash — the dancing doodle holds the wait. Dismisses
        itself the moment the page is ready (never earlier than 900ms, never
@@ -890,29 +868,6 @@
     }
     window.addEventListener('load', fitFlows);
     window.addEventListener('resize', fitFlows);
-
-    // Loading cover for the embedded flows: the iframes are lazy and can land
-    // well after the card is on screen — hold each phone with the dancing
-    // doodle until its flow document actually arrives, then fade it away.
-    (function () {
-      document.querySelectorAll('.project-card__device').forEach(function (device) {
-        var frame = device.querySelector('iframe');
-        if (!frame) return;
-        var cover = document.createElement('div');
-        cover.className = 'device-loader';
-        cover.setAttribute('aria-hidden', 'true');
-        cover.innerHTML = '<img src="assets/dancing-doodle.svg" alt="" />';
-        device.appendChild(cover);
-        function ready () {
-          // the initial about:blank also fires load — only dismiss for the real flow
-          try { if (frame.contentDocument && frame.contentDocument.location.href === 'about:blank') return; } catch (e) {}
-          device.classList.add('is-loaded');
-        }
-        frame.addEventListener('load', ready);
-        // a cached flow can finish before this script runs
-        try { if (frame.contentDocument && frame.contentDocument.readyState === 'complete') ready(); } catch (e) {}
-      });
-    })();
 
     // Play the card's embedded flow demo only while the card is hovered; reset on leave.
     (function () {
