@@ -175,14 +175,10 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    /* Metric chips: one voice, the info blue — every chip on every card the
-       same, so the numbers read as a system, not a fruit salad. White text
-       on it clears AA at 5.9:1. Kept off the tool chips: those are an
-       inventory, these are the sell. */
-    .project-card__pills .meta-chip {
-      background: var(--color-info-secondary);
-      color: var(--color-constant-transparent-87);
-    }
+    /* Metric chips stay in the card's own gray voice — the quiet raised
+       fill from .meta-chip itself. Color experiments (violet pair, aurora,
+       indigo ladder, single blue) all pulled the eye harder than the
+       numbers deserved; the metrics read best as part of the card. */
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
