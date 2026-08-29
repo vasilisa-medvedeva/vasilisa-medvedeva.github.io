@@ -56,17 +56,12 @@
         o.start(t); o.stop(t + dur + 0.02);
       } catch (e) {}
     }
-    var stepFlip = false;
     return {
       isOn: function () { return enabled; },
       set: function (on) {
         enabled = on;
         try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) {}
         if (on) { ac(); tone(440, 0.08, 'triangle', 0.05); tone(660, 0.1, 'triangle', 0.05, 0.08); }
-      },
-      step: function () {   // soft alternating footfall
-        stepFlip = !stepFlip;
-        tone(stepFlip ? 170 : 150, 0.05, 'sine', 0.05, 0, 90);
       },
       wave: function () {   // a cartoonish two-syllable "hel-LO!" (English
         // prosody: short rising pickup, then the higher, longer syllable
@@ -184,7 +179,7 @@
   }
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
-  var lastMd = null, idleTimer = null, lastStepAt = 0;
+  var lastMd = null, idleTimer = null;
 
   /* ♪ toggle — lives only while the runner does (same media conditions),
      so touch and small screens never see a dead sound button */
@@ -234,12 +229,6 @@
       steps++;
     }
     if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
-
-    // soft footfalls while he actually runs, at most one per stride
-    if (moved && performance.now() - lastStepAt > 150) {
-      lastStepAt = performance.now();
-      Sound.step();
-    }
 
     // he WAVES at both ends of the route — greeting at the 5+, goodbye at
     // "Let's talk" — but never mid-run: the wave waits for the stand.
