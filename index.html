@@ -891,10 +891,12 @@
       if (!t) return;
       function fit () {
         t.style.fontSize = '100px';
+        t.style.whiteSpace = 'nowrap';   // measure the intended <br> lines, not wrapped fragments
         var natural = t.scrollWidth;
+        t.style.whiteSpace = '';
         if (!natural) return;
         var size = 100 * t.clientWidth / natural * 0.985;
-        t.style.fontSize = Math.max(44, Math.min(220, size)) + 'px';
+        t.style.fontSize = Math.max(40, Math.min(220, size)) + 'px';
       }
       var queue;
       function refit () { clearTimeout(queue); queue = setTimeout(fit, 60); }
