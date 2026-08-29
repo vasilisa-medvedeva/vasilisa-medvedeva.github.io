@@ -169,7 +169,7 @@
     buddy.classList.add('gb--running');
     (function step () {
       if (!entering) { return; }
-      x += 9;
+      x += 4.5;   // an unhurried entrance — half his route-running speed
       buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (y - 78).toFixed(1) + 'px)';
       if (x - lastDotX >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: y }); }
       if (x >= target.x) {
