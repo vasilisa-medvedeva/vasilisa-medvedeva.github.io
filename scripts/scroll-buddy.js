@@ -122,7 +122,9 @@
       // slalom across the grid's centre gutter — the cards are its slopes
       var g = grid.getBoundingClientRect();
       var gx = g.left + window.scrollX, gy = g.top + window.scrollY;
-      [[0.66, 0.08], [0.42, 0.30], [0.68, 0.52], [0.40, 0.72], [0.60, 0.92]]
+      // the exit point sits left of centre so he emerges from under the
+      // cards on the title-column side — clear of the sections' body text
+      [[0.66, 0.08], [0.42, 0.30], [0.68, 0.52], [0.40, 0.72], [0.38, 0.92]]
         .forEach(function (s) { pts.push([gx + g.width * s[0], gy + g.height * s[1]]); });
     }
     // down the quiet column under each section title
