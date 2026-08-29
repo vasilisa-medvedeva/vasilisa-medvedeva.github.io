@@ -24,7 +24,10 @@
       matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
   var spriteSrc = document.getElementById('gb-sprite-src');
   if (!spriteSrc) { return; }
-  var spriteHTML = spriteSrc.innerHTML;
+  // the master copy sits in a hidden (display:none) holder, and a gradient
+  // there is not a usable paint server in Chrome — url(#…) would resolve to
+  // it and paint nothing. The live clone gets its own gradient id.
+  var spriteHTML = spriteSrc.innerHTML.split('gb-blob-grad').join('gb-blob-grad-live');
 
   var route = document.createElement('div');
   route.className = 'buddy-route';
