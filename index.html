@@ -89,7 +89,7 @@
     }
     .hero__aside {
       align-self: flex-end;
-      margin-top: -40px;
+      margin-top: 12px;   /* clear air below the headline's descenders */
       width: calc((100% - 10px) / 2.4);
       display: flex; flex-direction: column; gap: 14px;
     }
@@ -99,6 +99,7 @@
       color: var(--color-primary-transparent-87);
     }
     .hero__nowrap { white-space: nowrap; }
+    .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
     /* location + work-mode tag — the recruiter's first question, answered
        before the paragraphs start */
     .hero__aside .hero__meta {
@@ -593,6 +594,7 @@
         <p class="hero__meta" data-ru="Лимассол, Кипр&nbsp;· открыта к&nbsp;удалённой, гибридной и&nbsp;офисной работе">Limassol, Cyprus&nbsp;&middot; open to&nbsp;remote, hybrid or&nbsp;on-site work</p>
         <p data-ru="Свежие результаты: конверсия в&amp;nbsp;оплату ×2 в&amp;nbsp;приложении штрафов, загрузки фото ×2 в&amp;nbsp;сервисе проверки авто, дизайн-система — спроектирована и&amp;nbsp;задокументирована в&amp;nbsp;одиночку.">Recent receipts: payment conversion ×2 in&nbsp;a&nbsp;traffic-fines app, photo uploads ×2 in&nbsp;a&nbsp;car-history service, a&nbsp;design system built and&nbsp;documented solo.</p>
         <p data-ru="Работаю так: быстро проверяю гипотезы и&amp;nbsp;говорю с&amp;nbsp;пользователями, чтобы найти настоящие причины поведения, — а&amp;nbsp;потом довожу решение до&amp;nbsp;релиза.">How I&nbsp;get there: fast hypothesis tests and&nbsp;user interviews to&nbsp;uncover the&nbsp;real causes of&nbsp;behavior &mdash; then I&nbsp;ship the&nbsp;fix.</p>
+        <img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" aria-hidden="true" />
       </div>
     </section>
 

@@ -47,6 +47,7 @@
 
 /* Doodle SVGs are authored as black ink and arrive through <img>, so they
    cannot inherit currentColor. Photos are left alone. */
+.hero__arrow,
 .guess__mark img { filter: invert(1); }
 
 /* The doodle arrows and the circled word are drawn with stroke="black"
