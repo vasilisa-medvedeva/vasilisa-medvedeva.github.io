@@ -93,6 +93,14 @@
       color: var(--color-primary-transparent-87);
     }
     .hero__nowrap { white-space: nowrap; }
+    /* location + work-mode tag — the recruiter's first question, answered
+       before the paragraphs start */
+    .hero__aside .hero__meta {
+      font-size: 13px; line-height: 18px;
+      font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-48);
+    }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
     /* the "5+" wrapper — kept as the mascot's anchor point in the hero line */
     .hero__circle { position: relative; display: inline-block; }
@@ -201,69 +209,41 @@
       width: 360px; height: 780px; border: 0;
       transform-origin: top left; pointer-events: none;
     }
-
-    /* ── First-load splash — the dancing doodle holds the wait. Dismisses
-       itself the moment the page is ready (never earlier than 900ms, never
-       later than 8s). Shown once per tab (sessionStorage). Sits on the page
-       tone, not the card surface — it IS the page, not a layer above it. ── */
-    .page-splash {
-      position: fixed; inset: 0; z-index: 200;
-      display: flex; align-items: safe center; justify-content: center;
-      overflow-y: auto;
-      background: var(--page-bg);
-      transition: opacity 0.6s ease;
+    /* Flow-loading skeleton — the lazy iframes can land late; until a flow
+       document arrives its phone shows an app-style skeleton: gray blocks
+       under a sweeping shimmer, the way a real product loads. Injected from
+       JS: only JS can dismiss it, so it must never render without it. */
+    .device-skeleton {
+      position: absolute; inset: 0; z-index: 2;
+      background: var(--color-constant-primary);
+      padding: 52px 18px 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
     }
-    .page-splash.is-leaving { opacity: 0; pointer-events: none; }
-    .page-splash__inner {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 12px; padding: 40px 24px; width: 100%; max-width: 640px;
+    .device-skeleton i {
+      display: block; border-radius: 10px;
+      background: var(--color-primary-transparent-08);
+      margin-bottom: 13px;
     }
-    /* the buddy keeps his guide-buddy.css life (wave, blink, breathing sway);
-       here he loses the fixed bottom-corner placement the guide gives him, and
-       display:block re-shows him where the guide hides itself (small screens,
-       touch, reduced motion) — a standing greeter works everywhere the
-       roaming tour guide doesn't */
-    .page-splash .gb { position: static; width: 92px; height: 104px; display: block; }
-    .page-splash__name {
-      font-family: var(--font-display, "Archivo", sans-serif);
-      font-weight: 900; font-size: 24px; letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--color-primary-transparent-87);
+    .device-skeleton i:nth-child(1) { width: 44%; height: 22px; }
+    .device-skeleton i:nth-child(2) { width: 82%; height: 11px; }
+    .device-skeleton i:nth-child(3) { width: 64%; height: 11px; }
+    .device-skeleton i:nth-child(4) { width: 100%; height: 172px; border-radius: 16px; margin-top: 20px; }
+    .device-skeleton i:nth-child(5) { width: 100%; height: 68px; border-radius: 16px; }
+    .device-skeleton::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(100deg, transparent 32%, var(--color-primary-transparent-08) 50%, transparent 68%);
+      background-size: 220% 100%;
+      animation: skeleton-sweep 1.5s ease-in-out infinite;
     }
-    .page-splash__role {
-      font-family: var(--font-display, "Archivo", sans-serif);
-      font-weight: 300; font-size: 12px; letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
+    @keyframes skeleton-sweep {
+      from { background-position: 190% 0; }
+      to   { background-position: -90% 0; }
     }
-    .page-splash__dots { display: flex; gap: 8px; margin-top: 2px; }
-    .page-splash__dots i {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--color-accent-orange);
-      animation: splash-dot 1.2s ease-in-out infinite;
-    }
-    /* three steps of the site violet — solid accent, its pressed depth, and
-       the 87% wash — so the trio reads as one hue breathing, not a traffic light */
-    .page-splash__dots i:nth-child(2) { background: var(--color-accent-orange-pressed); animation-delay: 0.15s; }
-    .page-splash__dots i:nth-child(3) { background: var(--color-accent-orange-transparent-87); animation-delay: 0.3s; }
-    @keyframes splash-dot {
-      0%, 100% { transform: translateY(0); opacity: 0.5; }
-      50%      { transform: translateY(-4px); opacity: 1; }
-    }
-    .page-splash__skip {
-      margin-top: 10px;
-      border: none; background: none; cursor: pointer; padding: 8px 12px;
-      font-family: var(--font-display, "Archivo", sans-serif);
-      font-weight: 500; font-size: 14px;
-      color: var(--color-primary-transparent-48);
-      transition: color 160ms ease;
-    }
-    .page-splash__skip:hover { color: var(--color-primary-transparent-87); }
+    .project-card__device.is-loaded .device-skeleton { opacity: 0; }
     @media (prefers-reduced-motion: reduce) {
-      .page-splash { transition: none; }
-      .page-splash__dots i { animation: none; }
-      .page-splash .gb .gb__hand, .page-splash .gb .gb__figure,
-      .page-splash .gb .gb__eye { animation: none; }
+      .device-skeleton::after { animation: none; }
     }
 
     /* ── Scroll buddy route — the guide fella runs the page as you scroll
@@ -530,6 +510,7 @@
       font-weight: 500; font-size: 14px; line-height: 20px;
       letter-spacing: 0.02em;
       color: var(--color-primary-transparent-48);
+      text-align: right;
       /* sink it a step below the CTA's baseline, into the bottom padding —
          a quiet signature line, not a peer of "Let's talk" (transform, so
          the flex row's wrap behaviour on narrow screens is untouched) */
@@ -539,34 +520,11 @@
 </head>
 <body>
 
-  <!-- First-load splash. In the markup (not injected) so it paints before any
-       asset lands; the inline script right below kills it instantly for repeat
-       visits in this tab, and <noscript> for readers with JS off. -->
-  <div class="page-splash" id="page-splash">
-    <div class="page-splash__inner">
-      <!-- The guide buddy in his hello-wave pose. The drawing is a static
-           copy of SPRITE in scripts/guide-buddy.js (the guide itself is
-           switched off on this page) — inlined so he paints with the first
-           HTML, before any script or asset arrives; guide-buddy.css (already
-           linked) runs the wave, the blink and the breathing sway. -->
-      <div class="page-splash__buddy gb gb--waving" aria-hidden="true"><div class="gb__sprite"><svg viewBox="0 0 124 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="gb__figure"><g class="gb__arm gb__arm--back"><path class="gb__fA" d="M32.219 50.4999C25.3857 44.9999 10.419 35.7999 5.21901 42.9999C0.0190084 50.1999 1.38567 64.9999 2.71901 71.4999M2.71901 71.4999L8.21924 82.9999M2.71901 71.4999L8.21924 69.9999M2.71901 71.4999V81.9999" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M25.5 57.5L7.79032 84M1.5 92L7.79032 84M1.5 84H7.79032M7.79032 84L6 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M31.6752 44.7846C23.0073 43.4381 5.4458 42.954 4.54247 51.7894C3.63913 60.6248 12.2227 72.7586 16.6274 77.7211M16.6274 77.7211L27.1407 84.9303M16.6274 77.7211L20.6407 73.672M16.6274 77.7211L21.8774 86.8144" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__leg gb__leg--back"><path class="gb__fA" d="M21.5 104.5L24 97C36.6667 96.6667 61 104.5 61 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M63.998 137H58.498C59.6647 120.167 60.798 82 55.998 64" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M68.7505 115.952L63.2053 110.317C68.6636 98.8821 86.6978 80.7647 47.9473 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__leg gb__leg--front"><path class="gb__fA" d="M71.5 130L64.5 133.5C65.8333 118.167 64.9 83.5 50.5 67.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M31.5 133L35 136.5C38.6667 121.333 45.5 87.9 43.5 69.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M38.9365 126.627L31.1244 126.158C39.9457 113.545 56.4708 83.0564 52 62" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__arm gb__arm--front"><g class="gb__fA"><path d="M83.7192 47C85.8859 56.5 93.7192 74.6 107.719 71C121.719 67.4 119.553 42.1667 116.719 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__hand"><path d="M116.719 30L110.719 23.5M116.719 30V14M116.719 30L122.219 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g></g><path class="gb__fB" d="M82.5 57.5L100.2 84M106.5 92L100.2 84M106.5 84H100.2M100.2 84L102 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fC" transform="translate(8 -3.5)" d="M92.9998 1.50024C93.6845 5.60853 94.4317 10.8004 95.0916 16.5002C97.3231 35.7738 98.5565 60.8565 92.9998 69.5002C85.7998 80.7002 76.3331 69.8336 72.4998 63.0002M95.0916 16.5002C97.2277 13.8336 104 13.5002 99.4999 22.5002" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M83.2334 43.5788C80.3598 52.8894 78.0937 72.4811 92.018 76.3634C105.942 80.2458 116.683 57.3097 120.312 45.3564M120.312 45.3564L118.366 36.7272M120.312 45.3564L128.312 31.5M120.312 45.3564L131.075 37.7141" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><circle cx="58" cy="35" r="35" fill="var(--color-accent-orange)"/><g class="gb__face gb__face--A"><path class="gb__mouth gb__mouth--a" d="M64 50C64.3333 51.3333 66.3 54 69.5 54C72.7 54 74.5 51.3333 75 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--al"><mask id="gb-eye-al" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="48" y="23" width="22" height="22"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-al)"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="57" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="60" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--ar"><mask id="gb-eye-ar" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="68" y="23" width="22" height="22"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-ar)"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="81" cy="35" r="6" fill="currentColor"/><circle cx="77" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="80" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g></g><g class="gb__face gb__face--B" transform="translate(8 0)"><path class="gb__mouth gb__mouth--b" d="M46 50C46.3333 51.3333 48.3 54 51.5 54C54.7 54 56.5 51.3333 57 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--bl"><mask id="gb-eye-bl" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="30" y="23" width="22" height="22"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-bl)"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="41" cy="35" r="6" fill="currentColor"/><circle cx="39" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="42" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="43.5" cy="31" r="6" fill="currentColor"/><circle cx="41.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="44.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--br"><mask id="gb-eye-br" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="50" y="23" width="22" height="22"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-br)"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="59" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="62" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="63.5" cy="31" r="6" fill="currentColor"/><circle cx="61.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="64.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g></g></g></svg></div></div>
-      <div class="page-splash__name" data-ru="Василиса Медведева">Vasilisa Medvedeva</div>
-      <div class="page-splash__role" data-ru="продуктовый дизайнер">Product Designer</div>
-      <div class="page-splash__dots" aria-hidden="true"><i></i><i></i><i></i></div>
-      <button class="page-splash__skip" type="button" data-ru="Пропустить →">Skip →</button>
-    </div>
-  </div>
-  <script>
-    // Stash the buddy drawing for scripts/scroll-buddy.js — the splash node
-    // (its only markup source) can be dismissed before that file loads.
-    // Then skip the splash entirely for repeat visits in this tab.
-    try {
-      var _splash = document.getElementById('page-splash');
-      window.__gbSpriteHTML = _splash.querySelector('.gb__sprite').innerHTML;
-      if (sessionStorage.getItem('plxSplash')) _splash.remove();
-    } catch (e) {}
-  </script>
-  <noscript><style>.page-splash { display: none; }</style></noscript>
+  <!-- The guide buddy's drawing — hidden master copy that
+       scripts/scroll-buddy.js clones for the scroll runner. Inline (never
+       fetched) so the runner starts without waiting on a request. The
+       drawing is a static copy of SPRITE in scripts/guide-buddy.js. -->
+  <div id="gb-sprite-src" hidden><svg viewBox="0 0 124 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="gb__figure"><g class="gb__arm gb__arm--back"><path class="gb__fA" d="M32.219 50.4999C25.3857 44.9999 10.419 35.7999 5.21901 42.9999C0.0190084 50.1999 1.38567 64.9999 2.71901 71.4999M2.71901 71.4999L8.21924 82.9999M2.71901 71.4999L8.21924 69.9999M2.71901 71.4999V81.9999" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M25.5 57.5L7.79032 84M1.5 92L7.79032 84M1.5 84H7.79032M7.79032 84L6 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M31.6752 44.7846C23.0073 43.4381 5.4458 42.954 4.54247 51.7894C3.63913 60.6248 12.2227 72.7586 16.6274 77.7211M16.6274 77.7211L27.1407 84.9303M16.6274 77.7211L20.6407 73.672M16.6274 77.7211L21.8774 86.8144" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__leg gb__leg--back"><path class="gb__fA" d="M21.5 104.5L24 97C36.6667 96.6667 61 104.5 61 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M63.998 137H58.498C59.6647 120.167 60.798 82 55.998 64" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M68.7505 115.952L63.2053 110.317C68.6636 98.8821 86.6978 80.7647 47.9473 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__leg gb__leg--front"><path class="gb__fA" d="M71.5 130L64.5 133.5C65.8333 118.167 64.9 83.5 50.5 67.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M31.5 133L35 136.5C38.6667 121.333 45.5 87.9 43.5 69.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M38.9365 126.627L31.1244 126.158C39.9457 113.545 56.4708 83.0564 52 62" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__arm gb__arm--front"><g class="gb__fA"><path d="M83.7192 47C85.8859 56.5 93.7192 74.6 107.719 71C121.719 67.4 119.553 42.1667 116.719 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__hand"><path d="M116.719 30L110.719 23.5M116.719 30V14M116.719 30L122.219 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g></g><path class="gb__fB" d="M82.5 57.5L100.2 84M106.5 92L100.2 84M106.5 84H100.2M100.2 84L102 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fC" transform="translate(8 -3.5)" d="M92.9998 1.50024C93.6845 5.60853 94.4317 10.8004 95.0916 16.5002C97.3231 35.7738 98.5565 60.8565 92.9998 69.5002C85.7998 80.7002 76.3331 69.8336 72.4998 63.0002M95.0916 16.5002C97.2277 13.8336 104 13.5002 99.4999 22.5002" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M83.2334 43.5788C80.3598 52.8894 78.0937 72.4811 92.018 76.3634C105.942 80.2458 116.683 57.3097 120.312 45.3564M120.312 45.3564L118.366 36.7272M120.312 45.3564L128.312 31.5M120.312 45.3564L131.075 37.7141" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><circle cx="58" cy="35" r="35" fill="var(--color-accent-orange)"/><g class="gb__face gb__face--A"><path class="gb__mouth gb__mouth--a" d="M64 50C64.3333 51.3333 66.3 54 69.5 54C72.7 54 74.5 51.3333 75 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--al"><mask id="gb-eye-al" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="48" y="23" width="22" height="22"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-al)"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="57" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="60" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--ar"><mask id="gb-eye-ar" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="68" y="23" width="22" height="22"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-ar)"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="81" cy="35" r="6" fill="currentColor"/><circle cx="77" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="80" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g></g><g class="gb__face gb__face--B" transform="translate(8 0)"><path class="gb__mouth gb__mouth--b" d="M46 50C46.3333 51.3333 48.3 54 51.5 54C54.7 54 56.5 51.3333 57 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--bl"><mask id="gb-eye-bl" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="30" y="23" width="22" height="22"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-bl)"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="41" cy="35" r="6" fill="currentColor"/><circle cx="39" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="42" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="43.5" cy="31" r="6" fill="currentColor"/><circle cx="41.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="44.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--br"><mask id="gb-eye-br" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="50" y="23" width="22" height="22"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-br)"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="59" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="62" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="63.5" cy="31" r="6" fill="currentColor"/><circle cx="61.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="64.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g></g></g></svg></div>
 
   <!-- Slow drifting violet light behind the page; sits at z-index -1 -->
   <div class="bg-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -611,6 +569,7 @@
     <section class="hero">
       <h1 class="hero__title" data-ru="Привет! Я работаю &lt;span class=&quot;hero__nowrap&quot;&gt;продуктовым&lt;/span&gt; дизайнером &lt;span class=&quot;hero__nowrap&quot;&gt;уже &lt;span class=&quot;hero__circle&quot;&gt;5+&lt;/span&gt; лет.&lt;/span&gt;">Hi! I&#8217;ve been working <span class="hero__nowrap">as&nbsp;a&nbsp;product</span> designer <span class="hero__nowrap">for <span class="hero__circle">5+</span> years.</span></h1>
       <div class="hero__aside">
+        <p class="hero__meta" data-ru="Лимассол, Кипр&nbsp;· открыта к&nbsp;удалённой, гибридной и&nbsp;офисной работе">Limassol, Cyprus&nbsp;&middot; open to&nbsp;remote, hybrid or&nbsp;on-site work</p>
         <p data-ru="Проектирую масштабируемые гибкие интерфейсы: они упрощают жизнь пользователю и&amp;nbsp;помогают бизнесу расти — на&amp;nbsp;балансе UX, целей бизнеса и&amp;nbsp;технических ограничений.">I create scalable, flexible interfaces that simplify user experiences and&nbsp;help businesses grow &mdash; balancing UX, business goals, and&nbsp;technical constraints.</p>
         <p data-ru="Быстро проверяю гипотезы и&amp;nbsp;провожу интервью, чтобы добраться до&amp;nbsp;настоящих причин поведения, — и&amp;nbsp;превращаю находки в&amp;nbsp;понятные, полезные решения.">I rapidly test hypotheses and&nbsp;run user interviews to&nbsp;uncover the&nbsp;root causes of&nbsp;behavior, turning insights into&nbsp;clear, valuable solutions.</p>
         <img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" aria-hidden="true" />
@@ -850,7 +809,7 @@
 
   <footer class="footer">
     <a class="footer__big" href="https://t.me/vamedvedeva" target="_blank" rel="noopener" data-ru="Давайте поговорим&amp;nbsp;&lt;svg class=&quot;footer__arrow&quot; viewBox=&quot;0 0 52 26&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M3 13.4C13 12.6 27 13 48 13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;">Let&#8217;s talk&nbsp;<svg class="footer__arrow" viewBox="0 0 52 26" fill="none" aria-hidden="true"><path d="M3 13.4C13 12.6 27 13 48 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <span class="footer__colophon" data-ru="© 2026 Василиса Медведева · продуктовый дизайнер">© 2026 Vasilisa Medvedeva · Product Designer</span>
+    <span class="footer__colophon" data-ru="© 2026 Василиса Медведева · продуктовый дизайнер&lt;br /&gt;Дизайн, анимации и&amp;nbsp;код этого сайта — мои, без&amp;nbsp;шаблонов">© 2026 Vasilisa Medvedeva · Product Designer<br />I designed, animated and&nbsp;hand-coded this site myself &mdash; no&nbsp;templates</span>
   </footer>
 
   <script>
@@ -868,6 +827,29 @@
     }
     window.addEventListener('load', fitFlows);
     window.addEventListener('resize', fitFlows);
+
+    // App-style loading skeleton for the embedded flows: the iframes are
+    // lazy and can land well after the card is on screen — hold each phone
+    // with a shimmering skeleton until its flow document actually arrives.
+    (function () {
+      document.querySelectorAll('.project-card__device').forEach(function (device) {
+        var frame = device.querySelector('iframe');
+        if (!frame) return;
+        var cover = document.createElement('div');
+        cover.className = 'device-skeleton';
+        cover.setAttribute('aria-hidden', 'true');
+        cover.innerHTML = '<i></i><i></i><i></i><i></i><i></i>';
+        device.appendChild(cover);
+        function ready () {
+          // the initial about:blank also fires load — only dismiss for the real flow
+          try { if (frame.contentDocument && frame.contentDocument.location.href === 'about:blank') return; } catch (e) {}
+          device.classList.add('is-loaded');
+        }
+        frame.addEventListener('load', ready);
+        // a cached flow can finish before this script runs
+        try { if (frame.contentDocument && frame.contentDocument.readyState === 'complete') ready(); } catch (e) {}
+      });
+    })();
 
     // Play the card's embedded flow demo only while the card is hovered; reset on leave.
     (function () {
@@ -992,48 +974,6 @@
       });
     })();
 
-    // ── First-load splash: while the curtain is up, the flow prototypes are
-    //    pulled in EAGERLY (they stay lazy for a repeat visit, which skips the
-    //    splash) — so the curtain lifts onto ready phones, not empty ones.
-    //    It fades once the page AND all four flows have landed — never earlier
-    //    than 900ms (so it doesn't strobe on a fast connection) and never
-    //    later than 8s (so one stuck asset can't hold the site hostage). The
-    //    skip button is the escape hatch for the impatient on a slow network.
-    (function () {
-      var splash = document.getElementById('page-splash');
-      if (!splash) return;
-      try { sessionStorage.setItem('plxSplash', '1'); } catch (e) {}
-
-      var loaded = false, minShown = false, dismissed = false;
-      var frames = Array.prototype.slice.call(document.querySelectorAll('.project-card__device iframe'));
-      var pending = frames.length;
-
-      function dismiss () {
-        if (dismissed) return;
-        dismissed = true;
-        splash.classList.add('is-leaving');
-        setTimeout(function () { splash.remove(); }, 650);
-      }
-      function maybeAuto () { if (loaded && minShown && pending <= 0) dismiss(); }
-
-      frames.forEach(function (f) {
-        var counted = false;
-        function done () {
-          if (counted) return;
-          // the initial about:blank also fires load — only count the real flow
-          try { if (f.contentDocument && f.contentDocument.location.href === 'about:blank') return; } catch (e) {}
-          counted = true; pending--; maybeAuto();
-        }
-        f.addEventListener('load', done);
-        f.loading = 'eager';   // lazy → eager starts the fetch right now
-        try { if (f.contentDocument && f.contentDocument.readyState === 'complete') done(); } catch (e) {}
-      });
-
-      splash.querySelector('.page-splash__skip').addEventListener('click', dismiss);
-      window.addEventListener('load', function () { loaded = true; maybeAuto(); });
-      setTimeout(function () { minShown = true; maybeAuto(); }, 900);
-      setTimeout(dismiss, 8000);
-    })();
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js"></script>

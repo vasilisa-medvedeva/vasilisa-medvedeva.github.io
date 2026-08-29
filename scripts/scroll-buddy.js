@@ -1,4 +1,4 @@
-/* Scroll buddy — the guide fella comes down from the splash and runs the
+/* Scroll buddy — the guide fella greets at the hero and runs the
    page as you scroll, the way the paper plane flies other portfolios.
 
    The route is built from the page's real landmarks — the 5+ circle in the
@@ -13,18 +13,18 @@
    classes (.gb--running / .gb--left / .gb--waving) do all the acting; this
    file only steers.
 
-   Sprite: the splash's inline drawing, stashed in window.__gbSpriteHTML by
-   the inline script under the splash markup (the splash node itself can be
-   gone before this file loads). guide-buddy.css hides .gb on touch, small
-   screens and reduced motion — this script bails out in the same conditions:
-   the runner is a desktop flourish, never a mobility tax. */
+   Sprite: cloned from the hidden #gb-sprite-src master copy in the page
+   markup. guide-buddy.css hides .gb on touch, small screens and reduced
+   motion — this script bails out in the same conditions: the runner is a
+   desktop flourish, never a mobility tax. */
 (function () {
   'use strict';
   if (matchMedia('(max-width: 900px)').matches ||
       matchMedia('(hover: none)').matches ||
       matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-  var spriteHTML = window.__gbSpriteHTML;
-  if (!spriteHTML) { return; }
+  var spriteSrc = document.getElementById('gb-sprite-src');
+  if (!spriteSrc) { return; }
+  var spriteHTML = spriteSrc.innerHTML;
 
   var route = document.createElement('div');
   route.className = 'buddy-route';
