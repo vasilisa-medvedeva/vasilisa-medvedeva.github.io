@@ -123,16 +123,29 @@
       [[0.66, 0.08], [0.42, 0.30], [0.68, 0.52], [0.40, 0.72], [0.38, 0.92]]
         .forEach(function (s) { pts.push([gx + g.width * s[0], gy + g.height * s[1]]); });
     }
-    // down the quiet column under each section title
+    // down the quiet column under each section title — except the About
+    // section, where he detours to stand BESIDE the two-truths quiz
+    var quizIdx = null, quizAim = null, quizZone = null;
     document.querySelectorAll('.info-section .section-title').forEach(function (t, i) {
-      pts.push(at(t, i % 2 ? 0.6 : 0.25, 1, 0, 90));
+      var sec = t.closest('.info-section');
+      var quiz = sec && sec.querySelector('#guess');
+      if (quiz) {
+        var q = quiz.getBoundingClientRect();
+        pts.push([q.left + window.scrollX - 55, q.top + window.scrollY + 74]);
+        quizIdx = pts.length - 1;
+        quizAim = [q.left + window.scrollX + 70, q.top + window.scrollY + 60];
+        quizZone = [q.top + window.scrollY - 120, q.bottom + window.scrollY + 60];
+      } else {
+        pts.push(at(t, i % 2 ? 0.6 : 0.25, 1, 0, 90));
+      }
     });
     if (footerBig) { pts.push(at(footerBig, 0.19, 0, 0, -4)); }   // feet on top of the word "Let's"
-    return pts;
+    return { pts: pts, quizAim: quizAim, quizZone: quizZone };
   }
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
   var lastMd = null, idleTimer = null;
+  var quizZone = null, quizAim = null;
 
   function update (force) {
     if (!pathLen) { return; }
@@ -160,27 +173,46 @@
     }
     if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
 
-    // he WAVES at both ends of the route — greeting at the 5+, goodbye at
-    // "Let's talk" — but never mid-run: the wave waits for the stand.
+    // Standing poses: he WAVES at both ends of the route (hello under the
+    // headline, goodbye on "Let's talk"), and beside the two-truths quiz he
+    // POINTS at it and swaps to his laughing face. Never mid-run — the
+    // acting waits for the stand.
     function atEdge (pv) { return pv > 0.985 || pv < 0.04; }
-    function setWaving (on) { buddy.classList.toggle('gb--waving', on); }
+    function standPose (pv) {
+      buddy.classList.toggle('gb--waving', atEdge(pv));
+      // "beside the quiz" = the visitor's read-line is over the quiz zone;
+      // the arm aims from wherever he actually stands
+      var readNow = window.scrollY + window.innerHeight * 0.55;
+      var near = !!(quizZone && quizAim && readNow > quizZone[0] && readNow < quizZone[1]);
+      if (near) {
+        var cpt = motion.getPointAtLength(pv * pathLen);
+        var deg = Math.atan2(quizAim[1] - (cpt.y - 45), quizAim[0] - cpt.x) * 180 / Math.PI;
+        buddy.classList.remove('gb--left');
+        buddy.style.setProperty('--gb-aim', Math.max(-75, Math.min(35, deg)).toFixed(1) + 'deg');
+      }
+      buddy.classList.toggle('gb--pointing', near);
+      buddy.classList.toggle('gb--laughing', near);
+    }
     if (moved) {
       buddy.classList.remove('gb--waving');
+      buddy.classList.remove('gb--pointing');
+      buddy.classList.remove('gb--laughing');
       buddy.classList.add('gb--running');
       clearTimeout(idleTimer);
       idleTimer = setTimeout(function () {
         buddy.classList.remove('gb--running');
-        setWaving(atEdge(lastMd / pathLen));
+        standPose(lastMd / pathLen);
         dissolveDots();   // he stopped — the tail melts away behind him
       }, 170);
     } else if (!buddy.classList.contains('gb--running')) {
-      setWaving(atEdge(p));
+      standPose(p);
     }
     look();   // he moved — refresh where his eyes point from the new spot
   }
 
   function build () {
-    var pts = anchors();
+    var a = anchors();
+    var pts = a.pts;
     if (pts.length < 2) { return; }
     var w = document.documentElement.clientWidth;
     var h = document.documentElement.scrollHeight;
@@ -189,6 +221,7 @@
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
     motion.setAttribute('d', smoothPath(pts));
     pathLen = motion.getTotalLength();
+    quizAim = a.quizAim; quizZone = a.quizZone;
     clearDots();   // geometry moved — old footprints point at nothing
     // p must start AT 0: at scrollY 0 the read-line already sits at 0.55·vh,
     // which can be below the start anchor — clamp so he holds the start
