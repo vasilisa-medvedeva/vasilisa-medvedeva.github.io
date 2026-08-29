@@ -62,7 +62,7 @@
             '<path d="M83.7192 47C85.8859 56.5 93.7192 74.6 107.719 71C121.719 67.4 119.553 42.1667 116.719 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
             '<g class="gb__hand"><path d="M116.719 30L110.719 23.5M116.719 30V14M116.719 30L122.219 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g>' +
           '</g>' +
-          '<path class="gb__fB" transform="translate(8 0)" d="M72 58C73.3333 67.8333 79.6 87.4 94 87C112 86.5 108 48 106 37M106 37C104.4 28.2 104.333 22 104.5 20M106 37L97 31.5M106 37L111 22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
+          '<path class="gb__fB" d="M82.5 57.5L100.2 84M106.5 92L100.2 84M106.5 84H100.2M100.2 84L102 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
           '<path class="gb__fC" transform="translate(8 -3.5)" d="M92.9998 1.50024C93.6845 5.60853 94.4317 10.8004 95.0916 16.5002C97.3231 35.7738 98.5565 60.8565 92.9998 69.5002C85.7998 80.7002 76.3331 69.8336 72.4998 63.0002M95.0916 16.5002C97.2277 13.8336 104 13.5002 99.4999 22.5002" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
           '<path class="gb__fD" transform="translate(-1.5 0)" d="M83.2334 43.5788C80.3598 52.8894 78.0937 72.4811 92.018 76.3634C105.942 80.2458 116.683 57.3097 120.312 45.3564M120.312 45.3564L118.366 36.7272M120.312 45.3564L128.312 31.5M120.312 45.3564L131.075 37.7141" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>' +
         '</g>' +

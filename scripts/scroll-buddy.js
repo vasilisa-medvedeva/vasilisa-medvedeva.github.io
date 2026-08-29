@@ -4,9 +4,9 @@
    The route is built from the page's real landmarks — the 5+ circle in the
    hero, a slalom through the projects grid, the empty column under each
    section title, and the footer CTA — so it survives any copy or layout
-   change that keeps those landmarks. A dotted trail is revealed exactly as
-   far as he has run (dash-offset on a mask over the dotted path, same trick
-   as a dash-reveal, but the dots stay dots).
+   change that keeps those landmarks. He leaves a short tail of footstep
+   dots behind him — at most six, graded to transparent with age, the oldest
+   dissolving as new ones land.
 
    He RUNS while the scroll is moving his target distance, STANDS when it
    rests, and WAVES when he reaches the footer — guide-buddy.css's flipbook
@@ -31,10 +31,6 @@
   route.setAttribute('aria-hidden', 'true');
   route.innerHTML =
     '<svg class="buddy-route__trail" fill="none">' +
-      '<defs><mask id="buddyTrailMask">' +
-        '<path id="buddyTrailMaskPath" fill="none" stroke="#fff" stroke-width="9"/>' +
-      '</mask></defs>' +
-      '<path id="buddyTrailDots" fill="none" mask="url(#buddyTrailMask)"/>' +
       '<path id="buddyMotionPath"/>' +
     '</svg>' +
     '<div class="gb"><div class="gb__sprite">' + spriteHTML + '</div></div>';
@@ -42,9 +38,34 @@
 
   var svg = route.querySelector('.buddy-route__trail');
   var motion = route.querySelector('#buddyMotionPath');
-  var dots = route.querySelector('#buddyTrailDots');
-  var maskPath = route.querySelector('#buddyTrailMaskPath');
   var buddy = route.querySelector('.gb');
+
+  /* Footstep dots: he leaves at most MAX_DOTS behind him, one every
+     DOT_EVERY px of path; each is a real element, graded from faint (old)
+     to solid (fresh), and the oldest fades out and leaves as new ones
+     land — a dissolving tail instead of a permanent drawn route. */
+  var MAX_DOTS = 6, DOT_EVERY = 30;
+  var dotQueue = [], lastDotMd = null;
+  function dropDot (pt) {
+    var dot = document.createElement('i');
+    dot.className = 'buddy-dot';
+    dot.style.transform = 'translate(' + (pt.x - 2.5).toFixed(1) + 'px,' + (pt.y - 2.5).toFixed(1) + 'px)';
+    route.appendChild(dot);
+    dotQueue.push(dot);
+    if (dotQueue.length > MAX_DOTS) {
+      var old = dotQueue.shift();
+      old.style.opacity = '0';
+      setTimeout(function () { old.remove(); }, 400);
+    }
+    for (var i = 0; i < dotQueue.length; i++) {
+      dotQueue[i].style.opacity = (0.15 + 0.65 * (i + 1) / dotQueue.length).toFixed(2);
+    }
+  }
+  function clearDots () {
+    dotQueue.forEach(function (d) { d.remove(); });
+    dotQueue = [];
+    lastDotMd = null;
+  }
 
   /* Catmull-Rom through the anchor points → one smooth bezier chain */
   function smoothPath (pts) {
@@ -105,14 +126,29 @@
     buddy.classList.toggle('gb--left', pB.x - pA.x < -0.5);
     // feet on the path: sprite is 72×82, feet ≈ (36, 78) in its own box
     buddy.style.transform = 'translate(' + (pt.x - 36).toFixed(1) + 'px,' + (pt.y - 78).toFixed(1) + 'px)';
-    maskPath.style.strokeDashoffset = pathLen - md;
+    // footstep dots — stepped, so a fast scroll seeds the span it jumped over
+    if (lastDotMd === null) { lastDotMd = md; }
+    var steps = 0;
+    while (Math.abs(md - lastDotMd) >= DOT_EVERY && steps < MAX_DOTS) {
+      lastDotMd += (md > lastDotMd ? DOT_EVERY : -DOT_EVERY);
+      dropDot(motion.getPointAtLength(lastDotMd));
+      steps++;
+    }
+    if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
 
-    var atEnd = p > 0.985;
-    buddy.classList.toggle('gb--waving', atEnd);   // made it — wave at "Let's talk"
-    if (moved && !atEnd) {
+    // he WAVES at both ends of the route — greeting at the 5+, goodbye at
+    // "Let's talk" — but never mid-run: the wave waits for the stand.
+    function atEdge (pv) { return pv > 0.985 || pv < 0.04; }
+    if (moved) {
+      buddy.classList.remove('gb--waving');
       buddy.classList.add('gb--running');
       clearTimeout(idleTimer);
-      idleTimer = setTimeout(function () { buddy.classList.remove('gb--running'); }, 170);
+      idleTimer = setTimeout(function () {
+        buddy.classList.remove('gb--running');
+        buddy.classList.toggle('gb--waving', atEdge(lastMd / pathLen));
+      }, 170);
+    } else if (!buddy.classList.contains('gb--running')) {
+      buddy.classList.toggle('gb--waving', atEdge(p));
     }
   }
 
@@ -124,12 +160,9 @@
     route.style.height = h + 'px';
     svg.setAttribute('width', w); svg.setAttribute('height', h);
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    var d = smoothPath(pts);
-    motion.setAttribute('d', d);
-    dots.setAttribute('d', d);
-    maskPath.setAttribute('d', d);
+    motion.setAttribute('d', smoothPath(pts));
     pathLen = motion.getTotalLength();
-    maskPath.style.strokeDasharray = pathLen;
+    clearDots();   // geometry moved — old footprints point at nothing
     pathTopY = pts[0][1];
     // p must be able to reach 1: the read-line maxes out at
     // docHeight − 0.45·vh, and the footer anchor can sit below that
