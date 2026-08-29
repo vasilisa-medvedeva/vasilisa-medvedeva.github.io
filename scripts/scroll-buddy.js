@@ -263,10 +263,10 @@
     pathLen = motion.getTotalLength();
     quizAim = a.quizAim; quizZone = a.quizZone;
     clearDots();   // geometry moved — old footprints point at nothing
-    // p must start AT 0: at scrollY 0 the read-line already sits at 0.55·vh,
-    // which can be below the start anchor — clamp so he holds the start
-    // point (under "for") until the visitor actually scrolls
-    pathTopY = Math.max(pts[0][1], window.innerHeight * 0.55 + 2);
+    // p is anchored to the read-line's position AT scrollY 0 — so he holds
+    // his mark on an unscrolled page and starts running with the very first
+    // pixel of scroll, no dead zone while the read-line catches up to him
+    pathTopY = window.innerHeight * 0.55 + 2;
     // p must be able to reach 1: the read-line maxes out at
     // docHeight − 0.45·vh, and the footer anchor can sit below that
     pathBotY = Math.min(pts[pts.length - 1][1],
