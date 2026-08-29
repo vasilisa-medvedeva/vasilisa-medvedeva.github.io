@@ -148,6 +148,61 @@
 
   var pathLen = 0, pathTopY = 0, pathBotY = 0;
   var lastMd = null, idleTimer = null;
+  var gridEntryMd = null, gridExitMd = null;
+
+  // place him (and his footsteps) at a path distance — shared by scroll
+  // updates and the grid-escape glide
+  function placeAt (md) {
+    lastMd = md;
+    var pt = motion.getPointAtLength(md);
+    var pA = motion.getPointAtLength(Math.max(0, md - 2));
+    var pB = motion.getPointAtLength(Math.min(pathLen, md + 2));
+    buddy.classList.toggle('gb--left', pB.x - pA.x < -0.5);
+    // feet on the path: sprite is 72×82, feet ≈ (36, 78) in its own box
+    buddy.style.transform = 'translate(' + (pt.x - 36).toFixed(1) + 'px,' + (pt.y - 78).toFixed(1) + 'px)';
+    // footstep dots — stepped, so a fast scroll seeds the span it jumped over
+    if (lastDotMd === null) { lastDotMd = md; }
+    var steps = 0;
+    while (Math.abs(md - lastDotMd) >= DOT_EVERY && steps < MAX_DOTS) {
+      lastDotMd += (md > lastDotMd ? DOT_EVERY : -DOT_EVERY);
+      dropDot(motion.getPointAtLength(lastDotMd));
+      steps++;
+    }
+    if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
+    look();
+  }
+
+  /* The project cards sit ABOVE his layer — resting inside the grid parks
+     him invisibly behind them (an arrow-jump to #projects does exactly
+     that). So when the scroll settles mid-grid, he runs himself out to the
+     nearest grid edge and back into the light. */
+  var gliding = false, glideTimer = null;
+  function cancelGlide () {
+    if (!gliding) { return; }
+    gliding = false;
+    clearTimeout(glideTimer);
+    buddy.classList.remove('gb--running');
+  }
+  function maybeEscapeGrid () {
+    if (gridEntryMd === null || gridExitMd === null) { return; }
+    if (lastMd <= gridEntryMd || lastMd >= gridExitMd) { return; }
+    var target = (lastMd - gridEntryMd < gridExitMd - lastMd) ? gridEntryMd : gridExitMd;
+    gliding = true;
+    buddy.classList.add('gb--running');
+    (function step () {
+      if (!gliding) { return; }
+      var d = target - lastMd;
+      if (Math.abs(d) <= 7) {
+        placeAt(target);
+        gliding = false;
+        buddy.classList.remove('gb--running');
+        dissolveDots();
+        return;
+      }
+      placeAt(lastMd + (d > 0 ? 7 : -7));
+      glideTimer = setTimeout(step, 16);
+    })();
+  }
 
   /* Entrance: on the first load he RUNS IN from beyond the left edge to his
      mark beside the numbers, dropping footsteps, then stands and waves.
@@ -195,23 +250,8 @@
     var md = p * pathLen;
     if (md === lastMd && !force) { return; }
     var moved = lastMd !== null && Math.abs(md - lastMd) > 0.5;
-    lastMd = md;
-
-    var pt = motion.getPointAtLength(md);
-    var pA = motion.getPointAtLength(Math.max(0, md - 2));
-    var pB = motion.getPointAtLength(Math.min(pathLen, md + 2));
-    buddy.classList.toggle('gb--left', pB.x - pA.x < -0.5);
-    // feet on the path: sprite is 72×82, feet ≈ (36, 78) in its own box
-    buddy.style.transform = 'translate(' + (pt.x - 36).toFixed(1) + 'px,' + (pt.y - 78).toFixed(1) + 'px)';
-    // footstep dots — stepped, so a fast scroll seeds the span it jumped over
-    if (lastDotMd === null) { lastDotMd = md; }
-    var steps = 0;
-    while (Math.abs(md - lastDotMd) >= DOT_EVERY && steps < MAX_DOTS) {
-      lastDotMd += (md > lastDotMd ? DOT_EVERY : -DOT_EVERY);
-      dropDot(motion.getPointAtLength(lastDotMd));
-      steps++;
-    }
-    if (steps === MAX_DOTS) { lastDotMd = md; }   // huge jump — snap under his feet
+    cancelGlide();
+    placeAt(md);
 
     // Standing poses: he WAVES at both ends of the route (hello under the
     // headline, goodbye on "Let's talk"), and beside the two-truths quiz he
@@ -243,6 +283,7 @@
         buddy.classList.remove('gb--running');
         standPose(lastMd / pathLen);
         dissolveDots();   // he stopped — the tail melts away behind him
+        maybeEscapeGrid();
       }, 170);
     } else if (!buddy.classList.contains('gb--running')) {
       standPose(p);
@@ -262,6 +303,19 @@
     motion.setAttribute('d', smoothPath(pts));
     pathLen = motion.getTotalLength();
     quizAim = a.quizAim; quizZone = a.quizZone;
+    // md marks for where the route dives under the cards and re-emerges
+    gridEntryMd = null; gridExitMd = null;
+    var gEl = document.querySelector('.projects-grid');
+    if (gEl) {
+      var gr = gEl.getBoundingClientRect();
+      var gTop = gr.top + window.scrollY - 30, gBot = gr.bottom + window.scrollY + 30;
+      for (var m = 0; m <= pathLen; m += 12) {
+        var sp = motion.getPointAtLength(m);
+        if (sp.y < gTop) { gridEntryMd = m; }
+        if (gridExitMd === null && sp.y > gBot) { gridExitMd = m; }
+      }
+    }
+    cancelGlide();
     clearDots();   // geometry moved — old footprints point at nothing
     // p is anchored to the read-line's position AT scrollY 0 — so he holds
     // his mark on an unscrolled page and starts running with the very first
