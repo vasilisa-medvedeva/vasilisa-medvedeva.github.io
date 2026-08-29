@@ -225,16 +225,21 @@
     entranceDone = true;
     if (window.scrollY > 60) { update(true); return; }
     entering = true;
-    var target = motion.getPointAtLength(0);
-    var x = document.documentElement.clientWidth + 90, y = target.y, lastDotX = x;
+    var x = document.documentElement.clientWidth + 90, lastDotX = x;
     buddy.classList.add('gb--left');   // he enters from the right, facing left
     buddy.classList.add('gb--running');
     (function step () {
       if (!entering) { return; }
-      x -= 4.5;   // an unhurried entrance — half his route-running speed
-      buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (y - 78).toFixed(1) + 'px)';
-      if (lastDotX - x >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: y }); }
-      if (x <= target.x) {
+      // the mark is re-read every step: web fonts can resize the headline
+      // mid-entrance and move it — he follows, instead of finishing on a
+      // stale spot and teleporting
+      var target = motion.getPointAtLength(0);
+      var dxT = target.x - x;
+      buddy.classList.toggle('gb--left', dxT < 0);
+      x += (dxT > 0 ? 4.5 : -4.5);   // an unhurried entrance
+      buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (target.y - 78).toFixed(1) + 'px)';
+      if (Math.abs(lastDotX - x) >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: target.y }); }
+      if (Math.abs(dxT) <= 5) {
         entering = false;
         buddy.classList.remove('gb--running');
         lastMd = null;
