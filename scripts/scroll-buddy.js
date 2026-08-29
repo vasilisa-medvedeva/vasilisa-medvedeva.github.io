@@ -302,7 +302,7 @@
         buddy.classList.remove('gb--running');
         standPose(lastMd / pathLen);
         dissolveDots();   // he stopped — the tail melts away behind him
-        maybeEscapeGrid();
+        // (user's call: if he rests behind a card, he stays tucked there)
       }, 170);
     } else if (!buddy.classList.contains('gb--running')) {
       standPose(p);
