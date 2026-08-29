@@ -109,15 +109,18 @@
     var grid = document.querySelector('.projects-grid');
     var footerBig = document.querySelector('.footer__big');
     if (circle) {
-      // start right under the word before the 5+ ("for" / «уже») — measured
-      // as a text range so his head tucks just beneath the headline's line
+      // start ON the layout grid's left line, just under the headline's last
+      // line (the line is measured via a text range; +28 centres his feet so
+      // the body's left edge sits flush with the text edge)
       var start = null;
       var wrap = circle.parentElement;
-      if (wrap && wrap.firstChild && wrap.firstChild.nodeType === 3) {
+      var titleEl = document.querySelector('.hero__title');
+      if (wrap && wrap.firstChild && wrap.firstChild.nodeType === 3 && titleEl) {
         var range = document.createRange();
         range.selectNodeContents(wrap.firstChild);
         var r = range.getBoundingClientRect();
-        start = [r.left + r.width / 2 + window.scrollX, r.bottom + window.scrollY + 84];
+        var tx = titleEl.getBoundingClientRect().left + window.scrollX;
+        start = [tx + 28, r.bottom + window.scrollY + 84];
       }
       pts.push(start || at(circle, 0.5, 1, 44, 30));
     }
