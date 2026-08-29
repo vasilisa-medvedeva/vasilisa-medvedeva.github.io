@@ -161,6 +161,9 @@
       margin-top: 24px;   /* close enough for the first card to peek into view */
       padding-bottom: 50px;
     }
+    /* the left column rides a step higher, the right a step lower — the
+       stagger reads as intent (≈64px total), and Nomerogram leads */
+    .projects-grid > .project-card:nth-child(odd) { position: relative; top: -24px; }
     .projects-grid > .project-card:nth-child(even) { position: relative; top: 40px; }
 
     .project-card {
