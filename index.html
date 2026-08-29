@@ -175,18 +175,22 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    /* Metric chips on the project cards wear the cool family — four blues
-       and violets from the tokens, rotated by card parity so neighbouring
-       cards never repeat a pair. All four hold white text at AA (accent-87
-       is documented at 5.1:1; pressed violet ≈5.7, info blues ≥5.9). Kept
-       off the tool chips: those are an inventory, these are the sell. */
+    /* Metric chips wear the "aurora" palette (--color-chip-1…8, see
+       color-tokens.css): each card pairs one violet-family chip with one
+       blue/teal chip, and no color repeats anywhere in the grid. White
+       text passes AA on all eight. Kept off the tool chips: those are an
+       inventory, these are the sell. */
     .project-card__pills .meta-chip {
       color: var(--color-constant-transparent-87);
     }
-    .project-card__pills .meta-chip:nth-child(1) { background: var(--color-accent-orange-transparent-87); }
-    .project-card__pills .meta-chip:nth-child(2) { background: var(--color-info-secondary); }
-    .projects-grid > .project-card:nth-child(even) .project-card__pills .meta-chip:nth-child(1) { background: var(--color-info-tertiary); }
-    .projects-grid > .project-card:nth-child(even) .project-card__pills .meta-chip:nth-child(2) { background: var(--color-accent-orange-pressed); }
+    .projects-grid > .project-card:nth-child(1) .meta-chip:nth-child(1) { background: var(--color-chip-1); }
+    .projects-grid > .project-card:nth-child(1) .meta-chip:nth-child(2) { background: var(--color-chip-5); }
+    .projects-grid > .project-card:nth-child(2) .meta-chip:nth-child(1) { background: var(--color-chip-4); }
+    .projects-grid > .project-card:nth-child(2) .meta-chip:nth-child(2) { background: var(--color-chip-2); }
+    .projects-grid > .project-card:nth-child(3) .meta-chip:nth-child(1) { background: var(--color-chip-6); }
+    .projects-grid > .project-card:nth-child(3) .meta-chip:nth-child(2) { background: var(--color-chip-3); }
+    .projects-grid > .project-card:nth-child(4) .meta-chip:nth-child(1) { background: var(--color-chip-8); }
+    .projects-grid > .project-card:nth-child(4) .meta-chip:nth-child(2) { background: var(--color-chip-7); }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;

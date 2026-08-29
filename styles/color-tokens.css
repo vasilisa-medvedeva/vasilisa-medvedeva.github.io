@@ -52,6 +52,19 @@
      clears AA at 5.1:1, where the solid accent only manages 4.2:1. */
   --color-accent-orange-transparent-87: rgba(139, 92, 246, 0.87);
 
+  /* Chip palette — "aurora": violets, blues and deep teals for the metric
+     chips on dark project cards. Every value holds WHITE text at AA on a
+     #242424 card (5.1–9:1). Slots 1, 2 and 4 alias existing site tokens;
+     the teal/indigo steps are new to the system and live only here. */
+  --color-chip-1: var(--color-accent-orange-transparent-87);  /* violet 87% */
+  --color-chip-2: var(--color-accent-orange-pressed);         /* deep violet */
+  --color-chip-3: #4F46E5;                                    /* indigo */
+  --color-chip-4: var(--color-info-secondary);                /* blue */
+  --color-chip-5: #0E7490;                                    /* cyan */
+  --color-chip-6: #0F766E;                                    /* teal */
+  --color-chip-7: #155E75;                                    /* deep cyan */
+  --color-chip-8: #5B21B6;                                    /* violet depth */
+
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;
   --color-brand-yellow-secondary: #FFB928;
