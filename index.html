@@ -175,23 +175,14 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    /* Metric chips wear the "indigo ladder" (--color-chip-1…8, see
-       color-tokens.css): a monochrome descent from the site violet into
-       blue. Each card pairs one rung from the violet end (1–4) with one
-       from the blue end (5–8), no color repeats anywhere in the grid, and
-       white text passes AA on every rung. Kept off the tool chips: those
-       are an inventory, these are the sell. */
+    /* Metric chips: one voice, the info blue — every chip on every card the
+       same, so the numbers read as a system, not a fruit salad. White text
+       on it clears AA at 5.9:1. Kept off the tool chips: those are an
+       inventory, these are the sell. */
     .project-card__pills .meta-chip {
+      background: var(--color-info-secondary);
       color: var(--color-constant-transparent-87);
     }
-    .projects-grid > .project-card:nth-child(1) .meta-chip:nth-child(1) { background: var(--color-chip-1); }
-    .projects-grid > .project-card:nth-child(1) .meta-chip:nth-child(2) { background: var(--color-chip-5); }
-    .projects-grid > .project-card:nth-child(2) .meta-chip:nth-child(1) { background: var(--color-chip-2); }
-    .projects-grid > .project-card:nth-child(2) .meta-chip:nth-child(2) { background: var(--color-chip-7); }
-    .projects-grid > .project-card:nth-child(3) .meta-chip:nth-child(1) { background: var(--color-chip-3); }
-    .projects-grid > .project-card:nth-child(3) .meta-chip:nth-child(2) { background: var(--color-chip-6); }
-    .projects-grid > .project-card:nth-child(4) .meta-chip:nth-child(1) { background: var(--color-chip-4); }
-    .projects-grid > .project-card:nth-child(4) .meta-chip:nth-child(2) { background: var(--color-chip-8); }
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;

@@ -52,20 +52,6 @@
      clears AA at 5.1:1, where the solid accent only manages 4.2:1. */
   --color-accent-orange-transparent-87: rgba(139, 92, 246, 0.87);
 
-  /* Chip palette — "indigo ladder": one monochrome descent from the site
-     accent down into blue, for the metric chips on dark project cards.
-     Every step holds WHITE text at AA on a #242424 card (5.1–9:1).
-     Steps 1, 2, 7 and 8 alias existing site tokens; the middle rungs are
-     new to the system and live only here. */
-  --color-chip-1: var(--color-accent-orange-transparent-87);  /* violet 87% */
-  --color-chip-2: var(--color-accent-orange-pressed);         /* deep violet */
-  --color-chip-3: #6D28D9;                                    /* violet depth */
-  --color-chip-4: #5B21B6;                                    /* darkest violet */
-  --color-chip-5: #4F46E5;                                    /* indigo */
-  --color-chip-6: #4338CA;                                    /* deep indigo */
-  --color-chip-7: var(--color-info-secondary);                /* blue */
-  --color-chip-8: var(--color-info-tertiary);                 /* deep blue */
-
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;
   --color-brand-yellow-secondary: #FFB928;
