@@ -221,15 +221,15 @@
     if (window.scrollY > 60) { update(true); return; }
     entering = true;
     var target = motion.getPointAtLength(0);
-    var x = -90, y = target.y, lastDotX = x;
-    buddy.classList.remove('gb--left');
+    var x = document.documentElement.clientWidth + 90, y = target.y, lastDotX = x;
+    buddy.classList.add('gb--left');   // he enters from the right, facing left
     buddy.classList.add('gb--running');
     (function step () {
       if (!entering) { return; }
-      x += 4.5;   // an unhurried entrance — half his route-running speed
+      x -= 4.5;   // an unhurried entrance — half his route-running speed
       buddy.style.transform = 'translate(' + (x - 36).toFixed(1) + 'px,' + (y - 78).toFixed(1) + 'px)';
-      if (x - lastDotX >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: y }); }
-      if (x >= target.x) {
+      if (lastDotX - x >= DOT_EVERY) { lastDotX = x; dropDot({ x: x, y: y }); }
+      if (x <= target.x) {
         entering = false;
         buddy.classList.remove('gb--running');
         lastMd = null;
