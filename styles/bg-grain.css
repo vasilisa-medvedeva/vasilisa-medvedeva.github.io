@@ -23,3 +23,18 @@
   background-size: 160px 160px;
   opacity: 0.03;
 }
+
+/* The header floats above the grain — it is content, the grain sits at
+   z-index -1 — so on a flat fill it reads two 8-bit levels darker than the
+   page it hovers over. Give it the same tooth rather than fudging its
+   colour by hand: matched by construction, and it stays matched if the
+   grain is ever retuned. The alpha is baked into the tile here, because a
+   background layer cannot carry an opacity of its own.
+
+   Loaded after theme-dark.css, so this background-image survives that
+   file's `background: var(--page-bg)` shorthand, which supplies the colour
+   underneath. */
+.site-header {
+  background-image: url("data:image/svg+xml,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'><filter%20id='n'><feTurbulence%20type='fractalNoise'%20baseFrequency='0.75'%20numOctaves='2'%20stitchTiles='stitch'/><feColorMatrix%20type='saturate'%20values='0'/></filter><rect%20width='160'%20height='160'%20filter='url(%23n)'%20opacity='0.03'/></svg>");
+  background-size: 160px 160px;
+}
