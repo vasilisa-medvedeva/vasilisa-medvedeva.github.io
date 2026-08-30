@@ -83,11 +83,16 @@
 /* ── The swap itself ──
    While html carries .lang-swapping the page content softens out — a short
    fade with a whisper of blur — the words change under it, and it breathes
-   back in. The switch stays crisp so the reader keeps their anchor. */
-body > *:not(.lang-switch):not(.site-header):not(.bg-grain) {
+   back in. The switch stays crisp so the reader keeps their anchor.
+
+   The mobile menu and its scrim are excluded along with the header: they are
+   chrome, not content. They also carry transitions of their own, and this
+   selector outranks them — a body-child with several :not() classes beats a
+   single class — which is why the panel used to jump instead of slide. */
+body > *:not(.lang-switch):not(.site-header):not(.bg-grain):not(.mobile-nav):not(.mobile-nav__scrim) {
   transition: opacity .24s ease, filter .24s ease;
 }
-html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-grain) {
+html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-grain):not(.mobile-nav):not(.mobile-nav__scrim) {
   opacity: 0;
   filter: blur(6px);
   transition-duration: .18s;

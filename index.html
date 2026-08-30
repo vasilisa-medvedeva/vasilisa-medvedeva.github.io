@@ -42,10 +42,10 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/guide-buddy.css" />
-  <link rel="stylesheet" href="styles/lang-switch.css?v=2" />
+  <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -547,8 +547,13 @@
       .hero__sub, .hero__arrow-link { margin-left: 0; }
       /* Projects stack; both staggered offsets drop */
       .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid { gap: 20px; }
       .projects-grid > .project-card:nth-child(odd),
       .projects-grid > .project-card:nth-child(even) { top: 0; }
+      /* the stagger's compensating margin goes with it: in one column there
+         is nothing above to make room for, and it left the first gap 50px
+         wider than the rest */
+      .projects-grid > .project-card:nth-child(1) { margin-bottom: 0; }
     }
 
     @media (max-width: 600px) {
@@ -561,7 +566,6 @@
          it stands 607px tall (360/780), so the stage has to clear 24 + 607. */
       .project-card__stage { height: 660px; }
       .project-card__device { width: 280px; max-width: 280px; }
-      .footer { padding: 32px 12px 48px; }
     }
 
     /* ── Footer — a big closing sign-off; contacts already live in the header ── */
@@ -597,6 +601,26 @@
          a quiet signature line, not a peer of "Let's talk" (transform, so
          the flex row's wrap behaviour on narrow screens is untouched) */
       transform: translateY(26px);
+    }
+
+    /* ── Footer, narrow screens ──────────────────────────────────────────
+       This block has to sit AFTER the rules above, not in the page's earlier
+       @media: same specificity, so source order decides, and the earlier one
+       simply lost. Stacked, the footer is a different composition from the
+       desktop row — the signature is no longer a right-hand column, so it
+       stops behaving like one. */
+    @media (max-width: 600px) {
+      .footer { padding: 40px 12px 44px; gap: 14px; }
+      .footer__big {
+        /* small enough that the arrow stays on the line with the last word
+           instead of dropping below it on its own */
+        font-size: clamp(26px, 8vw, 34px);
+      }
+      .footer__colophon {
+        text-align: left;
+        transform: none;   /* the sink was for the desktop row's baseline */
+        max-width: 30ch;   /* keeps the line breaks off awkward words */
+      }
     }
   </style>
 </head>
@@ -642,6 +666,7 @@
         <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
         <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
         <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
       </nav>
     </div>
   </header>
@@ -888,7 +913,7 @@
 
   <footer class="footer">
     <a class="footer__big" href="https://t.me/vamedvedeva" target="_blank" rel="noopener" data-ru="Давайте поговорим&amp;nbsp;&lt;svg class=&quot;footer__arrow&quot; viewBox=&quot;0 0 52 26&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M3 13.4C13 12.6 27 13 48 13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;">Let&#8217;s talk&nbsp;<svg class="footer__arrow" viewBox="0 0 52 26" fill="none" aria-hidden="true"><path d="M3 13.4C13 12.6 27 13 48 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <span class="footer__colophon" data-ru="Дизайн, анимации и&amp;nbsp;код этого сайта — мои&lt;br /&gt;© 2026 Василиса Медведева · продуктовый дизайнер">I designed, animated and&nbsp;hand-coded this site myself<br />© 2026 Vasilisa Medvedeva · Product Designer</span>
+    <span class="footer__colophon" data-ru="© 2026 Василиса Медведева">© 2026 Vasilisa Medvedeva</span>
   </footer>
 
   <script>
@@ -1028,7 +1053,7 @@
     })();
 
   </script>
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
   <script src="scripts/analytics.js?v=2"></script>
   <script src="scripts/poster-fit.js?v=3"></script>
   <!-- Guide buddy is off for now. He builds his own chip and runs his own

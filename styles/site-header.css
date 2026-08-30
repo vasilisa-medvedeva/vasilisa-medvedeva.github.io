@@ -314,10 +314,44 @@ body.mobile-nav-open .mobile-nav__scrim {
   padding: 76px 20px 28px;         /* clears the 60px header */
   z-index: 19;
   transform: translateY(-100%);
-  transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1);
+  /* closing: accelerate away — a menu that is done should leave briskly */
+  transition: transform 0.22s cubic-bezier(0.4, 0, 1, 1);
   max-height: 100vh; overflow-y: auto;
 }
-body.mobile-nav-open .mobile-nav { transform: translateY(0); }
+body.mobile-nav-open .mobile-nav {
+  transform: translateY(0);
+  /* opening: decelerate in, a touch longer, so the drop has weight */
+  transition: transform 0.36s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+/* ── The contents arrive behind the panel ──────────────────────────────
+   The panel alone dropping reads as one flat slab. Letting each row catch
+   up a beat later turns it into an opening: the eye follows the list down
+   in the order it will be read. The stagger exists only on the way in —
+   on the way out everything leaves together and fast, because a stagger
+   on close reads as lag, not as craft. */
+.mobile-nav__label,
+.mobile-nav__link {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+body.mobile-nav-open .mobile-nav__label,
+body.mobile-nav-open .mobile-nav__link {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.24s ease, transform 0.34s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+body.mobile-nav-open .mobile-nav > *:nth-child(1)  { transition-delay: 0.09s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(2)  { transition-delay: 0.12s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(3)  { transition-delay: 0.15s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(4)  { transition-delay: 0.18s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(5)  { transition-delay: 0.21s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(6)  { transition-delay: 0.24s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(7)  { transition-delay: 0.27s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(8)  { transition-delay: 0.30s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(9)  { transition-delay: 0.33s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(n+10) { transition-delay: 0.36s; }
 
 .mobile-nav__label {
   font-family: var(--font-display, "Archivo", sans-serif);
@@ -342,7 +376,26 @@ body.mobile-nav-open .mobile-nav { transform: translateY(0); }
   padding-left: 20px;
 }
 .mobile-nav__link:active { background: var(--color-primary-transparent-04); }
+/* Opens a group where a heading used to sit — the space says "different kind
+   of thing" without spending a line of type on saying it. */
+.mobile-nav__link--group { margin-top: 34px; }
 
 @media (min-width: 701px) {
   .mobile-nav, .mobile-nav__scrim { display: none; }
+}
+
+/* Motion-sensitive visitors get the menu, not the choreography */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav,
+  .mobile-nav__scrim,
+  .mobile-nav__label,
+  .mobile-nav__link,
+  .site-header__burger span,
+  .site-header__burger span::before,
+  .site-header__burger span::after {
+    transition: none !important;
+    transition-delay: 0s !important;
+  }
+  .mobile-nav__label,
+  .mobile-nav__link { transform: none; }
 }

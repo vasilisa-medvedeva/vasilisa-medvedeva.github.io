@@ -83,12 +83,15 @@
     }
   }
 
-  // Contacts (Telegram / LinkedIn / Email — CV stays the pill above)
-  var contacts = contactLinks.filter(function (a) { return a !== cvLink; });
-  if (contacts.length) {
-    addLabel('Contacts');
-    contacts.forEach(function (a) { addLink(a.getAttribute('href'), a.textContent.trim(), false); });
-  }
+  /* Contacts — every way to reach her, the CV included: inside a menu the CV
+     is one more way to get in touch, not a pill of its own. No heading above
+     them; the gap says "different kind of thing", and one fewer label is one
+     fewer line to read. */
+  var contacts = contactLinks.slice();
+  contacts.forEach(function (a, i) {
+    addLink(a.getAttribute('href'), a.textContent.trim(), false);
+    if (i === 0) { panel.lastChild.classList.add('mobile-nav__link--group'); }
+  });
 
   document.body.appendChild(scrim);
   document.body.appendChild(panel);

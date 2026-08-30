@@ -42,10 +42,11 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css" />
-  <link rel="stylesheet" href="styles/lang-switch.css?v=2" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
+  <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <!-- Archivo — used for flow-card copy (same as the flow pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -331,6 +332,8 @@
   </style>
 </head>
 <body>
+  <!-- Static grain over the flat dark; sits at z-index -1 -->
+  <div class="bg-grain" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="site-header__inner">
@@ -609,7 +612,7 @@
     })();
 
   </script>
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
   <script src="scripts/analytics.js?v=2"></script>
   <script src="scripts/poster-fit.js?v=3"></script>
   <script src="scripts/i18n.js"></script>
