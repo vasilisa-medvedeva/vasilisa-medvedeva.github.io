@@ -658,6 +658,12 @@
     }
 
     @media (max-width: 600px) {
+      /* The phone is the case on a narrow screen — give it the width the
+         demo's padding was holding back. The screenshot inside is
+         width:100%, so it scales with the frame. */
+      .pdd-demo { padding: 28px 10px; }
+      .pdd-phone { width: min(300px, 84vw); }
+      .pdd-demo .video-timeline { max-width: min(300px, 84vw); }
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
@@ -711,7 +717,7 @@
   <main class="main">
     <section class="hero">
       <span class="hero__eyebrow" data-ru="Дром ПДД · iOS / Android / Веб">Drom PDD · iOS / Android / Web</span>
-      <h1 class="hero__title" data-ru="Дром ПДД помогает выучить правила<br />и&amp;nbsp;сдать&amp;nbsp;теорию&amp;nbsp;в&amp;nbsp;ГИБДД">Drom PDD helps drivers learn traffic rules<br />and&nbsp;pass the&nbsp;theory&nbsp;exam</h1>
+      <h1 class="hero__title" data-ru="Дром ПДД помогает выучить правила<br />и&amp;nbsp;сдать теорию в&amp;nbsp;ГИБДД">Drom PDD helps drivers learn traffic rules<br />and&nbsp;pass the theory exam</h1>
       <div class="hero__aside">
         <p data-ru="Теорию сдаёт каждый будущий водитель в&amp;nbsp;России, и&amp;nbsp;это одно из&amp;nbsp;крупнейших приложений для&amp;nbsp;подготовки: больше 10&amp;nbsp;миллионов загрузок и&amp;nbsp;стабильные верхние строчки в&amp;nbsp;разделе «Образование» Google Play.">Every future driver in&nbsp;Russia takes the&nbsp;same theory exam, and&nbsp;this is&nbsp;one of&nbsp;the&nbsp;biggest apps to&nbsp;prepare for&nbsp;it: over&nbsp;10&nbsp;million downloads, consistently at&nbsp;the&nbsp;top of&nbsp;Google Play&#8217;s education charts.</p>
         <span class="hero__stores">
@@ -1119,7 +1125,7 @@
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js"></script>
+  <script src="scripts/poster-fit.js?v=3"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

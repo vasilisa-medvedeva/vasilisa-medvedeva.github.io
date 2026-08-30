@@ -21,7 +21,12 @@
     t.style.whiteSpace = '';
     if (!natural) return;
     var size = 100 * t.clientWidth / natural * 0.985;
-    t.style.fontSize = Math.max(40, Math.min(220, size)) + 'px';
+    /* The floor is a safety net, not a design choice: the fitted size is what
+       should win. It used to be 40px, which was never reached on the front
+       page's short headline but is far above what a case headline needs on a
+       narrow screen — the line then stayed wider than the viewport, and the
+       nbsp-joined words gave the browser nowhere to break it. */
+    t.style.fontSize = Math.max(28, Math.min(220, size)) + 'px';
   }
   var queue;
   function refit () { clearTimeout(queue); queue = setTimeout(fit, 60); }

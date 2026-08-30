@@ -533,6 +533,12 @@
     }
 
     @media (max-width: 600px) {
+      /* The phone is the case on a narrow screen — give it the width the
+         demo's padding was holding back. The screenshot inside is
+         width:100%, so it scales with the frame. */
+      .scan-demo { padding: 28px 10px; }
+      .scan-phone { width: min(300px, 84vw); }
+      .scan-demo .video-timeline { max-width: min(300px, 84vw); }
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
@@ -964,7 +970,7 @@
     })();
   </script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js"></script>
+  <script src="scripts/poster-fit.js?v=3"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

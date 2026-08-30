@@ -556,8 +556,11 @@
       .hero { padding: 76px 0 0; gap: 16px; }
       .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
-      .project-card__stage { height: 520px; }                    /* taller so the whole phone shows */
-      .project-card__device { width: 220px; max-width: 220px; }  /* bigger, fixed-width phone that never clips */
+      /* The phone is the point of the card on a narrow screen — the copy is
+         short and the device is the only thing that shows real work. At 280px
+         it stands 607px tall (360/780), so the stage has to clear 24 + 607. */
+      .project-card__stage { height: 660px; }
+      .project-card__device { width: 280px; max-width: 280px; }
       .footer { padding: 32px 12px 48px; }
     }
 
@@ -1027,14 +1030,14 @@
   </script>
   <script src="scripts/page-transition.js?v=4"></script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js"></script>
+  <script src="scripts/poster-fit.js?v=3"></script>
   <!-- Guide buddy is off for now. He builds his own chip and runs his own
        tour, so hiding him in CSS would leave both running; the switch is
        this line. Uncomment to bring him back — theme-dark.css still keeps
        his eyes working on the dark page. -->
   <!-- <script src="scripts/guide-buddy.js"></script> -->
   <script src="scripts/i18n.js"></script>
-  <script src="scripts/scroll-buddy.js?v=1"></script>
+  <script src="scripts/scroll-buddy.js?v=4"></script>
   <script>
     // Guide buddy tour — the stickman runs along the bottom edge and points
     // at each stop. Edit the steps freely: target is any CSS selector,

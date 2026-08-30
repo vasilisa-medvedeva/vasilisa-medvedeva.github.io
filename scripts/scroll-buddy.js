@@ -15,14 +15,17 @@
    file only steers.
 
    Sprite: cloned from the hidden #gb-sprite-src master copy in the page
-   markup. guide-buddy.css hides .gb on touch, small screens and reduced
-   motion — this script bails out in the same conditions: the runner is a
-   desktop flourish, never a mobility tax. */
+   markup. guide-buddy.css hides .gb on touch and small screens, so on a
+   phone the footprints walk the page alone — the trail is the part that
+   survives without a cursor to look at. Reduced motion stops everything. */
 (function () {
   'use strict';
-  if (matchMedia('(max-width: 900px)').matches ||
-      matchMedia('(hover: none)').matches ||
-      matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+  /* Only reduced motion stops this outright. Narrow and touch screens keep
+     the trail: guide-buddy.css hides .gb below 900px and on touch, so what a
+     phone gets is the footprints alone, walking the page without their
+     walker. That is deliberate — the character needs a cursor to look at and
+     room to stand in; the trail needs neither. */
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
   var spriteSrc = document.getElementById('gb-sprite-src');
   if (!spriteSrc) { return; }
   // The sprite is flat-filled, so the clone needs no id rewriting: the old
@@ -52,6 +55,7 @@
      from faint (old) to solid (fresh), and the oldest fades out and leaves
      as new ones land — a dissolving tail instead of a drawn route. */
   var MAX_STEPS = 6, STEP_EVERY = 18;
+  var REST_KEEP = 2;   // prints left standing wherever he stops
   var stepQueue = [], lastStepMd = null, footSide = 1;
   /* deg aims a print whose toes point up (−Y) at 0°; side ±1 is the foot */
   function dropStep (pt, deg) {
@@ -70,8 +74,11 @@
       old.style.opacity = '0';
       setTimeout(function () { old.remove(); }, 400);
     }
+    /* graded by age: the freshest print tops out at 60%, the oldest fades
+       toward 15% — the grading is what makes the tail dissolve rather than
+       vanish all at once */
     for (var i = 0; i < stepQueue.length; i++) {
-      stepQueue[i].style.opacity = (0.15 + 0.65 * (i + 1) / stepQueue.length).toFixed(2);
+      stepQueue[i].style.opacity = (0.15 + 0.45 * (i + 1) / stepQueue.length).toFixed(2);
     }
   }
   /* the run's heading at a path distance, as that same 0° = toes-up angle */
@@ -86,12 +93,18 @@
     lastStepMd = null;
     footSide = 1;
   }
-  /* When he stops, the whole tail melts — oldest print first, one beat
-     apart. A resumed run isn't interrupted by this: the melting prints are
-     already out of the queue, and fresh steps start a new tail behind him. */
+  /* When he stops, the tail melts from the oldest end — one beat apart —
+     but the last REST_KEEP prints stay put. A trail that vanishes entirely
+     leaves the page looking like nothing happened; a couple of prints left
+     standing read as "he was here, and he stopped here".
+
+     The survivors stay in the queue rather than being orphaned, so the next
+     run treats them as its oldest members: they get re-graded, and they age
+     out through the normal MAX_STEPS shift instead of lingering forever. */
   function dissolveSteps () {
-    var fading = stepQueue;
-    stepQueue = [];
+    var keep = REST_KEEP > 0 ? stepQueue.slice(-REST_KEEP) : [];
+    var fading = stepQueue.slice(0, stepQueue.length - keep.length);
+    stepQueue = keep;
     lastStepMd = null;
     fading.forEach(function (d, i) {
       setTimeout(function () {
@@ -182,6 +195,19 @@
       }
     });
     if (footerBig) { pts.push(at(footerBig, 0.19, 0, 0, -4)); }   // feet on top of the word "Let's"
+
+    /* Hold the whole route inside the viewport. Several anchors are written
+       for a wide page — a lane past the headline's right edge, a detour to
+       the left of the quiz — and on a phone they land off-screen, where the
+       route layer's overflow:hidden simply eats the prints. Clamping keeps
+       the same walk, narrowed. */
+    var lo = 26, hi = document.documentElement.clientWidth - 26;
+    if (hi > lo) {
+      for (var c = 0; c < pts.length; c++) {
+        pts[c][0] = Math.max(lo, Math.min(hi, pts[c][0]));
+      }
+      if (quizAim) { quizAim[0] = Math.max(lo, Math.min(hi, quizAim[0])); }
+    }
     return { pts: pts, quizAim: quizAim, quizZone: quizZone };
   }
 
