@@ -206,7 +206,10 @@
   font-weight: 500;
   /* contacts are utilities, not navigation — a step smaller and dimmer so
      About me / My projects read as the page's only nav */
-  font-size: 14px;
+  /* Matches .menu-item__trigger. The contacts used to run a pixel smaller,
+     which read as a hierarchy that is not there — CV, Telegram, LinkedIn and
+     Email are peers of the section menu, not a footnote to it. */
+  font-size: 15px;
   line-height: 20px;
   color: var(--color-primary-transparent-60);
   text-decoration: none;

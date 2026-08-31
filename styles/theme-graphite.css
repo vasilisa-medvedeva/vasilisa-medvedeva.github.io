@@ -14,9 +14,16 @@
   --color-constant-primary: #2E2E30;   /* surfaces: cards, panels, bubbles */
 
   /* One ink ramp, light. Every component that already reads a transparency
-     level keeps its relative weight without knowing the theme changed. */
-  --color-primary: rgba(255, 255, 255, 0.92);
-  --color-primary-transparent-87: rgba(255, 255, 255, 0.92);
+     level keeps its relative weight without knowing the theme changed.
+
+     The top of the ramp is 0.82, not the 0.92 the light skin used. Inverted,
+     0.92 put near-white on near-black at 14.22:1 — past the point where letters
+     start to bloom and their edges soften. 11.46:1 sits inside the range that
+     stays comfortable to read on a dark sheet, and is still four times the
+     accessibility floor. Only the top level moved; everything below it was
+     already dim enough not to glare. */
+  --color-primary: rgba(255, 255, 255, 0.82);
+  --color-primary-transparent-87: rgba(255, 255, 255, 0.82);
   --color-primary-transparent-70: rgba(255, 255, 255, 0.74);
   --color-primary-transparent-60: rgba(255, 255, 255, 0.62);
   --color-primary-transparent-48: rgba(255, 255, 255, 0.48);
