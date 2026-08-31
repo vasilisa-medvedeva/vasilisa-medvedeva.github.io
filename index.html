@@ -42,11 +42,11 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=8" />
+  <link rel="stylesheet" href="styles/site-header.css?v=10" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <link rel="stylesheet" href="styles/guide-buddy.css" />
+  <link rel="stylesheet" href="styles/guide-buddy.css?v=3" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
-  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=4" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -178,7 +178,7 @@
          Each card takes one of the muted tones below, so the grid reads as a
          set of samples rather than four copies of one panel. */
       background: var(--tone-sage);
-      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
       border-radius: 24px;
       padding: 5px;
       overflow: hidden;
@@ -266,7 +266,7 @@
          skin, and inside a coloured card the tone shows through instead of a
          second fill sitting on top of it */
       background: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
       padding: 7px 14px;
       font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
       font-weight: var(--text-label-medium-font-weight);
@@ -305,7 +305,7 @@
       /* a floor for the device: a thin outline instead of a second fill, so
          the card keeps exactly one material */
       background: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
     }
     .project-card__device {
       position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
@@ -386,7 +386,7 @@
     }
     /* Idle acting (ref: springy star-mascot idles) — a jelly squash-breath
        from the feet plus a slow weight shift; blink and the sideways glance
-       come free with guide-buddy.css. The :not() chain outweighs its own
+       come free with guide-buddy.css?v=3. The :not() chain outweighs its own
        gb-idle rule, and running keeps the flipbook bob untouched. */
     .buddy-route .gb:not(.gb--running):not(.gb--pointing) .gb__figure {
       transform-box: fill-box;
@@ -400,7 +400,7 @@
       75%      { transform: scale(0.994, 1.014) rotate(0deg); }
     }
     /* standing, his pupils track the cursor (vars set by scroll-buddy.js);
-       on the run the googly spin from guide-buddy.css takes over */
+       on the run the googly spin from guide-buddy.css?v=3 takes over */
     .buddy-route .gb:not(.gb--running) .gb__pupil {
       transform: translate(var(--look-x, 0px), var(--look-y, 0px));
       transition: transform 0.12s ease-out;
@@ -495,7 +495,7 @@
          card's #211E2A. These sit on the page, not on a card, so the flat
          result is spelled out rather than layered. */
       background: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
       border: none;
       border-radius: 16px;
       cursor: pointer;
@@ -515,14 +515,15 @@
        label in white. Note white on the accent measures 3.70:1 and this row is
        18px at weight 300, so it sits below the 4.5:1 the size asks for — better
        than the 2.18:1 accent-on-sheet it replaces, still not compliant. */
+    /* The label keeps the theme's own colour instead of being forced white —
+       the accent under it is now chosen to be legible beneath that colour,
+       which is the point of the pairing. */
     .guess:not(.is-done) .guess__option:hover {
       transform: scale(0.97);
       background: var(--color-accent-orange);
-      color: #FFFFFF;
     }
     .guess:not(.is-done) .guess__option:active {
       background: var(--color-accent-orange-pressed);
-      color: #FFFFFF;
     }
     /* Mark holds a small black SVG icon (empty circle → tick / cross on reveal) */
     .guess__mark {
@@ -708,7 +709,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">

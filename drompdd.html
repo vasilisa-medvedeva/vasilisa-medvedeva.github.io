@@ -42,12 +42,12 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=8" />
+  <link rel="stylesheet" href="styles/site-header.css?v=10" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
   <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
-  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=4" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -107,7 +107,7 @@
     .hero__stores { display: flex; gap: 8px; flex-wrap: wrap; }
     .store-link {
       display: inline-flex; align-items: center;
-      border: 1.5px solid var(--color-primary-transparent-87);
+      border: 1.5px solid var(--outline-ink);
       border-radius: 30px;
       padding: 10px 16px;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
@@ -122,8 +122,8 @@
     /* Label goes light on the fill, the same call every other control in this
        skin makes on terracotta — dark ink on the accent read as a disabled
        state rather than a hover. */
-    .store-link:hover  { background: var(--color-accent-orange); color: #FFFFFF; border-color: var(--color-accent-orange); }
-    .store-link:active { background: var(--color-accent-orange-pressed); color: #FFFFFF; border-color: var(--color-accent-orange-pressed); }
+    .store-link:hover  { background: var(--color-accent-orange); border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -704,7 +704,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -776,7 +776,7 @@
             <div class="pdd-phone__screen" aria-label="The old Drom PDD home screen — a static Android layout: mascot, three progress rings, ticket buttons and a row of icon shortcuts">
               <div class="pdd-vp">
                 <div class="pdd-old__content">
-                <img class="pdd-old__illu" src="assets/drompdd/ui/old-illu.png" alt="" width="1080" height="708" />
+                <img class="pdd-old__illu" src="assets/drompdd/ui/old-illu.png" alt="" width="496" height="325" />
                 <img class="pdd-old__settings" src="assets/drompdd/ui/ic-settings-old.png" alt="" width="84" height="84" />
                 <div class="pdd-old__rings">
                   <div class="pdd-ring">
@@ -839,7 +839,7 @@
                   <img class="pdd-new__logo" src="assets/drompdd/ui/logo-en.png" alt="" width="320" height="88" />
                   <img class="pdd-new__settings" src="assets/drompdd/ui/ic-settings.png" alt="" width="84" height="84" />
                   <div class="pdd-new__card">
-                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/new-illu.png" alt="" width="864" height="426" />
+                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/new-illu.png" alt="" width="396" height="195" />
                     <div class="pdd-stat pdd-stat--q">
                       <div class="pdd-stat__val">45 <span>/ 800</span></div>
                       <div class="pdd-stat__bar"><i style="width:5px;"></i></div>
@@ -865,17 +865,17 @@
                   <div class="pdd-new__feed-title" data-ru="Подборка от&amp;nbsp;Дрома">Your picks from&nbsp;Drom</div>
                   <div class="pdd-feed">
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="477" height="268" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">Tesla Model 3, 2021</div>
                       <div class="pdd-car__price">€31,900</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="477" height="268" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">Tesla Model X, 2020</div>
                       <div class="pdd-car__price">€57,400</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="1160" height="652" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">BMW X5 M Competition, 2020</div>
                       <div class="pdd-car__price">€82,500</div>
                     </div>
@@ -942,7 +942,7 @@
                   <img class="pdd-new__logo" src="assets/drompdd/ui/dark-logo.png?v=2" alt="" width="320" height="88" />
                   <img class="pdd-new__settings" src="assets/drompdd/ui/dark-gear.png?v=2" alt="" width="47" height="47" />
                   <div class="pdd-new__card">
-                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/dark-illu.png" alt="" width="993" height="492" />
+                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/dark-illu.png" alt="" width="396" height="196" />
                     <div class="pdd-stat pdd-stat--q">
                       <div class="pdd-stat__val">45 <span>/ 800</span></div>
                       <div class="pdd-stat__bar"><i style="width:5px;"></i></div>
@@ -969,17 +969,17 @@
                   <div class="pdd-new__feed-title" data-ru="Подборка от&amp;nbsp;Дрома">Your picks from&nbsp;Drom</div>
                   <div class="pdd-feed">
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="477" height="268" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">Tesla Model 3, 2021</div>
                       <div class="pdd-car__price">&euro;31,900</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="477" height="268" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">Tesla Model X, 2020</div>
                       <div class="pdd-car__price">&euro;57,400</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="1160" height="652" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="290" height="163" />
                       <div class="pdd-car__name">BMW X5 M Competition, 2020</div>
                       <div class="pdd-car__price">&euro;82,500</div>
                     </div>

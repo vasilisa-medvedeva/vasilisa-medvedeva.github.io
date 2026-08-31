@@ -42,12 +42,12 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=8" />
+  <link rel="stylesheet" href="styles/site-header.css?v=10" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
   <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
-  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=4" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -107,7 +107,7 @@
     .hero__stores { display: flex; gap: 8px; flex-wrap: wrap; }
     .store-link {
       display: inline-flex; align-items: center;
-      border: 1.5px solid var(--color-primary-transparent-87);
+      border: 1.5px solid var(--outline-ink);
       border-radius: 30px;
       padding: 10px 16px;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
@@ -122,8 +122,8 @@
     /* Label goes light on the fill, the same call every other control in this
        skin makes on terracotta — dark ink on the accent read as a disabled
        state rather than a hover. */
-    .store-link:hover  { background: var(--color-accent-orange); color: #FFFFFF; border-color: var(--color-accent-orange); }
-    .store-link:active { background: var(--color-accent-orange-pressed); color: #FFFFFF; border-color: var(--color-accent-orange-pressed); }
+    .store-link:hover  { background: var(--color-accent-orange); border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -783,7 +783,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -956,7 +956,7 @@
 
                 <div class="reg__scanner">
                   <div class="reg__floor"></div>
-                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" width="768" height="1024" />
+                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" width="330" height="440" />
                   <div class="reg__scan-box">
                     <span></span><span></span><span></span><span></span>
                     <div class="reg__scan-line"></div>
@@ -1167,7 +1167,7 @@
           <div class="detail-scale">
             <div class="detail-phone">
               <div class="detail-screen detail-screen--old">
-                <img class="detail-shot" src="assets/dromfines/details-old.png" alt="The old Drom Fines detail screen — a flat list of label and value pairs with the discount buried beside the amount" loading="lazy" width="960" height="2496" />
+                <img class="detail-shot" src="assets/dromfines/details-old.png" alt="The old Drom Fines detail screen — a flat list of label and value pairs with the discount buried beside the amount" loading="lazy" width="580" height="1508" />
               </div>
             </div>
             <span class="detail-hint" aria-hidden="true">
@@ -1188,7 +1188,7 @@
           <div class="detail-scale">
             <div class="detail-phone">
               <div class="detail-screen detail-screen--new">
-                <img class="detail-shot" src="assets/dromfines/details-new.png" alt="The redesigned Drom Fines detail screen — a prominent discount card on top, then grouped Time and place, Article, Photo and Ruling sections" loading="lazy" width="960" height="3087" />
+                <img class="detail-shot" src="assets/dromfines/details-new.png" alt="The redesigned Drom Fines detail screen — a prominent discount card on top, then grouped Time and place, Article, Photo and Ruling sections" loading="lazy" width="580" height="1865" />
               </div>
             </div>
             <span class="detail-hint" aria-hidden="true">

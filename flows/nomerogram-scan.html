@@ -56,6 +56,31 @@
     .scan-scene--camera img.scan-cam {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; object-position: 100% 50%;
+      /* Until the shot arrives the viewfinder was a flat grey rectangle that
+         read as a broken screen. Same skeleton the case pages use, painted as
+         the image's own background — the arriving photo is opaque and covers it
+         by itself, and a photo that never arrives keeps shimmering instead of
+         leaving the frame blank. Darker values here: this sits on the camera
+         scene, not on the sage sheet. */
+      background-color: #3A3A3C;
+      background-image: linear-gradient(100deg,
+                        transparent 32%,
+                        rgba(255, 255, 255, 0.07) 50%,
+                        transparent 68%);
+      background-size: 220% 100%;
+      animation: scan-cam-skeleton 1.5s ease-in-out infinite;
+      font-size: 0;
+    }
+    .scan-scene--camera img.scan-cam.is-shot-loaded {
+      background: none;
+      animation: none;
+    }
+    @keyframes scan-cam-skeleton {
+      from { background-position: 190% 0; }
+      to   { background-position: -90% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scan-scene--camera img.scan-cam { animation: none; background-image: none; }
     }
     .scan-cam__ui { position: absolute; inset: 0; animation: scan-ui 12s ease infinite; }
     @keyframes scan-ui {
@@ -197,5 +222,17 @@
       <div class="scan-phone__island" aria-hidden="true"></div>
     </div>
   </div>
+<script>
+  /* Drop the viewfinder skeleton once the photo is actually decoded. `complete`
+     alone would also be true for a failed load, and a failed shot must keep the
+     shimmer rather than reveal an empty frame. */
+  (function () {
+    var cam = document.querySelector('img.scan-cam');
+    if (!cam) return;
+    function done () { cam.classList.add('is-shot-loaded'); }
+    if (cam.complete && cam.naturalWidth > 0) { done(); return; }
+    cam.addEventListener('load', done, { once: true });
+  })();
+</script>
 </body>
 </html>

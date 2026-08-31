@@ -187,3 +187,19 @@
 @media (max-width: 900px), (hover: none), (prefers-reduced-motion: reduce) {
   .gb, .gb-chip { display: none; }
 }
+
+/* ── Eyes are not themed ──────────────────────────────────────────────
+   The pupil was drawn with fill="currentColor", so it took the colour of the
+   whole figure. That worked as long as the figure was dark ink on a light
+   sheet. The moment a theme turned the figure white, the pupils went white
+   too — white on a white eye, and he lost his eyes entirely.
+
+   An eye does not follow a theme: the white stays light and the pupil stays
+   dark, on any background. Pinned here rather than in a theme file so no
+   future skin can take them out again. */
+.gb__eye circle { fill: #FFFFFF; }
+/* The two catchlights live INSIDE the pupil group, so a blanket rule on
+   .gb__pupil circle painted them the pupil's own colour and they disappeared
+   into it. The pupil is the first circle in the group; everything after it is
+   a highlight and stays light. */
+.gb__pupil circle:first-of-type { fill: #23261F; }
