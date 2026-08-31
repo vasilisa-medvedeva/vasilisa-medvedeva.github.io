@@ -600,7 +600,7 @@
       /* sink it a step below the CTA's baseline, into the bottom padding —
          a quiet signature line, not a peer of "Let's talk" (transform, so
          the flex row's wrap behaviour on narrow screens is untouched) */
-      transform: translateY(26px);
+      transform: translateY(36px);
     }
 
     /* ── Footer, narrow screens ──────────────────────────────────────────
@@ -618,7 +618,7 @@
       }
       .footer__colophon {
         text-align: left;
-        transform: none;   /* the sink was for the desktop row's baseline */
+        transform: translateY(10px);   /* the desktop row's baseline sink does not apply, but it still sits a touch low */
         max-width: 30ch;   /* keeps the line breaks off awkward words */
       }
     }
