@@ -46,7 +46,7 @@
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/guide-buddy.css" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
-  <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
+  <link rel="stylesheet" href="styles/theme-sage.css?v=1" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -169,22 +169,23 @@
     .project-card {
       position: relative;
       display: flex; flex-direction: column;
-      /* Flat fill, no border, no shadow: the card is held by its own colour
-         and by the air around it, nothing else. Every kind of edge —
-         hairline, bevel, offset slab — simulates a physical object, and this
-         page is set like a poster: Archivo 900 across the full measure, ink
-         on paper. The drawn things (the mascot, the circled word, the
-         footprints) are the only objects allowed to have a hand. */
-      background: #211E2A;
+      /* Flat block, thin outline, no shadow — the reference's language.
+         Each card takes one of the muted tones below, so the grid reads as a
+         set of samples rather than four copies of one panel. */
+      background: var(--tone-sage);
+      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
       border-radius: 24px;
       padding: 5px;
       overflow: hidden;
       text-decoration: none; color: inherit;
       transition: transform 0.4s cubic-bezier(0.16, 0.84, 0.24, 1);
     }
-    /* The original hover, kept: the card eases down a notch under the
-       cursor. Note it is a shrink, not a lift — 0.97 reads as a press, and
-       it needs no shadow, which is what makes it fit the flat surfaces. */
+    .project-card:nth-child(2) { background: var(--tone-lavender); }
+    .project-card:nth-child(3) { background: var(--tone-taupe); }
+    .project-card:nth-child(4) { background: var(--tone-mustard); }
+
+    /* The original hover, kept: the card eases down a notch under the cursor.
+       A shrink, not a lift — it needs no shadow, which is what keeps it flat. */
     .project-card:hover {
       transform: scale(0.97);
       z-index: 2;
@@ -238,7 +239,7 @@
     /* Chips in the Tools section stand alone on the page, so they carry the
        same surface as the project cards. The same class INSIDE a card keeps
        the translucent fill — on that surface it would otherwise vanish. */
-    .tools-group__chips .meta-chip { background: #2A2733; }
+    .tools-group__chips .meta-chip { background: transparent; box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24); }
     /* Metric chips stay in the card's own gray voice — the quiet raised
        fill from .meta-chip itself. Color experiments (violet pair, aurora,
        indigo ladder, single blue) all pulled the eye harder than the
@@ -250,9 +251,10 @@
       height: 510px;
       border-radius: 20px;
       overflow: hidden;
-      /* flat too — a lighter tint of the card, so the device has a floor
-         without the card growing a second material */
-      background: var(--color-primary-transparent-04);
+      /* a floor for the device: a thin outline instead of a second fill, so
+         the card keeps exactly one material */
+      background: transparent;
+      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
     }
     .project-card__device {
       position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
@@ -441,7 +443,8 @@
       /* same value the card's own pills composite to: 4% white over the
          card's #211E2A. These sit on the page, not on a card, so the flat
          result is spelled out rather than layered. */
-      background: #2A2733;
+      background: transparent;
+      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
       border: none;
       border-radius: 16px;
       cursor: pointer;
