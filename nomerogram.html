@@ -41,6 +41,7 @@
   <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/radius-tokens.css?v=1" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/site-header.css?v=11" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
@@ -108,7 +109,7 @@
     .store-link {
       display: inline-flex; align-items: center;
       border: 1.5px solid var(--outline-ink);
-      border-radius: 30px;
+      border-radius: var(--radius-full);
       padding: 10px 16px;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
       font-size: var(--text-title-medium-font-size);
@@ -219,7 +220,7 @@
     }
     .case__figure {
       margin: 0;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
       background: var(--tone-taupe);
     }
@@ -233,7 +234,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 32px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: var(--tone-taupe); border-radius: 20px;
+      background: var(--tone-taupe); border-radius: var(--radius-xl);
     }
     .scan-phone {
       width: 262px; padding: 7px; flex-shrink: 0;
@@ -364,7 +365,7 @@
     .ru-caption { left: 7%; right: 7%; top: 14.7%; height: 2.5%; background: #f5f5f5; color: #3d3d3d; font-size: 7px; }
     /* upload screen: title, disabled Upload pill, and the two source tiles */
     .ru-add     { left: 37%; right: 37%; top: 7.3%; height: 3.2%; background: #fdfdfd; color: #111; font-size: 9px; font-weight: 600; }
-    .ru-upload  { left: 68.4%; right: 4.9%; top: 6.4%; height: 4.6%; background: #cecece; color: #fff; font-size: 7px; font-weight: 500; border-radius: 20px; }
+    .ru-upload  { left: 68.4%; right: 4.9%; top: 6.4%; height: 4.6%; background: #cecece; color: #fff; font-size: 7px; font-weight: 500; border-radius: var(--radius-xl); }
     /* the tile covers span the whole source tile edge-to-edge (up to the white
        divider), so the plate's edges land on the tile's own borders — no seam */
     .ru-camera  { left: 0.6%; right: 50.1%; top: 12.1%; height: 22.8%; background: #3f3e3c; color: #fff; font-size: 8px; }

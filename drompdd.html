@@ -41,6 +41,7 @@
   <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/radius-tokens.css?v=1" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/site-header.css?v=11" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
@@ -108,7 +109,7 @@
     .store-link {
       display: inline-flex; align-items: center;
       border: 1.5px solid var(--outline-ink);
-      border-radius: 30px;
+      border-radius: var(--radius-full);
       padding: 10px 16px;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
       font-size: var(--text-title-medium-font-size);
@@ -219,7 +220,7 @@
     }
     .case__figure {
       margin: 0;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
       background: var(--tone-mustard);
     }
@@ -234,7 +235,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 40px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: var(--tone-mustard); border-radius: 20px;
+      background: var(--tone-mustard); border-radius: var(--radius-xl);
     }
     .pdd-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .pdd-demo .video-timeline { max-width: 262px; }   /* match the phone width */
