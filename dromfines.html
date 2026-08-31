@@ -42,15 +42,16 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <link rel="stylesheet" href="styles/site-header.css?v=8" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
-  <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
+  <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
+  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -118,8 +119,11 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .store-link:hover  { background: var(--color-accent-orange); }
-    .store-link:active { background: var(--color-accent-orange-pressed); }
+    /* Label goes light on the fill, the same call every other control in this
+       skin makes on terracotta — dark ink on the accent read as a disabled
+       state rather than a hover. */
+    .store-link:hover  { background: var(--color-accent-orange); color: #FFFFFF; border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); color: #FFFFFF; border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -195,7 +199,7 @@
       line-height: var(--text-label-medium-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-87);
       margin-bottom: 12px;
     }
     .case__col p,
@@ -217,7 +221,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: #211E2A;
+      background: var(--tone-lavender);
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
@@ -245,7 +249,7 @@
       margin-top: 32px;
       display: flex; justify-content: center; align-items: flex-start;
       gap: 56px; flex-wrap: wrap;
-      background: #211E2A;
+      background: var(--tone-lavender);
       border-radius: 20px; padding: 56px 20px 40px;   /* extra top room for the floating timeline */
     }
     .pay-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
@@ -779,7 +783,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -893,7 +897,7 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
                 <div class="reg-old__label reg-old__f1-label" data-ru="Госномер">License plate</div>
                 <div class="reg-old__value reg-old__f1-value">М999ММ&nbsp;125</div>
                 <div class="reg-old__line reg-old__f1-line"></div>
@@ -931,7 +935,7 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
                 <div class="reg-new__scan" data-ru="&lt;span class=&quot;reg-new__scan-ic&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
                   Сканировать документы
                 ">
@@ -952,7 +956,7 @@
 
                 <div class="reg__scanner">
                   <div class="reg__floor"></div>
-                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" />
+                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" width="768" height="1024" />
                   <div class="reg__scan-box">
                     <span></span><span></span><span></span><span></span>
                     <div class="reg__scan-line"></div>
@@ -971,11 +975,11 @@
                   </div>
                   <div class="ios__island" aria-hidden="true"></div>
                   <div class="ios__home" aria-hidden="true"></div>
-                  <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" /></div>
+                  <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
                   <svg class="reg__ricon reg__ricon--plus" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#1b75cc" stroke-width="2" stroke-linecap="round"/></svg>
                   <svg class="reg__ricon reg__ricon--profile" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#1b75cc"/><circle cx="13" cy="10" r="4" fill="#fff"/><path d="M5.5 21.2c1.5-3 4.3-4.6 7.5-4.6s6 1.6 7.5 4.6a12 12 0 0 1-15 0z" fill="#fff"/></svg>
                   <div class="reg__rcard">
-                    <img class="reg__rplate" src="assets/dromfines/plate.png" alt="Х 755 АН 799" />
+                    <img class="reg__rplate" src="assets/dromfines/plate.png" alt="Х 755 АН 799" width="168" height="40" />
                     <div class="reg__rdate" data-ru="30 марта">March 30</div>
                     <div class="reg__rchip" data-ru="–50% до&amp;nbsp;1 мая">–50% until May 1</div>
                     <div class="reg__rtitle" data-ru="Превышение скорости на&amp;nbsp;20–40 км/ч">Speeding 20–40 km/h over&nbsp;the&nbsp;limit</div>
@@ -1163,7 +1167,7 @@
           <div class="detail-scale">
             <div class="detail-phone">
               <div class="detail-screen detail-screen--old">
-                <img class="detail-shot" src="assets/dromfines/details-old.png" alt="The old Drom Fines detail screen — a flat list of label and value pairs with the discount buried beside the amount" loading="lazy" />
+                <img class="detail-shot" src="assets/dromfines/details-old.png" alt="The old Drom Fines detail screen — a flat list of label and value pairs with the discount buried beside the amount" loading="lazy" width="960" height="2496" />
               </div>
             </div>
             <span class="detail-hint" aria-hidden="true">
@@ -1184,7 +1188,7 @@
           <div class="detail-scale">
             <div class="detail-phone">
               <div class="detail-screen detail-screen--new">
-                <img class="detail-shot" src="assets/dromfines/details-new.png" alt="The redesigned Drom Fines detail screen — a prominent discount card on top, then grouped Time and place, Article, Photo and Ruling sections" loading="lazy" />
+                <img class="detail-shot" src="assets/dromfines/details-new.png" alt="The redesigned Drom Fines detail screen — a prominent discount card on top, then grouped Time and place, Article, Photo and Ruling sections" loading="lazy" width="960" height="3087" />
               </div>
             </div>
             <span class="detail-hint" aria-hidden="true">
@@ -1222,7 +1226,7 @@
     <div class="page-end"></div>
   </main>
 
-  <script src="scripts/page-transition.js?v=5"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
   <script>
@@ -1245,7 +1249,7 @@
     })();
   </script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js?v=3"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

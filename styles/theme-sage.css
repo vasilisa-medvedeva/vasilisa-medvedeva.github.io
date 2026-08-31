@@ -1,6 +1,6 @@
 /* Sage theme — an alternative skin for the front page.
 
-   Same contract as theme-dark.css: nothing here restyles a component, it
+   Same contract the dark theme held before it: nothing here restyles a component, it
    reassigns the two token families every page already speaks. Ink that reads
    --color-primary-* turns warm near-black; surfaces painted
    --color-constant-primary turn a light sage; the page sits one step BELOW
@@ -17,7 +17,7 @@
    work — is ink. Ink belongs on paper, not on glass, and the dark theme was
    always asking those marks to sit on glass.
 
-   Link it after color-tokens.css, in place of theme-dark.css. */
+   Link it after color-tokens.css. */
 
 :root {
   --page-bg: #C4C9B6;                  /* the sheet */
@@ -37,17 +37,37 @@
   --color-primary-transparent-04: rgba(45, 50, 40, 0.05);
 
   /* Terracotta. The token keeps its historical name — every page references
-     it, so the name stays put while the colour moves again. */
-  --color-accent-orange: #CE6A4B;
-  --color-accent-orange-pressed: #B3563A;
+     it, so the name stays put while the colour moves again. Softened ~18%
+     toward its own gray (luma preserved): still clearly the one saturated
+     colour in the room, it just stops shouting over the muted tones. */
+  --color-accent-orange: #C16F55;
+  --color-accent-orange-pressed: #A75A43;
+
+  /* Onest on the display, Golos Text on the running copy. Onest is a
+     neutral grotesque with a tall x-height and flat, squared terminals —
+     stricter than the rounded face this slot held before, and it already
+     lives in the project as the Cyrillic stand-in, so the Russian version
+     no longer changes voice halfway. */
+  --font-display: "Onest", sans-serif;
+  --font-text: "Golos Text", sans-serif;
 
   /* The muted block tones the second reference is built from. Each project
      card takes one, so the grid reads as a set of samples rather than four
      copies of the same panel. */
+  --tone-steel:    #A5BCC7;   /* 229° — the lead card. Chroma pulled from 0.042
+                                 to 0.030: greyer, same hue and lightness */
   --tone-sage:     #B9C2AC;
   --tone-lavender: #B7B6C6;
   --tone-taupe:    #C3B9AC;
   --tone-mustard:  #D2C79A;
+}
+
+/* Rubik and Golos Text both carry Cyrillic, so the RU override in
+   text-tokens.css (Onest, added because Archivo had none) must not swap the
+   pair back on the Russian version. */
+:root[lang="ru"] {
+  --font-display: "Onest", sans-serif;
+  --font-text: "Golos Text", sans-serif;
 }
 
 /* The header takes the page tone — a surface here would only draw a seam. */
@@ -59,8 +79,11 @@
 /* Hover paints the accent behind the label; on terracotta the label goes
    light, the same call the dark theme made on violet. */
 .site-header__link:hover,
-.site-header__link:active,
-.guess:not(.is-done) .guess__option:hover { color: #FFFFFF; }
+.site-header__link:active { color: #FFFFFF; }
+/* The quiz option used to ride along here. It now takes the accent on hover
+   instead, set beside its own rule in index.html — and the two declarations had
+   identical specificity, so which one won came down to sheet order. Removed
+   rather than left to that. */
 
 /* Doodle SVGs authored as black ink arrive through <img> and cannot inherit
    currentColor — but on a light ground black ink is already correct, so the

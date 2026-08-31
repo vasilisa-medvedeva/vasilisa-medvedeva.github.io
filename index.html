@@ -42,15 +42,15 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <link rel="stylesheet" href="styles/site-header.css?v=8" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/guide-buddy.css" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
-  <link rel="stylesheet" href="styles/theme-sage.css?v=1" />
+  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -80,7 +80,7 @@
       padding-bottom: 72px;   /* compact, with clear air before the cards */
     }
     .hero__title {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 900;
       /* fallback size only — the poster-fit script below scales the type so
          the longest line spans the full content width at any viewport */
@@ -97,7 +97,7 @@
       /* left edge sits on the projects grid's second column line — the same
          vertical the right-hand card starts on below */
       margin-left: calc((100% - 10px) / 2.4 * 1.4 + 10px);
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
@@ -120,7 +120,7 @@
     }
     .hero__arrow { display: block; width: 44px; height: auto; }
     .hero__aside p {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
@@ -133,7 +133,7 @@
     .hero__meta, .hero__aside .hero__meta {
       /* the display face, not the body Roboto it used to inherit — the case
          pages' .hero__eyebrow has always set it, and the two must match */
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-size: 13px; line-height: 18px;
       font-weight: 500; letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -161,10 +161,15 @@
     .projects-grid > .project-card:nth-child(even) { position: relative; top: 40px; }
     /* Nomerogram leads the grid, so it sits 50px lower than the other odd
        card — the stagger stays, the first card just starts closer to the
-       hero's foot. `top` shifts the paint but not the layout, so the row
-       below has to be pushed down by the same 50px or the card lands on
-       top of the one beneath it in the same column. */
-    .projects-grid > .project-card:nth-child(1) { top: -6px; margin-bottom: 50px; }
+       hero's foot. `top` shifts the paint but not the layout, so the card
+       beneath it in the same column has to make room.
+
+       The room is made with a margin on THAT card, not with margin-bottom on
+       this one: a bottom margin here grows the whole first row, which pushes
+       the second row down — and the right-hand card of that row has no
+       negative `top` to absorb it, so it alone ended up 50px too low. */
+    .projects-grid > .project-card:nth-child(1) { top: -6px; }
+    .projects-grid > .project-card:nth-child(3) { margin-top: 50px; }
 
     .project-card {
       position: relative;
@@ -173,15 +178,46 @@
          Each card takes one of the muted tones below, so the grid reads as a
          set of samples rather than four copies of one panel. */
       background: var(--tone-sage);
-      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
+      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
       border-radius: 24px;
       padding: 5px;
       overflow: hidden;
       text-decoration: none; color: inherit;
       transition: transform 0.4s cubic-bezier(0.16, 0.84, 0.24, 1);
     }
+    /* ── Labels in the display sans ────────────────────────────────────────
+       Every small, structural piece of type — navigation, tag lines, card
+       names, chips, section headings, the signature — takes Rubik in caps
+       with a touch of tracking, the way the reference sets its labels
+       (BANDS & ARTISTS): same voice as the headlines, one size down. The
+       mono experiment is retired — the reference carries no mono at all.
+       Scoped to this page's own <style>, so the case pages are untouched. */
+    /* The header used to sit in this list too. Its controls are sentence case,
+       not caps, and 0.06em on lowercase simply reads as loose — it now takes a
+       tighter value from site-header.css, which also gets the case pages'
+       headers to match instead of drifting a step apart from this one. */
+    .hero__meta,
+    .project-card__name,
+    .meta-chip,
+    .section-title,
+    .tools-group__label,
+    .footer__colophon {
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+    /* Display sizes need the tracking pulled back in and a notch off the
+       size, or the card names outgrow their cards. */
+    .project-card__name { font-size: 22px; letter-spacing: 0.02em; }
+    .section-title { letter-spacing: 0.04em; }
+    .meta-chip { font-size: 11px; }
+
+    /* Nomerogram leads the grid, so it takes the tone furthest from the
+       sheet's own hue — the lead card should read first, and sage sat only a
+       step off the background. */
+    .project-card:nth-child(1) { background: var(--tone-taupe); }
     .project-card:nth-child(2) { background: var(--tone-lavender); }
-    .project-card:nth-child(3) { background: var(--tone-taupe); }
+    .project-card:nth-child(3) { background: var(--tone-steel); }
     .project-card:nth-child(4) { background: var(--tone-mustard); }
 
     /* The original hover, kept: the card eases down a notch under the cursor.
@@ -200,7 +236,7 @@
       padding: 24px 20px 0;
     }
     .project-card__name {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -209,7 +245,7 @@
       text-transform: uppercase;
     }
     .project-card__desc {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300;
       font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
@@ -226,7 +262,11 @@
     .meta-chip {
       display: inline-flex; align-items: center;
       border-radius: 100px;
-      background: var(--color-primary-transparent-04);
+      /* outlined, not filled — the same treatment as every other box on this
+         skin, and inside a coloured card the tone shows through instead of a
+         second fill sitting on top of it */
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
       padding: 7px 14px;
       font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
       font-weight: var(--text-label-medium-font-weight);
@@ -236,10 +276,21 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
+    /* On a coloured card the chip needs no drawn edge: the tone already
+       separates it from the sheet, and an outline there read as a second frame
+       inside a framed box. The standalone Tools chips sit directly on the
+       sheet and keep theirs — without it they collapse into a list of words. */
+    .project-card .meta-chip {
+      box-shadow: none;
+      /* Translucent rather than a fixed colour: the same rule then lifts the
+         badge off taupe, lavender, steel and mustard alike, instead of one
+         hardcoded fill that reads right on one card and muddy on the rest. */
+      background: var(--color-primary-transparent-08);
+    }
+
     /* Chips in the Tools section stand alone on the page, so they carry the
        same surface as the project cards. The same class INSIDE a card keeps
        the translucent fill — on that surface it would otherwise vanish. */
-    .tools-group__chips .meta-chip { background: transparent; box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24); }
     /* Metric chips stay in the card's own gray voice — the quiet raised
        fill from .meta-chip itself. Color experiments (violet pair, aurora,
        indigo ladder, single blue) all pulled the eye harder than the
@@ -254,7 +305,7 @@
       /* a floor for the device: a thin outline instead of a second fill, so
          the card keeps exactly one material */
       background: transparent;
-      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
+      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
     }
     .project-card__device {
       position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
@@ -283,7 +334,7 @@
     }
     .device-skeleton i {
       display: block; border-radius: 10px;
-      background: var(--color-primary-transparent-08);
+      background: var(--color-primary-transparent-04);
       margin-bottom: 13px;
     }
     .device-skeleton i:nth-child(1) { width: 44%; height: 22px; }
@@ -385,7 +436,7 @@
     .info-section, .projects-grid { scroll-margin-top: 72px; }
 
     .section-title {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -398,7 +449,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .info-section__body p {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
@@ -409,7 +460,7 @@
       text-underline-offset: 3px;
     }
     .info-muted {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: var(--text-label-large-line-height);
@@ -421,7 +472,7 @@
     /* Two-truths-and-a-lie mini game in Bit About Me */
     .guess { margin-top: 6px; }
     .guess .guess__intro {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 700;
       font-size: 22px; line-height: 28px;
       color: var(--color-primary-transparent-87);
@@ -437,25 +488,42 @@
       width: 100%;
       padding: 15px 17px;
       text-align: left;
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 26px;
       color: var(--color-primary-transparent-87);
       /* same value the card's own pills composite to: 4% white over the
          card's #211E2A. These sit on the page, not on a card, so the flat
          result is spelled out rather than layered. */
       background: transparent;
-      box-shadow: inset 0 0 0 1px var(--color-primary-transparent-24);
+      box-shadow: inset 0 0 0 1.5px var(--color-primary-transparent-87);
       border: none;
       border-radius: 16px;
       cursor: pointer;
-      transition: background 160ms ease, transform 160ms ease;
+      transition: background 160ms ease, transform 160ms ease, color 160ms ease;
     }
     /* muted violet hover only while the game is unanswered — once revealed, the
        red / green highlight must stay put even under the cursor */
     /* Same gesture as the project cards: the row eases down a notch under
        the cursor instead of filling with the accent. Timing stays at 160ms —
        the card's 0.4s suits a card-sized object, not a button. */
-    .guess:not(.is-done) .guess__option:hover { transform: scale(0.97); }
+    /* Accent text under the cursor. Worth knowing: on the sage sheet the accent
+       carries only 2.18:1, against 7.74:1 for the ink it replaces, and this row
+       is 18px at weight 300 — so hovering costs legibility rather than adding
+       it. Kept because it is the hover the rest of the site uses; #704D3C is
+       the same gesture at a compliant 4.40:1 if the row ever needs reading. */
+    /* Same highlight as the header controls: the accent behind the label, the
+       label in white. Note white on the accent measures 3.70:1 and this row is
+       18px at weight 300, so it sits below the 4.5:1 the size asks for — better
+       than the 2.18:1 accent-on-sheet it replaces, still not compliant. */
+    .guess:not(.is-done) .guess__option:hover {
+      transform: scale(0.97);
+      background: var(--color-accent-orange);
+      color: #FFFFFF;
+    }
+    .guess:not(.is-done) .guess__option:active {
+      background: var(--color-accent-orange-pressed);
+      color: #FFFFFF;
+    }
     /* Mark holds a small black SVG icon (empty circle → tick / cross on reveal) */
     .guess__mark {
       flex: 0 0 auto;
@@ -474,7 +542,7 @@
     .guess__option.is-truth  { opacity: 0.55; }
     .guess__result {
       margin-top: 14px;
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 500; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 560px;
@@ -491,7 +559,7 @@
       margin-bottom: 8px;
     }
     .xp__company {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 900;
       font-size: 22px; line-height: 26px;
       letter-spacing: -0.01em;
@@ -499,13 +567,13 @@
       color: var(--color-primary-transparent-87);
     }
     .xp__role {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-60);
     }
     .xp__years {
       margin-left: auto;
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: 24px;
@@ -513,7 +581,7 @@
       color: var(--color-primary-transparent-60);
     }
     .xp p {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
@@ -523,7 +591,7 @@
       list-style: disc; margin: 8px 0 0; padding-left: 20px; max-width: 720px;
     }
     .xp li {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
     }
@@ -533,7 +601,7 @@
     .tools-group { padding: 14px 0; }
     .tools-group:first-child { padding-top: 0; }
     .tools-group__label {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-medium-font-size);
       line-height: var(--text-label-medium-line-height);
@@ -553,10 +621,9 @@
       .projects-grid { gap: 20px; }
       .projects-grid > .project-card:nth-child(odd),
       .projects-grid > .project-card:nth-child(even) { top: 0; }
-      /* the stagger's compensating margin goes with it: in one column there
-         is nothing above to make room for, and it left the first gap 50px
-         wider than the rest */
-      .projects-grid > .project-card:nth-child(1) { margin-bottom: 0; }
+      /* the stagger's compensating margin goes with it: in one column the
+         cards are evenly spaced already */
+      .projects-grid > .project-card:nth-child(3) { margin-top: 0; }
     }
 
     @media (max-width: 600px) {
@@ -578,7 +645,7 @@
       padding: 96px 20px 56px;
     }
     .footer__big {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 900;
       font-size: clamp(34px, 4.6vw, 64px);
       line-height: 1.0; letter-spacing: -0.025em;
@@ -595,7 +662,7 @@
       margin-left: 0.12em;
     }
     .footer__colophon {
-      font-family: var(--font-display, "Archivo", sans-serif);
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500; font-size: 14px; line-height: 20px;
       letter-spacing: 0.02em;
       color: var(--color-primary-transparent-60);
@@ -641,7 +708,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -677,8 +744,8 @@
   <main class="main">
     <section class="hero">
       <p class="hero__meta" data-ru="Лимассол, Кипр">Limassol, Cyprus</p>
-      <h1 class="hero__title" data-ru="Привет! Я&nbsp;проектирую мобильные продукты&lt;br /&gt;для миллионов пользователей">Hi! I&nbsp;design mobile products<br />used by&nbsp;millions of&nbsp;users</h1>
-      <p class="hero__sub" data-ru="Проверяю гипотезы с&nbsp;реальными пользователями, собираю рабочие прототипы с&nbsp;помощью ИИ-инструментов и&nbsp;выпускаю решения, которые двигают метрики">I&nbsp;test hypotheses with real users, build working prototypes with AI&nbsp;tools, and&nbsp;ship fixes that move metrics</p>
+      <h1 class="hero__title" data-ru="Привет! Я&amp;nbsp;проектирую мобильные продукты&lt;br /&gt;для миллионов пользователей">Hi! I&nbsp;design mobile products<br />used by&nbsp;millions of&nbsp;users</h1>
+      <p class="hero__sub" data-ru="Проверяю гипотезы с&nbsp;реальными пользователями, собираю рабочие прототипы с&nbsp;помощью ИИ-инструментов и&nbsp;выпускаю решения, которые двигают метрики">I&nbsp;test hypotheses with real users, build working prototypes with&nbsp;AI&nbsp;tools, and&nbsp;ship fixes that move metrics</p>
       <a class="hero__arrow-link" href="#projects" aria-label="Scroll to the projects" data-ru-aria="К проектам"><svg class="hero__arrow" viewBox="0 0 56 96" fill="none" aria-hidden="true"><path d="M29.5 3.5C26.6 18 31.4 40 27.8 68C27.3 72.8 27 77.5 27.4 84.5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M27.4 85.5C22.2 77.9 17.4 72.6 12.6 68.8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M27.4 85.5C32.8 78.4 38 73.2 43.2 69.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></a>
 
     </section>
@@ -1056,16 +1123,16 @@
     })();
 
   </script>
-  <script src="scripts/page-transition.js?v=5"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js?v=3"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
   <!-- Guide buddy is off for now. He builds his own chip and runs his own
        tour, so hiding him in CSS would leave both running; the switch is
-       this line. Uncomment to bring him back — theme-dark.css still keeps
+       this line. Uncomment to bring him back — the theme still keeps
        his eyes working on the dark page. -->
   <!-- <script src="scripts/guide-buddy.js"></script> -->
   <script src="scripts/i18n.js"></script>
-  <script src="scripts/scroll-buddy.js?v=4"></script>
+  <script src="scripts/scroll-buddy.js?v=7"></script>
   <script>
     // Guide buddy tour — the stickman runs along the bottom edge and points
     // at each stop. Edit the steps freely: target is any CSS selector,

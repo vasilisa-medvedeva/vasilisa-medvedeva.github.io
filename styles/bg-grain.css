@@ -31,7 +31,7 @@
    grain is ever retuned. The alpha is baked into the tile here, because a
    background layer cannot carry an opacity of its own.
 
-   Loaded after theme-dark.css, so this background-image survives that
+   Loaded after the theme, so this background-image survives that
    file's `background: var(--page-bg)` shorthand, which supplies the colour
    underneath. */
 .site-header {

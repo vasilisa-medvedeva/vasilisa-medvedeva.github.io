@@ -101,8 +101,9 @@
      The survivors stay in the queue rather than being orphaned, so the next
      run treats them as its oldest members: they get re-graded, and they age
      out through the normal MAX_STEPS shift instead of lingering forever. */
-  function dissolveSteps () {
-    var keep = REST_KEEP > 0 ? stepQueue.slice(-REST_KEEP) : [];
+  function dissolveSteps (keepCount) {
+    var n = keepCount === undefined ? REST_KEEP : keepCount;
+    var keep = n > 0 ? stepQueue.slice(-n) : [];
     var fading = stepQueue.slice(0, stepQueue.length - keep.length);
     stepQueue = keep;
     lastStepMd = null;
@@ -133,6 +134,30 @@
             r.top + r.height * fy + (dy || 0) + window.scrollY];
   }
 
+  /* Y of the baseline the given text node's last line sits on.
+
+     A Range's rect gives the line BOX — which for a display headline hangs a
+     good 30px below the letters, all of it descender and leading. Standing him
+     on that put him visibly adrift under the word. A zero-sized inline-block
+     is laid out with its bottom edge exactly on the baseline, so appending one
+     for a single measurement reads the real thing off the layout engine
+     instead of guessing at font metrics. Zero width, so it cannot wrap. */
+  function baselineAfter (textNode, fallbackBottom) {
+    var host = textNode.parentNode;
+    if (!host) return fallbackBottom;
+    var strut = document.createElement('span');
+    strut.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    host.appendChild(strut);
+    var y = strut.getBoundingClientRect().bottom;
+    host.removeChild(strut);
+    return y || fallbackBottom;
+  }
+
+  /* The anchor is not his feet: the sprite is placed at pt.y - 78 and stands
+     82 tall, so his soles land 4px BELOW the point. Offsetting by exactly that
+     puts them on the baseline itself, level with the bottoms of the letters. */
+  var FOOT_LIFT = 4;
+
   function anchors () {
     var pts = [];
     var grid = document.querySelector('.projects-grid');
@@ -145,7 +170,8 @@
       var range = document.createRange();
       range.selectNodeContents(lastText);
       var lr = range.getBoundingClientRect();
-      pts.push([lr.right + window.scrollX + 52, lr.bottom + window.scrollY - 8]);
+      var baseY = baselineAfter(lastText, lr.bottom) + window.scrollY - FOOT_LIFT;
+      pts.push([lr.right + window.scrollX + 52, baseY]);
       // …then a wide right-hand loop: he swings out to the right margin,
       // walks straight down it past the hero, and only curves back inwards
       // over the grid's brim — no leftward drift across the hero copy
@@ -158,7 +184,7 @@
       if (hero) {
         var hr = hero.getBoundingClientRect();
         var heroBot = hr.bottom + window.scrollY;
-        var markY = lr.bottom + window.scrollY - 8;
+        var markY = baseY;
         pts.push([lane, markY + (heroBot - markY) * 0.45]);   // out to the margin
         pts.push([lane, heroBot + 8]);                        // down the margin
       }
@@ -221,7 +247,15 @@
     // which way is he TRAVELLING? scrolling up walks him backwards along the
     // path, and the facing has to follow that, not the path's own direction —
     // otherwise he reads as running in reverse. A stop keeps the last facing.
-    if (lastMd !== null && Math.abs(md - lastMd) > 0.5) { lastDir = md > lastMd ? 1 : -1; }
+    if (lastMd !== null && Math.abs(md - lastMd) > 0.5) {
+      var d = md > lastMd ? 1 : -1;
+      /* A reversal orphans the tail: prints laid walking one way are ahead of
+         him the moment he turns, and a trail that leads the walker reads as
+         someone else's. Let the whole thing go — including the pair left
+         standing at the last stop — and start a new one behind him. */
+      if (d !== lastDir) { dissolveSteps(0); }
+      lastDir = d;
+    }
     lastMd = md;
     var pt = motion.getPointAtLength(md);
     var pA = motion.getPointAtLength(Math.max(0, md - 6));

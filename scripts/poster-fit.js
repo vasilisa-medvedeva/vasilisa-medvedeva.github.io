@@ -14,13 +14,31 @@
   'use strict';
   var t = document.querySelector('.hero__title');
   if (!t) return;
+  /* Widest declared line at the current font size.
+
+     This used to read t.scrollWidth, which looks right and is quietly wrong:
+     scrollWidth is never reported below clientWidth, so a headline narrower
+     than its column measured as exactly the column. The ratio came out at 1,
+     the fitter returned the probe size untouched, and the thing could only
+     ever shrink text — never grow it into the space beside it. A Range over
+     the contents reports what the glyphs actually occupy, under or over. */
+  function widestLine () {
+    var range = document.createRange();
+    range.selectNodeContents(t);
+    var rects = range.getClientRects();
+    var max = 0;
+    for (var i = 0; i < rects.length; i++) { if (rects[i].width > max) max = rects[i].width; }
+    range.detach && range.detach();
+    return max;
+  }
+
   function fit () {
     t.style.fontSize = '100px';
     t.style.whiteSpace = 'nowrap';   // measure the intended <br> lines, not wrapped fragments
-    var natural = t.scrollWidth;
+    var natural = widestLine();
     t.style.whiteSpace = '';
     if (!natural) return;
-    var size = 100 * t.clientWidth / natural * 0.985;
+    var size = 100 * t.clientWidth / natural * 0.995;   /* 0.5% of air, not 1.5% */
     /* The floor is a safety net, not a design choice: the fitted size is what
        should win. It used to be 40px, which was never reached on the front
        page's short headline but is far above what a case headline needs on a
@@ -34,5 +52,19 @@
   document.addEventListener('langchange', refit);
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(refit); }
   if (document.fonts && document.fonts.addEventListener) { document.fonts.addEventListener('loadingdone', refit); }
+
+  /* Ask for the display face by name and refit when it lands. fonts.ready can
+     resolve before a stylesheet-triggered face has even been requested, and
+     then no 'loadingdone' follows either — the headline keeps the size it was
+     measured at in the fallback font and quietly under-fills its column. The
+     two timed refits are the belt to that braces: cheap, and they cover a
+     slow network where the face arrives after everything else has settled. */
+  if (document.fonts && document.fonts.load) {
+    var face = getComputedStyle(t).fontFamily.split(',')[0].replace(/["']/g, '').trim();
+    if (face) { document.fonts.load('900 100px "' + face + '"').then(refit).catch(function () {}); }
+  }
+  setTimeout(refit, 400);
+  setTimeout(refit, 1500);
+
   fit();
 })();

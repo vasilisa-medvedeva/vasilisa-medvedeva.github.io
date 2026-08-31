@@ -42,15 +42,16 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <link rel="stylesheet" href="styles/site-header.css?v=8" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
-  <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
+  <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
+  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -118,8 +119,11 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .store-link:hover  { background: var(--color-accent-orange); }
-    .store-link:active { background: var(--color-accent-orange-pressed); }
+    /* Label goes light on the fill, the same call every other control in this
+       skin makes on terracotta — dark ink on the accent read as a disabled
+       state rather than a hover. */
+    .store-link:hover  { background: var(--color-accent-orange); color: #FFFFFF; border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); color: #FFFFFF; border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -195,7 +199,7 @@
       line-height: var(--text-label-medium-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-87);
       margin-bottom: 12px;
     }
     .case__col p,
@@ -217,7 +221,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: #211E2A;
+      background: var(--tone-taupe);
     }
     .case__figure img { display: block; width: 100%; height: auto; }
 
@@ -229,7 +233,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 32px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: #211E2A; border-radius: 20px;
+      background: var(--tone-taupe); border-radius: 20px;
     }
     .scan-phone {
       width: 262px; padding: 7px; flex-shrink: 0;
@@ -561,7 +565,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -633,7 +637,7 @@
         </div>
         <div class="scan-phone">
           <div class="scan-phone__screen onb-stage">
-            <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" />
+            <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" width="960" height="2080" />
             <span class="ru-cover ru-caption" data-ru="686,7 млн фотографий всего · +6,9 млн в&amp;nbsp;июле">686.7M photos total · +6.9M in&nbsp;July</span>
             <div class="onb-scrim" aria-hidden="true"></div>
             <div class="onb-sheet" aria-hidden="true">
@@ -641,7 +645,7 @@
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1l6 6M7 1L1 7" stroke="#7c7c80" stroke-width="1.5" stroke-linecap="round"/></svg>
               </span>
               <div class="onb-sheet__art" id="onbLottie" aria-hidden="true">
-                <img src="assets/nomerogram/onb-illustration.png" alt="" /><!-- static fallback; replaced by the Lottie -->
+                <img src="assets/nomerogram/onb-illustration.png" alt="" width="846" height="555" /><!-- static fallback; replaced by the Lottie -->
               </div>
               <div class="onb-sheet__title" data-ru="Сфотографируйте битую машину">Photograph a&nbsp;damaged car</div>
               <p class="onb-sheet__text" data-ru="Помогите будущему владельцу не&amp;nbsp;купить хлам">Help the&nbsp;future owner avoid&nbsp;junk</p>
@@ -667,7 +671,7 @@
             </div>
             <!-- The upload screen the coach mark leads to: one tap on Add and the user is here -->
             <div class="onb-upload" aria-hidden="true">
-              <img src="assets/nomerogram/upload-screen.png" alt="The photo upload screen — camera and gallery tiles on top, recent car photos below, with an Upload button in the navigation bar" loading="lazy" />
+              <img src="assets/nomerogram/upload-screen.png" alt="The photo upload screen — camera and gallery tiles on top, recent car photos below, with an Upload button in the navigation bar" loading="lazy" width="1290" height="2796" />
               <span class="ru-cover ru-add" data-ru="Добавить">Add</span>
               <span class="ru-cover ru-upload" data-ru="Загрузить">Upload</span>
               <span class="ru-cover ru-camera" data-ru="Камера">Camera</span>
@@ -715,14 +719,14 @@
           <div class="scan-phone__screen scan-stage">
             <!-- Search screen (base) — defines the stage height -->
             <div class="scan-scene scan-scene--search">
-              <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" />
+              <img src="assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" loading="lazy" width="960" height="2080" />
               <img class="scan-phone__scanicon" src="assets/scan.svg" alt="Scan a plate with the camera" />
               <span class="ru-cover ru-caption" data-ru="686,7 млн фотографий всего · +6,9 млн в&amp;nbsp;июле">686.7M photos total · +6.9M in&nbsp;July</span>
             </div>
             <span class="scan-tap" aria-hidden="true"></span>
             <!-- Camera scanner — presented over the search screen on tap -->
             <div class="scan-scene scan-scene--camera" aria-hidden="true">
-              <img class="scan-cam" src="assets/nomerogram/scan-camera.png" alt="The camera check — pointing the phone at a car so the app can read its plate" loading="lazy" />
+              <img class="scan-cam" src="assets/nomerogram/scan-camera.png" alt="The camera check — pointing the phone at a car so the app can read its plate" loading="lazy" width="1290" height="1720" />
               <div class="scan-cam__ui">
                 <div class="scan-cam__sb" aria-hidden="true">
                   <span class="scan-cam__sb-time">16:55</span>
@@ -744,7 +748,7 @@
             </div>
             <!-- Recognized: the car's report pushes in over the camera -->
             <div class="scan-scene scan-scene--result" aria-hidden="true">
-              <img src="assets/nomerogram/scan-result.png" alt="The car report opened from the scan — BMW X5 M Competition 2020 with registration periods, average price and photos found by the plate" loading="lazy" />
+              <img src="assets/nomerogram/scan-result.png" alt="The car report opened from the scan — BMW X5 M Competition 2020 with registration periods, average price and photos found by the plate" loading="lazy" width="960" height="2080" />
             </div>
             <div class="scan-phone__island" aria-hidden="true"></div>
           </div>
@@ -814,7 +818,7 @@
     <div class="page-end"></div>
   </main>
 
-  <script src="scripts/page-transition.js?v=5"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
   <script src="scripts/lottie.min.js"></script>
@@ -973,7 +977,7 @@
     })();
   </script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js?v=3"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>

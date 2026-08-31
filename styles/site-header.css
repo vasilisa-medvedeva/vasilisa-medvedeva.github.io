@@ -29,19 +29,22 @@
   border-radius: 30px;
 }
 .site-header__avatar {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
   border: 2.5px solid var(--color-primary-transparent-87);
   display: block;
 }
 .site-header__name {
+  /* Same voice as the menu items beside it: the family always matched, but 700
+     with negative tracking against their 500 with positive read as a different
+     typeface altogether. Only the size still sets the name apart. */
   font-family: var(--font-display, "Archivo", sans-serif);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   line-height: 19px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
   color: var(--color-primary-transparent-87);
   white-space: nowrap;
 }
@@ -72,6 +75,16 @@
   align-items: center;
   gap: 4px;
 }
+/* One tracking for every control in the bar — name, menu, links, CV, language.
+   Set here rather than on the home page so the case pages' headers read the
+   same; they were a step apart while the home page styled its own. */
+.site-header__name,
+.menu-item__trigger,
+.menu-item__link,
+.site-header__link,
+.site-header__cv,
+.lang-switch__btn { letter-spacing: 0.02em; }
+
 .menu-item { position: relative; }
 .menu-item__trigger {
   display: inline-flex;
@@ -398,4 +411,103 @@ body.mobile-nav-open .mobile-nav > *:nth-child(n+10) { transition-delay: 0.36s; 
   }
   .mobile-nav__label,
   .mobile-nav__link { transform: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Lifted out of the home page's own <style> — which is exactly why every other
+   page still wore the older header. Kept at the end of the file so they keep
+   outranking the base declarations above by source order, the way they did
+   from a later stylesheet.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* The identity inherited the body face, so it sat outside the pair
+   entirely — a third typeface nobody chose. It also carried more weight
+   than the menu beside it; at this size the name does not need to shout
+   over its own navigation. */
+.site-header__identity { font-family: var(--font-display, sans-serif); font-weight: 500; }
+
+/* One ink across the header. The contact links sat at 62% and the idle
+   language at 48%, which made the right-hand half read as secondary — it
+   is not, it holds every way of reaching her. The language switch keeps
+   its state on the drawn ring, which is what that ring is for. */
+.site-header__link,
+.lang-switch__btn { color: var(--color-primary-transparent-87); }
+
+/* Every header control paints the accent behind its own label on hover,
+   so the label has to go light or it sits dark ink on terracotta. The
+   theme only covered the contact links; the menu items, the identity and
+   the CV pill were left reading dark on their own highlight. */
+.site-header__identity:hover,
+.site-header__identity:active,
+.menu-item__trigger:hover,
+.menu-item__trigger:active,
+.menu-item:focus-within .menu-item__trigger,
+.site-header__link:hover,
+.site-header__link:active,
+.site-header__cv:hover,
+.site-header__cv:active { color: #FFFFFF; }
+
+/* The dropdown rows highlight like every other control in the bar: the accent
+   behind the label, the label in white. They used to take a grey wash from the
+   ink tokens, which read as a different component.
+
+   The fill itself is not painted by the row — one .menu-item__marker slides
+   between rows (built by scripts/page-transition.js), so the highlight reads as
+   a single object travelling the list rather than four backgrounds blinking in
+   turn. The rows keep the colour change, which has to stay per-row: only the
+   one under the cursor may go white. */
+.menu-item__marker {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 0;
+  background: var(--color-accent-orange);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;                     /* under the labels, over the panel */
+  transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 140ms ease,
+              height 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.menu-item__marker.is-on { opacity: 1; }
+/* the labels have to sit above the travelling fill */
+.menu-item__link { position: relative; z-index: 1; }
+
+/* Without the script there is no marker, so the rows paint themselves — the
+   menu still highlights, it just does not slide. */
+.menu-item__link:hover { background: var(--color-accent-orange); color: #FFFFFF; }
+
+/* With the marker in place the row hands both jobs over to it. .is-marked, not
+   :hover, decides the white label: the panel's 8px of padding lies outside every
+   row, so a cursor resting there ends :hover while the marker stays put. */
+.has-marker .menu-item__link:hover { background: transparent; }
+
+/* The colour change is deliberately asymmetric. The block takes 260ms to cross,
+   so a label that turns white the instant the pointer arrives goes white while
+   it still sits on the bare panel — the word lights up in mid-air, ahead of its
+   own background. Arriving therefore waits 110ms and then fades over 170ms,
+   landing with the block. Leaving has no delay at all: the moment the block
+   pulls away the ink comes straight back, so no row is ever left white on the
+   panel. Same reason the two directions differ in length — catching up reads
+   as quick, being left behind reads as immediate. */
+.has-marker .menu-item__link {
+  color: var(--color-primary-transparent-87);
+  transition: color 200ms cubic-bezier(0.4, 0, 1, 1);
+}
+.has-marker .menu-item__link.is-marked {
+  color: #FFFFFF;
+  transition: color 170ms cubic-bezier(0, 0, 0.2, 1) 110ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-marker .menu-item__link,
+  .has-marker .menu-item__link.is-marked { transition: none; }
+}
+/* Pressed state stays a per-row paint: it is instantaneous by nature, and the
+   marker is mid-flight exactly when it would be needed. */
+.menu-item__link:active { background: var(--color-accent-orange-pressed); }
+
+/* No sliding for anyone who asked for stillness — the highlight simply appears
+   on the row under the cursor, which is what the rows did before. */
+@media (prefers-reduced-motion: reduce) {
+  .menu-item__marker { transition: none; }
 }

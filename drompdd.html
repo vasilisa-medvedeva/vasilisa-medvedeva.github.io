@@ -42,15 +42,16 @@
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <link rel="stylesheet" href="styles/site-header.css?v=8" />
   <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
   <link rel="stylesheet" href="styles/video-timeline.css" />
-  <link rel="stylesheet" href="styles/theme-dark.css?v=3" />
+  <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
+  <link rel="stylesheet" href="styles/theme-sage.css?v=9" />
   <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -118,8 +119,11 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .store-link:hover  { background: var(--color-accent-orange); }
-    .store-link:active { background: var(--color-accent-orange-pressed); }
+    /* Label goes light on the fill, the same call every other control in this
+       skin makes on terracotta — dark ink on the accent read as a disabled
+       state rather than a hover. */
+    .store-link:hover  { background: var(--color-accent-orange); color: #FFFFFF; border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); color: #FFFFFF; border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
@@ -195,7 +199,7 @@
       line-height: var(--text-label-medium-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-87);
       margin-bottom: 12px;
     }
     .case__col p,
@@ -217,7 +221,7 @@
       margin: 0;
       border-radius: 20px;
       overflow: hidden;
-      background: #211E2A;
+      background: var(--tone-mustard);
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
@@ -230,7 +234,7 @@
       display: flex; justify-content: center; align-items: flex-start;
       gap: 40px; flex-wrap: wrap;
       padding: 44px 20px;
-      background: #211E2A; border-radius: 20px;
+      background: var(--tone-mustard); border-radius: 20px;
     }
     .pdd-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .pdd-demo .video-timeline { max-width: 262px; }   /* match the phone width */
@@ -644,7 +648,22 @@
     /* ── Dark-mode case: screenshots of the shipped app (cut from the original
        case composites) shown in the same phone mockups as the coded screens. ── */
     .pdd-shot { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .pdd-demo--grid3 { max-width: 950px; margin: 0 auto; }   /* 3 phones per row */
+    /* The slab spans the content column like every other demo on the site; only
+       the phones inside it stay clustered. It used to be capped at 950px, which
+       left the dark-mode case sitting on a visibly shorter substrate than the
+       cases above it. */
+    /* The slab spans the content column like every other demo on the site.
+       Flex-wrap used to decide the rows, so widening the slab quietly repacked
+       the screenshots into ragged rows. An explicit grid fixes the composition
+       at four per row whatever the slab does. */
+    .pdd-demo--grid3 {
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(4, max-content);
+      justify-content: center;
+      justify-items: center;
+      column-gap: 40px; row-gap: 44px;
+    }
 
     /* looping demos idle until the user scrolls to them (scripts/demo-anim.js) */
     [data-anim]:not(.anim-live) * { animation-play-state: paused !important; }
@@ -685,7 +704,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="256" height="256" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
@@ -757,8 +776,8 @@
             <div class="pdd-phone__screen" aria-label="The old Drom PDD home screen — a static Android layout: mascot, three progress rings, ticket buttons and a row of icon shortcuts">
               <div class="pdd-vp">
                 <div class="pdd-old__content">
-                <img class="pdd-old__illu" src="assets/drompdd/ui/old-illu.png" alt="" />
-                <img class="pdd-old__settings" src="assets/drompdd/ui/ic-settings-old.png" alt="" />
+                <img class="pdd-old__illu" src="assets/drompdd/ui/old-illu.png" alt="" width="1080" height="708" />
+                <img class="pdd-old__settings" src="assets/drompdd/ui/ic-settings-old.png" alt="" width="84" height="84" />
                 <div class="pdd-old__rings">
                   <div class="pdd-ring">
                     <svg width="96" height="96" viewBox="0 0 96 96" fill="none">
@@ -791,11 +810,11 @@
                 <div class="pdd-old__learn" data-ru="Учить билеты AB">Learn tickets AB</div>
                 <div class="pdd-old__btn pdd-old__btn--marathon" data-ru="Марафон">Marathon</div>
                 <div class="pdd-old__btn pdd-old__btn--exam" data-ru="Экзамен">Exam</div>
-                <div class="pdd-dock__item" style="left:16px;width:48px;"><img src="assets/drompdd/ui/old-ic-themes.png" alt="" /><span data-ru="Темы">Topics</span></div>
-                <div class="pdd-dock__item" style="left:70px;width:72px;"><img src="assets/drompdd/ui/old-ic-fav.png" alt="" /><span data-ru="Избранное">Favorites</span></div>
-                <div class="pdd-dock__item" style="left:147px;width:78px;"><img src="assets/drompdd/ui/old-ic-schools.png" alt="" /><span data-ru="Автошколы">Schools</span></div>
-                <div class="pdd-dock__item" style="left:230px;width:60px;"><img src="assets/drompdd/ui/old-ic-chat.png" alt="" /><span data-ru="Чат">Chat</span></div>
-                <div class="pdd-dock__item" style="left:296px;width:48px;"><img src="assets/drompdd/ui/old-ic-pdd.png" alt="" /><span data-ru="ПДД">Rules</span></div>
+                <div class="pdd-dock__item" style="left:16px;width:48px;"><img src="assets/drompdd/ui/old-ic-themes.png" alt="" width="144" height="96" /><span data-ru="Темы">Topics</span></div>
+                <div class="pdd-dock__item" style="left:70px;width:72px;"><img src="assets/drompdd/ui/old-ic-fav.png" alt="" width="144" height="96" /><span data-ru="Избранное">Favorites</span></div>
+                <div class="pdd-dock__item" style="left:147px;width:78px;"><img src="assets/drompdd/ui/old-ic-schools.png" alt="" width="144" height="96" /><span data-ru="Автошколы">Schools</span></div>
+                <div class="pdd-dock__item" style="left:230px;width:60px;"><img src="assets/drompdd/ui/old-ic-chat.png" alt="" width="144" height="96" /><span data-ru="Чат">Chat</span></div>
+                <div class="pdd-dock__item" style="left:296px;width:48px;"><img src="assets/drompdd/ui/old-ic-pdd.png" alt="" width="144" height="96" /><span data-ru="ПДД">Rules</span></div>
                 </div>
                 <div class="pdd-nav3" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M13.5 3.8v12.4L5.2 10z" fill="none" stroke="#444746" stroke-width="1.8" stroke-linejoin="round"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.6" fill="none" stroke="#444746" stroke-width="1.8"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><rect x="3.6" y="3.6" width="12.8" height="12.8" rx="2" fill="none" stroke="#444746" stroke-width="1.8"/></svg></div>
                 <div class="pdd-sb"><span class="pdd-sb__time">20:19</span><span class="pdd-sb__right"><svg width="15" height="12" viewBox="0 0 16 12"><path d="M8 12 0.6 4.6A11.2 11.2 0 0 1 15.4 4.6Z" fill="#1c1b1f"/></svg><svg width="13" height="12" viewBox="0 0 14 12"><path d="M14 0v12H0z" fill="#1c1b1f"/></svg><svg width="8" height="13" viewBox="0 0 8 14"><rect x="2.4" width="3.2" height="1.6" rx="0.8" fill="#1c1b1f"/><rect y="1.6" width="8" height="12.4" rx="1.6" fill="#1c1b1f"/></svg></span></div>
@@ -817,10 +836,10 @@
               <div class="pdd-vp">
                 <div class="pdd-new__scroller">
                 <div class="pdd-new__content">
-                  <img class="pdd-new__logo" src="assets/drompdd/ui/logo-en.png" alt="" />
-                  <img class="pdd-new__settings" src="assets/drompdd/ui/ic-settings.png" alt="" />
+                  <img class="pdd-new__logo" src="assets/drompdd/ui/logo-en.png" alt="" width="320" height="88" />
+                  <img class="pdd-new__settings" src="assets/drompdd/ui/ic-settings.png" alt="" width="84" height="84" />
                   <div class="pdd-new__card">
-                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/new-illu.png" alt="" />
+                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/new-illu.png" alt="" width="864" height="426" />
                     <div class="pdd-stat pdd-stat--q">
                       <div class="pdd-stat__val">45 <span>/ 800</span></div>
                       <div class="pdd-stat__bar"><i style="width:5px;"></i></div>
@@ -839,39 +858,39 @@
                   </div>
                   <div class="pdd-new__btn pdd-new__btn--primary pdd-new__btn--tickets" data-ru="Билеты AB">Tickets AB</div>
                   <div class="pdd-new__btn pdd-new__btn--primary pdd-new__btn--exam" data-ru="Экзамен">Exam</div>
-                  <div class="pdd-new__btn pdd-new__btn--themes" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-book.png&quot; alt=&quot;&quot; /&gt;Темы"><img src="assets/drompdd/ui/ic-book.png" alt="" />Topics</div>
-                  <div class="pdd-new__btn pdd-new__btn--marathon" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-timer.png&quot; alt=&quot;&quot; /&gt;Марафон"><img src="assets/drompdd/ui/ic-timer.png" alt="" />Marathon</div>
-                  <div class="pdd-new__btn pdd-new__btn--errors" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-error.png&quot; alt=&quot;&quot; /&gt;Ошибки"><img src="assets/drompdd/ui/ic-error.png" alt="" />Mistakes</div>
-                  <div class="pdd-new__btn pdd-new__btn--fav" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-star.png&quot; alt=&quot;&quot; /&gt;Избранное"><img src="assets/drompdd/ui/ic-star.png" alt="" />Favorites</div>
+                  <div class="pdd-new__btn pdd-new__btn--themes" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-book.png&quot; alt=&quot;&quot; /&gt;Темы"><img src="assets/drompdd/ui/ic-book.png" alt="" width="72" height="72" />Topics</div>
+                  <div class="pdd-new__btn pdd-new__btn--marathon" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-timer.png&quot; alt=&quot;&quot; /&gt;Марафон"><img src="assets/drompdd/ui/ic-timer.png" alt="" width="78" height="72" />Marathon</div>
+                  <div class="pdd-new__btn pdd-new__btn--errors" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-error.png&quot; alt=&quot;&quot; /&gt;Ошибки"><img src="assets/drompdd/ui/ic-error.png" alt="" width="75" height="72" />Mistakes</div>
+                  <div class="pdd-new__btn pdd-new__btn--fav" data-ru="&lt;img src=&quot;assets/drompdd/ui/ic-star.png&quot; alt=&quot;&quot; /&gt;Избранное"><img src="assets/drompdd/ui/ic-star.png" alt="" width="75" height="72" />Favorites</div>
                   <div class="pdd-new__feed-title" data-ru="Подборка от&amp;nbsp;Дрома">Your picks from&nbsp;Drom</div>
                   <div class="pdd-feed">
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="477" height="268" />
                       <div class="pdd-car__name">Tesla Model 3, 2021</div>
                       <div class="pdd-car__price">€31,900</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="477" height="268" />
                       <div class="pdd-car__name">Tesla Model X, 2020</div>
                       <div class="pdd-car__price">€57,400</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="1160" height="652" />
                       <div class="pdd-car__name">BMW X5 M Competition, 2020</div>
                       <div class="pdd-car__price">€82,500</div>
                     </div>
                     <div class="pdd-more">
-                      <img src="assets/drompdd/ui/new-selection.png" alt="" />
+                      <img src="assets/drompdd/ui/new-selection.png" alt="" width="510" height="300" />
                       <span data-ru="Ещё 1 356 машин&lt;br /&gt;на&amp;nbsp;Дроме">1,356 more cars<br />on&nbsp;Drom</span>
                     </div>
                   </div>
                 </div>
                 </div>
                 <div class="pdd-tabbar">
-                  <div class="pdd-tab pdd-tab--active" style="left:0;"><img src="assets/drompdd/ui/tab-wheel.png" alt="" /><span data-ru="Обучение">Learning</span></div>
-                  <div class="pdd-tab" style="left:25%;"><img src="assets/drompdd/ui/tab-school.png" alt="" /><span data-ru="Автошколы">Schools</span></div>
-                  <div class="pdd-tab" style="left:50%;"><img src="assets/drompdd/ui/tab-chat.png" alt="" /><span data-ru="Чат">Chat</span></div>
-                  <div class="pdd-tab" style="left:75%;"><img src="assets/drompdd/ui/tab-sign.png" alt="" /><span data-ru="ПДД">Rules</span></div>
+                  <div class="pdd-tab pdd-tab--active" style="left:0;"><img src="assets/drompdd/ui/tab-wheel.png" alt="" width="144" height="96" /><span data-ru="Обучение">Learning</span></div>
+                  <div class="pdd-tab" style="left:25%;"><img src="assets/drompdd/ui/tab-school.png" alt="" width="144" height="96" /><span data-ru="Автошколы">Schools</span></div>
+                  <div class="pdd-tab" style="left:50%;"><img src="assets/drompdd/ui/tab-chat.png" alt="" width="144" height="96" /><span data-ru="Чат">Chat</span></div>
+                  <div class="pdd-tab" style="left:75%;"><img src="assets/drompdd/ui/tab-sign.png" alt="" width="144" height="96" /><span data-ru="ПДД">Rules</span></div>
                 </div>
                 <div class="pdd-nav3" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M13.5 3.8v12.4L5.2 10z" fill="none" stroke="#444746" stroke-width="1.8" stroke-linejoin="round"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.6" fill="none" stroke="#444746" stroke-width="1.8"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><rect x="3.6" y="3.6" width="12.8" height="12.8" rx="2" fill="none" stroke="#444746" stroke-width="1.8"/></svg></div>
                 <div class="pdd-sb"><span class="pdd-sb__time">20:19</span><span class="pdd-sb__right"><svg width="15" height="12" viewBox="0 0 16 12"><path d="M8 12 0.6 4.6A11.2 11.2 0 0 1 15.4 4.6Z" fill="#1c1b1f"/></svg><svg width="13" height="12" viewBox="0 0 14 12"><path d="M14 0v12H0z" fill="#1c1b1f"/></svg><svg width="8" height="13" viewBox="0 0 8 14"><rect x="2.4" width="3.2" height="1.6" rx="0.8" fill="#1c1b1f"/><rect y="1.6" width="8" height="12.4" rx="1.6" fill="#1c1b1f"/></svg></span></div>
@@ -920,10 +939,10 @@
               <div class="pdd-vp pdd-vp--dark">
                 <div class="pdd-new__scroller">
                 <div class="pdd-new__content">
-                  <img class="pdd-new__logo" src="assets/drompdd/ui/dark-logo.png?v=2" alt="" />
-                  <img class="pdd-new__settings" src="assets/drompdd/ui/dark-gear.png?v=2" alt="" />
+                  <img class="pdd-new__logo" src="assets/drompdd/ui/dark-logo.png?v=2" alt="" width="320" height="88" />
+                  <img class="pdd-new__settings" src="assets/drompdd/ui/dark-gear.png?v=2" alt="" width="47" height="47" />
                   <div class="pdd-new__card">
-                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/dark-illu.png" alt="" />
+                    <img class="pdd-new__card-illu" src="assets/drompdd/ui/dark-illu.png" alt="" width="993" height="492" />
                     <div class="pdd-stat pdd-stat--q">
                       <div class="pdd-stat__val">45 <span>/ 800</span></div>
                       <div class="pdd-stat__bar"><i style="width:5px;"></i></div>
@@ -943,29 +962,29 @@
                   <div class="pdd-new__btn pdd-new__btn--primary pdd-new__btn--tickets" data-ru="Билеты AB">Tickets AB</div>
                   <div class="pdd-new__btn pdd-new__btn--primary pdd-new__btn--exam" data-ru="Экзамен">Exam</div>
                   <div class="pdd-new__btn pdd-new__btn--primary pdd-btn--situations" data-ru="Ситуации на&amp;nbsp;дороге">Real-life situations</div>
-                  <div class="pdd-new__btn pdd-new__btn--themes" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-book.png?v=2&quot; alt=&quot;&quot; /&gt;Темы"><img src="assets/drompdd/ui/dark-ic-book.png?v=2" alt="" />Topics</div>
-                  <div class="pdd-new__btn pdd-new__btn--marathon" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-timer.png?v=2&quot; alt=&quot;&quot; /&gt;Марафон"><img src="assets/drompdd/ui/dark-ic-timer.png?v=2" alt="" />Marathon</div>
-                  <div class="pdd-new__btn pdd-new__btn--errors" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-error.png?v=2&quot; alt=&quot;&quot; /&gt;Ошибки"><img src="assets/drompdd/ui/dark-ic-error.png?v=2" alt="" />Mistakes</div>
-                  <div class="pdd-new__btn pdd-new__btn--fav" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-star.png?v=2&quot; alt=&quot;&quot; /&gt;Избранное"><img src="assets/drompdd/ui/dark-ic-star.png?v=2" alt="" />Favorites</div>
+                  <div class="pdd-new__btn pdd-new__btn--themes" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-book.png?v=2&quot; alt=&quot;&quot; /&gt;Темы"><img src="assets/drompdd/ui/dark-ic-book.png?v=2" alt="" width="51" height="51" />Topics</div>
+                  <div class="pdd-new__btn pdd-new__btn--marathon" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-timer.png?v=2&quot; alt=&quot;&quot; /&gt;Марафон"><img src="assets/drompdd/ui/dark-ic-timer.png?v=2" alt="" width="51" height="51" />Marathon</div>
+                  <div class="pdd-new__btn pdd-new__btn--errors" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-error.png?v=2&quot; alt=&quot;&quot; /&gt;Ошибки"><img src="assets/drompdd/ui/dark-ic-error.png?v=2" alt="" width="49" height="49" />Mistakes</div>
+                  <div class="pdd-new__btn pdd-new__btn--fav" data-ru="&lt;img src=&quot;assets/drompdd/ui/dark-ic-star.png?v=2&quot; alt=&quot;&quot; /&gt;Избранное"><img src="assets/drompdd/ui/dark-ic-star.png?v=2" alt="" width="47" height="47" />Favorites</div>
                   <div class="pdd-new__feed-title" data-ru="Подборка от&amp;nbsp;Дрома">Your picks from&nbsp;Drom</div>
                   <div class="pdd-feed">
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-tesla3.png" alt="" width="477" height="268" />
                       <div class="pdd-car__name">Tesla Model 3, 2021</div>
                       <div class="pdd-car__price">&euro;31,900</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-teslax.png" alt="" width="477" height="268" />
                       <div class="pdd-car__name">Tesla Model X, 2020</div>
                       <div class="pdd-car__price">&euro;57,400</div>
                     </div>
                     <div class="pdd-car">
-                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" />
+                      <img class="pdd-car__img" src="assets/drompdd/ui/car-bmw.png" alt="" width="1160" height="652" />
                       <div class="pdd-car__name">BMW X5 M Competition, 2020</div>
                       <div class="pdd-car__price">&euro;82,500</div>
                     </div>
                     <div class="pdd-more">
-                      <img src="assets/drompdd/ui/dark-cta-car.png" alt="" />
+                      <img src="assets/drompdd/ui/dark-cta-car.png" alt="" width="555" height="309" />
                       <span data-ru="Ещё 1 356 машин&lt;br /&gt;на&amp;nbsp;Дроме">1,356 more cars<br />on&nbsp;Drom</span>
                     </div>
                   </div>
@@ -1012,7 +1031,7 @@
                       <span class="pdd-signs__chip pdd-signs__chip--next">2</span>
                     </div>
                     <div class="pdd-signs__page pdd-signs__page--1">
-                      <img class="pdd-signs__img" src="assets/drompdd/ui/signs-road.png" alt="" />
+                      <img class="pdd-signs__img" src="assets/drompdd/ui/signs-road.png" alt="" width="375" height="342" />
                       <div class="pdd-signs__q" data-ru="Кто из&amp;nbsp;водителей выбрал запрещённую траекторию?">Which of&nbsp;the&nbsp;drivers picked a&nbsp;forbidden trajectory?</div>
                       <div class="pdd-signs__ans" style="top:486px;" data-ru="1. Грузовик">1. The truck</div>
                       <div class="pdd-signs__ans pdd-signs__ans--2" style="top:544px;" data-ru="2. Красная легковая">2. The red car</div>
@@ -1021,7 +1040,7 @@
                       <div class="pdd-sit-tap3" aria-hidden="true"></div>
                     </div>
                     <div class="pdd-signs__page pdd-signs__page--2">
-                      <img class="pdd-signs__img" src="assets/drompdd/ui/signs-road2.png" alt="" />
+                      <img class="pdd-signs__img" src="assets/drompdd/ui/signs-road2.png" alt="" width="375" height="330" />
                       <div class="pdd-signs__q" data-ru="Нарушает ли учебная машина правила на&amp;nbsp;этой траектории?">Does the&nbsp;learner car break the&nbsp;rules on&nbsp;this trajectory?</div>
                       <div class="pdd-signs__ans pdd-signs__ans--q2a1" style="top:486px;" data-ru="1. Нарушает">1. It does</div>
                       <div class="pdd-signs__ans" style="top:544px;" data-ru="2. Не&amp;nbsp;нарушает">2. It doesn&#8217;t</div>
@@ -1048,10 +1067,10 @@
                   </div>
                 </div>
                 <div class="pdd-tabbar">
-                  <div class="pdd-tab pdd-tab--active" style="left:0;"><img src="assets/drompdd/ui/dark-tab-wheel.png" alt="" /><span data-ru="Обучение">Learning</span></div>
-                  <div class="pdd-tab" style="left:25%;"><img src="assets/drompdd/ui/dark-tab-school.png" alt="" /><span data-ru="Автошколы">Schools</span></div>
-                  <div class="pdd-tab" style="left:50%;"><img src="assets/drompdd/ui/dark-tab-chat.png" alt="" /><span data-ru="Чат">Chat</span></div>
-                  <div class="pdd-tab" style="left:75%;"><img src="assets/drompdd/ui/dark-tab-sign.png" alt="" /><span data-ru="ПДД">Rules</span></div>
+                  <div class="pdd-tab pdd-tab--active" style="left:0;"><img src="assets/drompdd/ui/dark-tab-wheel.png" alt="" width="144" height="96" /><span data-ru="Обучение">Learning</span></div>
+                  <div class="pdd-tab" style="left:25%;"><img src="assets/drompdd/ui/dark-tab-school.png" alt="" width="144" height="96" /><span data-ru="Автошколы">Schools</span></div>
+                  <div class="pdd-tab" style="left:50%;"><img src="assets/drompdd/ui/dark-tab-chat.png" alt="" width="144" height="96" /><span data-ru="Чат">Chat</span></div>
+                  <div class="pdd-tab" style="left:75%;"><img src="assets/drompdd/ui/dark-tab-sign.png" alt="" width="144" height="96" /><span data-ru="ПДД">Rules</span></div>
                 </div>
                 <div class="pdd-nav3" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M13.5 3.8v12.4L5.2 10z" fill="none" stroke="#b9b9bb" stroke-width="1.8" stroke-linejoin="round"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.6" fill="none" stroke="#b9b9bb" stroke-width="1.8"/></svg><svg width="18" height="18" viewBox="0 0 20 20"><rect x="3.6" y="3.6" width="12.8" height="12.8" rx="2" fill="none" stroke="#b9b9bb" stroke-width="1.8"/></svg></div>
                 <div class="pdd-sb"><span class="pdd-sb__time">20:19</span><span class="pdd-sb__right"><svg width="15" height="12" viewBox="0 0 16 12"><path d="M8 12 0.6 4.6A11.2 11.2 0 0 1 15.4 4.6Z" fill="#fff"/></svg><svg width="13" height="12" viewBox="0 0 14 12"><path d="M14 0v12H0z" fill="#fff"/></svg><svg width="8" height="13" viewBox="0 0 8 14"><rect x="2.4" width="3.2" height="1.6" rx="0.8" fill="#fff"/><rect y="1.6" width="8" height="12.4" rx="1.6" fill="#fff"/></svg></span></div>
@@ -1087,15 +1106,14 @@
         <h2 class="case__title" data-ru="Тёмная тема">Dark Mode</h2>
       </div>
       <div class="pdd-demo pdd-demo--grid3">
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3a.png" alt="Dark mode — the home screen with the adapted mascot illustration" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-1a.png" alt="Dark mode — the tickets list" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-1b.png" alt="Dark mode — a ticket question with the answer marked green" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-1c.png" alt="Dark mode — a photo question with right and wrong answers and a comment" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2a.png" alt="Dark mode — the ticket result screen with the angry mascot" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2b.png" alt="Dark mode — the tickets list with a failed ticket marked red" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2c.png" alt="Dark mode — training by topics" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3b.png" alt="Dark mode — the marathon screen" loading="lazy" /></div></div>
-        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3c.png" alt="Dark mode — driving schools and the free video course with the mascot on a couch" loading="lazy" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3a.png" alt="Dark mode — the home screen with the adapted mascot illustration" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-1a.png" alt="Dark mode — the tickets list" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-1c.png" alt="Dark mode — a photo question with right and wrong answers and a comment" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2a.png" alt="Dark mode — the ticket result screen with the angry mascot" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2b.png" alt="Dark mode — the tickets list with a failed ticket marked red" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-2c.png" alt="Dark mode — training by topics" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3b.png" alt="Dark mode — the marathon screen" loading="lazy" width="496" height="1074" /></div></div>
+        <div class="pdd-phone"><div class="pdd-phone__screen"><img class="pdd-shot" src="assets/drompdd/dark/dm-3c.png" alt="Dark mode — driving schools and the free video course with the mascot on a couch" loading="lazy" width="496" height="1074" /></div></div>
       </div>
       <div class="case__grid">
         <div class="case__col">
@@ -1124,11 +1142,11 @@
     <div class="page-end"></div>
   </main>
 
-  <script src="scripts/page-transition.js?v=5"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
   <script src="scripts/demo-anim.js"></script>
   <script src="scripts/video-timeline.js"></script>
   <script src="scripts/analytics.js?v=2"></script>
-  <script src="scripts/poster-fit.js?v=3"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
   <script src="scripts/i18n.js"></script>
 </body>
 </html>
