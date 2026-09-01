@@ -4,22 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Organisms</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/docs-guides.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -85,7 +86,7 @@
     }
 
     .state-label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-body-small-font-size);
       font-weight: var(--text-body-small-font-weight);
       line-height: var(--text-body-small-line-height);
@@ -249,7 +250,7 @@
     /* ── Code panel ── */
     .code-toggle-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      font-family: "Archivo", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: var(--font-display, "Archivo", sans-serif); font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60);
       background: var(--color-primary-transparent-04);
       border: 1px solid var(--color-primary-transparent-16);
@@ -275,7 +276,7 @@
 
     .copy-code-btn {
       position: absolute; top: 14px; right: 16px;
-      font-family: "Archivo", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: var(--font-display, "Archivo", sans-serif); font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
       border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
     }
@@ -649,13 +650,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -717,7 +717,7 @@
                     </div>
                   </div>
                   <div class="card-profile-text__bio">
-                    <p class="card-profile-text__bio-text">Product designer based in Berlin. Sharing UX breakdowns, design process, and tools I actually use. DMs open for collabs ✉️</p>
+                    <p class="card-profile-text__bio-text">Product designer based in&nbsp;Berlin. Sharing UX breakdowns, design process, and&nbsp;tools I actually use. DMs open for&nbsp;collabs ✉️</p>
                   </div>
                 </div>
               </div>
@@ -742,7 +742,7 @@
                     </div>
                   </div>
                   <div class="card-profile-text__bio">
-                    <p class="card-profile-text__bio-text">Daily tips on backend dev, system design, and open source. Posts every weekday at 9 AM. Run by Omar Diaz 👨‍💻</p>
+                    <p class="card-profile-text__bio-text">Daily tips on&nbsp;backend dev, system design, and&nbsp;open source. Posts every weekday at&nbsp;9 AM. Run by&nbsp;Omar Diaz 👨‍💻</p>
                   </div>
                 </div>
               </div>
@@ -773,7 +773,7 @@
                 </div>
               </div>
             </div>
-            <span class="state-label">private, no bio</span>
+            <span class="state-label">private, no&nbsp;bio</span>
           </div>
 
           <!-- public, no bio -->
@@ -795,7 +795,7 @@
                 </div>
               </div>
             </div>
-            <span class="state-label">public, no bio</span>
+            <span class="state-label">public, no&nbsp;bio</span>
           </div>
 
         </div>
@@ -809,7 +809,7 @@
           <div class="docs__section-title">Composition</div>
           <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">new atom · 72 × 72px</span></div>
           <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">molecule · reused</span></div>
-          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · via the molecule</span></div>
+          <div class="docs__row"><span class="docs__row-label">ic16_lock</span><span class="docs__row-value">icons/small/lock.svg · via&nbsp;the&nbsp;molecule</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -818,15 +818,15 @@
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">h 240px · flex-col · gap 12px · centered</span></div>
           <div class="docs__row"><span class="docs__row-label">ava slot</span><span class="docs__row-value">flex: 1 · centered</span></div>
           <div class="docs__row"><span class="docs__row-label">AvatarInitials</span><span class="docs__row-value">72px · circle · brand-yellow-16</span></div>
-          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">356px · variants: private/public × bio/no bio</span></div>
+          <div class="docs__row"><span class="docs__row-label">CardProfileText</span><span class="docs__row-value">356px · variants: private/public × bio/no&nbsp;bio</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
           <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Lock + bio</span></div>
           <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Bio only</span></div>
-          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Lock only</span></div>
-          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Name + subtitle only</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no&nbsp;bio</span><span class="docs__row-value">Lock only</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no&nbsp;bio</span><span class="docs__row-value">Name + subtitle only</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -1009,7 +1009,7 @@
               </div>
               <button class="btn btn--primary">Join</button>
             </div>
-            <span class="state-label">Join (not in the meet)</span>
+            <span class="state-label">Join (not in&nbsp;the&nbsp;meet)</span>
           </div>
           <div class="state-wrapper">
             <div class="meet-bar">
@@ -1149,6 +1149,7 @@
   </main>
 
   <script src="scripts/nav.js"></script>
+  <script src="scripts/docs-guides.js"></script>
 
   <script>
     function toggleCode(id) {
@@ -1217,6 +1218,6 @@
   })();
   </script>
 
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
 </body>
 </html>

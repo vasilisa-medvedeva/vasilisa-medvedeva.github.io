@@ -1,0 +1,115 @@
+/* ── Language switch ────────────────────────────────────────────────────
+   The two languages side by side in the site's hand-drawn voice: no pill,
+   no hairline — the live language is circled with the same doodle ring as
+   the circled word in the hero, in the accent color. The ring draws itself
+   in when the language changes. It rides at the end of the header row —
+   where a reader looks for a language — and the header is sticky, so it
+   stays reachable the whole way down the page. On a page with no header it
+   falls back to a floating pill in the bottom-right corner.
+   Colors and type come from the token files — nothing local. */
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.lang-switch__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  position: relative;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 8px;
+  /* same letters as the menu items: Archivo 500 · 15/20 */
+  font-family: var(--font-display, "Archivo", sans-serif);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--color-primary-transparent-48);
+  cursor: pointer;
+  transition: color .16s ease-out;
+}
+/* The 44px touch target, hung off the button so the row can stay short and
+   the header keeps its 60px height. */
+.lang-switch__btn::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+.lang-switch__btn:hover { color: var(--color-primary-transparent-87); }
+.lang-switch__btn:focus-visible {
+  outline: 2px solid var(--color-accent-orange);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* the live language: full contrast, same weight as the menu — the ring
+   alone carries the state */
+.lang-switch__btn[aria-current="true"] {
+  color: var(--color-primary-transparent-87);
+}
+
+/* The hand-drawn ring — hidden until its language is live, then it draws
+   itself in like a pen stroke. */
+.lang-switch__ring {
+  display: none;
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 118%; height: 92%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.lang-switch__btn[aria-current="true"] .lang-switch__ring { display: block; }
+.lang-switch__ring path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 0;
+}
+.lang-switch__btn[aria-current="true"] .lang-switch__ring path {
+  animation: lang-ring-draw .5s ease-out;
+}
+@keyframes lang-ring-draw {
+  from { stroke-dashoffset: 320; }
+  to   { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-switch__btn[aria-current="true"] .lang-switch__ring path { animation: none; }
+}
+
+/* ── The swap itself ──
+   While html carries .lang-swapping the page content softens out — a short
+   fade with a whisper of blur — the words change under it, and it breathes
+   back in. The switch stays crisp so the reader keeps their anchor.
+
+   The mobile menu and its scrim are excluded along with the header: they are
+   chrome, not content. They also carry transitions of their own, and this
+   selector outranks them — a body-child with several :not() classes beats a
+   single class — which is why the panel used to jump instead of slide. */
+body > *:not(.lang-switch):not(.site-header):not(.bg-grain):not(.mobile-nav):not(.mobile-nav__scrim) {
+  transition: opacity .24s ease, filter .24s ease;
+}
+html.lang-swapping body > *:not(.lang-switch):not(.site-header):not(.bg-grain):not(.mobile-nav):not(.mobile-nav__scrim) {
+  opacity: 0;
+  filter: blur(6px);
+  transition-duration: .18s;
+}
+
+/* Fallback for a page that has no site header: the switch returns to the
+   bottom-right corner, stacked, on a small surface so it stays legible
+   over content; clear of the guide buddy on the left. */
+.lang-switch--floating {
+  position: fixed;
+  right: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 210;
+  flex-direction: column;
+  padding: 6px 4px;
+  border-radius: 30px;
+  background: var(--color-constant-primary);
+  box-shadow: 0 6px 20px var(--color-primary-transparent-08);
+}
+.lang-switch--floating .lang-switch__btn { min-width: 44px; height: 40px; }

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nomerogram — plate scan flow</title>
+  <style>
+    /* Bare 360×780 embed for the home-page project card: the Case 02 scan demo
+       from nomerogram.html (search → camera scan → report), built on its native
+       248px grid and scaled up to the card's 360px frame. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 360px; height: 780px; overflow: hidden; background: #fff; }
+    .scaler {
+      width: 248px; height: 537.33px;
+      transform: scale(1.4516129);
+      transform-origin: top left;
+    }
+
+    .scan-phone__screen {
+      position: relative; width: 248px;
+      overflow: hidden; background: #fff;
+    }
+    .scan-phone__screen img { display: block; width: 100%; height: auto; }
+    .scan-phone__island {
+      position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+      width: 78px; height: 23px; background: #0b0b0d; border-radius: 12px; z-index: 6;
+    }
+    /* Scan icon overlaid just to the right of the plate field (matching the app) */
+    .scan-phone__screen img.scan-phone__scanicon {
+      position: absolute; top: 10.2%; left: 79%; transform: translateY(-50%);
+      width: 20px; height: 20px; z-index: 3;
+    }
+
+    /* ── Scan flow: one looped demo (verbatim from nomerogram.html Case 02) ── */
+    .scan-stage { position: relative; overflow: hidden; }
+    .scan-scene--search { position: relative; z-index: 1; }
+    .scan-scene--camera {
+      position: absolute; inset: 0; z-index: 2; overflow: hidden;
+      transform: translateY(101%);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.18);
+      animation: scan-present 12s cubic-bezier(0.32,0.72,0,1) infinite;
+    }
+    .scan-scene--result {
+      position: absolute; inset: 0; z-index: 3; overflow: hidden; background: #fff;
+      transform: translateX(101%);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.18);
+      animation: scan-result 12s cubic-bezier(0.32,0.72,0,1) infinite;
+    }
+    .scan-scene--result img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    @keyframes scan-result {
+      0%,29%   { transform: translateX(101%); opacity: 1; }
+      33.5%,86% { transform: translateX(0); opacity: 1; }
+      90%,97%  { transform: translateX(0); opacity: 0; }
+      100%     { transform: translateX(101%); opacity: 0; }
+    }
+    .scan-scene--camera img.scan-cam {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: 100% 50%;
+      /* Until the shot arrives the viewfinder was a flat grey rectangle that
+         read as a broken screen. Same skeleton the case pages use, painted as
+         the image's own background — the arriving photo is opaque and covers it
+         by itself, and a photo that never arrives keeps shimmering instead of
+         leaving the frame blank. Darker values here: this sits on the camera
+         scene, not on the sage sheet. */
+      background-color: #3A3A3C;
+      background-image: linear-gradient(100deg,
+                        transparent 32%,
+                        rgba(255, 255, 255, 0.07) 50%,
+                        transparent 68%);
+      background-size: 220% 100%;
+      animation: scan-cam-skeleton 1.5s ease-in-out infinite;
+      font-size: 0;
+    }
+    .scan-scene--camera img.scan-cam.is-shot-loaded {
+      background: none;
+      animation: none;
+    }
+    @keyframes scan-cam-skeleton {
+      from { background-position: 190% 0; }
+      to   { background-position: -90% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scan-scene--camera img.scan-cam { animation: none; background-image: none; }
+    }
+    .scan-cam__ui { position: absolute; inset: 0; animation: scan-ui 12s ease infinite; }
+    @keyframes scan-ui {
+      0%,12.5% { opacity: 0; }
+      14.5%,84% { opacity: 1; }
+      84.2%,100% { opacity: 0; }
+    }
+    .scan-cam__frame {
+      position: absolute; left: 50%; top: 63%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%;
+    }
+    .scan-cam__zone {
+      position: relative; z-index: 1;
+      width: 46%; aspect-ratio: 137 / 84;
+      border: 1.5px solid rgba(255,255,255,0.92); border-radius: 5px;
+      box-shadow: 0 0 0 2000px rgba(26,26,30,0.5);
+      overflow: hidden;
+    }
+    .scan-cam__line {
+      position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, rgba(120,205,255,0.95), transparent);
+      box-shadow: 0 0 8px 1px rgba(120,205,255,0.6);
+      animation: scan-line 12s ease-in-out infinite;
+    }
+    @keyframes scan-line {
+      0%,17%   { top: 6%;  opacity: 0; }
+      19%      { opacity: 1; }
+      27%      { top: 90%; opacity: 1; }
+      28%,100% { top: 90%; opacity: 0; }
+    }
+    .scan-cam__hint {
+      position: relative; z-index: 3; text-align: center;
+      color: #fff; font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+      font-size: 10px; font-weight: 400; text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+    }
+    .scan-cam__ctl {
+      position: absolute; z-index: 2; color: #fff;
+      font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+      font-weight: 400; font-size: 11px; text-shadow: 0 1px 3px rgba(0,0,0,0.4); white-space: nowrap;
+    }
+    .scan-cam__back    { top: 5.6%; left: 6%; }
+    .scan-cam__flash   { top: 5.6%; right: 5.5%; }
+    .scan-cam__gallery { bottom: 8%; left: 7%; }
+    .scan-cam__shutter {
+      position: absolute; z-index: 2; left: 50%; bottom: 4.2%; transform: translateX(-50%);
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 2.5px solid #fff; background: transparent;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));
+    }
+    .scan-cam__shutter::after {
+      content: ""; position: absolute; inset: 3px; border-radius: 50%; background: #fff;
+    }
+    .scan-cam__sb { position: absolute; top: 0; left: 0; right: 0; height: 34px; z-index: 2;
+      color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+    .scan-cam__sb-time { position: absolute; left: 18px; top: 13px;
+      font: 600 9px/1 -apple-system,"SF Pro Text",system-ui,sans-serif; letter-spacing: 0.02em; }
+    .scan-cam__sb-icons { position: absolute; right: 16px; top: 13px; display: flex; align-items: center; gap: 3px; }
+    .scan-cam__sb-icons svg { display: block; }
+    .scan-cam__bat { position: relative; width: 18px; height: 9px;
+      border: 1px solid rgba(255,255,255,0.65); border-radius: 2.5px; }
+    .scan-cam__bat::before { content: ""; position: absolute; inset: 1.3px; width: 60%; background: #fff; border-radius: 1px; }
+    .scan-cam__bat::after { content: ""; position: absolute; right: -2.3px; top: 2.6px; width: 1.3px; height: 3.4px;
+      background: rgba(255,255,255,0.65); border-radius: 0 1px 1px 0; }
+
+    .scan-tap {
+      position: absolute; top: 10.2%; left: 83%; transform: translate(-50%,-50%);
+      width: 26px; height: 26px; border-radius: 50%; z-index: 3;
+      background: rgba(90,150,230,0.35); border: 1.5px solid rgba(90,150,230,0.6);
+      opacity: 0; animation: scan-tap 12s ease-out infinite;
+    }
+    @keyframes scan-tap {
+      0%,4.5% { opacity: 0; transform: translate(-50%,-50%) scale(0.4); }
+      5.5%    { opacity: 0.9; transform: translate(-50%,-50%) scale(0.7); }
+      8%      { opacity: 0; transform: translate(-50%,-50%) scale(1.4); }
+      100%    { opacity: 0; }
+    }
+    @keyframes scan-present {
+      0%,8%      { transform: translateY(101%); }
+      12.5%,84%  { transform: translateY(0); }
+      84.2%,100% { transform: translateY(101%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scan-scene--camera { animation: none; transform: translateY(0); }
+      .scan-scene--result { animation: none; }
+      .scan-cam__ui { animation: none; opacity: 1; }
+      .scan-cam__line { animation: none; top: 46%; opacity: 0.9; }
+      .scan-tap { display: none; }
+    }
+
+    /* English overlays over the Russian baked into the app screenshot: a matched
+       plate hides the original word, English is set on top. */
+    .ss-cover {
+      position: absolute; z-index: 4; display: flex;
+      align-items: center; justify-content: center; text-align: center; line-height: 1;
+      font-family: -apple-system,"SF Pro Text",system-ui,sans-serif;
+    }
+    .ss-caption {
+      left: 7%; right: 7%; top: 14.7%; height: 2.5%;
+      background: #f5f5f5; color: #3d3d3d; font-size: 7px; font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="scaler">
+    <div class="scan-phone__screen scan-stage">
+      <!-- Search screen (base) — defines the stage height -->
+      <div class="scan-scene scan-scene--search">
+        <img src="../assets/nomerogram/scan-search.png" alt="The Nomerogram search screen — a large license-plate field at the top and a gallery of recently photographed cars below" />
+        <img class="scan-phone__scanicon" src="../assets/scan.svg" alt="" />
+        <span class="ss-cover ss-caption">686.7M photos total · +6.9M in&nbsp;July</span>
+      </div>
+      <span class="scan-tap" aria-hidden="true"></span>
+      <!-- Camera scanner — presented over the search screen on tap -->
+      <div class="scan-scene scan-scene--camera" aria-hidden="true">
+        <img class="scan-cam" src="../assets/nomerogram/scan-camera.png" alt="" />
+        <div class="scan-cam__ui">
+          <div class="scan-cam__sb" aria-hidden="true">
+            <span class="scan-cam__sb-time">16:55</span>
+            <span class="scan-cam__sb-icons">
+              <svg width="15" height="9" viewBox="0 0 15 9" fill="#fff"><rect x="0" y="6" width="2.5" height="3" rx="0.6"/><rect x="4" y="4" width="2.5" height="5" rx="0.6"/><rect x="8" y="2" width="2.5" height="7" rx="0.6"/><rect x="12" y="0" width="2.5" height="9" rx="0.6"/></svg>
+              <svg width="13" height="9" viewBox="0 0 15 11" fill="none"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#fff"/></svg>
+              <span class="scan-cam__bat"></span>
+            </span>
+          </div>
+          <div class="scan-cam__frame">
+            <span class="scan-cam__hint">Position the&nbsp;plate in&nbsp;the&nbsp;frame</span>
+            <div class="scan-cam__zone"><div class="scan-cam__line"></div></div>
+          </div>
+          <span class="scan-cam__ctl scan-cam__back">Back</span>
+          <span class="scan-cam__ctl scan-cam__flash">Flash</span>
+          <span class="scan-cam__ctl scan-cam__gallery">Gallery</span>
+          <span class="scan-cam__shutter"></span>
+        </div>
+      </div>
+      <!-- Recognized: the car's report pushes in over the camera -->
+      <div class="scan-scene scan-scene--result" aria-hidden="true">
+        <img src="../assets/nomerogram/scan-result.png" alt="" />
+      </div>
+      <div class="scan-phone__island" aria-hidden="true"></div>
+    </div>
+  </div>
+<script>
+  /* Drop the viewfinder skeleton once the photo is actually decoded. `complete`
+     alone would also be true for a failed load, and a failed shot must keep the
+     shimmer rather than reveal an empty frame. */
+  (function () {
+    var cam = document.querySelector('img.scan-cam');
+    if (!cam) return;
+    function done () { cam.classList.add('is-shot-loaded'); }
+    if (cam.complete && cam.naturalWidth > 0) { done(); return; }
+    cam.addEventListener('load', done, { once: true });
+  })();
+</script>
+</body>
+</html>

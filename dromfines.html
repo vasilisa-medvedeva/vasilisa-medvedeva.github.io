@@ -3,25 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drom Fines — Vasilisa Medvedeva</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDY8SF935T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    // Self-traffic opt-out: open the site once with ?ga_optout=1 to stop being
+    // counted in this browser (persists); ?ga_optout=0 re-enables tracking.
+    try {
+      var gaOpt = new URLSearchParams(location.search).get('ga_optout');
+      if (gaOpt === '1') { localStorage.setItem('ga_optout', '1'); }
+      else if (gaOpt === '0') { localStorage.removeItem('ga_optout'); }
+    } catch (e) {}
+    if (localStorage.getItem('ga_optout') === '1' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      window['ga-disable-G-PDY8SF935T'] = true;
+    }
+    gtag('config', 'G-PDY8SF935T');
+  </script>
+  <title data-ru="Дром Штрафы — Василиса Медведева">Drom Fines — Vasilisa Medvedeva</title>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Vasilisa Medvedeva" />
+  <meta property="og:title" content="Drom Fines — Vasilisa Medvedeva" />
+  <meta property="og:description" content="Check and pay traffic fines through the official government database. Payments, registration and onboarding redesign." />
+  <meta property="og:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://vasilisa-medvedeva.github.io/dromfines.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Drom Fines — Vasilisa Medvedeva" />
+  <meta name="twitter:description" content="Check and pay traffic fines through the official government database. Payments, registration and onboarding redesign." />
+  <meta name="twitter:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/radius-tokens.css?v=1" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=11" />
+  <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/video-timeline.css" />
+  <link rel="stylesheet" href="styles/shot-skeleton.css?v=1" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=5" />
+  <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-constant-primary);
+      background: var(--page-bg);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -39,21 +76,23 @@
       display: flex; flex-direction: column; gap: 24px;
     }
     .hero__eyebrow {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
-      font-size: var(--text-label-large-font-size);
-      line-height: var(--text-label-large-line-height);
-      letter-spacing: 0.14em;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-87);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
     }
     .hero__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -62,15 +101,15 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .hero__aside p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
     .hero__stores { display: flex; gap: 8px; flex-wrap: wrap; }
     .store-link {
       display: inline-flex; align-items: center;
-      border: 1.5px solid var(--color-primary-transparent-87);
-      border-radius: 30px;
+      border: 1.5px solid var(--outline-ink);
+      border-radius: var(--radius-full);
       padding: 10px 16px;
       font-family: var(--text-title-medium-font-family, "Roboto"), sans-serif;
       font-size: var(--text-title-medium-font-size);
@@ -81,17 +120,23 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    .store-link:hover { background: var(--color-primary-transparent-04); }
+    /* Label goes light on the fill, the same call every other control in this
+       skin makes on terracotta — dark ink on the accent read as a disabled
+       state rather than a hover. */
+    .store-link:hover  { background: var(--color-accent-orange); border-color: var(--color-accent-orange); }
+    .store-link:active { background: var(--color-accent-orange-pressed); border-color: var(--color-accent-orange-pressed); }
 
     /* ── Role section ── */
     .role {
-      margin-top: 96px;
+      /* the widest gap on the page: it separates the title zone from the body,
+         so it sits above the 120px the sections keep between themselves */
+      margin-top: 160px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
       gap: 10px;
     }
     .section-title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -103,7 +148,7 @@
     .role__team {
       margin-top: 16px;
       max-width: 420px;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-60);
     }
@@ -112,13 +157,12 @@
       display: flex; flex-direction: column;
     }
     .role__list li {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
       padding: 14px 0;
-      border-top: 1px solid var(--color-primary-transparent-16);
     }
-    .role__list li:first-child { border-top: none; padding-top: 0; }
+    .role__list li:first-child { padding-top: 0; }
 
     /* ── Case studies ── */
     .case {
@@ -126,16 +170,16 @@
       display: flex; flex-direction: column; gap: 32px;
     }
     .case__index {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: var(--text-label-large-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
+      color: var(--color-primary-transparent-60);
     }
     .case__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
       font-size: clamp(32px, 3.4vw, 52px);
       line-height: 1.02; letter-spacing: -0.02em;
@@ -150,18 +194,18 @@
       align-items: start;
     }
     .case__label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-medium-font-size);
       line-height: var(--text-label-medium-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-60);
+      color: var(--color-primary-transparent-87);
       margin-bottom: 12px;
     }
     .case__col p,
     .case__col li {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
     }
@@ -176,15 +220,18 @@
     }
     .case__figure {
       margin: 0;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
-      background: var(--color-primary-transparent-04);
+      background: var(--tone-lavender);
     }
     .case__figure img { display: block; width: 100%; height: auto; }
     .case__figure + .case__figure { margin-top: 10px; }
 
     /* Video figure — a vertical screen recording, shown phone-sized on the soft stage */
-    .case__figure--video { display: flex; justify-content: center; padding: 40px 20px; }
+    .case__figure--video {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 30px; padding: 40px 20px;
+    }
     .case__figure--video video {
       display: block;
       width: auto; height: auto;
@@ -192,6 +239,7 @@
       border-radius: 28px;
       box-shadow: var(--elevation-4);
     }
+    .case__figure--video .video-timeline { max-width: 296px; }   /* match the video's height-capped width */
 
     /* ── Payment demo: old screen (static) vs new screen with an animated card pick.
        Both screens are coded 1:1 from the Figma frames at their native 320×568 grid
@@ -202,25 +250,68 @@
       margin-top: 32px;
       display: flex; justify-content: center; align-items: flex-start;
       gap: 56px; flex-wrap: wrap;
-      background: var(--color-primary-transparent-04);
-      border-radius: 20px; padding: 40px 20px;
+      background: var(--tone-lavender);
+      border-radius: var(--radius-xl); padding: 56px 20px 40px;   /* extra top room for the floating timeline */
     }
     .pay-demo__item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    /* doodle timeline floating above the animated (right) mockup — absolute so it
+       doesn't push the phone down or break its alignment with the "before" screen */
+    .pay-demo__item--after { position: relative; }
+    .pay-demo__timeline {
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      margin-bottom: 30px; width: 260px;
+    }
     .pay-demo__cap {
-      font-family: "Archivo", sans-serif; font-weight: 300;
+      font-family: var(--font-display, "Archivo", sans-serif); font-weight: 300;
       font-size: 15px; line-height: 22px; text-align: center;
       color: var(--color-primary-transparent-60); max-width: 240px;
     }
     .pay-demo__tag {
-      display: inline-block; font-family: "Archivo", sans-serif;
+      display: inline-block; font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 500; font-size: 11px; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--color-primary-transparent-48);
       margin-right: 6px;
     }
-    .pay-demo__tag--after { color: #1b75cc; }
+    .pay-demo__tag--after { color: var(--color-accent-orange); }   /* site accent, not the product's blue */
     /* Hand-drawn arrow between the old and new screens — same doodle stroke as the site's arrows */
     .pay-demo__arrow { align-self: flex-start; margin-top: 298px; flex-shrink: 0; }
     .pay-demo__arrow svg { display: block; }
+
+    /* Fine-details redesign: two exported screens (node 13:821 old, 13:1023 new)
+       compared on the same soft stage. Each tall screen sits in a phone mockup the
+       same size as the other cases' phones, and scrolls by hand. */
+    /* phones and the arrow inherit the base pay-demo layout: phones top-aligned,
+       the arrow centred on the 640px phone by the base margin-top: 298px */
+    /* Same frame as .pay-phone (320-wide screen, 0.9065 scale) — but no notch / island */
+    .detail-scale { position: relative; width: 303px; height: 640px; flex-shrink: 0; }
+    .detail-phone {
+      width: 334px; padding: 7px; background: #0b0b0d;
+      border-radius: 36px; box-shadow: var(--elevation-4); flex-shrink: 0;
+      transform: scale(0.9065); transform-origin: top left;
+    }
+    .detail-screen {
+      width: 320px; height: 692px;
+      background: #fff; border-radius: 29px;      /* concentric with the bezel: 36 − 7 */
+      overflow-y: auto; overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;                       /* hide the bar; the side label is the cue */
+    }
+    .detail-screen::-webkit-scrollbar { display: none; }
+    .detail-shot { width: 320px; height: auto; display: block; }
+    /* Scroll hint beside the mockup: the hand-drawn ↕ arrow sits exactly at the
+       phone's vertical centre, with the vertical "Scroll" label just below it. */
+    .detail-hint {
+      position: absolute; top: 0; bottom: 0; right: -40px; width: 30px;
+      color: var(--color-primary-transparent-60); pointer-events: none;
+    }
+    .detail-hint svg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: block; }
+    .detail-hint__txt {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, 24px);
+      writing-mode: vertical-rl;
+      font-family: var(--font-display, "Archivo", sans-serif); font-weight: 500;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      white-space: nowrap;
+    }
 
     /* Phone frame — the screen renders at the Figma frame's native 320×568 */
     .pay-phone-scale { width: 303px; height: 640px; flex-shrink: 0; }  /* 334×706 × 0.9065 — same height as the case-01 video */
@@ -281,6 +372,14 @@
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 17px; font-weight: 500;
     }
+    /* DS primary-button (node 9:605): radius 4, 16px Medium, subtle shadow.
+       The redesign only changes height: old 48 (node 3:320) → new 56. */
+    .reg .ios__pay {
+      border-radius: 4px; font-size: 16px; box-shadow: none;
+    }
+    .reg--old .ios__paypanel { height: 102px; }
+    .reg--new .ios__paypanel { height: 110px; }
+    .reg--new .ios__pay { border-radius: 8px; }   /* new screen: everything on radius 8 */
     .ios__paybox { position: relative; height: 100%; }
     .ios__paybox .ios__pay { position: absolute; inset: 0; height: auto; }
     .ios__pay--ap { background: #000; gap: 4px; }   /* black Apple Pay button per HIG */
@@ -363,13 +462,15 @@
         /* Apple Pay payment mark — white badge with a black outline (Apple Pay Marks
        guidelines), sized into the same 32×16 slot as the card logos */
     .ios__ap {
-      position: absolute; left: 16px; top: 13px;
-      width: 36px; height: 18px;
+      position: absolute; left: 16px; top: 11.5px;
+      width: 44px; height: 21px;
       background: #fff; border: 1px solid #000; border-radius: 4px;
-      display: flex; align-items: center; justify-content: center; gap: 1.5px;
-      font-size: 10px; line-height: 10px; font-weight: 500; color: #000;
+      display: flex; align-items: center; justify-content: center; gap: 2px;
+      font-size: 12px; line-height: 12px; font-weight: 500; color: #000;
     }
-    .ios__ap svg { display: block; width: 7px; height: 8.5px; margin-top: -0.5px; }
+    .ios__ap svg { display: block; width: 8.5px; height: 10.5px; margin-top: -0.5px; }
+    /* the label clears the wider Apple Pay badge (same 8px gap as the cards) */
+    .ios__card--ap .ios__num, .ios__method-opt--ap .ios__num { left: 68px; }
     .ios__plus {
       position: absolute; left: 16px; top: 11px; width: 36px;
       text-align: center; color: #1b75cc; font-size: 21px; line-height: 22px; font-weight: 500;
@@ -466,15 +567,16 @@
        Reuses the pay-demo stage / phone frame / status bar / island / home
        indicator / arrow. Screens coded from Figma (old: node 3:320, new: 3:460). */
     .reg { position: absolute; inset: 0; }
-    .reg__logo {
-      position: absolute; left: 16px; top: 54px;
-      display: flex; align-items: center; gap: 5px;
-      font-family: "Archivo", -apple-system, sans-serif; font-weight: 800;
-      font-size: 17px; line-height: 20px; letter-spacing: -0.3px;
-    }
-    .reg__logo-dot { width: 20px; height: 20px; border-radius: 50%; background: #e21b22; flex-shrink: 0; }
-    .reg__logo b { color: #181818; }
-    .reg__logo i { color: #e21b22; font-style: normal; }
+    .reg__logo { position: absolute; left: 16px; top: 54px; }
+    .reg__logo img { display: block; }
+    .reg--old .reg__logo img { width: 210px; height: 32px; }   /* old appbar logo: 210×32 */
+    .reg--new .reg__logo img { width: 158px; height: 24px; }   /* new: smaller, 24 tall */
+    /* Scanner glyph (fines/ic_scanner_24) tinted with the button colour via a mask */
+    .reg-new__scan-ic {
+      width: 24px; height: 24px; flex-shrink: 0; background: #1b75cc;
+      -webkit-mask: url("assets/dromfines/ic-scanner.svg") center / contain no-repeat;
+      mask: url("assets/dromfines/ic-scanner.svg") center / contain no-repeat;
+    }   /* viewBox 169×30.93 (both explicit — SVG root is 100%/100%) */
 
     /* Old screen — Material underline fields, scanning hidden in a tiny camera icon */
     .reg-old__label { position: absolute; left: 16px; font-size: 12px; line-height: 16px; }
@@ -487,50 +589,67 @@
     .reg-old__f2-value { top: 232px; }
     .reg-old__f2-line  { top: 260px; height: 2px; background: #1b75cc; }
     .reg-old__cam {
-      position: absolute; right: 16px; top: 226px; width: 24px; height: 24px; opacity: 0.5;
-      animation: reg-cam-hint 2.6s ease-in-out infinite;   /* gently flags where scanning was buried */
+      position: absolute; right: 16px; top: 228px; width: 20px; height: 20px;
     }
-    @keyframes reg-cam-hint { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.75;transform:scale(1.12)} }
 
     /* New screen — scan is a primary button; fields are labelled outlined boxes */
     .reg-new__scan {
-      position: absolute; left: 16px; right: 16px; top: 112px; height: 48px;
-      border: 1.5px solid #1b75cc; border-radius: 10px;
+      position: absolute; left: 16px; right: 16px; top: 112px; height: 56px;
+      border: 1.5px solid #1b75cc; border-radius: 8px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
       color: #1b75cc; font-size: 16px; font-weight: 500;
-      animation: reg-scan-hl 9s infinite;
+      animation: reg-scan-hl 12s infinite;
     }
     .reg-new__field {
       position: absolute; left: 16px; right: 16px; height: 56px;
-      border: 1px solid #c1c1c1; border-radius: 10px;
+      border: 1px solid #c1c1c1; border-radius: 8px;
     }
-    .reg-new__field--active { border: 1.5px solid #1b75cc; }
     .reg-new__f1 { top: 184px; }
     .reg-new__f2 { top: 256px; }
+    /* empty + unfocused: placeholder sits INSIDE, grey (Figma node 11:1038) */
+    .reg-new__fph {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; line-height: 20px; color: #8b8b8b;
+    }
+    /* fields stay empty — scanning jumps straight to the fines list */
+    /* once a value exists, the label floats up into the border notch */
     .reg-new__flabel {
       position: absolute; left: 12px; top: -8px; background: #fff; padding: 0 5px;
-      font-size: 12px; line-height: 16px; color: #8b8b8b;
+      font-size: 12px; line-height: 16px; color: #8b8b8b; opacity: 0;
     }
-    .reg-new__field--active .reg-new__flabel { color: #1b75cc; }
     .reg-new__fvalue {
       position: absolute; left: 15px; top: 18px; font-size: 16px; line-height: 20px; color: #181818;
       opacity: 0;
     }
-    .reg-new__f1 .reg-new__fvalue { animation: reg-fill-1 9s infinite; }
-    .reg-new__f2 .reg-new__fvalue { animation: reg-fill-2 9s infinite; }
 
     /* Scanner overlay — appears after tapping Scan, fills the fields, then dismisses */
+    /* Scanner "camera view": a stylised СТС on the floor, framed by the scan corners.
+       Data is invented and matches the form (plate М999ММ 125, certificate 22 АВ 323555). */
     .reg__scanner {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.82);
+      position: absolute; inset: 0; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; animation: reg-scanner 9s infinite;
+      opacity: 0; animation: reg-scanner 12s infinite;
+    }
+    .reg__floor {
+      position: absolute; inset: 0; z-index: 0; background: #eef0f2;   /* white table */
+    }
+    .reg__floor::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(135% 100% at 50% 46%, transparent 48%, rgba(0,0,0,0.13) 100%);
+    }
+    .reg__sts {
+      position: absolute; left: 50%; top: 50%; z-index: 1;
+      transform: translate(-50%,-50%) rotate(-3deg);
+      width: 170px; height: auto; display: block;
+      border-radius: 8px; box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
     .reg__scan-box {
-      position: relative; width: 208px; height: 132px; border-radius: 12px;
-      animation: reg-scan-pulse 9s infinite;
+      position: relative; z-index: 2; width: 190px; height: 250px; border-radius: 12px;
+      animation: reg-scan-pulse 12s infinite;
     }
     .reg__scan-box span {
       position: absolute; width: 26px; height: 26px; border: 3px solid #fff; border-radius: 3px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
     }
     .reg__scan-box span:nth-child(1){ left:0; top:0; border-right:0; border-bottom:0; }
     .reg__scan-box span:nth-child(2){ right:0; top:0; border-left:0; border-bottom:0; }
@@ -539,50 +658,91 @@
     .reg__scan-line {
       position: absolute; left: 6px; right: 6px; height: 2px; background: #1b75cc;
       box-shadow: 0 0 8px 1px #1b75cc; border-radius: 2px;
-      animation: reg-scan-sweep 9s infinite;
+      animation: reg-scan-sweep 12s infinite;
     }
     .reg__scan-cap {
       position: absolute; left: 0; right: 0; bottom: -34px; text-align: center;
-      color: #fff; font-size: 14px; font-weight: 500;
-      animation: reg-scan-cap 9s infinite;
+      color: #fff; font-size: 14px; font-weight: 500; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      animation: reg-scan-cap 12s infinite;
     }
 
     @keyframes reg-scan-hl {
-      0%,13.5%{ background:transparent } 15%,18%{ background:rgba(27,117,204,0.08) } 20%,100%{ background:transparent }
+      0%,10.5%{ background:transparent } 12%,14.5%{ background:rgba(27,117,204,0.08) } 16.5%,100%{ background:transparent }
     }
     @keyframes reg-scanner {
-      0%,18%   { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
-      21%,36%  { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
-      39%,100% { opacity:0; }
+      0%,16%    { opacity:0; animation-timing-function: cubic-bezier(0.05,0.7,0.1,1); }
+      18.5%,29% { opacity:1; animation-timing-function: cubic-bezier(0.3,0,0.8,0.15); }
+      31.5%,100%{ opacity:0; }
     }
-    @keyframes reg-scan-pulse { 0%,20%{transform:scale(0.9);opacity:0} 24%,36%{transform:scale(1);opacity:1} 39%,100%{opacity:0} }
+    @keyframes reg-scan-pulse { 0%,17%{transform:scale(0.9);opacity:0} 20%,29%{transform:scale(1);opacity:1} 31.5%,100%{opacity:0} }
     @keyframes reg-scan-sweep {
-      0%,23%   { top:8px; opacity:0 }
-      25%      { top:8px; opacity:1 }
-      34%      { top:120px; opacity:1 }
-      36%,100% { top:120px; opacity:0 }
+      0%,20%   { top:8px; opacity:0 }
+      21%      { top:8px; opacity:1 }
+      28%      { top:240px; opacity:1 }
+      29.5%,100%{ top:240px; opacity:0 }
     }
-    @keyframes reg-scan-cap { 0%,23%{opacity:0} 26%,35%{opacity:1} 37%,100%{opacity:0} }
+    @keyframes reg-scan-cap { 0%,20%{opacity:0} 22%,28%{opacity:1} 30%,100%{opacity:0} }
     /* values appear on their own after the scan (the payoff), reset softly at loop end */
-    @keyframes reg-fill-1 { 0%,40%{opacity:0} 45%,92%{opacity:1} 98%,100%{opacity:0} }
-    @keyframes reg-fill-2 { 0%,44%{opacity:0} 49%,92%{opacity:1} 98%,100%{opacity:0} }
+
+    /* Result screen — the fines list (node 12:1281) shown after the scan */
+    .reg__result {
+      position: absolute; inset: 0; background: #fff; z-index: 5;
+      /* iOS navigation push: the result slides in from the trailing edge with a
+         leading-edge shadow, using the system presentation curve */
+      transform: translateX(100%);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.12);
+      animation: reg-result 12s infinite;
+    }
+    .reg__ricon { position: absolute; top: 50px; }
+    .reg__ricon--plus { right: 60px; }
+    .reg__ricon--profile { right: 16px; }
+    .reg__rcard {
+      position: absolute; left: 16px; right: 16px; top: 118px; height: 208px;
+      background: #fff; border: 1px solid #f7f7f7; border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+    .reg__rplate { position: absolute; left: 16px; top: 18px; width: 147px; height: 35px; }
+    .reg__rdate { position: absolute; left: 16px; top: 70px; font-size: 14px; line-height: 18px; color: #8b8b8b; }
+    .reg__rchip {
+      position: absolute; left: 96px; top: 66px; height: 24px; padding: 0 12px;
+      background: #e7f1d8; border-radius: 14px;
+      font-size: 12.5px; line-height: 24px; font-weight: 500; color: #181818; white-space: nowrap;
+    }
+    .reg__rtitle { position: absolute; left: 16px; right: 16px; top: 102px; font-size: 18px; line-height: 23px; color: #181818; }
+    .reg__rprice { position: absolute; left: 16px; top: 156px; font-size: 22px; line-height: 26px; font-weight: 700; color: #181818; letter-spacing: 0.6px; }
+    .reg__rprice-old {
+      position: absolute; left: 96px; top: 156px; font-size: 22px; line-height: 26px; font-weight: 700;
+      color: #c1c1c1; letter-spacing: 0.6px; text-decoration: line-through; text-decoration-thickness: 2px;
+    }
+    .reg__rpaid {
+      position: absolute; left: 0; right: 0; top: 350px; text-align: center;
+      font-size: 16px; line-height: 20px; font-weight: 500; color: #8b8b8b;
+    }
+    @keyframes reg-result {
+      /* enter: iOS push from the trailing edge */
+      0%,30%   { opacity:1; transform:translateX(100%); animation-timing-function: cubic-bezier(0.32,0.72,0,1); }
+      36%,62%  { opacity:1; transform:translateX(0);    animation-timing-function: cubic-bezier(0.4,0,0.2,1); }
+      /* exit: fade back to the start of the flow */
+      70%,100% { opacity:0; transform:translateX(0); }
+    }
 
     .reg__tap {
       position: absolute; width: 40px; height: 40px; border-radius: 50%;
       background: rgba(27,117,204,0.22); border: 1.5px solid rgba(27,117,204,0.45);
       opacity: 0; transform: translate(-50%,-50%) scale(0.8); pointer-events: none;
-      animation: reg-tap 9s infinite;
+      animation: reg-tap 12s infinite;
     }
     @keyframes reg-tap {
-      0%,10%    { opacity:0; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
-      13%       { opacity:1; top:136px; left:160px; transform:translate(-50%,-50%) scale(1); }
-      16%       { opacity:0.9; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.62); }
-      19%,100%  { opacity:0; top:136px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
+      0%,10%    { opacity:0; top:140px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
+      11.5%     { opacity:1; top:140px; left:160px; transform:translate(-50%,-50%) scale(1); }
+      13.5%     { opacity:0.9; top:140px; left:160px; transform:translate(-50%,-50%) scale(0.62); }
+      16%,100%  { opacity:0; top:140px; left:160px; transform:translate(-50%,-50%) scale(0.9); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .reg__scanner, .reg-new__scan, .reg-old__cam, .reg__tap { animation: none; }
-      .reg__scanner, .reg__tap { display: none; }
-      .reg-new__fvalue { animation: none; opacity: 1; }
+      .reg__scanner, .reg-new__scan, .reg-old__cam, .reg__tap, .reg__result { animation: none; }
+      .reg__scanner, .reg__tap, .reg__result { display: none; }
+      .reg-new__fvalue, .reg-new__flabel { opacity: 0; }
+      .reg-new__fph { opacity: 1; }
     }
 
     .page-end { height: 120px; }
@@ -590,7 +750,7 @@
     @media (max-width: 900px) {
       .hero__aside { width: 100%; align-self: stretch; }
       .role, .case__grid { grid-template-columns: 1fr; }
-      .role { margin-top: 56px; }
+      .role { margin-top: 96px; }
       .case { margin-top: 72px; }
     }
 
@@ -598,12 +758,13 @@
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
       .hero__aside { margin-top: 8px; }
-      .role { margin-top: 44px; }
+      .role { margin-top: 72px; }
       .role__team { margin-top: 12px; }
       .case { margin-top: 56px; gap: 24px; }
       .case__grid { gap: 20px; }
       .case__figure--video { padding: 24px 12px; }
       .case__figure--video video { max-width: 260px; max-height: 560px; }
+      .case__figure--video .video-timeline { max-width: 260px; }
       .pay-demo { gap: 36px; margin-top: 24px; padding: 24px 12px; }
       .pay-demo__arrow { align-self: center; margin: 30px 0; transform: rotate(90deg); }
       .case__before { flex-direction: column; gap: 20px; }
@@ -611,34 +772,38 @@
       .case__before figcaption { font-size: 18px; line-height: 27px; }
       .page-end { height: 56px; }
     }
+
+    /* looping demos idle until the user scrolls to them (scripts/demo-anim.js) */
+    [data-anim]:not(.anim-live) * { animation-play-state: paused !important; }
   </style>
 </head>
 <body>
+  <!-- Static grain over the flat dark; sits at z-index -1 -->
+  <div class="bg-grain" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
           <a class="menu-item__trigger" href="index.html#projects">My projects</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="home.html">Pyroblast</a>
             <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
-            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
             <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
           </div>
         </div>
       </nav>
@@ -653,10 +818,10 @@
 
   <main class="main">
     <section class="hero">
-      <span class="hero__eyebrow">Drom Fines · iOS / Android</span>
-      <h1 class="hero__title">Drom Fines lets drivers check and pay traffic fines&nbsp;online.</h1>
+      <span class="hero__eyebrow" data-ru="Дром Штрафы · iOS / Android">Drom Fines · iOS / Android</span>
+      <h1 class="hero__title" data-ru="Дром Штрафы позволяет водителям проверять<br />и&amp;nbsp;оплачивать штрафы ГИБДД онлайн">Drom Fines lets drivers check<br />and&nbsp;pay traffic fines online</h1>
       <div class="hero__aside">
-        <p>Fine data comes straight from the official government database (GIS&nbsp;GMP). Paying in the app gives drivers legally valid confirmation and helps them avoid late fees.</p>
+        <p data-ru="Данные о&amp;nbsp;штрафах приходят напрямую из&amp;nbsp;официальной государственной базы (ГИС&amp;nbsp;ГМП). Оплата в&amp;nbsp;приложении даёт юридически значимое подтверждение и&amp;nbsp;помогает не&amp;nbsp;уйти в&amp;nbsp;просрочку.">Fine data comes straight from&nbsp;the&nbsp;official government database (GIS&nbsp;GMP). Paying in&nbsp;the&nbsp;app gives drivers legally valid confirmation and&nbsp;helps them avoid late fees.</p>
         <span class="hero__stores">
           <a class="store-link" href="https://apps.apple.com/ru/app/%D1%88%D1%82%D1%80%D0%B0%D1%84%D1%8B-%D0%B3%D0%B8%D0%B1%D0%B4%D0%B4-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D1%81-%D1%84%D0%BE%D1%82%D0%BE-%D0%BF%D0%B4%D0%B4/id1467318250" target="_blank" rel="noopener">App Store</a>
           <a class="store-link" href="https://play.google.com/store/apps/details?id=ru.drom.fines&hl=ru&gl=US" target="_blank" rel="noopener">Google Play</a>
@@ -666,76 +831,59 @@
 
     <section class="role">
       <div>
-        <h2 class="section-title">My Role and Responsibilities</h2>
-        <p class="role__team">The team: a product manager, an analyst, two iOS and two Android engineers, and a QA engineer, with backend owned by a separate team.</p>
+        <h2 class="section-title" data-ru="Моя роль и&amp;nbsp;задачи">My Role and&nbsp;Responsibilities</h2>
+        <p class="role__team" data-ru="Большой опыт работы в&amp;nbsp;кросс-функциональных командах с&amp;nbsp;продактами, аналитиками, разработчиками и&amp;nbsp;QA.">Extensive experience collaborating in&nbsp;cross-functional teams with&nbsp;PMs, analysts, engineers, and&nbsp;QA.</p>
       </div>
       <ul class="role__list">
-        <li>Owned UX for the fines app on iOS and Android: registration, fine search, payment, and onboarding.</li>
-        <li>Redesigned the payment screen around saved cards, cutting manual input for repeat payers.</li>
-        <li>Designed and A/B-tested the Lottie onboarding that brought 16% more registrations.</li>
-        <li>Moved the fines feature into the main Drom app, restyling it on Drom&#8217;s design system and dark theme.</li>
-        <li>Mapped the flow for fines tied to a driver&#8217;s license rather than a vehicle.</li>
-        <li>Prepared the onboarding animations as Lottie files for development.</li>
+        <li data-ru="Отвечала за&amp;nbsp;UX приложения штрафов на&amp;nbsp;iOS и&amp;nbsp;Android: регистрация, поиск штрафов, оплата и&amp;nbsp;онбординг.">Owned UX for&nbsp;the&nbsp;fines app on&nbsp;iOS and&nbsp;Android: registration, fine search, payment, and&nbsp;onboarding.</li>
+        <li data-ru="Перестроила экран оплаты вокруг сохранённых карт, убрав ручной ввод для&amp;nbsp;повторных платежей.">Redesigned the&nbsp;payment screen around saved cards, cutting manual input for&nbsp;repeat payers.</li>
+        <li data-ru="Спроектировала и&amp;nbsp;проверила в&amp;nbsp;A/B-тесте Lottie-онбординг, который дал +16% регистраций.">Designed and&nbsp;A/B-tested the&nbsp;Lottie onboarding that brought 16% more registrations.</li>
+        <li data-ru="Перенесла штрафы в&amp;nbsp;основное приложение Drom, переложив их на&amp;nbsp;его дизайн-систему и&amp;nbsp;тёмную тему.">Moved the&nbsp;fines feature into&nbsp;the&nbsp;main Drom app, restyling it&nbsp;on&nbsp;Drom&#8217;s design system and&nbsp;dark theme.</li>
+        <li data-ru="Описала сценарий для&amp;nbsp;штрафов, привязанных к&amp;nbsp;водительскому удостоверению, а&amp;nbsp;не&amp;nbsp;к&amp;nbsp;машине.">Mapped the&nbsp;flow for&nbsp;fines tied to&nbsp;a&nbsp;driver&#8217;s license rather than a&nbsp;vehicle.</li>
+        <li data-ru="Подготовила анимации онбординга в&amp;nbsp;виде Lottie-файлов для&amp;nbsp;разработки.">Prepared the&nbsp;onboarding animations as&nbsp;Lottie files for&nbsp;development.</li>
       </ul>
     </section>
 
-    <!-- ── Case 01 — Onboarding ── -->
+    <!-- ── Case 01 — Trust-Building Onboarding ── -->
     <section class="case">
       <div>
         <span class="case__index">Case 01</span>
-        <h2 class="case__title">Onboarding</h2>
-      </div>
-      <div class="case__grid">
-        <div class="case__col">
-          <h3 class="case__label">Problem</h3>
-          <p>A significant share of new users never finished registration: they opened the app once and never came back. The first thing the app asked for was documents, before it had shown any reason to trust it with them.</p>
-        </div>
-        <div class="case__col">
-          <h3 class="case__label">Solution</h3>
-          <p>My hypothesis: people dropped off because nothing explained why the app was worth their documents. I designed a short onboarding on animated Lottie screens with two messages: the data is official, straight from GIBDD, the Federal Treasury, MADI, AMPP, and FSSP, and checking takes one scan of the registration certificate.</p>
-          <p>We ran it as a month-long A/B test: the new onboarding against the flow without one.</p>
-        </div>
-        <div class="case__col">
-          <h3 class="case__label">Outcome</h3>
-          <ul>
-            <li>The onboarding variant brought 16% more registrations</li>
-          </ul>
-        </div>
+        <h2 class="case__title" data-ru="Онбординг, который строит доверие">Trust-Building Onboarding</h2>
       </div>
       <figure class="case__figure case__figure--video">
+        <div class="video-timeline" data-video-timeline aria-hidden="true"></div>
         <video src="assets/dromfines/onboarding.mp4" poster="assets/dromfines/onboarding-poster.jpg"
                autoplay muted loop playsinline preload="metadata"
                aria-label="Drom Fines animated Lottie onboarding: official data sources and a one-scan check"></video>
       </figure>
-    </section>
-
-    <!-- ── Case 02 — Registration Screen Redesign ── -->
-    <section class="case">
-      <div>
-        <span class="case__index">Case 02</span>
-        <h2 class="case__title">Registration Screen Redesign</h2>
-      </div>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>The app could scan documents instead of asking users to type the plate and registration certificate numbers, but almost nobody found it: scanning hid behind a small camera icon inside an input field. Most users took the slowest path through the very first screen of the product.</p>
-          <p>The input fields themselves looked dated and gave little feedback while typing.</p>
+          <p data-ru="Заметная доля новых пользователей не&amp;nbsp;доходила до&amp;nbsp;конца регистрации: открывали приложение один раз и&amp;nbsp;не&amp;nbsp;возвращались.">A significant share of&nbsp;new users never completed registration: they opened the&nbsp;app once and&nbsp;didn&#8217;t return.</p>
+          <p data-ru="У&amp;nbsp;человека просили документы раньше, чем он понимал, зачем ему приложение и&amp;nbsp;почему стоит доверить ему свои данные.">Users were asked to&nbsp;provide documents before they understood why the&nbsp;app was valuable or&nbsp;why they should trust it&nbsp;with&nbsp;their data.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I rebuilt the hierarchy: scanning became the primary button at the top of the screen, manual fields the fallback below it. The inputs got clear labels and visible states.</p>
-          <p>The layout also reserves room for registering by driver&#8217;s license, which later became its own case.</p>
+          <p data-ru="Моя гипотеза была в&amp;nbsp;том, что отваливаются не&amp;nbsp;из-за&amp;nbsp;отсутствия интереса, а&amp;nbsp;из-за&amp;nbsp;недоверия.">My hypothesis was that the&nbsp;drop-off was caused by&nbsp;a&nbsp;lack of&nbsp;trust, not lack of&nbsp;interest.</p>
+          <p data-ru="Я спроектировала короткий онбординг на&amp;nbsp;анимациях Lottie, который снимал два главных сомнения: данные приходят из&amp;nbsp;официальных источников (ГИБДД, Федеральное казначейство, МАДИ, АМПП и&amp;nbsp;ФССП), а&amp;nbsp;для&amp;nbsp;проверки машины достаточно один раз отсканировать СТС.">I designed a&nbsp;short trust-building onboarding with&nbsp;animated Lottie screens that addressed two key concerns: the&nbsp;data comes from&nbsp;official sources (GIBDD, Federal Treasury, MADI, AMPP, and&nbsp;FSSP), and&nbsp;checking a&nbsp;car only requires one scan of&nbsp;the&nbsp;registration certificate.</p>
+          <p data-ru="Решение проверили месячным A/B-тестом против исходного сценария без&amp;nbsp;онбординга.">We validated the&nbsp;solution through a&nbsp;month-long A/B test against the&nbsp;original flow without onboarding.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>After the redesign, registration drop-off fell by 20%</li>
-            <li>Scanning is now the first thing a new user sees; manual entry became the fallback</li>
-            <li>The same layout later absorbed the driver&#8217;s license scenario without a rework</li>
+            <li data-ru="Вариант с&amp;nbsp;онбордингом дал +16% регистраций">The onboarding variant increased registrations by&nbsp;16%</li>
           </ul>
         </div>
       </div>
-      <div class="pay-demo">
+    </section>
+
+    <!-- ── Case 02 — Registration Flow Optimization ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 02</span>
+        <h2 class="case__title" data-ru="Оптимизация регистрации">Registration Flow Optimization</h2>
+      </div>
+      <div class="pay-demo" data-anim>
         <figure class="pay-demo__item">
           <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="The old Drom Fines registration screen — underline fields with scanning hidden in a small camera icon">
@@ -750,19 +898,19 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
-                <div class="reg-old__label reg-old__f1-label">License plate</div>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
+                <div class="reg-old__label reg-old__f1-label" data-ru="Госномер">License plate</div>
                 <div class="reg-old__value reg-old__f1-value">М999ММ&nbsp;125</div>
                 <div class="reg-old__line reg-old__f1-line"></div>
-                <div class="reg-old__label reg-old__f2-label">Registration certificate</div>
+                <div class="reg-old__label reg-old__f2-label" data-ru="СТС">Registration certificate</div>
                 <div class="reg-old__value reg-old__f2-value">22&nbsp;АВ&nbsp;323555</div>
-                <svg class="reg-old__cam" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4V8z" stroke="#8b8b8b" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="#8b8b8b" stroke-width="1.6"/></svg>
+                <svg class="reg-old__cam" viewBox="0 0 24 24" fill="#1b75cc" aria-hidden="true"><path d="M12 15.2c1.77 0 3.2-1.43 3.2-3.2s-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2 1.43 3.2 3.2 3.2zM9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
                 <div class="reg-old__line reg-old__f2-line"></div>
-                <div class="ios__paypanel"><div class="ios__pay">Check fines</div></div>
+                <div class="ios__paypanel"><div class="ios__pay" data-ru="Проверить штрафы">Check fines</div></div>
               </div>
             </div>
           </div></div>
-          <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> scanning hid in a tiny icon; most people typed</figcaption>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag&quot;&gt;Было&lt;/span&gt; — сканирование пряталось в&amp;nbsp;крошечной иконке, и&amp;nbsp;почти все печатали руками"><span class="pay-demo__tag">Before</span> &mdash; scanning hid in&nbsp;a&nbsp;tiny icon; most people typed</figcaption>
         </figure>
 
         <div class="pay-demo__arrow" aria-hidden="true">
@@ -773,7 +921,8 @@
           </svg>
         </div>
 
-        <figure class="pay-demo__item">
+        <figure class="pay-demo__item pay-demo__item--after">
+          <div class="video-timeline pay-demo__timeline" data-video-timeline data-duration="12" aria-hidden="true"></div>
           <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="Redesigned registration screen: Scan documents is the primary button and fills the fields automatically">
               <div class="reg reg--new">
@@ -787,61 +936,99 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <div class="reg__logo"><span class="reg__logo-dot"></span><b>drom</b>&nbsp;<i>fines</i></div>
-                <div class="reg-new__scan">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/><path d="M4 12h16" stroke="#1b75cc" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
+                <div class="reg-new__scan" data-ru="&lt;span class=&quot;reg-new__scan-ic&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+                  Сканировать документы
+                ">
+                  <span class="reg-new__scan-ic" aria-hidden="true"></span>
                   Scan documents
                 </div>
                 <div class="reg-new__field reg-new__f1">
-                  <span class="reg-new__flabel">License plate</span>
+                  <span class="reg-new__fph" data-ru="Госномер">License plate</span>
+                  <span class="reg-new__flabel" data-ru="Госномер">License plate</span>
                   <span class="reg-new__fvalue">М999ММ&nbsp;125</span>
                 </div>
-                <div class="reg-new__field reg-new__field--active reg-new__f2">
-                  <span class="reg-new__flabel">Registration certificate</span>
+                <div class="reg-new__field reg-new__f2">
+                  <span class="reg-new__fph" data-ru="СТС">Registration certificate</span>
+                  <span class="reg-new__flabel" data-ru="СТС">Registration certificate</span>
                   <span class="reg-new__fvalue">22&nbsp;АВ&nbsp;323555</span>
                 </div>
-                <div class="ios__paypanel"><div class="ios__pay">Check fines</div></div>
+                <div class="ios__paypanel"><div class="ios__pay" data-ru="Проверить штрафы">Check fines</div></div>
 
                 <div class="reg__scanner">
+                  <div class="reg__floor"></div>
+                  <img class="reg__sts" src="assets/dromfines/sts-photo.png" alt="" width="330" height="440" />
                   <div class="reg__scan-box">
                     <span></span><span></span><span></span><span></span>
                     <div class="reg__scan-line"></div>
-                    <div class="reg__scan-cap">Scanning…</div>
+                    <div class="reg__scan-cap" data-ru="Сканируем…">Scanning…</div>
                   </div>
+                </div>
+
+                <div class="reg__result">
+                  <div class="ios__sb">
+                    <span class="ios__sb-time">9:41</span>
+                    <span class="ios__sb-right">
+                      <svg class="ios__sb-cell" width="17" height="11" viewBox="0 0 17 11" fill="#030303" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="4.8" width="3" height="6.2" rx="1"/><rect x="9.2" y="2.4" width="3" height="8.6" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>
+                      <svg class="ios__sb-wifi" width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1.2 3.7a9.6 9.6 0 0 1 12.6 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 6.2a6.2 6.2 0 0 1 8 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><path d="M5.8 8.5a3.1 3.1 0 0 1 3.4 0" stroke="#030303" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1" fill="#030303"/></svg>
+                      <span class="ios__sb-bat"></span>
+                    </span>
+                  </div>
+                  <div class="ios__island" aria-hidden="true"></div>
+                  <div class="ios__home" aria-hidden="true"></div>
+                  <div class="reg__logo"><img src="assets/Appbar/logo/df-splash-logo.png" alt="drom fines" width="210" height="32" /></div>
+                  <svg class="reg__ricon reg__ricon--plus" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#1b75cc" stroke-width="2" stroke-linecap="round"/></svg>
+                  <svg class="reg__ricon reg__ricon--profile" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#1b75cc"/><circle cx="13" cy="10" r="4" fill="#fff"/><path d="M5.5 21.2c1.5-3 4.3-4.6 7.5-4.6s6 1.6 7.5 4.6a12 12 0 0 1-15 0z" fill="#fff"/></svg>
+                  <div class="reg__rcard">
+                    <img class="reg__rplate" src="assets/dromfines/plate.png" alt="Х 755 АН 799" width="168" height="40" />
+                    <div class="reg__rdate" data-ru="30 марта">March 30</div>
+                    <div class="reg__rchip" data-ru="–50% до&amp;nbsp;1 мая">–50% until May 1</div>
+                    <div class="reg__rtitle" data-ru="Превышение скорости на&amp;nbsp;20–40 км/ч">Speeding 20–40 km/h over&nbsp;the&nbsp;limit</div>
+                    <div class="reg__rprice">250 ₽</div>
+                    <div class="reg__rprice-old">500 ₽</div>
+                  </div>
+                  <div class="reg__rpaid" data-ru="Показать оплаченные">Show paid</div>
                 </div>
                 <div class="reg__tap"></div>
               </div>
             </div>
           </div></div>
-          <figcaption class="pay-demo__cap"><span class="pay-demo__tag pay-demo__tag--after">After</span> scan once — the fields fill themselves</figcaption>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag pay-demo__tag--after&quot;&gt;Стало&lt;/span&gt; — один скан — и&amp;nbsp;поля заполняются сами"><span class="pay-demo__tag pay-demo__tag--after">After</span> &mdash; scan once — the&nbsp;fields fill themselves</figcaption>
         </figure>
-      </div>
-    </section>
-
-    <!-- ── Case 03 — Making Payment Effortless ── -->
-    <section class="case">
-      <div>
-        <span class="case__index">Case 03</span>
-        <h2 class="case__title">Making Payment Effortless</h2>
       </div>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>Every payment started from scratch: the app had no saved cards and no Apple&nbsp;Pay or Google&nbsp;Pay, so users retyped card details for every fine. Repeat payers, the core of a revenue-critical flow, felt it most.</p>
+          <p data-ru="Приложение уже умело сканировать документы вместо ручного ввода номера и&amp;nbsp;данных СТС, но&amp;nbsp;почти никто эту возможность не&amp;nbsp;находил: сканирование пряталось за&amp;nbsp;маленькой иконкой камеры внутри поля ввода.">The app could already scan documents instead of&nbsp;asking users to&nbsp;type the&nbsp;plate number and&nbsp;registration certificate details, but&nbsp;most users never found that option &#8212; scanning was hidden behind a&nbsp;small camera icon inside the&nbsp;input field.</p>
+          <p data-ru="В&amp;nbsp;итоге на&amp;nbsp;самом первом экране продукта человек по&amp;nbsp;умолчанию шёл самым медленным путём.">As a&nbsp;result, users defaulted to&nbsp;the&nbsp;slowest path right on&nbsp;the&nbsp;product&#8217;s very first screen.</p>
+          <p data-ru="Сами поля выглядели устаревшими: вместо полноценных полей — тонкие подчёркивания, почти без&amp;nbsp;отклика при&amp;nbsp;вводе.">The input fields themselves looked dated too: thin underlines in&nbsp;place of&nbsp;full fields gave almost no&nbsp;feedback as&nbsp;you typed.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I redesigned the screen around saved cards: a returning user confirms the payment instead of retyping the card. The chosen payment method is remembered for the next time, so the next fine opens ready to pay. Usability testing validated the new layout before release.</p>
+          <p data-ru="Я перестроила иерархию экрана: сканирование стало главным действием наверху, ручной ввод — запасным вариантом под&amp;nbsp;ним.">I reworked the&nbsp;screen&#8217;s hierarchy: scanning became the&nbsp;primary action at&nbsp;the&nbsp;top of&nbsp;the&nbsp;screen, with&nbsp;manual entry as&nbsp;the&nbsp;fallback below it.</p>
+          <p data-ru="Для&amp;nbsp;сканирования взяли системный паттерн распознавания документов (VisionKit): он надёжно читал номера и&amp;nbsp;СТС, и&amp;nbsp;не&amp;nbsp;пришлось строить своё решение с&amp;nbsp;нуля.">For scanning, we&nbsp;used the&nbsp;system document-recognition pattern (VisionKit), which gave reliable recognition of&nbsp;plates and&nbsp;registration certificates without building a&nbsp;custom solution from&nbsp;scratch.</p>
+          <p data-ru="Форму тоже обновила: вместо устаревших подчёркиваний — современные поля с&amp;nbsp;рамкой, постоянными подписями и&amp;nbsp;понятным состоянием фокуса.">I also updated the&nbsp;form: replaced the&nbsp;dated underline fields with&nbsp;modern outlined fields, persistent labels, and&nbsp;clear focus states.</p>
+          <p data-ru="Новая структура экрана заранее учитывала будущий сценарий регистрации по&amp;nbsp;водительскому удостоверению.">The new screen structure also accounted for&nbsp;a&nbsp;future registration scenario via&nbsp;driver&#8217;s license.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>After the redesign, payment conversion doubled and fines revenue grew 5&times;</li>
-            <li>Repeat payments went from retyping a card to confirming a saved one</li>
+            <li data-ru="Отвал на&amp;nbsp;регистрации снизился на&amp;nbsp;20%">Registration drop-off fell by&nbsp;20%</li>
+            <li data-ru="Сканирование стало первым и&amp;nbsp;самым заметным путём для&amp;nbsp;новых пользователей">Scanning became the&nbsp;first and&nbsp;most visible path for&nbsp;new users</li>
+            <li data-ru="Ручной ввод остался запасным вариантом">Manual entry remained a&nbsp;fallback option</li>
+            <li data-ru="Этот же дизайн позже позволил добавить регистрацию по&amp;nbsp;правам, не&amp;nbsp;переделывая экран">The same design later let us add driver&#8217;s license registration without reworking the&nbsp;screen</li>
           </ul>
         </div>
       </div>
-      <div class="pay-demo">
+    </section>
+
+    <!-- ── Case 03 — Reducing Friction in Payments ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 03</span>
+        <h2 class="case__title" data-ru="Меньше трения в&amp;nbsp;оплате">Reducing Friction in&nbsp;Payments</h2>
+      </div>
+      <div class="pay-demo" data-anim>
         <figure class="pay-demo__item">
           <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="The old Drom Fines payment screen — payer and amount only, no saved card">
@@ -856,21 +1043,21 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <span class="ios__close">Close</span>
-                <span class="ios__title">Payment</span>
-                <div class="ios__label ios__label--payer">Payer</div>
-                <div class="ios__payer-value">Dmitry Mikhailov</div>
+                <span class="ios__close" data-ru="Закрыть">Close</span>
+                <span class="ios__title" data-ru="Оплата">Payment</span>
+                <div class="ios__label ios__label--payer" data-ru="Плательщик">Payer</div>
+                <div class="ios__payer-value" data-ru="Дмитрий Михайлов">Dmitry Mikhailov</div>
                 <div class="ios__hr ios__field-hr"></div>
-                <div class="ios__label ios__label--details">Payment details</div>
-                <div class="ios__row ios__row--1"><span>Fine</span><span>750,00&nbsp;₽</span></div>
-                <div class="ios__row ios__row--2"><span>Fee</span><span>37,50&nbsp;₽</span></div>
+                <div class="ios__label ios__label--details" data-ru="Детали платежа">Payment details</div>
+                <div class="ios__row ios__row--1" data-ru="&lt;span&gt;Штраф&lt;/span&gt;&lt;span&gt;750,00&amp;nbsp;₽&lt;/span&gt;"><span>Fine</span><span>750,00&nbsp;₽</span></div>
+                <div class="ios__row ios__row--2" data-ru="&lt;span&gt;Комиссия&lt;/span&gt;&lt;span&gt;37,50&amp;nbsp;₽&lt;/span&gt;"><span>Fee</span><span>37,50&nbsp;₽</span></div>
                 <div class="ios__hr ios__total-hr"></div>
-                <div class="ios__row ios__row--total"><span>Total</span><b>787,50&nbsp;₽</b></div>
-                <div class="ios__paypanel"><div class="ios__pay">Pay fine</div></div>
+                <div class="ios__row ios__row--total" data-ru="&lt;span&gt;Итого&lt;/span&gt;&lt;b&gt;787,50&amp;nbsp;₽&lt;/b&gt;"><span>Total</span><b>787,50&nbsp;₽</b></div>
+                <div class="ios__paypanel"><div class="ios__pay" data-ru="Оплатить штраф">Pay fine</div></div>
               </div>
             </div>
           </div></div>
-          <figcaption class="pay-demo__cap"><span class="pay-demo__tag">Before</span> the full card was retyped for every fine</figcaption>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag&quot;&gt;Было&lt;/span&gt; — карту вводили заново для&amp;nbsp;каждого штрафа"><span class="pay-demo__tag">Before</span> &mdash; the&nbsp;full card was retyped for&nbsp;every fine</figcaption>
         </figure>
 
         <div class="pay-demo__arrow" aria-hidden="true">
@@ -881,7 +1068,8 @@
           </svg>
         </div>
 
-        <figure class="pay-demo__item">
+        <figure class="pay-demo__item pay-demo__item--after">
+          <div class="video-timeline pay-demo__timeline" data-video-timeline data-duration="18" aria-hidden="true"></div>
           <div class="pay-phone-scale"><div class="pay-phone">
             <div class="pay-phone__screen" aria-label="Redesigned payment screen: tapping the payment method opens a sheet to pick a saved card">
               <div class="ios ios--new">
@@ -895,17 +1083,17 @@
                 </div>
                 <div class="ios__island" aria-hidden="true"></div>
                 <div class="ios__home" aria-hidden="true"></div>
-                <span class="ios__close">Close</span>
-                <span class="ios__title">Payment</span>
-                <div class="ios__h ios__h--details">Payment details</div>
-                <div class="ios__row ios__row--1"><span>Fine</span><span>750,00&nbsp;₽</span></div>
-                <div class="ios__row ios__row--2"><span>Fee</span><span>37,50&nbsp;₽</span></div>
+                <span class="ios__close" data-ru="Закрыть">Close</span>
+                <span class="ios__title" data-ru="Оплата">Payment</span>
+                <div class="ios__h ios__h--details" data-ru="Детали платежа">Payment details</div>
+                <div class="ios__row ios__row--1" data-ru="&lt;span&gt;Штраф&lt;/span&gt;&lt;span&gt;750,00&amp;nbsp;₽&lt;/span&gt;"><span>Fine</span><span>750,00&nbsp;₽</span></div>
+                <div class="ios__row ios__row--2" data-ru="&lt;span&gt;Комиссия&lt;/span&gt;&lt;span&gt;37,50&amp;nbsp;₽&lt;/span&gt;"><span>Fee</span><span>37,50&nbsp;₽</span></div>
                 <div class="ios__hr ios__total-hr"></div>
-                <div class="ios__row ios__row--total"><span>Total</span><b>787,50&nbsp;₽</b></div>
-                <div class="ios__h ios__h--payer">Payer</div>
-                <div class="ios__payer-value">Dmitry Mikhailov</div>
+                <div class="ios__row ios__row--total" data-ru="&lt;span&gt;Итого&lt;/span&gt;&lt;b&gt;787,50&amp;nbsp;₽&lt;/b&gt;"><span>Total</span><b>787,50&nbsp;₽</b></div>
+                <div class="ios__h ios__h--payer" data-ru="Плательщик">Payer</div>
+                <div class="ios__payer-value" data-ru="Дмитрий Михайлов">Dmitry Mikhailov</div>
                 <div class="ios__hr ios__field-hr"></div>
-                <div class="ios__h ios__h--method">Payment method</div>
+                <div class="ios__h ios__h--method" data-ru="Способ оплаты">Payment method</div>
                 <div class="ios__method">
                   <span class="ios__method-opt ios__method-opt--visa"><span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;9876</span></span>
                   <span class="ios__method-opt ios__method-opt--mc"><span class="ios__mc" aria-hidden="true"></span><span class="ios__num">**&nbsp;4321</span></span>
@@ -913,13 +1101,13 @@
                   <svg class="ios__chev" width="13" height="8" viewBox="0 0 13 8" fill="none" aria-hidden="true"><path d="M1 1l5.5 5.3L12 1" stroke="#c1c1c1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="ios__paypanel"><div class="ios__paybox">
-                  <div class="ios__pay ios__pay-opt--card">Pay fine</div>
+                  <div class="ios__pay ios__pay-opt--card" data-ru="Оплатить штраф">Pay fine</div>
                   <div class="ios__pay ios__pay--ap ios__pay-opt--ap"><svg width="14" height="17" viewBox="0 0 384 512" aria-hidden="true"><path fill="#fff" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</div>
                 </div></div>
 
                 <div class="ios__scrim"></div>
                 <div class="ios__sheet">
-                  <span class="ios__sheet-title">Payment method</span>
+                  <span class="ios__sheet-title" data-ru="Способ оплаты">Payment method</span>
                   <span class="ios__x">×</span>
                   <div class="ios__card ios__card--ap">
                     <span class="ios__ap"><svg width="9" height="11" viewBox="0 0 384 512" aria-hidden="true"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>Pay</span><span class="ios__num">Apple Pay</span>
@@ -937,78 +1125,111 @@
                     <span class="ios__visa">VISA</span><span class="ios__num">**&nbsp;5511</span>
                   </div>
                   <div class="ios__card ios__card--new">
-                    <span class="ios__plus">+</span><span class="ios__num">New card</span>
+                    <span class="ios__plus">+</span><span class="ios__num" data-ru="Новая карта">New card</span>
                   </div>
                 </div>
                 <div class="ios__tap"></div>
               </div>
             </div>
           </div></div>
-          <figcaption class="pay-demo__cap"><span class="pay-demo__tag pay-demo__tag--after">After</span> pick a saved card in two taps</figcaption>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag pay-demo__tag--after&quot;&gt;Стало&lt;/span&gt; — сохранённая карта в&amp;nbsp;два касания"><span class="pay-demo__tag pay-demo__tag--after">After</span> &mdash; pick a&nbsp;saved card in&nbsp;two taps</figcaption>
         </figure>
-      </div>
-    </section>
-
-    <!-- ── Case 04 — Integration into the Drom Ecosystem ── -->
-    <section class="case">
-      <div>
-        <span class="case__index">Case 04</span>
-        <h2 class="case__title">Integration into the Drom Ecosystem</h2>
       </div>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>The fines feature was moving into the main Drom app, where millions of users already knew Drom&#8217;s visual language, including its dark theme. Dropped in as-is, it would have read as a third-party embed inside a trusted product.</p>
+          <p data-ru="Каждая оплата начиналась с&amp;nbsp;нуля: карту сохранить было нельзя, Apple&amp;nbsp;Pay и&amp;nbsp;Google&amp;nbsp;Pay не&amp;nbsp;поддерживались.">Every payment started from&nbsp;scratch: the&nbsp;app couldn&#8217;t save a&nbsp;card, and&nbsp;Apple&nbsp;Pay and&nbsp;Google&nbsp;Pay weren&#8217;t supported.</p>
+          <p data-ru="Реквизиты карты приходилось вводить заново при&amp;nbsp;каждом штрафе. Сильнее всего это било по&amp;nbsp;тем, кто платит регулярно, — ядру аудитории этого критичного для&amp;nbsp;бизнеса сценария.">Users had to&nbsp;re-enter card details every time they paid a&nbsp;fine. Repeat users &#8212; the&nbsp;core audience for&nbsp;this business-critical flow &#8212; felt it&nbsp;most.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I restyled the feature on Drom&#8217;s design system: its dark palette, its components, its navigation patterns. Existing Drom components were reused wherever possible instead of building a parallel kit.</p>
-          <p>A custom onboarding animation in Drom&#8217;s style introduced fines to the existing audience.</p>
+          <p data-ru="Я перестроила экран оплаты вокруг сохранённых способов: вместо повторного ввода реквизитов человек просто подтверждает платёж.">I redesigned the&nbsp;payment screen around saved payment methods: instead of&nbsp;re-entering card details, the&nbsp;user could simply confirm the&nbsp;payment.</p>
+          <p data-ru="Выбранный способ запоминался, и&amp;nbsp;следующий штраф открывался сразу готовым к&amp;nbsp;подтверждению.">The chosen payment method was remembered for&nbsp;future use, so&nbsp;the&nbsp;next fine payment opened already to&nbsp;be confirmed.</p>
+          <p data-ru="Перед релизом мы проверили новый сценарий юзабилити-тестами, чтобы убедиться, что он понятен.">Before release, we&nbsp;validated the&nbsp;new flow through usability testing to&nbsp;make sure it&nbsp;was clear to&nbsp;users.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Outcome</h3>
           <ul>
-            <li>The fines feature reads as native Drom, down to the dark theme</li>
-            <li>Reusing Drom components meant no parallel UI kit to maintain</li>
+            <li data-ru="Конверсия в&amp;nbsp;оплату выросла вдвое">Payment conversion doubled</li>
+            <li data-ru="Повторная оплата превратилась из&amp;nbsp;ввода реквизитов в&amp;nbsp;подтверждение одного сохранённого способа">Repeat payments went from&nbsp;re-entering card details to&nbsp;confirming a&nbsp;single saved payment method</li>
           </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/dromfines/ecosystem-1.png" alt="Drom Fines aligned with the Drom design system" loading="lazy" />
-      </figure>
-      <figure class="case__figure">
-        <img src="assets/dromfines/ecosystem-2.png" alt="Drom Fines ecosystem onboarding animation frames" loading="lazy" />
-      </figure>
-      <figure class="case__figure">
-        <img src="assets/dromfines/ecosystem-3.png" alt="Drom Fines ecosystem visual continuity screens" loading="lazy" />
-      </figure>
     </section>
 
-    <!-- ── Case 05 — Driver’s License Fine Tracking ── -->
+    <!-- ── Case 04 — Clarifying Fine Details ── -->
     <section class="case">
       <div>
-        <span class="case__index">Case 05</span>
-        <h2 class="case__title">Driver&#8217;s License Fine Tracking</h2>
+        <span class="case__index">Case 04</span>
+        <h2 class="case__title" data-ru="Понятная карточка штрафа">Clarifying Fine Details</h2>
+      </div>
+      <div class="pay-demo detail-demo">
+        <figure class="pay-demo__item">
+          <div class="detail-scale">
+            <div class="detail-phone">
+              <div class="detail-screen detail-screen--old">
+                <img class="detail-shot" src="assets/dromfines/details-old.png" alt="The old Drom Fines detail screen — a flat list of label and value pairs with the discount buried beside the amount" loading="lazy" width="580" height="1508" />
+              </div>
+            </div>
+            <span class="detail-hint" aria-hidden="true">
+              <svg width="12" height="27" viewBox="0 0 12 30" fill="none"><path d="M6 5C4.6 12 7.4 18 6 25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 5C4.3 6.5 3.2 7.9 2.4 9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 5C7.8 6.5 8.9 7.9 9.6 9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 25C4.3 23.5 3.2 22.1 2.4 20.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 25C7.8 23.5 8.9 22.1 9.6 20.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span class="detail-hint__txt" data-ru="Листайте">Scroll</span>
+            </span>
+          </div>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag&quot;&gt;Было&lt;/span&gt; — плоский список «поле — значение», скидка теряется рядом с&amp;nbsp;суммой"><span class="pay-demo__tag">Before</span> &mdash; a&nbsp;flat label&ndash;value list; the&nbsp;discount buried by&nbsp;the&nbsp;amount</figcaption>
+        </figure>
+        <div class="pay-demo__arrow" aria-hidden="true">
+          <svg width="104" height="44" viewBox="0 0 104 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.5 27.2C17.8 21.4 34.6 17.6 51.9 18.1C66.3 18.5 80.2 21.4 92.6 25.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C88.5 20.9 84.3 15.8 80.9 10.6" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M93.9 26.3C86.8 28.1 80.1 30.6 73.9 33.9" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <figure class="pay-demo__item">
+          <div class="detail-scale">
+            <div class="detail-phone">
+              <div class="detail-screen detail-screen--new">
+                <img class="detail-shot" src="assets/dromfines/details-new.png" alt="The redesigned Drom Fines detail screen — a prominent discount card on top, then grouped Time and place, Article, Photo and Ruling sections" loading="lazy" width="580" height="1865" />
+              </div>
+            </div>
+            <span class="detail-hint" aria-hidden="true">
+              <svg width="12" height="27" viewBox="0 0 12 30" fill="none"><path d="M6 5C4.6 12 7.4 18 6 25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 5C4.3 6.5 3.2 7.9 2.4 9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 5C7.8 6.5 8.9 7.9 9.6 9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 25C4.3 23.5 3.2 22.1 2.4 20.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 25C7.8 23.5 8.9 22.1 9.6 20.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span class="detail-hint__txt" data-ru="Листайте">Scroll</span>
+            </span>
+          </div>
+          <figcaption class="pay-demo__cap" data-ru="&lt;span class=&quot;pay-demo__tag pay-demo__tag--after&quot;&gt;Стало&lt;/span&gt; — смысловые блоки, заметная карточка скидки и&amp;nbsp;объяснённая статья"><span class="pay-demo__tag pay-demo__tag--after">After</span> &mdash; grouped sections, a&nbsp;prominent discount card, and&nbsp;the&nbsp;article explained</figcaption>
+        </figure>
       </div>
       <div class="case__grid">
         <div class="case__col">
           <h3 class="case__label">Problem</h3>
-          <p>Some fines are issued to a driver&#8217;s license rather than a vehicle, so the app, which tracked fines only by car, silently showed users an incomplete list. A &#8220;no fines&#8221; screen could be wrong.</p>
+          <p data-ru="Экран штрафа был длинным списком полей без&amp;nbsp;всякой иерархии: дата, сумма, фото, место нарушения, номер документа и&amp;nbsp;орган, выписавший штраф.">The fine screen was a&nbsp;long list of&nbsp;fields with&nbsp;no&nbsp;visual hierarchy: date, amount, photo, violation location, document number, and&nbsp;the&nbsp;issuing authority.</p>
+          <p data-ru="При&amp;nbsp;этом скидка 50% за&amp;nbsp;раннюю оплату — главный довод заплатить прямо сейчас — вообще не&amp;nbsp;выделялась. И&amp;nbsp;экран не&amp;nbsp;объяснял, за&amp;nbsp;что именно штраф.">Meanwhile, information about the&nbsp;50% early-payment discount &mdash; the&nbsp;key factor in&nbsp;deciding whether to&nbsp;pay right away &mdash; wasn&#8217;t highlighted at&nbsp;all. The screen also didn&#8217;t explain what the&nbsp;fine was actually for.</p>
         </div>
         <div class="case__col">
           <h3 class="case__label">Solution</h3>
-          <p>I mapped the full flow for adding and tracking fines by license and designed the license card for the fines list. A banner in the list prompts drivers to add their license, so the feature surfaces exactly where the incomplete list lives.</p>
+          <p data-ru="Я перестроила экран, сгруппировав информацию по&amp;nbsp;смыслу: время и&amp;nbsp;место нарушения, статья, фотография и&amp;nbsp;постановление.">I restructured the&nbsp;screen, grouping information into&nbsp;logical sections: time and&nbsp;place of&nbsp;the&nbsp;violation, the&nbsp;article, the&nbsp;photo, and&nbsp;the&nbsp;ruling.</p>
+          <p data-ru="Информацию о&amp;nbsp;скидке я вынесла в&amp;nbsp;отдельную карточку наверху экрана и&amp;nbsp;добавила понятный срок её действия.">I moved the&nbsp;discount information into&nbsp;a&nbsp;separate card at&nbsp;the&nbsp;top of&nbsp;the&nbsp;screen and&nbsp;added a&nbsp;clear deadline for&nbsp;it.</p>
+          <p data-ru="Фотографию нарушения опустила ниже: она грузилась дольше, и&amp;nbsp;так человек видит главное сразу, не&amp;nbsp;дожидаясь её.">I moved the&nbsp;violation photo lower &mdash; it&nbsp;took longer to&nbsp;load, so&nbsp;users would see the&nbsp;key information first without waiting.</p>
+          <p data-ru="Появился блок «Статья» с&amp;nbsp;описанием нарушения — человек понимает причину штрафа, а&amp;nbsp;не&amp;nbsp;видит один лишь номер статьи закона.">An &#8220;Article&#8221; block also appeared, describing the&nbsp;violation, so&nbsp;users understand the&nbsp;reason for&nbsp;the&nbsp;fine instead of&nbsp;seeing just the&nbsp;law&#8217;s article number.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li data-ru="Скидка и&amp;nbsp;срок её действия стали самым заметным элементом экрана">The discount information and&nbsp;its deadline became the&nbsp;most visible element on&nbsp;the&nbsp;screen</li>
+            <li data-ru="Человек сразу понимает, за&amp;nbsp;что штраф, а&amp;nbsp;не&amp;nbsp;только сколько платить">Users immediately understood what they were fined for, not just how much to&nbsp;pay</li>
+            <li data-ru="Длинный список превратился в&amp;nbsp;понятную структуру с&amp;nbsp;ясной иерархией">The long list became a&nbsp;clear structure with&nbsp;a&nbsp;defined visual hierarchy</li>
+          </ul>
         </div>
       </div>
-      <figure class="case__figure">
-        <img src="assets/dromfines/license.png" alt="Drom Fines driver&#8217;s license tracking flow" loading="lazy" />
-      </figure>
     </section>
 
     <div class="page-end"></div>
   </main>
 
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
+  <script src="scripts/demo-anim.js"></script>
+  <script src="scripts/video-timeline.js"></script>
   <script>
     /* Play case videos only while they're on screen (reliable where the
        autoplay attribute is ignored, and it saves data off-screen). */
@@ -1028,5 +1249,8 @@
       vids.forEach(function (v) { io.observe(v); });
     })();
   </script>
+  <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
+  <script src="scripts/i18n.js"></script>
 </body>
 </html>

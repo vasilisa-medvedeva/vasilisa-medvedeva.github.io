@@ -16,7 +16,7 @@ Product Designer | Payments & Consumer Mobile | Limassol, Cyprus
 
 ## About
 
-I'm a product designer who turns payment flows and onboarding into numbers. 4 years in consumer mobile (iOS and Android), based in Limassol, Cyprus.
+I'm a product designer who turns payment flows and onboarding into numbers. 5 years in consumer mobile (iOS and Android), based in Limassol, Cyprus.
 
 ✦ Redesigned a payment funnel for a fines-payment app: payment conversion 2×, revenue 5×
 ✦ Shipped a Lottie-animated onboarding that won a month-long A/B test: +16% registrations
@@ -24,15 +24,24 @@ I'm a product designer who turns payment flows and onboarding into numbers. 4 ye
 ✦ Built a design system solo: tokens and 50+ documented components across three platforms
 ✦ Every change I ship goes through an A/B test
 
-My portfolio is a live product, not screenshots: interactive flow prototypes and a fully documented design system → [portfolio URL]
+My portfolio is a live product, not screenshots: interactive flow prototypes and a fully documented design system → vasilisa-medvedeva.github.io
 
-Currently finishing a deliberate career break spent bringing my English to working level (reading and writing at B2) and building the portfolio above.
+Since 2024 I've been freelancing: full-cycle design for small businesses — landing pages, menus, identity — and a move to an AI-native process: research synthesis with Claude, working prototypes built in Claude Code.
 
 Open to on-site product design roles in Cyprus; open to Europe and remote as well.
 
 ---
 
 ## Experience
+
+### Freelance Designer
+*2024 – Present · Limassol, Cyprus*
+
+• Moved to an AI-native process: research synthesis and concepts with Claude, working prototypes built in Claude Code.
+• Full-cycle design: landing pages, menus, identity.
+• A board game — 100 cards art-directed in Midjourney, one style throughout.
+
+📎 Attach media: link to the portfolio site + one live flow prototype.
 
 ### Product Designer — Pyroblast
 *Aug 2023 – Apr 2024 · Limassol, Cyprus*
@@ -85,4 +94,4 @@ Designed user interfaces for web products.
 - [ ] Open to Work: Product Designer, Cyprus + hybrid/on-site (recruiters-only mode if preferred)
 - [ ] Custom URL: linkedin.com/in/vas-medvedeva ✓ (already set)
 - [ ] Featured section: pin the portfolio link + the strongest case (Drom Fines)
-- [ ] Replace [portfolio URL] everywhere after the site is deployed
+- [x] Portfolio link: vasilisa-medvedeva.github.io (live)

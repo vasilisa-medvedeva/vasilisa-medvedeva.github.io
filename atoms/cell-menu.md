@@ -55,5 +55,5 @@
 - Title is the accessible label; add `aria-label` on the button if the icon alone conveys the action.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

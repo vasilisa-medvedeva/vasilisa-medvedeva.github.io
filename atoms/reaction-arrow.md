@@ -40,5 +40,5 @@
 - ARIA: `aria-expanded` true/false; `aria-label` describing the action; icon is `aria-hidden`.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

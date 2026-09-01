@@ -1,0 +1,27 @@
+/* Figma-style hotspot hints: when a tap lands on nothing clickable, every
+   live tappable element on the current screen flashes a violet outline —
+   the same "here's what responds" gesture Figma prototypes make.
+   scripts/proto-hotspots.js builds the marks; this file only paints them. */
+
+.hotspot-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 95;   /* above every screen layer, still inside the phone's clip */
+}
+.hotspot-mark {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid var(--color-accent-orange);
+  opacity: 0;
+}
+.hotspot-layer.is-on .hotspot-mark { animation: hotspot-flash 0.9s ease both; }
+@keyframes hotspot-flash {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  55%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* the flash is pure opacity — under reduced motion it simply appears and goes */
+@media (prefers-reduced-motion: reduce) {
+  .hotspot-layer.is-on .hotspot-mark { animation: none; opacity: 1; transition: opacity 0.2s ease 0.5s; }
+}

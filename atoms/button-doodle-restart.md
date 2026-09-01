@@ -48,5 +48,5 @@ There is no separate text label — the wording is baked into the SVG artwork, s
 - Contrast: default stroke and hover red both meet WCAG AA on white.
 
 ## Status
-`draft` — proposed by Claude, awaiting confirmation.
+`draft`  
 Version 0.1 | Owner: @vasilisa

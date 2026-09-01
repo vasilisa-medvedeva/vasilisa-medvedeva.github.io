@@ -49,5 +49,5 @@
 - Minimum touch target: 44×44pt — the row's 8px vertical padding plus context should reach it.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

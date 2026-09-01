@@ -3,26 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pyroblast UI</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDY8SF935T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    // Self-traffic opt-out: open the site once with ?ga_optout=1 to stop being
+    // counted in this browser (persists); ?ga_optout=0 re-enables tracking.
+    try {
+      var gaOpt = new URLSearchParams(location.search).get('ga_optout');
+      if (gaOpt === '1') { localStorage.setItem('ga_optout', '1'); }
+      else if (gaOpt === '0') { localStorage.removeItem('ga_optout'); }
+    } catch (e) {}
+    if (localStorage.getItem('ga_optout') === '1' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      window['ga-disable-G-PDY8SF935T'] = true;
+    }
+    gtag('config', 'G-PDY8SF935T');
+  </script>
+  <title data-ru="Pyroblast UI">Pyroblast UI</title>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Vasilisa Medvedeva" />
+  <meta property="og:title" content="Pyroblast — Vasilisa Medvedeva" />
+  <meta property="og:description" content="A messenger for gamers: chats, channels and streams in one place. Solo-designed and documented design system." />
+  <meta property="og:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://vasilisa-medvedeva.github.io/home.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pyroblast — Vasilisa Medvedeva" />
+  <meta name="twitter:description" content="A messenger for gamers: chats, channels and streams in one place. Solo-designed and documented design system." />
+  <meta name="twitter:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/radius-tokens.css?v=1" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=11" />
+  <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=5" />
+  <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <!-- Archivo — used for flow-card copy (same as the flow pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-constant-primary);
+      background: var(--page-bg);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -39,13 +74,24 @@
       padding: 88px 0 0;                 /* side gutters come from .main, same as the cards */
       display: flex; flex-direction: column; gap: 24px;
     }
+    .hero__eyebrow {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      font-weight: 500;
+      /* same tag line as the front page's .hero__meta */
+      font-size: 13px; line-height: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-87);
+      margin-bottom: -6px;   /* tag line hugs its headline, as on the front page */
+    }
     .hero__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      font-size: clamp(44px, 6.9vw, 94px);
+      /* fallback size only — scripts/poster-fit.js scales the type so the
+         longest line spans the full content width, as on the front page */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
     .hero__aside {
       align-self: flex-end;
@@ -54,7 +100,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .hero__aside p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
@@ -68,96 +114,102 @@
     }
     .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
 
-    /* ── Flows grid (korolev-style tiles) ── */
-    .flows-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;   /* left cards wider, right narrower */
-      gap: 10px;
-      align-items: start;
-      margin-top: 20px;
-      padding-bottom: 50px;            /* room for the offset right column */
+    /* ── Case sections — same rhythm and type as the other project pages ── */
+    .case {
+      margin-top: 120px;
+      display: flex; flex-direction: column; gap: 32px;
     }
-    /* Staggered columns: the right card sits 40px lower */
-    .flows-grid > .flow-card:nth-child(even) { position: relative; top: 40px; }
-
-    .flow-card {
-      position: relative;
-      display: flex; flex-direction: column;
-      background: var(--color-constant-primary);
-      border: 1px solid var(--color-primary-transparent-08);
-      border-radius: 24px;
-      padding: 5px;
-      overflow: hidden;
-      text-decoration: none; color: inherit;
-      /* reveal-on-scroll start state */
-      opacity: 0;
-      transform: translateY(36px) scale(0.98);
-      transition: opacity 0.7s ease,
-                  transform 0.7s cubic-bezier(0.16, 0.84, 0.24, 1),
-                  box-shadow 0.4s ease;
-      will-change: transform, opacity;
+    .case__index {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      font-weight: 500;
+      font-size: var(--text-label-large-font-size);
+      line-height: var(--text-label-large-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-60);
     }
-    .flow-card.is-revealed { opacity: 1; transform: none; }
-    .flow-card.is-revealed:hover {
-      transform: scale(0.95);
-      box-shadow: var(--elevation-4);
-      z-index: 2;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .flow-card { opacity: 1; transform: none; transition: none; }
-    }
-
-    .flow-card__head { display: flex; flex-direction: column; gap: 2px; padding: 20px 20px 0; }
-    .flow-card__name {
-      font-family: "Archivo", sans-serif;
-      font-size: var(--text-headline-medium-font-size);
+    .case__title {
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-weight: 900;
-      line-height: var(--text-headline-medium-line-height);
-      letter-spacing: -0.02em;   /* matches the flow-page title (-0.88px at 44px) */
+      font-size: clamp(32px, 3.4vw, 52px);
+      line-height: 1.02; letter-spacing: -0.02em;
       color: var(--color-primary-transparent-87);
       text-transform: uppercase;
+      margin-top: 4px;
     }
 
-    /* Stage — device on a soft gradient-blob backdrop */
-    .flow-card__stage {
-      position: relative;
-      margin-top: 16px;
-      height: 510px;
-      border-radius: 20px;
+    /* Case demo — the full flow composition embedded live (?embed=full):
+       the copy column, the hand-drawn Demo button, the "try it yourself"
+       arrow, the restart doodle and the interactive phone, minus the site
+       chrome. The flow page scales its own stage to fit the frame. */
+    .case-demo {
+      margin: 0;
+      background: var(--tone-steel); border-radius: var(--radius-xl);
       overflow: hidden;
-      background: var(--color-primary-transparent-04);
+    }
+    .case-demo iframe {
+      display: block; width: 100%; height: 700px; border: 0;
+    }
+    @media (max-width: 900px) {
+      .case-demo iframe { height: 940px; }    /* stacked phone + doodles + button, no inner scroll */
+    }
+    /* Problem / Solution / Outcome grid — same as the other project pages */
+    .case__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .case__label {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      font-weight: 500;
+      font-size: var(--text-label-medium-font-size);
+      line-height: var(--text-label-medium-line-height);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-87);
+      margin-bottom: 12px;
+    }
+    .case__col p,
+    .case__col li {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .case__col p + p { margin-top: 10px; }
+    .case__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .case__col ul li { padding-left: 20px; position: relative; }
+    .case__col ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 6px;
+      width: 11px; height: 11px;
+      background: url("assets/point-doodle.svg") no-repeat center / contain;
     }
 
-    .flow-card__device {
-      position: absolute; left: 50%; top: 16px; transform: translateX(-50%);
-      width: 54%; max-width: 220px;
-      aspect-ratio: 360 / 780;
-      border-radius: 30px; overflow: hidden;
-      box-shadow: var(--elevation-4);
-      z-index: 1;
+    /* Design system — the one card left on the page, linking to the library.
+       Real library CSS classes/markup are copied in below so the wall looks
+       exactly like the library. */
+    .ds-card {
+      position: relative; display: block; height: 510px;
+      border-radius: var(--radius-xl); overflow: hidden;
+      border: 1px solid var(--color-primary-transparent-08);
+      background: var(--color-constant-primary);
+      transition: box-shadow 0.3s ease;
     }
-    .flow-card__device iframe {
-      position: absolute; top: 0; left: 0;
-      width: 360px; height: 780px; border: 0;
-      transform-origin: top left; pointer-events: none;
-    }
-
-    .flow-card--empty .flow-card__stage {
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-      border: 1.5px dashed var(--color-primary-transparent-16);
-      border-radius: 16px;
-    }
-    .flow-card--empty .flow-card__stage span {
-      font-size: var(--text-body-large-font-size);
-      color: var(--color-primary-transparent-32);
-    }
-
-    /* Design system card — wall of components (spans two columns). Real library
-       CSS classes/markup are copied in below so they look exactly like the library. */
-    .flow-card--ds .flow-card__stage { background: var(--color-constant-primary); }
-    /* Screenshot overlay — shown when assets/design-system.png exists, else removed (wall fallback) */
+    .ds-card:hover { box-shadow: var(--elevation-4); }
+    /* Screenshot overlay — shown when assets/design-system-preview.png exists, else removed (wall fallback) */
     .ds-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: translateX(-20px) scale(1.2); transform-origin: center; z-index: 2; }
+    /* Darkening overlay + centred "View" CTA over the design-system preview */
+    .ds-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--color-primary-transparent-48);   /* darken the preview to focus the button */
+    }
+    /* hand-drawn "View" button — inlined so the fill can flip to orange on hover, like the Demo button */
+    .ds-view { display: block; width: 200px; height: auto; color: var(--color-primary-transparent-87); transition: transform 0.2s ease; }
+    .ds-view__bg { fill: var(--color-constant-primary); transition: fill 0.15s ease; }
+    .ds-card:hover .ds-view { transform: scale(1.05); }
+    .ds-card:hover .ds-view__bg { fill: var(--color-accent-orange); }
     .ds-wall {
       position: absolute; inset: 0; padding: 28px 32px; overflow: hidden;
       display: flex; flex-wrap: wrap; gap: 14px; align-content: flex-start; align-items: center;
@@ -262,47 +314,51 @@
     .ds-wall .ds-video__play { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: var(--color-constant-primary); display: flex; align-items: center; justify-content: center; font-size: 9px; }
     .ds-wall .ds-thumb { width: 64px; height: 48px; border-radius: 8px; background: var(--color-primary-transparent-08); flex-shrink: 0; }
 
+    .page-end { height: 120px; }
+
     /* ── Mobile ── */
     @media (max-width: 900px) {
       /* Hero aside drops below the title at full width */
       .hero__aside { width: 100%; align-self: stretch; margin-top: 8px; }
-      /* Flows stack; drop the staggered offset and the extra bottom room */
-      .flows-grid { grid-template-columns: 1fr; padding-bottom: 20px; }
-      .flows-grid > .flow-card:nth-child(even) { top: 0; }
+      .case { margin-top: 72px; }
+      .case__grid { grid-template-columns: 1fr; gap: 20px; }
     }
     @media (max-width: 600px) {
       .main { padding: 8px; }
       .hero { padding: 76px 0 0; gap: 18px; }
-      .flow-card__head { padding: 16px 16px 0; }
+      .case { margin-top: 56px; gap: 24px; }
+      .ds-card { height: 420px; }
+      .page-end { height: 56px; }
     }
   </style>
 </head>
 <body>
+  <!-- Static grain over the flat dark; sits at z-index -1 -->
+  <div class="bg-grain" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
           <a class="menu-item__trigger" href="index.html#projects">My projects</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="home.html">Pyroblast</a>
             <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
-            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
             <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
           </div>
         </div>
       </nav>
@@ -318,67 +374,60 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title">Pyroblast: chats, channels and&nbsp;streams for&nbsp;gamers.</h1>
+      <span class="hero__eyebrow" data-ru="Pyroblast · iOS / Android / Десктоп">Pyroblast · iOS / Android / Desktop</span>
+      <h1 class="hero__title" data-ru="Pyroblast: чаты, каналы<br />и&amp;nbsp;стримы для&amp;nbsp;геймеров">Pyroblast: chats, channels<br />and&nbsp;streams for&nbsp;gamers</h1>
       <div class="hero__aside">
-        <p>No servers to set up, no noise to fight through. I designed it end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the design system, the core messaging experience, and every flow below. Each one is a live prototype. Tap through.</p>
-        <p>Designed for desktop, iOS and Android; the prototypes below are the mobile flows. Built at an early-stage startup that ran out of funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
+        <p data-ru="Не&amp;nbsp;нужно поднимать сервер и&amp;nbsp;продираться через&amp;nbsp;шум. Я спроектировала всё целиком, &lt;span class=&quot;hero__circled&quot;&gt;одна&lt;svg viewBox=&quot;0 0 104 52&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4&quot; stroke=&quot;black&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;: дизайн-систему, ядро переписки и&amp;nbsp;каждый сценарий ниже. Все они — живые прототипы. Потыкайте.">No servers to&nbsp;set up, no&nbsp;noise to&nbsp;fight through. I designed it&nbsp;end-to-end, <span class="hero__circled">solo<svg viewBox="0 0 104 52" fill="none" aria-hidden="true"><path d="M20 8.5C38 2.5 76 1.5 91 9.5C101.5 15 103 29.5 91.5 38.5C74 50.5 28 51.5 13.5 41C3.5 33.5 5 18.5 24 10.5C28.5 8.6 33.5 7.2 38.5 6.4" stroke="black" stroke-width="2.5" stroke-linecap="round"/></svg></span>: the&nbsp;design system, the&nbsp;core messaging experience, and&nbsp;every flow below. Each one is&nbsp;a&nbsp;live prototype. Tap through.</p>
+        <p data-ru="Проектировала для&amp;nbsp;десктопа, iOS и&amp;nbsp;Android; прототипы ниже — мобильные сценарии. Делала в&amp;nbsp;раннем стартапе, у&amp;nbsp;которого закончились деньги до&amp;nbsp;запуска. Продукт не&amp;nbsp;вышел, а&amp;nbsp;мышление за&amp;nbsp;ним — вот оно.">Designed for&nbsp;desktop, iOS and&nbsp;Android; the&nbsp;prototypes below are the&nbsp;mobile flows. Built at&nbsp;an&nbsp;early-stage startup that ran out of&nbsp;funding before launch. The product never shipped, but&nbsp;the thinking did.</p>
       </div>
     </section>
 
-    <div class="flows-grid">
-      <!-- Live animated flow -->
-      <a class="flow-card" href="flows/login.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Log in</span>
-        </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/login.html?embed=1" title="Log in flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
-        </div>
-      </a>
-
-      <a class="flow-card flow-card--chats" href="flows/create-chats.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Create Chats</span>
-        </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/create-chats.html?embed=1" title="Create Chats flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
-        </div>
-      </a>
-
-      <!-- Design system — entry to the component library -->
-      <a class="flow-card flow-card--ds" href="atoms.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Design system</span>
-        </div>
-        <div class="flow-card__stage">
-          <!-- Drop a screenshot at assets/design-system.png and it shows here automatically;
+    <!-- ── Design system — the one card left, linking to the component library ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 01</span>
+        <h2 class="case__title" data-ru="Дизайн-система">Design System</h2>
+      </div>
+      <a class="ds-card" href="overview.html" aria-label="Open the Pyroblast design system overview">
+          <!-- Drop a screenshot at assets/design-system-preview.png and it shows here automatically;
                until the file exists, onerror removes the img and the component wall below shows. -->
-          <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()">
+          <img class="ds-shot" src="assets/design-system-preview.png" alt="Design system components" onerror="this.remove()" width="3972" height="3468" />
+          <div class="ds-overlay" aria-hidden="true">
+            <svg class="ds-view" viewBox="0 0 208 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <rect class="ds-view__bg" x="2" y="2" width="203" height="52"/>
+              <path d="M1.14331 0.863402C1.14331 0.846418 1.14331 -0.29871 1.14331 6.36636C1.14331 13.0314 1.14331 26.3791 1.17947 33.5151C1.21563 40.6511 1.28795 41.1711 1.32521 43.2514C1.36247 45.3316 1.36247 48.9564 1.36247 52.6911" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M204.028 1.84875C204.045 1.86574 204.062 1.88272 204.086 6.98628C204.111 12.0898 204.142 22.2795 204.411 29.4287C204.824 40.3978 205.759 45.8067 205.868 48.3488C205.988 49.8763 206.09 50.871 206.198 51.8954C206.271 52.4388 206.379 53.03 206.694 54.7033" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M204.22 1.78556C204.22 1.80199 204.22 1.81843 178.15 2.12495C152.081 2.43147 99.9409 3.02757 68.5593 2.82484C37.1777 2.62211 7.96288 1.54964 1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M206.956 54.7846C206.925 54.7846 206.893 54.7846 180.342 54.4857C153.792 54.1868 100.723 53.5891 67.2599 53.2247C33.7965 52.8604 21.5463 52.7475 14.928 52.7562C6.17227 53.3716 3.55153 53.1538 1 53.2247" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M71.49 20.7721C71.5069 21.0851 71.6906 22.3449 72.591 24.909C73.2694 26.8411 74.5903 29.9839 75.3259 31.7671C76.1943 33.872 76.4626 34.2804 76.6101 34.3727C76.6807 34.3651 76.7426 34.2469 77.6533 31.9943C78.5639 29.7417 80.3215 25.3583 82.1323 20.7618" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M86.6289 24.6633C86.6289 24.6689 86.6289 24.6745 86.6298 26.0842C86.6307 27.4939 86.6326 30.3075 86.6578 31.895C86.6831 33.4825 86.7317 33.7587 86.8256 34.1432" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M86.8663 20.9672C86.8587 20.9672 86.8512 20.9672 86.8825 20.9311C86.9138 20.895 86.9841 20.8228 86.9872 20.7235" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M91.2985 29.4252C91.3066 29.4252 92.9133 29.4118 95.9895 29.3738C97.4631 29.3556 98.759 29.3139 99.4283 29.2401C100.098 29.1663 100.101 29.0551 99.9807 28.6778C99.6524 27.6481 99.1639 26.6588 98.6831 25.9399C97.6957 24.4635 96.773 24.1251 95.9975 23.821C95.2379 23.5232 94.3075 23.798 93.4782 24.2174C92.3447 24.7905 91.6255 26.1786 91.2269 27.0648C90.731 28.1675 91.2019 29.9582 91.7673 31.1289C92.5067 32.66 93.8583 33.371 94.3914 33.6298C95.4161 34.1271 97.2762 33.7871 98.2514 33.4027C98.5172 33.2764 98.7689 33.1347 98.9406 33.033C99.1123 32.9314 99.1964 32.874 99.283 32.8149" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M102.31 24.5006C102.314 24.6721 102.355 25.1095 102.853 26.6691C103.286 28.0256 104.209 30.4876 104.778 31.9532C105.504 33.8267 105.904 34.3524 106.143 34.5279C106.241 34.6007 106.384 34.434 106.921 33.1903C107.457 31.9467 108.406 29.5784 108.968 28.0923C109.529 26.6063 109.675 26.0744 109.755 25.6358C109.835 25.1971 109.845 24.8679 109.856 24.5287" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M109.475 26.1588C109.475 26.1666 109.5 26.2737 110.115 27.6416C110.686 28.9142 111.854 31.3297 112.507 32.5049C113.161 33.6802 113.283 33.534 113.781 32.4936C114.28 31.4533 115.151 29.5233 115.722 28.1062C116.537 25.8433 116.819 24.8229 116.875 24.5457C116.901 24.4175 116.921 24.3147 116.968 23.9287" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="ds-wall">
-            <span class="btn btn--primary">Button</span>
-            <span class="btn btn--secondary">Button</span>
-            <span class="btn btn--only-text">Button</span>
-            <span class="btn btn--accent">Button</span>
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+            <span class="btn btn--primary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent" data-ru="Кнопка">Button</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;Поиск"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
 
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="notification-counter"><span class="notification-counter__number">34</span></span>
             <span class="ds-avatar">ML</span>
             <span class="ds-avatar ds-avatar--ch">P</span>
             <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
 
-            <span class="btn btn--primary s-pressed">Button</span>
-            <span class="btn btn--secondary s-pressed">Button</span>
-            <span class="btn btn--only-text s-pressed">Button</span>
-            <span class="btn btn--accent s-pressed">Button</span>
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true"><span style="color:var(--color-primary-transparent-87)">Coffee</span></span>
+            <span class="btn btn--primary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-pressed" data-ru="Кнопка">Button</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;&lt;span style=&quot;color:var(--color-primary-transparent-87)&quot;&gt;Кофе&lt;/span&gt;"><img src="icons/general/search.svg" alt="" aria-hidden="true"><span style="color:var(--color-primary-transparent-87)">Coffee</span></span>
 
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
@@ -386,11 +435,11 @@
             <span class="ds-thumb"></span>
             <span class="ds-video"><span class="ds-video__play">↓</span>0:32 · 102 MB</span>
 
-            <span class="btn btn--primary s-disabled">Button</span>
-            <span class="btn btn--secondary s-disabled">Button</span>
-            <span class="btn btn--only-text s-disabled">Button</span>
-            <span class="btn btn--accent s-disabled">Button</span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="btn btn--primary s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text s-disabled" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-disabled" data-ru="Кнопка">Button</span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
 
@@ -398,39 +447,140 @@
             <span class="ds-avatar ds-avatar--ch">G</span>
             <span class="ds-cell"><span class="ds-cell__av"></span><span class="ds-cell__tx"><span class="ds-cell__t1"></span><span class="ds-cell__t2"></span></span></span>
             <span class="notification-counter"><span class="notification-counter__number">12</span></span>
-            <span class="btn btn--primary">Button</span>
-            <span class="btn btn--accent">Button</span>
+            <span class="btn btn--primary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent" data-ru="Кнопка">Button</span>
 
-            <span class="ds-search"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
+            <span class="ds-search" data-ru="&lt;img src=&quot;icons/general/search.svg&quot; alt=&quot;&quot; aria-hidden=&quot;true&quot;&gt;Поиск"><img src="icons/general/search.svg" alt="" aria-hidden="true">Search</span>
             <span class="ds-thumb"></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
-            <span class="tag-chip"><span class="tag-chip__label">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
+            <span class="tag-chip"><span class="tag-chip__label" data-ru="Заголовок">Title</span><span class="tag-chip__cancel">×</span></span>
             <span class="ds-video"><span class="ds-video__play">▶</span>0:32 · 102 MB</span>
-            <span class="btn btn--secondary">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
 
-            <span class="btn btn--primary s-pressed">Button</span>
-            <span class="btn btn--secondary">Button</span>
-            <span class="btn btn--only-text">Button</span>
-            <span class="btn btn--accent s-disabled">Button</span>
+            <span class="btn btn--primary s-pressed" data-ru="Кнопка">Button</span>
+            <span class="btn btn--secondary" data-ru="Кнопка">Button</span>
+            <span class="btn btn--only-text" data-ru="Кнопка">Button</span>
+            <span class="btn btn--accent s-disabled" data-ru="Кнопка">Button</span>
             <span class="toggle-cb">✓</span>
             <span class="toggle-radio"></span>
             <span class="notification-counter"><span class="notification-counter__number">7</span></span>
             <span class="ds-avatar">EM</span>
           </div>
-        </div>
       </a>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p data-ru="Мессенджер для&amp;nbsp;геймеров — это огромная поверхность: чаты, каналы, стримы, профили, настройки — на&amp;nbsp;десктопе, iOS и&amp;nbsp;Android. Я была единственным дизайнером и&amp;nbsp;не&amp;nbsp;могла позволить себе рисовать каждый экран заново: каждой платформе нужен был свой системный набор деталей, иначе продукт перерос бы меня за&amp;nbsp;считанные недели.">A messenger for&nbsp;gamers has a&nbsp;huge surface: chats, channels, streams, profiles, settings &#8212; across desktop, iOS and&nbsp;Android. As the&nbsp;only designer, I couldn&#8217;t afford to&nbsp;draw each screen from&nbsp;scratch: every platform needed its own systematic set of&nbsp;parts, or&nbsp;the&nbsp;product would outgrow me in&nbsp;weeks.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p data-ru="Я собрала дизайн-систему под&amp;nbsp;каждую платформу в&amp;nbsp;Figma — десктоп, iOS и&amp;nbsp;Android. Та, что открывается на&amp;nbsp;этой странице, — мобильная библиотека, пересобранная вживую в&amp;nbsp;коде.">I built a&nbsp;design system for&nbsp;each platform in&nbsp;Figma &#8212; desktop, iOS and&nbsp;Android. The one you can open on&nbsp;this page is&nbsp;the&nbsp;mobile library, rebuilt live in&nbsp;code.</p>
+          <p data-ru="В&amp;nbsp;основе — фундамент: палитра на&amp;nbsp;альфа-шкалах, согласованная типографика, elevation и&amp;nbsp;набор иконок; у&amp;nbsp;каждого значения есть имя, поэтому экраны ссылаются на&amp;nbsp;токены, а&amp;nbsp;не&amp;nbsp;на&amp;nbsp;hex-коды. Поверх — библиотека компонентов, от&amp;nbsp;кнопок и&amp;nbsp;тумблеров до&amp;nbsp;целых блоков чата; у&amp;nbsp;каждого задокументированы варианты, состояния, токены и&amp;nbsp;требования доступности. Там, где дизайн ещё не&amp;nbsp;определял состояние, пробел помечен явно, а&amp;nbsp;не&amp;nbsp;замазан.">It starts with&nbsp;the&nbsp;foundations: a&nbsp;color palette built on&nbsp;alpha scales, a&nbsp;matching type ramp, elevation and&nbsp;an&nbsp;icon set &#8212; every value named, so&nbsp;screens reference tokens instead of&nbsp;raw hex codes. On top sits the&nbsp;component library &#8212; from&nbsp;buttons and&nbsp;toggles up&nbsp;to&nbsp;complete chat blocks &#8212; each documented with&nbsp;its variants, states, tokens and&nbsp;accessibility requirements. Where the&nbsp;design didn&#8217;t define a&nbsp;state yet, that gap is&nbsp;flagged explicitly instead of&nbsp;being papered over.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li data-ru="Все прототипы на&amp;nbsp;этой странице собраны из&amp;nbsp;этой библиотеки: те же токены, те же компоненты, ничего не&amp;nbsp;нарисовано дважды">Every prototype on&nbsp;this page is&nbsp;assembled from&nbsp;this library &#8212; same tokens, same components, nothing drawn twice</li>
+            <li data-ru="Новый экран стал сборкой из&amp;nbsp;задокументированных деталей, а&amp;nbsp;не&amp;nbsp;рисованием с&amp;nbsp;нуля">Designing a&nbsp;new screen turned into&nbsp;assembling documented parts instead of&nbsp;drawing from&nbsp;zero</li>
+            <li data-ru="Компоненты читаются как спека, а&amp;nbsp;не&amp;nbsp;мудборд: состояния, токены и&amp;nbsp;доступность записаны — включая то, чего ещё не&amp;nbsp;хватает">Components read as&nbsp;a&nbsp;spec, not a&nbsp;mood board: states, tokens and&nbsp;accessibility are written down, including what&#8217;s still missing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <a class="flow-card flow-card--attach" href="flows/attach-photo.html">
-        <div class="flow-card__head">
-          <span class="flow-card__name">Attach Photo</span>
+    <!-- ── Case 02 — Chat Organization ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 02</span>
+        <h2 class="case__title" data-ru="Порядок в&amp;nbsp;чатах">Chat Organization</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/create-chats.html?embed=full" title="Chat Organization flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p data-ru="Игровое сообщество за&amp;nbsp;недели вырастает из&amp;nbsp;небольшой компании в&amp;nbsp;десятки переписок. Без&amp;nbsp;внятной структуры чаты шумят и&amp;nbsp;в&amp;nbsp;них трудно ориентироваться — люди отключают уведомления или&amp;nbsp;уходят.">Gaming communities can grow from&nbsp;a&nbsp;small group into&nbsp;dozens of&nbsp;conversations within weeks. Without a&nbsp;clear structure, chats become noisy and&nbsp;difficult to&nbsp;navigate, causing members to&nbsp;mute channels or&nbsp;disengage.</p>
+          <p data-ru="Сложность была в&amp;nbsp;том, чтобы поддержать обе стороны роста: помочь новым сообществам стартовать с&amp;nbsp;нуля, а&amp;nbsp;сложившимся — не&amp;nbsp;потерять порядок при&amp;nbsp;масштабировании.">The challenge was supporting both sides of&nbsp;growth: helping new communities start from&nbsp;zero and&nbsp;helping established ones stay organized as&nbsp;they scale.</p>
         </div>
-        <div class="flow-card__stage">
-          <div class="flow-card__device">
-            <iframe src="flows/attach-photo.html?embed=1" title="Attach Photo flow" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-          </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p data-ru="Я спроектировала два дополняющих друг друга сценария.">I designed two complementary experiences.</p>
+          <p data-ru="Первый ведёт основателя от&amp;nbsp;пустого пространства к&amp;nbsp;первой переписке и&amp;nbsp;созданию первого подканала, превращая начальную настройку в&amp;nbsp;понятные шаги.">The first guides a&nbsp;founder from&nbsp;an&nbsp;empty space to&nbsp;the&nbsp;first conversation and&nbsp;creation of&nbsp;the&nbsp;first sub-channel, making the&nbsp;initial setup feel simple and&nbsp;actionable.</p>
+          <p data-ru="Второй помогает зрелым сообществам справляться со&amp;nbsp;сложностью: папки, поиск, перетаскивание и&amp;nbsp;переименование — структура, которая не&amp;nbsp;ломает привычки в&amp;nbsp;чатах.">The second helps mature communities manage complexity through folders, search, drag-and-drop organization, and&nbsp;renaming &#8212; adding structure without changing existing chat habits.</p>
         </div>
-      </a>
-    </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li data-ru="Сообщества смогли вырасти из&amp;nbsp;одного чата в&amp;nbsp;организованные пространства">Enabled communities to&nbsp;evolve from&nbsp;a&nbsp;single chat into&nbsp;organized spaces</li>
+            <li data-ru="Меньше трения при&amp;nbsp;создании и&amp;nbsp;ведении множества переписок">Reduced friction when creating and&nbsp;managing multiple conversations</li>
+            <li data-ru="Большие сообщества получили структуру, а&amp;nbsp;привычный опыт чата остался нетронутым">Added structure for&nbsp;large communities while keeping the&nbsp;familiar chat experience intact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Case 03 — Rich Photo Layouts ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 03</span>
+        <h2 class="case__title" data-ru="Гибкая вёрстка с&amp;nbsp;фото">Rich Photo Layouts</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/attach-photo.html?embed=full" title="Rich Photo Layouts flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p data-ru="В&amp;nbsp;большинстве мессенджеров фотография просто прикрепляется к&amp;nbsp;сообщению. Картинка и&amp;nbsp;текст живут отдельными блоками, поэтому трудно собрать структурированный пост, гайд или&amp;nbsp;анонс, где визуальное и&amp;nbsp;текст работают вместе.">In most chat apps, photos are simply attached to&nbsp;a&nbsp;message. Images and&nbsp;text are treated as&nbsp;separate blocks, making it&nbsp;difficult to&nbsp;create structured posts, guides, or&nbsp;announcements where visuals and&nbsp;text work together.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p data-ru="Я спроектировала гибкий сборщик сообщений с&amp;nbsp;фото: человек сам выбирает, как картинка показана внутри сообщения. Фотографии вставляются в&amp;nbsp;разных раскладках, а&amp;nbsp;текст естественно обтекает их, вместо того чтобы ютиться подписью снизу.">I designed a&nbsp;flexible photo composer that lets users choose how an&nbsp;image is&nbsp;displayed within a&nbsp;message. Photos can be inserted in&nbsp;different layouts, while text flows naturally around them instead of&nbsp;being limited to&nbsp;a&nbsp;caption below.</p>
+          <p data-ru="Это даёт редакторский контроль над&amp;nbsp;сообщением: насыщенный, хорошо собранный контент можно делать прямо в&amp;nbsp;чате.">This gives users editorial control over&nbsp;message composition, making it&nbsp;possible to&nbsp;create rich, well-structured content directly inside the&nbsp;chat.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li data-ru="Вложенные фото превратились из&amp;nbsp;простой загрузки файла в&amp;nbsp;инструмент создания контента">Turned photo attachments into&nbsp;a&nbsp;content creation tool rather than a&nbsp;simple file upload</li>
+            <li data-ru="Визуально структурированные посты стало возможно собирать, не&amp;nbsp;выходя из&amp;nbsp;переписки">Enabled users to&nbsp;create visually structured posts without leaving the&nbsp;conversation</li>
+            <li data-ru="Опыт переписки вышел за&amp;nbsp;пределы простого текста и&amp;nbsp;вложений">Expanded the&nbsp;messaging experience beyond plain text and&nbsp;attachments</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Case 04 — Log in/Sign up ── -->
+    <section class="case">
+      <div>
+        <span class="case__index">Case 04</span>
+        <h2 class="case__title" data-ru="Вход и&amp;nbsp;регистрация">Log in/Sign up</h2>
+      </div>
+      <figure class="case-demo">
+        <iframe src="flows/login.html?embed=full" title="Log in/Sign up flow — live prototype" loading="lazy"></iframe>
+      </figure>
+      <div class="case__grid">
+        <div class="case__col">
+          <h3 class="case__label">Problem</h3>
+          <p data-ru="Обычная регистрация просит завести аккаунт раньше, чем человек увидит хоть какую-то пользу. В&amp;nbsp;мессенджерах это трение часто приводит к&amp;nbsp;уходу до&amp;nbsp;того, как станет понятно, зачем вообще регистрироваться.">Traditional sign up&nbsp;flows ask users to&nbsp;create an&nbsp;account before they experience any value. In messaging apps, that friction often leads to&nbsp;abandonment before users understand why they should register.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Solution</h3>
+          <p data-ru="Я переработала онбординг, чтобы снизить порог входа. Вместо формы регистрации на&amp;nbsp;старте приложение даёт сначала осмотреться: можно листать публичные чаты, искать по&amp;nbsp;переписке и&amp;nbsp;пощупать интерфейс без&amp;nbsp;аккаунта.">I redesigned onboarding to&nbsp;reduce the&nbsp;barrier to&nbsp;entry. Instead of&nbsp;opening with&nbsp;a&nbsp;sign up&nbsp;form, the&nbsp;app lets visitors explore the&nbsp;product first: they can browse public chats, search conversations, and&nbsp;experience the&nbsp;interface without creating an&nbsp;account.</p>
+          <p data-ru="Действия, которым нужна личность, — например, отправка сообщений — остаются закрытыми до&amp;nbsp;регистрации. Когда человек решает присоединиться, вход и&amp;nbsp;регистрация сливаются в&amp;nbsp;один сценарий, пароль заменяется одноразовым кодом, а&amp;nbsp;настройка профиля откладывается на&amp;nbsp;потом.">Actions that require identity &#8212; such as&nbsp;sending messages &#8212; remain locked until registration. When users decide to&nbsp;join, sign up&nbsp;and&nbsp;log in&nbsp;are combined into&nbsp;a&nbsp;single flow, passwords are replaced with&nbsp;a&nbsp;one-time verification code, and&nbsp;profile setup is&nbsp;postponed until after the&nbsp;account is&nbsp;created.</p>
+        </div>
+        <div class="case__col">
+          <h3 class="case__label">Outcome</h3>
+          <ul>
+            <li data-ru="Меньше трения в&amp;nbsp;первой точке контакта: регистрация отложена до&amp;nbsp;момента, когда продукт уже пощупали">Reduced friction at&nbsp;the&nbsp;first touchpoint by&nbsp;delaying registration until users had experienced the&nbsp;product</li>
+            <li data-ru="Публичный контент доступен без&amp;nbsp;аккаунта, а&amp;nbsp;интерактивные возможности остаются защищёнными">Allowed visitors to&nbsp;explore public content without an&nbsp;account while protecting interactive features</li>
+            <li data-ru="Аутентификация проще: одноразовый код вместо пароля и&amp;nbsp;отложенная настройка профиля">Simplified authentication by&nbsp;replacing passwords with&nbsp;one-time verification codes and&nbsp;deferring profile setup</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-end"></div>
   </main>
 
   <script>
@@ -440,64 +590,32 @@
     window.scrollTo(0, 0);
     window.addEventListener('load', function () { window.scrollTo(0, 0); });
 
-    // Scale each embedded flow (natural 360px wide) to fill its card
-    function fitFlows() {
-      document.querySelectorAll('.flow-card__device iframe').forEach(function (f) {
-        f.style.transform = 'scale(' + (f.parentElement.clientWidth / 360) + ')';
-      });
-    }
-    window.addEventListener('load', fitFlows);
-    window.addEventListener('resize', fitFlows);
-
-
-    // Play each card's embedded flow demo only while the card is hovered; reset on leave.
-    // Same-origin iframes → we can drive the flow's own window functions directly.
+    // Auto-play each case flow's demo once it scrolls into view. The embedded
+    // flows expose window.playDemo; each hides its own Demo button while playing
+    // and restores it when the demo ends or the visitor taps in to drive.
     (function () {
-      document.querySelectorAll('.flow-card').forEach(function (card) {
-        var iframe = card.querySelector('.flow-card__device iframe');
-        if (!iframe) return;
-        function call (fn) {
-          try { var w = iframe.contentWindow; if (w && typeof w[fn] === 'function') w[fn](); } catch (e) {}
-        }
-        card.addEventListener('mouseenter', function () { call('playDemo'); });
-        card.addEventListener('mouseleave', function () { call('restartManual'); });
-      });
-    })();
-
-
-    // Reveal cards as they scroll into view (staggered)
-    (function () {
-      var cards = document.querySelectorAll('.flow-card');
-      function reveal (el, delay) { setTimeout(function () { el.classList.add('is-revealed'); }, delay || 0); }
-      if (!('IntersectionObserver' in window)) {
-        cards.forEach(function (c) { reveal(c); });
-        return;
+      if (!('IntersectionObserver' in window)) return;
+      function tryPlay (iframe, tries) {
+        try {
+          var w = iframe.contentWindow;
+          if (w && typeof w.playDemo === 'function') { w.playDemo(); return; }
+        } catch (e) {}
+        if (tries > 0) setTimeout(function () { tryPlay(iframe, tries - 1); }, 200);
       }
-      // threshold 0 → reveal the moment a card enters (robust even when a tall hero
-      // leaves the first card only slightly in view on load).
       var io = new IntersectionObserver(function (entries) {
-        var shown = 0;
         entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          reveal(e.target, shown * 110);
-          shown++;
-          io.unobserve(e.target);
+          if (!e.isIntersecting || e.target.__demoStarted) return;
+          e.target.__demoStarted = true;
+          tryPlay(e.target, 30);   // retry ~6s to cover lazy-load + flow init
         });
-      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-      // Reveal anything already in (or above) the viewport right away — robust on
-      // reload and when a tall hero pushes the first cards down to the fold, where
-      // the observer's initial callback can otherwise miss them. Observe the rest.
-      var initial = 0;
-      cards.forEach(function (c) {
-        if (c.getBoundingClientRect().top < window.innerHeight) {
-          reveal(c, initial * 110);
-          initial++;
-        } else {
-          io.observe(c);
-        }
-      });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.case-demo iframe').forEach(function (f) { io.observe(f); });
     })();
+
   </script>
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
+  <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
+  <script src="scripts/i18n.js"></script>
 </body>
 </html>

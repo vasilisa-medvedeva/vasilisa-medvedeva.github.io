@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyroblast — Spacing</title>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
+  <link rel="stylesheet" href="styles/cursor.css?v=9" />
+  <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/elevation-tokens.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-display, "Archivo", sans-serif);
+      background: var(--color-constant-primary);
+      color: var(--color-primary);
+      min-height: 100vh;
+    }
+
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px 80px;
+      max-width: 980px;
+    }
+
+    .page-title {
+      font-size: var(--text-headline-medium-font-size);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: var(--text-headline-medium-line-height);
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+
+    .page-subtitle {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--color-primary-transparent-60);
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    .scale { display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+    .step { display: flex; align-items: center; gap: 16px; }
+    .step__value {
+      flex-shrink: 0;
+      width: 44px;
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: var(--text-body-medium-font-size);
+      color: var(--color-primary-transparent-87);
+      text-align: right;
+    }
+    .step__bar {
+      flex-shrink: 0;
+      height: 20px;
+      border-radius: 3px;
+      background: var(--color-brand-yellow-primary);
+      border: 1px solid var(--color-primary-transparent-87);
+    }
+    .step__use {
+      font-weight: 300;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+      color: var(--color-primary-transparent-60);
+    }
+
+    .note {
+      margin-top: 48px;
+      max-width: 640px;
+      padding: 16px 20px;
+      border: 1px solid var(--color-brand-yellow-32);
+      background: var(--color-brand-yellow-8);
+      border-radius: 12px;
+    }
+    .note p {
+      font-weight: 300;
+      font-size: var(--text-body-medium-font-size);
+      line-height: var(--text-body-medium-line-height);
+      color: var(--color-primary-transparent-87);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__identity" href="index.html">
+        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <span class="site-header__name">Vasilisa Medvedeva</span>
+      </a>
+      <nav class="site-header__menu" aria-label="Site sections">
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
+            <a class="menu-item__link" href="index.html#education">Education</a>
+            <a class="menu-item__link" href="index.html#tools">Tools</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a class="menu-item__trigger" href="index.html#projects">My projects</a>
+          <div class="menu-item__dropdown">
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
+            <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+          </div>
+        </div>
+      </nav>
+      <nav class="site-header__links" aria-label="CV and contacts">
+        <a class="site-header__link" href="assets/VasilisaMedvedeva_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a class="site-header__link" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
+        <a class="site-header__link" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="site-header__link" href="mailto:medvedeva_vas@icloud.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="sidebar"></nav>
+
+  <main class="main">
+    <h1 class="page-title">Spacing</h1>
+    <p class="page-subtitle">Components sit on&nbsp;a&nbsp;4px grid. Each step has a&nbsp;job — spacing carries hierarchy the&nbsp;same way the&nbsp;color alpha scale does.</p>
+
+    <div class="scale">
+      <div class="step"><span class="step__value">2</span><span class="step__bar" style="width:2px"></span><span class="step__use">Micro — inside compact badges (ChipLive, Chip label-to-cancel)</span></div>
+      <div class="step"><span class="step__value">4</span><span class="step__bar" style="width:4px"></span><span class="step__use">Icon-to-text gap (VideoChip), tight vertical padding in&nbsp;badges</span></div>
+      <div class="step"><span class="step__value">8</span><span class="step__bar" style="width:8px"></span><span class="step__use">Default gap between siblings; small inset (gallery gaps, corner offsets)</span></div>
+      <div class="step"><span class="step__value">12</span><span class="step__bar" style="width:12px"></span><span class="step__use">Medium inset — chips, video chip, buttons xs/sm horizontal padding</span></div>
+      <div class="step"><span class="step__value">16</span><span class="step__bar" style="width:16px"></span><span class="step__use">Large inset — screen edges, bars, buttons md/lg horizontal padding</span></div>
+      <div class="step"><span class="step__value">24</span><span class="step__bar" style="width:24px"></span><span class="step__use">Separation between content blocks inside a&nbsp;screen</span></div>
+      <div class="step"><span class="step__value">32</span><span class="step__bar" style="width:32px"></span><span class="step__use">Section breaks — the&nbsp;largest step inside a&nbsp;mobile screen</span></div>
+    </div>
+
+    <div class="note">
+      <p>Vertical paddings inside controls can be odd on&nbsp;purpose — 5, 9 and&nbsp;18 in&nbsp;Button sizes, 6 in&nbsp;SegmentedControl. They come straight from&nbsp;Figma, where the&nbsp;control's total height has to&nbsp;land on&nbsp;the&nbsp;type grid; the&nbsp;4px scale governs everything between components, not inside them.</p>
+    </div>
+  </main>
+
+  <script src="scripts/nav.js"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
+</body>
+</html>

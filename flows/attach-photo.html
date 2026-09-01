@@ -4,18 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flow · Attach Photo</title>
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="../styles/color-tokens.css" />
+  <link rel="icon" href="../assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="../assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="../styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="../styles/cursor.css?v=9" />
   <link rel="stylesheet" href="../styles/text-tokens.css" />
   <link rel="stylesheet" href="../styles/elevation-tokens.css" />
   <link rel="stylesheet" href="../styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="../styles/video-timeline.css" />
+  <link rel="stylesheet" href="../styles/proto-hotspots.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;900&family=Roboto:wght@400;500;700&display=swap" />
-  <link rel="stylesheet" href="../styles/site-header.css" />
+  <link rel="stylesheet" href="../styles/site-header.css?v=2" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -43,13 +45,13 @@
     /* ── Copy column — same geometry as the other flow pages ── */
     .flow-desc { width: 572px; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 50px; }
     .flow-desc__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: 44px; font-weight: 900; line-height: 44px; letter-spacing: -0.88px;
       color: var(--color-primary-transparent-87);
       margin-bottom: 13px;
     }
     .flow-desc__lead {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: 20px; font-weight: 300; line-height: 28px;
       color: var(--color-primary-transparent-87);
     }
@@ -94,7 +96,66 @@
     body.embed .device { padding: 0; background: transparent; border-radius: 0; box-shadow: none; transform: none; }
     body.embed .device__cam { display: none; }
     body.embed .flow-desc, body.embed .site-header { display: none; }
-    body.embed .flow-point, body.embed .flow-tryit, body.embed .flow-restart { display: none; }
+    /* Full-stage embed (?embed=full) — the whole composition (copy, doodles,
+       phone) without the site chrome, for the home-page case sections */
+    body.embed-full .site-header { display: none; }
+    body.embed-full .flow-desc__title { display: none; }   /* the case heading above the frame already names the flow */
+    body.embed-full .flow-desc__lead { display: none; }     /* the description moves below the frame on the home page */
+    body.embed-full { background: transparent; }            /* let the home page's grey stage show through */
+    /* The hand-drawn doodles are black-ink SVGs served via <img>; over the
+       home page's dark stage they vanish, so the embed flips them to white. */
+    body.embed-full .flow-tryit,
+    body.embed-full .flow-tryit-mobile,
+    body.embed-full .flow-orwatch,
+    body.embed-full .flow-arrow,
+    body.embed-full .flow-restart img { filter: invert(1); }
+    /* .flow-point stays black — it sits on the phone's red topbar, not on the stage */
+    /* The Demo button is an inline SVG drawn with black ink straight in the
+       markup, so neither a filter nor a token reaches it — repaint the frame
+       and the word for the dark stage. Its hover fill stays on the accent. */
+    body.embed-full .flow-btn svg [stroke="black"] { stroke: var(--color-constant-primary); }
+    body.embed-full .flow-btn svg [fill="black"]   { fill:   var(--color-constant-primary); }
+    /* The demo scrubber inherits the flow page's light-theme ink (the flows
+       never load the site's theme) — repaint it for the dark stage as well. */
+    body.embed-full .video-timeline__track { stroke: var(--color-constant-transparent-48); }
+    body.embed-full .video-timeline__fill  { stroke: var(--color-constant-primary); }
+    body.embed-full .video-timeline__time  { color:  var(--color-constant-primary); }
+    body.embed-full .flow-desc { width: auto; }             /* the column shrinks to the hand-drawn Demo button */
+    body.embed-full .flow-orwatch { margin-top: 0; }
+    @media (min-width: 901px) {
+      /* The Demo button drops under the "try it yourself" doodle, left-aligned
+         with its handwritten text (text left = 306 + 86, underline bottom = 80 + 305
+         in stage coordinates — identical in all three try-it SVGs). The stage box
+         is widened so fitStage centres the phone-plus-doodles composition. */
+      body.embed-full .flow-stage { position: relative; display: block; width: 302px; }  /* the box is just the phone, so it centres dead-on; the doodles hang off to the left */
+      /* Rich Photo Layouts: annotation block on the LEFT of the phone; the Union
+         arrow (native down-right, so no mirror here) sweeps into the "+" composer */
+      body.embed-full .flow-tryit { left: -368px; top: 80px; }
+      body.embed-full .flow-desc { position: absolute; left: -280px; top: 429px; margin: 0; }
+      body.embed-full .flow-arrow { left: -97px; top: 350px; width: 77px; height: 272px; transform: none; }
+      body.embed-full .flow-orwatch { margin-left: 0; }
+      body.embed-full .flow-btn { width: 175px; }   /* as wide as the "try it yourself" underline */
+      body.embed-full .flow-btn svg { height: 63px; }   /* the frame narrows, the height stays */
+      /* the squashed frame is fine (hand-drawn), but the word "Demo" gets the
+         inverse scale so it keeps its original size */
+      body.embed-full .flow-btn svg path[fill="black"] {
+        transform: scaleX(1.5257); transform-origin: center; transform-box: fill-box;
+      }
+    }
+    body.embed-full { padding: 40px; }
+    @media (max-width: 900px) {
+      body.embed-full { padding: 16px 16px 48px; }   /* no fixed header to clear */
+      /* embedded mobile: phone first, then the try-it doodle (the up-arrow
+         variant points back at the phone), then the Demo button */
+      body.embed-full .stage { order: 1; }
+      body.embed-full .flow-tryit-mobile { display: block; order: 2; width: 264px; align-self: center; margin: -64px 0 0; }   /* as wide as the Demo button, so the text left-aligns with it; the arrow wraps up beside the phone */
+      body.embed-full .flow-desc { order: 3; }
+    }
+    .flow-tryit-mobile { display: none; }
+    /* hand-drawn arrow that sweeps down from the underline to the "+" / composer;
+       the file points down-right, so it's mirrored to point down-left at the phone */
+    .flow-arrow { position: absolute; left: 316px; top: 405px; width: 45px; height: 153px; transform: scaleX(-1); pointer-events: none; z-index: 40; }
+    body.embed .flow-point, body.embed .flow-tryit, body.embed .flow-arrow, body.embed .flow-restart { display: none; }
     body.embed .flow-stage { gap: 0; }
 
     /* ── Top slab: Statusbar + chat top bar ── */
@@ -705,7 +766,12 @@
     }
     .flow-btn svg { display: block; width: 100%; height: auto; }
     .flow-btn .btn-fill { transition: fill .12s ease; }
-    .flow-btn--demo:hover .btn-fill { fill: var(--color-primary-transparent-08); }
+    .flow-btn--demo:hover .btn-fill { fill: var(--color-accent-orange); }
+    .flow-btn--demo:active .btn-fill { fill: var(--color-accent-orange-pressed); }
+    /* doodle timeline under the Demo button — appears while the demo plays */
+    /* demo scrubber floats just above the phone; invisible until the Demo
+       button fires it (is-live), so it only shows during playback */
+    .flow-timeline { position: absolute; top: -34px; left: 1px; width: 300px; margin: 0; z-index: 45; }
     .flow-btn:active { transform: scale(.98); opacity: .7; }
     .flow-btn:focus-visible { outline: 2px solid var(--color-primary-transparent-87); outline-offset: 3px; }
     .flow-fade { position: absolute; inset: 0; z-index: 200; background: var(--color-primary); opacity: 0; pointer-events: none; transition: opacity 0.46s ease; }
@@ -729,7 +795,7 @@
       .flow-desc { width: 100%; max-width: 480px; margin-bottom: 4px; }
       .flow-orwatch { margin-top: 28px; }
       .device { margin: 0 -82px -170px 0; }
-      .flow-tryit, .flow-point { display: none; }
+      .flow-tryit, .flow-arrow, .flow-point { display: none; }
     }
   </style>
 </head>
@@ -745,11 +811,11 @@
         <div class="menu-item">
           <a class="menu-item__trigger" href="../index.html">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="../index.html">Main page</a>
-            <a class="menu-item__link" href="../index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="../index.html">Main Page</a>
+            <a class="menu-item__link" href="../index.html#experience">Work experience</a>
             <a class="menu-item__link" href="../index.html#education">Education</a>
             <a class="menu-item__link" href="../index.html#tools">Tools</a>
-            <a class="menu-item__link" href="../index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="../index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -774,25 +840,28 @@
   <!-- Close → back to the PYROBLAST home -->
 
   <div class="flow-stage" id="flowStage">
-    <aside class="flow-desc">
+    <img class="flow-tryit-mobile" src="../assets/try-it-mobile.svg" alt="" aria-hidden="true" />
+  <aside class="flow-desc">
       <div class="flow-desc__title">Attach Photo</div>
-      <p class="flow-desc__lead">Sharing a photo usually drops you into a system picker — the conversation disappears right when you're mid-thought. Here the plus button opens one tray for gallery, camera, files and location, and the photo lands next to the message field, ready for a caption.</p>
+      <p class="flow-desc__lead">Sharing a&nbsp;photo usually drops you into&nbsp;a&nbsp;system picker — the&nbsp;conversation disappears right when you're mid-thought. Here the&nbsp;plus button opens one tray for&nbsp;gallery, camera, files and&nbsp;location, and&nbsp;the&nbsp;photo lands next to&nbsp;the&nbsp;message field, ready for&nbsp;a&nbsp;caption.</p>
       <img class="flow-orwatch" src="../assets/or-watch-the.svg" alt="or watch the" />
       <button class="flow-btn flow-btn--demo" onclick="window.playDemo()" aria-label="Demo">
-        <svg viewBox="0 0 267 63" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 267 63" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <rect class="btn-fill" x="3" y="3" width="260" height="55" fill="none"/>
           <path d="M264.306 1.82617C264.306 1.8405 264.306 1.85484 264.373 10.366C264.439 18.8772 264.573 35.8847 264.692 45.1282C264.811 54.3718 264.912 55.3358 264.988 56.1136C265.065 56.8914 265.115 57.4537 265.319 58.9697" stroke="black" stroke-width="2" stroke-linecap="round"/>
           <path d="M2.2778 2.4446C2.26251 2.42931 2.24722 2.41402 2.07978 11.6994C1.91234 20.9848 1.59321 39.5713 1.51504 49.337C1.43687 59.1027 1.60934 59.4844 1.87099 59.9805" stroke="black" stroke-width="2" stroke-linecap="round"/>
           <path d="M2.27246 1.79336C2.28632 1.79336 4.77246 1.79336 40.6677 1.65763C80.4818 1.50707 160.097 1.58453 201.927 1.47033C243.757 1.35613 245.39 1.17793 249.297 1.04529C253.203 0.912641 257.772 1.04527 264.272 1.79347" stroke="black" stroke-width="2" stroke-linecap="round"/>
           <path d="M134.004 23.0361C134.556 23.0363 135.004 23.4841 135.004 24.0361C135.004 24.0363 135.02 24.725 135.062 26.0264C135.094 26.0036 135.126 25.9798 135.158 25.957C135.695 25.5764 136.323 25.1545 136.77 24.9268C137.249 24.6826 137.885 24.5371 138.538 24.4961C139.206 24.4543 139.967 24.5167 140.711 24.75C141.39 24.9629 141.764 25.4514 141.968 25.8398C141.989 25.8797 142.005 25.921 142.024 25.96C143.018 25.0558 144.089 24.5132 144.636 24.2998C145.048 24.1393 145.521 24.0965 145.943 24.1016C146.382 24.1069 146.849 24.1655 147.291 24.2617C147.936 24.4022 148.37 24.8564 148.673 25.2813C148.981 25.7133 149.266 26.2783 149.557 26.8994L149.59 26.9697L149.612 27.0439C149.776 27.6097 149.912 28.3288 149.975 29.916C150.037 31.4847 150.026 33.9446 150.015 36.4238C150.013 36.976 149.563 37.4213 149.011 37.419C148.459 37.4165 148.013 36.9672 148.015 36.415C148.026 33.9146 148.036 31.5097 147.976 29.9961C147.92 28.5916 147.807 28.0271 147.708 27.6699C147.436 27.0915 147.229 26.6986 147.045 26.4414C146.933 26.2839 146.864 26.2274 146.841 26.2109C146.522 26.1431 146.2 26.105 145.919 26.1016C145.615 26.0979 145.432 26.1359 145.363 26.1631C144.967 26.3177 144.016 26.7985 143.194 27.6055C143.006 27.7894 142.915 27.8903 142.875 27.9356C142.858 27.9552 142.851 27.9644 142.85 27.9658C142.849 27.9667 142.849 27.9681 142.847 27.9707C142.846 27.9715 142.839 27.9798 142.832 27.9883C142.83 27.9916 142.802 28.0278 142.764 28.0674C142.746 28.0862 142.696 28.137 142.621 28.1895C142.609 28.1981 142.586 28.214 142.553 28.2334C142.559 28.3277 142.568 28.425 142.573 28.5254C142.615 29.3577 142.627 30.4501 142.613 31.7578V31.7715L142.612 31.7842C142.566 33.0204 142.453 34.084 142.396 34.8848C142.337 35.6989 142.328 36.3278 142.318 37C142.309 37.5521 141.854 37.9927 141.302 37.9844C140.75 37.9758 140.309 37.5218 140.318 36.9697C140.328 36.296 140.339 35.6177 140.402 34.7422C140.465 33.8576 140.568 32.9138 140.613 31.7275C140.627 30.4411 140.614 29.3986 140.575 28.6279C140.555 28.241 140.53 27.9359 140.499 27.71C140.472 27.5086 140.448 27.4207 140.444 27.4033C140.411 27.3282 140.384 27.2523 140.364 27.1943C140.333 27.1077 140.331 27.1015 140.303 27.0244C140.265 26.9169 140.233 26.8368 140.199 26.7715C140.165 26.7078 140.14 26.6781 140.128 26.667C140.122 26.6611 140.121 26.6604 140.114 26.6582C139.636 26.5086 139.124 26.4634 138.663 26.4922C138.19 26.5219 137.843 26.6256 137.679 26.709C137.376 26.8636 136.852 27.2072 136.314 27.5889C135.806 27.9485 135.351 28.295 135.147 28.4639C135.156 28.6971 135.165 28.9391 135.174 29.1895C135.231 30.6606 135.385 31.6293 135.466 32.6172C135.543 33.548 135.556 34.2697 135.578 34.8828C135.599 35.496 135.631 36.0233 135.702 36.6621C135.762 37.2108 135.366 37.7047 134.818 37.7656C134.269 37.8263 133.775 37.4307 133.714 36.8818C133.637 36.1804 133.602 35.6019 133.579 34.9541C133.555 34.3065 133.545 33.6518 133.473 32.7813C133.406 31.9674 133.234 30.7762 133.175 29.2676C133.046 25.9438 133.004 24.0744 133.004 24.0361C133.004 23.484 133.452 23.0361 134.004 23.0361ZM102.841 19C103.15 19 103.425 19.1399 103.609 19.3594C104.182 19.3665 105.41 19.3874 107.233 19.4492C109.584 19.529 111.169 20.0389 112.121 20.4199C114.117 21.2186 115.218 22.9253 115.908 24.3135C116.171 24.8448 116.308 25.476 116.402 26.0977C116.496 26.7248 116.562 27.4559 116.64 28.1934C116.825 29.9487 116.548 31.3749 116.234 32.3125C115.562 34.3145 113.862 35.7103 112.908 36.3066C111.667 37.0823 109.9 37.3147 108.284 37.4639L108.25 37.4668L108.217 37.4678C106.207 37.5201 104.511 37.49 103.513 37.4375V37.4365C103.462 37.4339 103.41 37.4304 103.358 37.4277C103.179 37.731 102.846 37.9312 102.469 37.9209C101.917 37.9054 101.481 37.4455 101.496 36.8936C101.656 31.167 101.749 25.6548 101.795 22.8701C101.842 20.0764 101.841 20.0399 101.841 20C101.841 19.4479 102.289 19.0002 102.841 19ZM158.496 23.8193C158.788 23.6048 159.188 23.5568 159.535 23.7305C159.54 23.7333 159.544 23.7351 159.556 23.7373C159.564 23.7389 159.578 23.7415 159.601 23.7441C159.613 23.7455 159.626 23.7463 159.643 23.748C159.658 23.7496 159.681 23.7525 159.704 23.7549L159.727 23.7568L159.75 23.7607C159.991 23.7983 160.254 23.8614 160.6 23.9795L160.976 24.1172L160.992 24.123C161.504 24.3316 161.982 24.5272 162.375 24.7422C162.785 24.9661 163.171 25.2457 163.471 25.6621C163.818 26.1423 164.549 27.0746 164.902 28.2373C165.166 29.1104 165.397 30.2704 165.192 31.6016C165.032 32.6352 164.741 33.8579 164.17 34.9307C164.027 35.2 163.9 35.4276 163.783 35.6065C163.675 35.7703 163.516 35.9905 163.282 36.1514C163.268 36.1643 162.588 36.8189 161.666 37.1709C160.957 37.4418 159.525 37.8367 157.58 37.3594C157.116 37.2452 156.618 37.1105 156.095 36.749C155.273 36.1805 154.603 35.5746 154.021 34.3018C153.808 33.8363 153.515 33.1422 153.463 31.7607C153.432 30.93 153.442 29.7009 153.524 28.9316C153.619 28.0314 153.715 27.3981 154.025 26.8809C154.393 26.2662 155.031 25.2059 156.323 24.5635C157.213 24.1207 157.952 23.9111 158.496 23.8193ZM123.336 23.4355C124.944 23.4786 126.744 23.2599 128.231 24.7979C129.041 25.6356 129.889 27.185 129.867 29.6699C129.865 29.891 129.86 30.4389 129.445 30.8721C129.047 31.2866 128.491 31.373 128.065 31.3984C127.599 31.4262 126.98 31.3824 126.357 31.3359C125.704 31.2873 124.981 31.2298 124.218 31.2061C122.585 31.1552 121.344 31.1261 120.51 31.1094C120.258 31.1043 120.043 31.1006 119.867 31.0977C120.02 31.8358 120.241 32.5315 120.415 32.9756C120.526 33.2587 120.731 33.4935 121.125 33.7461C121.551 34.0181 122.094 34.2498 122.84 34.5772C124.208 35.1772 125.379 34.8859 126.024 34.6484C126.274 34.5106 126.472 34.3718 126.638 34.2178C126.703 34.143 126.802 34.0143 127.027 33.6416C127.312 33.1691 127.927 33.0175 128.4 33.3027C128.873 33.5882 129.024 34.203 128.739 34.6758C128.475 35.1129 128.3 35.3659 128.099 35.5869L128.077 35.6113L128.052 35.6357C127.709 35.9641 127.328 36.2228 126.911 36.4453L126.856 36.4746L126.797 36.4971C125.935 36.826 124.133 37.3291 122.037 36.4092C121.359 36.1119 120.637 35.8079 120.047 35.4307C119.427 35.034 118.866 34.5043 118.553 33.7051C118.31 33.0839 118.013 32.1189 117.836 31.125C117.668 30.1772 117.572 29.0051 117.902 28.0869C118.186 27.2967 118.76 25.5422 120.359 24.4395C121.064 23.9534 122.134 23.4035 123.336 23.4355ZM159.366 25.7295C159.296 25.7453 159.223 25.7555 159.149 25.7559C158.977 25.7567 158.291 25.818 157.212 26.3545C156.485 26.7163 156.098 27.3112 155.741 27.9082C155.692 27.9889 155.614 28.178 155.512 29.1426C155.445 29.7779 155.432 30.9009 155.461 31.6856C155.501 32.7449 155.707 33.1808 155.839 33.4707C156.233 34.3329 156.622 34.6814 157.234 35.1045C157.438 35.2454 157.63 35.312 158.058 35.417C159.498 35.7706 160.504 35.4745 160.954 35.3027C161.584 35.062 161.64 34.8693 162.08 34.5518C162.088 34.5419 162.099 34.5283 162.111 34.5098C162.174 34.4127 162.265 34.2539 162.405 33.9912C162.825 33.2012 163.071 32.2292 163.215 31.2969C163.358 30.3696 163.204 29.5314 162.988 28.8184C162.752 28.0413 162.256 27.3974 161.849 26.833C161.783 26.7421 161.673 26.6375 161.416 26.4971C161.146 26.3491 160.788 26.1992 160.253 25.9814C159.816 25.8121 159.598 25.7623 159.456 25.7393C159.433 25.7372 159.402 25.7337 159.366 25.7295ZM103.795 22.9033C103.753 25.4421 103.67 30.2552 103.535 35.4336C103.56 35.4349 103.587 35.438 103.616 35.4395H103.618C104.549 35.4885 106.178 35.5188 108.132 35.4688C109.799 35.3136 111.075 35.093 111.847 34.6104C112.629 34.1216 113.879 33.0427 114.338 31.6758C114.573 30.9757 114.802 29.8384 114.651 28.4023C114.568 27.6171 114.51 26.9644 114.424 26.3965C114.338 25.8236 114.237 25.4458 114.117 25.2031C113.489 23.9402 112.672 22.7953 111.378 22.2773C110.594 21.9637 109.24 21.5186 107.165 21.4482C105.889 21.405 104.909 21.3815 104.247 21.3691C104.086 21.3661 103.942 21.3642 103.819 21.3623C103.812 21.7501 103.806 22.2522 103.795 22.9033ZM123.283 25.4355C122.697 25.42 122.052 25.7018 121.495 26.0859C120.499 26.7723 120.097 27.8939 119.784 28.7637C119.75 28.8562 119.725 28.9673 119.708 29.0947C120.419 29.1058 121.958 29.1347 124.281 29.207C125.097 29.2324 125.868 29.2943 126.505 29.3418C127.115 29.3872 127.56 29.4126 127.864 29.4033C127.827 27.5749 127.2 26.6082 126.793 26.1875C126.015 25.3825 125.309 25.4898 123.283 25.4355Z" fill="black"/>
-          <path d="M2.00002 59.8331C2.02546 59.8331 2.0509 59.8331 45.2728 60.2939C88.4948 60.7548 174.685 58.1375 219.448 58.672C264.21 59.2064 264.698 59.3257 264.773 59.2874" stroke="black" stroke-width="4" stroke-linecap="round"/>
+          <path d="M2.00002 59.8331C2.02546 59.8331 2.0509 59.8331 45.2728 60.2939C88.4948 60.7548 174.685 58.1375 219.448 58.672C264.21 59.2064 264.698 59.3257 264.773 59.2874" stroke="black" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
     </aside>
 
     <div class="stage" id="stage">
+      <div class="video-timeline video-timeline--controlled flow-timeline" data-video-timeline data-duration="16" data-controlled aria-hidden="true"></div>
       <img class="flow-point" src="../assets/point.svg" alt="" aria-hidden="true" />
       <img class="flow-tryit" src="../assets/try-it-attach.svg" alt="Try it yourself" />
+      <img class="flow-arrow" src="../assets/arrow-photos.svg" alt="" aria-hidden="true" />
       <div class="device">
         <div class="phone">
           <div class="screen" id="screen">
@@ -901,11 +970,11 @@
                 <div class="loc-list">
                   <button class="loc-row" onclick="window.closeSheet()">
                     <span class="loc-row__icon"><img src="../icons/general/location-place.svg" alt="" aria-hidden="true"></span>
-                    <span class="loc-row__text"><span class="loc-row__title">Share Live Location</span><span class="loc-row__sub">Accurate to 37m</span></span>
+                    <span class="loc-row__text"><span class="loc-row__title">Share Live Location</span><span class="loc-row__sub">Accurate to&nbsp;37m</span></span>
                   </button>
                   <button class="loc-row" onclick="window.closeSheet()">
                     <span class="loc-row__icon"><img src="../icons/general/location-place.svg" alt="" aria-hidden="true"></span>
-                    <span class="loc-row__text"><span class="loc-row__title">Send Your Current Location</span><span class="loc-row__sub">Accurate to 30m</span></span>
+                    <span class="loc-row__text"><span class="loc-row__title">Send Your Current Location</span><span class="loc-row__sub">Accurate to&nbsp;30m</span></span>
                   </button>
                   <div class="loc-sep" aria-hidden="true"></div>
                   <button class="loc-row" onclick="window.closeSheet()">
@@ -1107,7 +1176,6 @@
     (function () {
       var screen = document.getElementById('screen');
       var grid = document.getElementById('attachGrid');
-      var cta = document.getElementById('attachCta');
       var preview = document.getElementById('attachPreview');
       var pretext = document.getElementById('attachPretext');
       var editor = document.getElementById('msgInput');
@@ -1161,14 +1229,7 @@
       window.composerSetMark = function (mark, on) { curF[mark] = on; };
       window.composerSetStyle = function (name) { curF.style = name; };
 
-      // Build the 8 selectable PhotoPlaceholder tiles (Toggle atom pinned top-right)
-      var TOGGLE_SVG =
-        '<svg class="attach-tile__toggle" viewBox="0 0 28 28" fill="none" aria-hidden="true">' +
-        '<circle class="t-ring"   cx="14" cy="14" r="11"   stroke="var(--color-primary-transparent-32)" stroke-width="2"/>' +
-        '<circle class="t-fill"   cx="14" cy="14" r="12.5" fill="var(--color-brand-yellow-secondary)"/>' +
-        '<circle class="t-border" cx="14" cy="14" r="11.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" fill="none"/>' +
-        '<path   class="t-mark"   d="M8.5 14.5L12.5 18.5L19.5 10.5" stroke="var(--color-primary-transparent-87)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '</svg>';
+      // Build the 8 PhotoPlaceholder tiles — one tap attaches the photo
       var PHOTOS = [
         '../assets/gallery/tower-bridge.jpg',
         '../assets/gallery/big-ben.jpg',
@@ -1182,15 +1243,10 @@
       PHOTOS.forEach(function (url) {
         var tile = document.createElement('button');
         tile.className = 'attach-tile';
-        tile.setAttribute('aria-pressed', 'false');
-        tile.setAttribute('aria-label', 'Select photo');
+        tile.setAttribute('aria-label', 'Attach photo');
         tile.dataset.photo = url;
         tile.style.backgroundImage = 'url(' + url + ')';
-        tile.innerHTML = TOGGLE_SVG;
-        tile.addEventListener('click', function () {
-          this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-          updateCta();
-        });
+        tile.addEventListener('click', function () { attachPhotoNow(this.dataset.photo); });
         grid.appendChild(tile);
       });
 
@@ -1264,24 +1320,11 @@
           t.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
         Object.keys(PANES).forEach(function (k) { PANES[k].hidden = k !== pane; });
-        updateCta();
       };
       document.querySelectorAll('#attachTabs .attach-tab[data-pane]').forEach(function (t) {
         t.addEventListener('click', function () { window.setAttachTab(t.dataset.pane); });
       });
 
-      function selectedCount () { return grid.querySelectorAll('.attach-tile[aria-pressed="true"]').length; }
-      function updateCta () {
-        var n = selectedCount();
-        if (grid.hidden) n = 0;   // only the gallery pane attaches photos
-        if (n > 0) {
-          cta.classList.add('attach-cta--primary');
-          cta.textContent = 'Attach (' + n + ')';
-        } else {
-          cta.classList.remove('attach-cta--primary');
-          cta.textContent = 'Cancel';
-        }
-      }
       function updateSend () {
         var has = !preview.hidden || !pretext.hidden || segsPlain(segs).trim().length > 0;
         sendBtn.classList.toggle('is-visible', has);
@@ -1293,33 +1336,25 @@
         screen.classList.add('attach-open');
       };
       window.closeSheet = function () { screen.classList.remove('attach-open'); };
-      window.clearSelection = function () {
-        grid.querySelectorAll('.attach-tile[aria-pressed="true"]').forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
-        updateCta();
-      };
       var attachedPhoto = null;
-      window.attachCtaClick = function () {
-        if (selectedCount() > 0 && !grid.hidden) {
-          var first = grid.querySelector('.attach-tile[aria-pressed="true"]');
-          attachedPhoto = first ? first.dataset.photo : null;
-          var thumb = preview.querySelector('.attach-thumb');
-          if (thumb) thumb.style.backgroundImage = attachedPhoto ? 'url(' + attachedPhoto + ')' : '';
-          // words typed before the photo stay above it; typing continues below
-          if (segsPlain(segs).trim()) {
-            pretextSegs = segs.slice();
-            pretext.innerHTML = segsHTML(pretextSegs);
-            pretext.hidden = false;
-            window.composerClear();
-          }
-          preview.hidden = false;
-          window.closeSheet();
-          window.clearSelection();
-          updateSend();
-          setTimeout(function () { if (window.openKeyboard) window.openKeyboard(editor); }, 380);   // keyboard slides up under the composer
-        } else {
-          window.closeSheet();
+      // One tap on a gallery photo attaches it and hands control back to the composer
+      function attachPhotoNow (url) {
+        attachedPhoto = url;
+        var thumb = preview.querySelector('.attach-thumb');
+        if (thumb) thumb.style.backgroundImage = url ? 'url(' + url + ')' : '';
+        // words typed before the photo stay above it; typing continues below
+        if (segsPlain(segs).trim()) {
+          pretextSegs = segs.slice();
+          pretext.innerHTML = segsHTML(pretextSegs);
+          pretext.hidden = false;
+          window.composerClear();
         }
-      };
+        preview.hidden = false;
+        window.closeSheet();
+        updateSend();
+        setTimeout(function () { if (window.openKeyboard) window.openKeyboard(editor); }, 380);   // keyboard slides up under the composer
+      }
+      window.attachCtaClick = function () { window.closeSheet(); };
       window.getAttachedPhoto = function () { return attachedPhoto; };
       window.removeAttachment = function () {
         preview.hidden = true;
@@ -1511,7 +1546,8 @@
 
     // ── Fit the composition to the window; embed mode for the home card ──
     (function () {
-      if (location.search.indexOf('embed') !== -1) document.body.classList.add('embed');
+      if (location.search.indexOf('embed=full') !== -1) document.body.classList.add('embed-full');
+      else if (location.search.indexOf('embed') !== -1) document.body.classList.add('embed');
       if (document.body.classList.contains('embed')) return;
       var stageEl = document.getElementById('flowStage');
       if (!stageEl) return;
@@ -1532,7 +1568,7 @@
       fitStage();
     })();
 
-    // ── Auto-play demo: "+" → pick a photo → ATTACH → caption → send ──
+    // ── Auto-play demo: "+" → tap a photo → caption → send ──
     (function () {
       var screen = document.getElementById('screen');
       var fadeEl = document.getElementById('flowFade');
@@ -1572,7 +1608,6 @@
         if (window.closeKeyboard) window.closeKeyboard();
         window.closeSheet();
         if (window.resetFormat) window.resetFormat();
-        window.clearSelection();
         window.removeAttachment();
         if (window.composerClear) window.composerClear();
         var pre = document.getElementById('attachPretext');
@@ -1598,12 +1633,8 @@
         await tap('#addBtn');                                    // …then open the tray
         await aDelay(700); if (auto.cancelled) return;
         var tiles = document.querySelectorAll('#attachGrid .attach-tile:not(.attach-tile--camera)');
-        await tap(tiles[0]);                                     // Tower Bridge, right by the flat
-        await aDelay(600); if (auto.cancelled) return;
-        await tap('#attachCta');                                 // ATTACH (1) — typed words stay above the photo
-        await aDelay(800); if (auto.cancelled) return;
-        if (window.openKeyboard) window.openKeyboard(input);     // …and keep typing under it
-        await aDelay(420); if (auto.cancelled) return;
+        await tap(tiles[0]);                                     // Tower Bridge — one tap attaches it
+        await aDelay(900); if (auto.cancelled) return;           // composer returns with the photo and keyboard
         await autoType('Two minutes from the Tube, pub downstairs. London, here we come!');
         if (auto.cancelled) return;
         await aDelay(500); if (auto.cancelled) return;
@@ -1619,6 +1650,7 @@
         await fadeToBlack(); if (auto.cancelled) { fadeEl.classList.remove('is-black'); return; }
         resetPhone();
         await fadeFromBlack();
+        document.dispatchEvent(new CustomEvent('demo-end'));
         showPoint();
         stopAuto();
       }
@@ -1632,8 +1664,21 @@
       function showPoint(){ if (pointEl) pointEl.classList.remove('is-hidden'); }
       function hidePoint(){ if (pointEl) pointEl.classList.add('is-hidden'); }
 
-      window.playDemo = function(){ stopAuto(); hideRestart(); hidePoint(); if (fadeEl) fadeEl.classList.remove('is-black'); loop(300); };
-      window.startManual = function(){ stopAuto(); showPoint(); if (fadeEl) fadeEl.classList.remove('is-black'); resetPhone(); };
+      window.playDemo = function(){ stopAuto(); hideRestart(); hidePoint(); if (fadeEl) fadeEl.classList.remove('is-black'); document.dispatchEvent(new CustomEvent('demo-start')); loop(300); };
+
+      // Pyroblast case embed (embed-full): fully remove the Demo button and its
+      // "or watch the" label (display:none — no dangling label, no empty gap) while
+      // the auto-play runs AND after it ends. They return only once the visitor taps
+      // in to drive the prototype themselves, offering a replay.
+      if (document.body.classList.contains('embed-full')) {
+        var _demoEls = [document.querySelector('.flow-btn--demo'), document.querySelector('.flow-orwatch')];
+        var _demoShow = function (show) {
+          _demoEls.forEach(function (el) { if (el) { el.style.display = show ? '' : 'none'; } });
+        };
+        document.addEventListener('demo-start', function () { _demoShow(false); });
+        document.addEventListener('demo-stop',  function () { _demoShow(true); });
+      }
+      window.startManual = function(){ stopAuto(); document.dispatchEvent(new CustomEvent('demo-stop')); showPoint(); if (fadeEl) fadeEl.classList.remove('is-black'); resetPhone(); };
       // Pulse the "+" (flow entry point) as tap feedback when Restart is pressed.
       var addBtn = document.getElementById('addBtn');
       function pulseAdd(){
@@ -1649,18 +1694,60 @@
       window.takeControl = function(){
         if (auto.cancelled) return;
         stopAuto();
+        document.dispatchEvent(new CustomEvent('demo-stop'));
         document.querySelectorAll('.phone .is-pressed').forEach(function(b){ b.classList.remove('is-pressed'); b.style.transform = ''; });
         if (fadeEl) fadeEl.classList.remove('is-black');
       };
       var phoneEl = document.querySelector('.phone');
       if (phoneEl && !document.body.classList.contains('embed')) {
-        phoneEl.addEventListener('click', function(){ if (auto.synthetic) return; showRestart(); if (!auto.cancelled) window.takeControl(); }, true);
+        phoneEl.addEventListener('click', function(e){ if (auto.synthetic) return; if (!auto.cancelled) { e.stopPropagation(); e.preventDefault(); window.restartManual(); } showRestart(); }, true);
       }
 
       // On entry, start in manual mode; embedded card plays the demo on hover (parent-driven).
       window.addEventListener('load', window.startManual);
     })();
   </script>
-  <script src="../scripts/page-transition.js?v=4"></script>
+  <script src="../scripts/video-timeline.js"></script>
+  <script src="../scripts/proto-hotspots.js"></script>
+  <script src="../scripts/page-transition.js?v=5"></script>
+  <script>
+    /* Prototype-interaction tracking → posted to the parent (home.html forwards to GA4).
+       No GA inside the prototype. Real selectors: demo → .flow-btn--demo, phone → .phone,
+       steps → #screen classes (attach-open, format-open; kb-open keyboard excluded). */
+    (function () {
+      'use strict';
+      var PROTO = 'photo_layouts';
+      var STEPS = ['attach-open', 'format-open'];
+      function trackProto(event, detail) {
+        try {
+          window.parent.postMessage({ source: 'proto', event: event, prototype: PROTO, detail: detail || '' }, '*');
+        } catch (err) {}
+      }
+      var screenEl = document.getElementById('screen');
+      var phone = document.querySelector('.phone');
+      function openSteps() {
+        var out = [];
+        if (screenEl) { for (var i = 0; i < STEPS.length; i++) { if (screenEl.classList.contains(STEPS[i])) { out.push(STEPS[i]); } } }
+        return out;
+      }
+      var interacted = false;
+      // One delegated click listener in capture phase — runs before the prototype's own
+      // handlers, so their stopPropagation can't hide the click. Never calls preventDefault.
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.closest) { return; }
+        if (t.closest('.flow-btn--demo')) { trackProto('demo_click'); }             // Demo button
+        if (!interacted && phone && phone.contains(t)) {                            // first drive of the prototype
+          interacted = true; trackProto('prototype_interact');
+        }
+        var before = openSteps();                                                  // which step screens does this click newly open?
+        Promise.resolve().then(function () {
+          openSteps().forEach(function (s) {
+            if (before.indexOf(s) === -1) { trackProto('prototype_step', s.replace('-open', '')); }
+          });
+        });
+      }, true);
+    })();
+  </script>
 </body>
 </html>

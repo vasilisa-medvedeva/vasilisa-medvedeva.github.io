@@ -8,6 +8,9 @@
     { id: 'nav-styles', label: 'Styles', items: [
       ['typography.html', 'Typography'],
       ['colors.html', 'Colors'],
+      ['spacing.html', 'Spacing'],
+      ['radius.html', 'Radius'],
+      ['elevation.html', 'Elevation'],
     ]},
     { id: 'nav-icons', label: 'Icons', items: [
       ['icons.html', 'Tab bar'],
@@ -32,7 +35,7 @@
       ['atoms.html#notification-counter', 'NotificationCounter'],
       ['atoms.html#separator-message', 'SeparatorMessage'],
       ['atoms.html#info-title', 'InfoTitle'],
-      ['atoms.html#bubble-2', 'Bubble2.0'],
+      ['atoms.html#bubble-2', 'Bubble'],
       ['atoms.html#send-time', 'SendTime'],
       ['atoms.html#reaction', 'Reaction'],
       ['atoms.html#reaction-arrow', 'ReactionArrow'],
@@ -73,7 +76,7 @@
       ['molecules.html#top-search-bar', 'TopSearchBar'],
       ['molecules.html#text-reply', 'TextReply'],
       ['molecules.html#above-text-field', 'AboveTheTextField'],
-      ['molecules.html#bubble-bottom-2', 'BubbleBottom 2.0'],
+      ['molecules.html#bubble-bottom-2', 'BubbleBottom'],
       ['molecules.html#message', 'Message'],
       ['molecules.html#dropdown-menu', 'DropdownMenu'],
       ['molecules.html#menu-compact', 'MenuCompact'],
@@ -103,7 +106,9 @@
     }).join('');
   }
   function buildSidebar() {
-    var html = NAV.map(function (g) {
+    // Standalone entry point above the groups — the library's intro page
+    var html = '<a class="sidebar__link sidebar__link--top" href="overview.html">Overview</a>';
+    html += NAV.map(function (g) {
       return '<div class="nav-group" id="' + g.id + '">' +
         '<button class="nav-group__header" onclick="toggleGroup(\'' + g.id + '\')">' + g.label +
         chevron('nav-group__chevron') + '</button>' +
@@ -149,6 +154,11 @@
                 : page === 'atoms.html'       ? 'nav-atoms'
                 : page === 'molecules.html'   ? 'nav-molecules'
                 : page === 'organisms.html'   ? 'nav-components'
+                : page === 'typography.html'  ? 'nav-styles'
+                : page === 'colors.html'      ? 'nav-styles'
+                : page === 'spacing.html'     ? 'nav-styles'
+                : page === 'radius.html'      ? 'nav-styles'
+                : page === 'elevation.html'   ? 'nav-styles'
                 : null;
     if (groupId) {
       var openGroup = document.getElementById(groupId);

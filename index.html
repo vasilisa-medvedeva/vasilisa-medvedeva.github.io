@@ -3,25 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vasilisa Medvedeva — Product Designer</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDY8SF935T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    // Self-traffic opt-out: open the site once with ?ga_optout=1 to stop being
+    // counted in this browser (persists); ?ga_optout=0 re-enables tracking.
+    try {
+      var gaOpt = new URLSearchParams(location.search).get('ga_optout');
+      if (gaOpt === '1') { localStorage.setItem('ga_optout', '1'); }
+      else if (gaOpt === '0') { localStorage.removeItem('ga_optout'); }
+    } catch (e) {}
+    if (localStorage.getItem('ga_optout') === '1' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      window['ga-disable-G-PDY8SF935T'] = true;
+    }
+    gtag('config', 'G-PDY8SF935T');
+  </script>
+  <title data-ru="Василиса Медведева — продуктовый дизайнер">Vasilisa Medvedeva — Product Designer</title>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Vasilisa Medvedeva" />
+  <meta property="og:title" content="Vasilisa Medvedeva — Product Designer" />
+  <meta property="og:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5+ years of experience." />
+  <meta property="og:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://vasilisa-medvedeva.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vasilisa Medvedeva — Product Designer" />
+  <meta name="twitter:description" content="Product designer — scalable, flexible interfaces that balance UX, business goals and technical constraints. 5+ years of experience." />
+  <meta name="twitter:image" content="https://vasilisa-medvedeva.github.io/assets/og-image.png" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
+  <link rel="stylesheet" href="styles/radius-tokens.css?v=1" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=11" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
+  <link rel="stylesheet" href="styles/guide-buddy.css?v=3" />
+  <link rel="stylesheet" href="styles/lang-switch.css?v=3" />
+  <link rel="stylesheet" href="styles/theme-graphite.css?v=5" />
+  <link rel="stylesheet" href="styles/bg-grain.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;900&family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;800;900&family=Golos+Text:wght@400;500&family=Roboto:wght@400;500;700&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* smooth anchor jumps (the hero arrow, the header menu) — instant for
+       readers who asked motion to stay quiet */
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
     body {
       font-family: var(--text-body-medium-font-family, "Roboto"), sans-serif;
-      background: var(--color-constant-primary);
+      background: var(--page-bg);
       color: var(--color-primary);
       min-height: 100vh;
     }
@@ -35,66 +76,160 @@
 
     /* ── Hero — same oversized statement as the project page ── */
     .hero {
-      padding: 38px 0 0;
+      padding: 88px 0 0;   /* same air under the header as on the case pages */
       display: flex; flex-direction: column; gap: 24px;
+      padding-bottom: 72px;   /* compact, with clear air before the cards */
     }
     .hero__title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 900;
-      font-size: clamp(48px, 7.6vw, 104px);
+      /* fallback size only — the poster-fit script below scales the type so
+         the longest line spans the full content width at any viewport */
+      font-size: clamp(48px, 7.6vw, 160px);
       line-height: 0.96; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      max-width: 1360px;
     }
-    .hero__aside {
-      align-self: flex-end;
-      margin-top: -40px;
-      width: calc((100% - 10px) / 2.4);
-      display: flex; flex-direction: column; gap: 14px;
+
+    /* the method line rides directly under the headline as a quiet
+       subhead — third level of the top text stack */
+    .hero__sub {
+      max-width: 560px;
+      margin-top: -2px;
+      /* left edge sits on the projects grid's second column line — the same
+         vertical the right-hand card starts on below */
+      margin-left: calc((100% - 10px) / 2.4 * 1.4 + 10px);
+      font-family: var(--font-text, "Golos Text", sans-serif);
+      font-weight: 300; font-size: 18px; line-height: 27px;
+      color: var(--color-primary-transparent-87);
     }
+
+    /* Hand-drawn arrow down to the work — same stroke family as the footer
+       arrow and the circled word, and it lines up with the stat band above.
+       Inline SVG rather than the <img> it used to be: the file's own stroke
+       is black, which was fine on the light page it was drawn for and
+       invisible here. currentColor lets it live in the dark theme. */
+    .hero__arrow-link {
+      display: inline-block;
+      width: fit-content;
+      margin-left: calc((100% - 10px) / 2.4 * 1.4 + 10px);
+      color: var(--color-primary-transparent-87);   /* the same white as the headline */
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+    .hero__arrow-link:hover {
+      transform: translateY(4px);
+      color: var(--color-accent-orange);
+    }
+    .hero__arrow { display: block; width: 44px; height: auto; }
     .hero__aside p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
     }
     .hero__nowrap { white-space: nowrap; }
-    .hero__arrow { width: 44px; height: auto; margin: 6px 0 0 8px; }
+    /* location + work-mode tag — the recruiter's first question, answered
+       before the paragraphs start */
+    .hero__meta {
+      margin-bottom: -6px;   /* tag line hugs its headline */
+    }
+    .hero__meta, .hero__aside .hero__meta {
+      /* the display face, not the body Roboto it used to inherit — the case
+         pages' .hero__eyebrow has always set it, and the two must match */
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-size: 13px; line-height: 18px;
+      font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-primary-transparent-87);
+    }
+    /* the "5+" wrapper — kept as the mascot's anchor point in the hero line */
+    .hero__circle { position: relative; display: inline-block; }
 
     /* ── Projects grid — korolev-style tiles, same rhythm as the flows grid ── */
+    /* Lifted above the scroll buddy's overlay (z-index 3): his slalom runs
+       BEHIND the project cards — he shows in the gaps between them, never
+       on top of the work itself. Everywhere else he stays above content. */
     .projects-grid {
+      position: relative; z-index: 4;
       display: grid;
       grid-template-columns: 1.4fr 1fr;   /* project card wider, placeholder narrower */
       gap: 10px;
       align-items: start;
+      margin-top: 74px;   /* the grid sits half a step lower under the compact hero */
       padding-bottom: 50px;
     }
+    /* the left column rides a step higher, the right a step lower — the
+       stagger reads as intent (≈64px total), and Nomerogram leads */
+    .projects-grid > .project-card:nth-child(odd) { position: relative; top: -56px; }
     .projects-grid > .project-card:nth-child(even) { position: relative; top: 40px; }
+    /* Nomerogram leads the grid, so it sits 50px lower than the other odd
+       card — the stagger stays, the first card just starts closer to the
+       hero's foot. `top` shifts the paint but not the layout, so the card
+       beneath it in the same column has to make room.
+
+       The room is made with a margin on THAT card, not with margin-bottom on
+       this one: a bottom margin here grows the whole first row, which pushes
+       the second row down — and the right-hand card of that row has no
+       negative `top` to absorb it, so it alone ended up 50px too low. */
+    .projects-grid > .project-card:nth-child(1) { top: -6px; }
+    .projects-grid > .project-card:nth-child(3) { margin-top: 50px; }
 
     .project-card {
       position: relative;
       display: flex; flex-direction: column;
-      background: var(--color-constant-primary);
-      border: 1px solid var(--color-primary-transparent-08);
-      border-radius: 24px;
+      /* Flat block, thin outline, no shadow — the reference's language.
+         Each card takes one of the muted tones below, so the grid reads as a
+         set of samples rather than four copies of one panel. */
+      background: var(--tone-sage);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
+      border-radius: var(--radius-xl);
       padding: 5px;
       overflow: hidden;
       text-decoration: none; color: inherit;
-      /* reveal-on-scroll start state */
-      opacity: 0;
-      transform: translateY(36px) scale(0.98);
-      transition: opacity 0.7s ease,
-                  transform 0.7s cubic-bezier(0.16, 0.84, 0.24, 1),
-                  box-shadow 0.4s ease;
-      will-change: transform, opacity;
+      transition: transform 0.4s cubic-bezier(0.16, 0.84, 0.24, 1);
     }
-    .project-card.is-revealed { opacity: 1; transform: none; }
-    .project-card.is-revealed:hover {
+    /* ── Labels in the display sans ────────────────────────────────────────
+       Every small, structural piece of type — navigation, tag lines, card
+       names, chips, section headings, the signature — takes Rubik in caps
+       with a touch of tracking, the way the reference sets its labels
+       (BANDS & ARTISTS): same voice as the headlines, one size down. The
+       mono experiment is retired — the reference carries no mono at all.
+       Scoped to this page's own <style>, so the case pages are untouched. */
+    /* The header used to sit in this list too. Its controls are sentence case,
+       not caps, and 0.06em on lowercase simply reads as loose — it now takes a
+       tighter value from site-header.css, which also gets the case pages'
+       headers to match instead of drifting a step apart from this one. */
+    .hero__meta,
+    .project-card__name,
+    .meta-chip,
+    .section-title,
+    .tools-group__label,
+    .footer__colophon {
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+    /* Display sizes need the tracking pulled back in and a notch off the
+       size, or the card names outgrow their cards. */
+    .project-card__name { font-size: 22px; letter-spacing: 0.02em; }
+    .section-title { letter-spacing: 0.04em; }
+    .meta-chip { font-size: 11px; }
+
+    /* Nomerogram leads the grid, so it takes the tone furthest from the
+       sheet's own hue — the lead card should read first, and sage sat only a
+       step off the background. */
+    .project-card:nth-child(1) { background: var(--tone-taupe); }
+    .project-card:nth-child(2) { background: var(--tone-lavender); }
+    .project-card:nth-child(3) { background: var(--tone-steel); }
+    .project-card:nth-child(4) { background: var(--tone-mustard); }
+
+    /* The original hover, kept: the card eases down a notch under the cursor.
+       A shrink, not a lift — it needs no shadow, which is what keeps it flat. */
+    .project-card:hover {
       transform: scale(0.97);
-      box-shadow: var(--elevation-4);
       z-index: 2;
     }
+
     @media (prefers-reduced-motion: reduce) {
-      .project-card { opacity: 1; transform: none; transition: none; }
+      .project-card { transition: none; }
     }
 
     .project-card__head {
@@ -102,7 +237,7 @@
       padding: 24px 20px 0;
     }
     .project-card__name {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -111,20 +246,29 @@
       text-transform: uppercase;
     }
     .project-card__desc {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300;
       font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 560px;
     }
+    /* Metric pills on the cards — same chips as the Tools section */
+    .project-card__pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 14px;
+    }
 
-    /* Meta chips — same skin as the library tag-chip, non-interactive */
-    .project-card__meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    /* Tool chips follow the card surface language: a quiet raised fill
+       and a full-round pill shape — the fill alone draws the edge */
     .meta-chip {
       display: inline-flex; align-items: center;
-      border: 1.5px solid var(--color-primary-transparent-87);
-      border-radius: 12px;
-      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      /* outlined, not filled — the same treatment as every other box on this
+         skin, and inside a coloured card the tone shows through instead of a
+         second fill sitting on top of it */
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
+      padding: 7px 14px;
       font-family: var(--text-label-medium-font-family, "Roboto"), sans-serif;
       font-weight: var(--text-label-medium-font-weight);
       font-size: var(--text-label-medium-font-size);
@@ -133,18 +277,39 @@
       color: var(--color-primary-transparent-87);
       white-space: nowrap;
     }
-    .meta-chip--accent {
-      background: var(--color-brand-yellow-primary);
+    /* On a coloured card the chip needs no drawn edge: the tone already
+       separates it from the sheet, and an outline there read as a second frame
+       inside a framed box. The standalone Tools chips sit directly on the
+       sheet and keep theirs — without it they collapse into a list of words. */
+    .project-card .meta-chip {
+      box-shadow: none;
+      /* Translucent rather than a fixed colour: the same rule then lifts the
+         badge off taupe, lavender, steel and mustard alike, instead of one
+         hardcoded fill that reads right on one card and muddy on the rest. */
+      background: var(--color-primary-transparent-08);
     }
 
+    /* Chips in the Tools section stand alone on the page, so they carry the
+       same surface as the project cards. The same class INSIDE a card keeps
+       the translucent fill — on that surface it would otherwise vanish. */
+    /* Metric chips stay in the card's own gray voice — the quiet raised
+       fill from .meta-chip itself. Color experiments (violet pair, aurora,
+       indigo ladder, single blue) all pulled the eye harder than the
+       numbers deserved; the metrics read best as part of the card. */
     /* Stage — device on a soft backdrop, identical to the flow cards */
     .project-card__stage {
       position: relative;
       margin-top: 20px;
       height: 510px;
-      border-radius: 20px;
+      /* Concentric with the card around it: the outer radius less the 5px of
+         padding between them, so the two curves stay parallel instead of one
+         cutting across the other. */
+      border-radius: calc(var(--radius-xl) - 5px);
       overflow: hidden;
-      background: var(--color-primary-transparent-04);
+      /* a floor for the device: a thin outline instead of a second fill, so
+         the card keeps exactly one material */
+      background: transparent;
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
     }
     .project-card__device {
       position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
@@ -159,6 +324,103 @@
       width: 360px; height: 780px; border: 0;
       transform-origin: top left; pointer-events: none;
     }
+    /* Flow-loading skeleton — the lazy iframes can land late; until a flow
+       document arrives its phone shows an app-style skeleton: gray blocks
+       under a sweeping shimmer, the way a real product loads. Injected from
+       JS: only JS can dismiss it, so it must never render without it. */
+    .device-skeleton {
+      position: absolute; inset: 0; z-index: 2;
+      background: var(--color-constant-primary);
+      padding: 52px 18px 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .device-skeleton i {
+      display: block; border-radius: 10px;
+      background: var(--color-primary-transparent-04);
+      margin-bottom: 13px;
+    }
+    .device-skeleton i:nth-child(1) { width: 44%; height: 22px; }
+    .device-skeleton i:nth-child(2) { width: 82%; height: 11px; }
+    .device-skeleton i:nth-child(3) { width: 64%; height: 11px; }
+    .device-skeleton i:nth-child(4) { width: 100%; height: 172px; border-radius: 16px; margin-top: 20px; }
+    .device-skeleton i:nth-child(5) { width: 100%; height: 68px; border-radius: 16px; }
+    .device-skeleton::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(100deg, transparent 32%, var(--color-primary-transparent-08) 50%, transparent 68%);
+      background-size: 220% 100%;
+      animation: skeleton-sweep 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton-sweep {
+      from { background-position: 190% 0; }
+      to   { background-position: -90% 0; }
+    }
+    .project-card__device.is-loaded .device-skeleton { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .device-skeleton::after { animation: none; }
+    }
+
+    /* ── Scroll buddy route — the guide fella runs the page as you scroll
+       (built and steered by scripts/scroll-buddy.js; hidden with the rest
+       of .gb on touch / small screens / reduced motion). Sits above the
+       cards (their hover z-index is 2) but under the header and splash. ── */
+    .buddy-route {
+      position: absolute; left: 0; top: 0; width: 100%;
+      pointer-events: none; z-index: 3; overflow: hidden;
+    }
+    .buddy-route__trail { display: block; position: absolute; left: 0; top: 0; }
+    /* footprints — a short dissolving tail of shoe prints (assets/footstep.svg
+       masked in the accent colour; scroll-buddy.js mirrors every other one
+       into the opposite foot, aims it along the run and grades the opacity
+       by age — the transition is what makes them melt) */
+    .buddy-route .buddy-step {
+      position: absolute; left: 0; top: 0;
+      width: 5.4px; height: 14px;
+      background: var(--color-accent-orange);
+      -webkit-mask: url('assets/footstep.svg') no-repeat center / contain;
+              mask: url('assets/footstep.svg') no-repeat center / contain;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .buddy-route .gb {
+      position: absolute; left: 0; top: 0;
+      width: 72px; height: 82px;
+      will-change: transform;
+    }
+    /* Idle acting (ref: springy star-mascot idles) — a jelly squash-breath
+       from the feet plus a slow weight shift; blink and the sideways glance
+       come free with guide-buddy.css?v=3. The :not() chain outweighs its own
+       gb-idle rule, and running keeps the flipbook bob untouched. */
+    .buddy-route .gb:not(.gb--running):not(.gb--pointing) .gb__figure {
+      transform-box: fill-box;
+      transform-origin: 50% 98%;
+      animation: buddy-idle 3.6s ease-in-out infinite;
+    }
+    @keyframes buddy-idle {
+      0%, 100% { transform: scale(1.012, 0.988) rotate(-1.2deg); }
+      25%      { transform: scale(0.994, 1.014) rotate(0deg); }
+      50%      { transform: scale(1.012, 0.988) rotate(1.2deg); }
+      75%      { transform: scale(0.994, 1.014) rotate(0deg); }
+    }
+    /* standing, his pupils track the cursor (vars set by scroll-buddy.js);
+       on the run the googly spin from guide-buddy.css?v=3 takes over */
+    .buddy-route .gb:not(.gb--running) .gb__pupil {
+      transform: translate(var(--look-x, 0px), var(--look-y, 0px));
+      transition: transform 0.12s ease-out;
+    }
+    /* the pointing arm sits a step higher and further right than the
+       guide's default pivot puts it (screen-space nudge after the aim
+       rotation, so it reads as coming off his shoulder, not his hip) */
+    .buddy-route .gb.gb--pointing .gb__arm--front {
+      transform: translate(16px, -18px) rotate(calc(var(--gb-aim, -40deg) + 72deg));
+    }
+    /* beside the quiz he points at it and swaps to the laughing face
+       (closed happy eyes + open mouth, drawn in the sprite) */
+    .buddy-route .gb .gb__face--laugh { opacity: 0; }
+    .buddy-route .gb.gb--laughing .gb__face--laugh { opacity: 1; }
+    .buddy-route .gb.gb--laughing .gb__face--A,
+    .buddy-route .gb.gb--laughing .gb__face--B { opacity: 0; animation: none; }
 
     /* Cover image stage — for projects without an embedded live flow.
        Anchor left so the first phone in the frame stays whole when cropped. */
@@ -173,12 +435,12 @@
       display: grid;
       grid-template-columns: 1fr 1.4fr;   /* narrow title column, wide content */
       gap: 10px;
-      padding: 56px 20px;
+      padding: 56px 0;   /* title flush with the header avatar / hero at the 10px main gutter */
     }
     .info-section, .projects-grid { scroll-margin-top: 72px; }
 
     .section-title {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-size: var(--text-headline-medium-font-size);
       font-weight: 900;
       line-height: var(--text-headline-medium-line-height);
@@ -191,7 +453,7 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .info-section__body p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 18px; line-height: 27px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
@@ -202,24 +464,112 @@
       text-underline-offset: 3px;
     }
     .info-muted {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: var(--text-label-large-line-height);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--color-primary-transparent-48);
+      color: var(--color-primary-transparent-60);
     }
 
+    /* Two-truths-and-a-lie mini game in Bit About Me */
+    .guess { margin-top: 6px; }
+    .guess .guess__intro {
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-weight: 700;
+      font-size: 22px; line-height: 28px;
+      color: var(--color-primary-transparent-87);
+      margin-bottom: 16px;
+    }
+    .guess__options { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+    /* Plates follow the project-card surface language: a quiet raised fill
+       and an even radius — the fill alone draws the edge. border: none
+       matters here: these are <button>s, and without it the UA's own outset
+       bevel shows through (it did once, and almost stayed). */
+    .guess__option {
+      display: flex; align-items: flex-start; gap: 12px;
+      width: 100%;
+      padding: 15px 17px;
+      text-align: left;
+      font-family: var(--font-text, "Golos Text", sans-serif);
+      font-weight: 300; font-size: 18px; line-height: 26px;
+      color: var(--color-primary-transparent-87);
+      /* same value the card's own pills composite to: 4% white over the
+         card's #211E2A. These sit on the page, not on a card, so the flat
+         result is spelled out rather than layered. */
+      /* Same surface the cards take, so a row reads as a thing you can press
+         rather than an outline drawn on the sheet. */
+      background: var(--color-constant-primary);
+      box-shadow: inset 0 0 0 1.5px var(--outline-ink);
+      border: none;
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: background 160ms ease, transform 160ms ease, color 160ms ease;
+    }
+    /* muted violet hover only while the game is unanswered — once revealed, the
+       red / green highlight must stay put even under the cursor */
+    /* Same gesture as the project cards: the row eases down a notch under
+       the cursor instead of filling with the accent. Timing stays at 160ms —
+       the card's 0.4s suits a card-sized object, not a button. */
+    /* Accent text under the cursor. Worth knowing: on the sage sheet the accent
+       carries only 2.18:1, against 7.74:1 for the ink it replaces, and this row
+       is 18px at weight 300 — so hovering costs legibility rather than adding
+       it. Kept because it is the hover the rest of the site uses; #704D3C is
+       the same gesture at a compliant 4.40:1 if the row ever needs reading. */
+    /* Same highlight as the header controls: the accent behind the label, the
+       label in white. Note white on the accent measures 3.70:1 and this row is
+       18px at weight 300, so it sits below the 4.5:1 the size asks for — better
+       than the 2.18:1 accent-on-sheet it replaces, still not compliant. */
+    /* The label keeps the theme's own colour instead of being forced white —
+       the accent under it is now chosen to be legible beneath that colour,
+       which is the point of the pairing. */
+    .guess:not(.is-done) .guess__option:hover {
+      transform: scale(0.97);
+      background: var(--color-accent-orange);
+    }
+    .guess:not(.is-done) .guess__option:active {
+      background: var(--color-accent-orange-pressed);
+    }
+    /* Mark holds a small black SVG icon (empty circle → tick / cross on reveal) */
+    .guess__mark {
+      flex: 0 0 auto;
+      width: 24px; height: 24px; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .guess__mark img { display: block; width: 100%; height: 100%; }
+    .guess.is-done .guess__option { cursor: default; }
+
+    /* Revealed states — a quiet verdict for a playful block: borderless like
+       the cards, so the wash of a muted green / red is the whole verdict and
+       the icons do the rest. Swap --guess-green / --guess-red to retint. */
+    .guess { --guess-green: #567F60; --guess-red: #A2594F; }
+    /* Mixed into the row's own surface, not into transparency — against a
+       transparent base the verdict would have replaced the fill and left the
+       revealed rows sitting lower than the ones beside them. */
+    .guess__option.is-lie    { background: color-mix(in srgb, var(--guess-green) 22%, var(--color-constant-primary)); }
+    .guess__option.is-missed { background: color-mix(in srgb, var(--guess-red) 22%, var(--color-constant-primary)); }
+    .guess__option.is-truth  { opacity: 0.55; }
+    .guess__result {
+      margin-top: 14px;
+      font-family: var(--font-text, "Golos Text", sans-serif);
+      font-weight: 500; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+      max-width: 560px;
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+    .guess__result.is-shown { opacity: 1; }
+
     /* Experience entries */
-    .xp { padding: 20px 0; border-top: 1px solid var(--color-primary-transparent-16); }
-    .xp:first-child { border-top: none; padding-top: 0; }
+    .xp { padding: 20px 0; }
+    .xp:first-child { padding-top: 0; }
     .xp__head {
       display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
       margin-bottom: 8px;
     }
     .xp__company {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 900;
       font-size: 22px; line-height: 26px;
       letter-spacing: -0.01em;
@@ -227,32 +577,41 @@
       color: var(--color-primary-transparent-87);
     }
     .xp__role {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-60);
     }
     .xp__years {
       margin-left: auto;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-large-font-size);
       line-height: 24px;
       letter-spacing: 0.14em;
-      color: var(--color-primary-transparent-48);
+      color: var(--color-primary-transparent-60);
     }
     .xp p {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-text, "Golos Text", sans-serif);
       font-weight: 300; font-size: 16px; line-height: 24px;
       color: var(--color-primary-transparent-87);
       max-width: 720px;
     }
     .xp p + p { margin-top: 8px; }
+    .xp ul {
+      list-style: disc; margin: 8px 0 0; padding-left: 20px; max-width: 720px;
+    }
+    .xp li {
+      font-family: var(--font-text, "Golos Text", sans-serif);
+      font-weight: 300; font-size: 16px; line-height: 24px;
+      color: var(--color-primary-transparent-87);
+    }
+    .xp li + li { margin-top: 4px; }
 
     /* Tools — chip groups */
-    .tools-group { padding: 14px 0; border-top: 1px solid var(--color-primary-transparent-16); }
-    .tools-group:first-child { border-top: none; padding-top: 0; }
+    .tools-group { padding: 14px 0; }
+    .tools-group:first-child { padding-top: 0; }
     .tools-group__label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Rubik", sans-serif);
       font-weight: 500;
       font-size: var(--text-label-medium-font-size);
       line-height: var(--text-label-medium-line-height);
@@ -265,71 +624,120 @@
 
     @media (max-width: 900px) {
       .info-section { grid-template-columns: 1fr; }
-      /* Hero aside drops below the title at full width instead of a narrow side column */
-      .hero__aside {
-        width: 100%; align-self: stretch; margin-top: 4px;
-      }
-      /* Projects stack; drop the staggered offset on the even cards */
+      /* the right-column alignment folds away — subhead and stats go full width */
+      .hero__sub, .hero__arrow-link { margin-left: 0; }
+      /* Projects stack; both staggered offsets drop */
       .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid { gap: 20px; }
+      .projects-grid > .project-card:nth-child(odd),
       .projects-grid > .project-card:nth-child(even) { top: 0; }
+      /* the stagger's compensating margin goes with it: in one column the
+         cards are evenly spaced already */
+      .projects-grid > .project-card:nth-child(3) { margin-top: 0; }
     }
 
     @media (max-width: 600px) {
       .main { padding: 8px; }
-      .hero { padding: 24px 0 0; gap: 16px; }
-      .info-section { padding: 40px 12px; gap: 20px; }
+      .hero { padding: 76px 0 0; gap: 16px; }
+      .info-section { padding: 40px 4px; gap: 20px; }   /* 8px .main + 4px = 12px, flush with the header gutter */
       .project-card__head { padding: 20px 16px 0; }
-      .project-card__stage { height: 420px; }
-      .footer { padding: 32px 12px 48px; }
+      /* The phone is the point of the card on a narrow screen — the copy is
+         short and the device is the only thing that shows real work. At 280px
+         it stands 607px tall (360/780), so the stage has to clear 24 + 607. */
+      .project-card__stage { height: 660px; }
+      .project-card__device { width: 280px; max-width: 280px; }
     }
 
-    /* ── Footer ── */
+    /* ── Footer — a big closing sign-off; contacts already live in the header ── */
     .footer {
-      display: flex; align-items: baseline; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
-      padding: 40px 20px 56px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+      padding: 96px 20px 56px;
     }
-    .footer__note {
-      font-family: "Archivo", sans-serif;
-      font-weight: 300; font-size: 16px; line-height: 24px;
-      color: var(--color-primary-transparent-60);
-    }
-    .footer__links { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
-    .footer__mail {
-      font-family: "Archivo", sans-serif;
-      font-weight: 500; font-size: 16px; line-height: 24px;
+    .footer__big {
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-weight: 900;
+      font-size: clamp(34px, 4.6vw, 64px);
+      line-height: 1.0; letter-spacing: -0.025em;
       color: var(--color-primary-transparent-87);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .footer__big:hover { color: var(--color-accent-orange); }
+    /* hand-drawn arrow after the CTA — inherits colour, so it turns orange on hover */
+    .footer__arrow {
+      display: inline-block;
+      width: 0.92em; height: auto;
+      vertical-align: middle;   /* centred on the middle of the "Let’s talk" line */
+      margin-left: 0.12em;
+    }
+    .footer__colophon {
+      font-family: var(--font-display, "Rubik", sans-serif);
+      font-weight: 500; font-size: 14px; line-height: 20px;
+      letter-spacing: 0.02em;
+      color: var(--color-primary-transparent-60);
+      text-align: right;
+      /* sink it a step below the CTA's baseline, into the bottom padding —
+         a quiet signature line, not a peer of "Let's talk" (transform, so
+         the flex row's wrap behaviour on narrow screens is untouched) */
+      transform: translateY(36px);
+    }
+
+    /* ── Footer, narrow screens ──────────────────────────────────────────
+       This block has to sit AFTER the rules above, not in the page's earlier
+       @media: same specificity, so source order decides, and the earlier one
+       simply lost. Stacked, the footer is a different composition from the
+       desktop row — the signature is no longer a right-hand column, so it
+       stops behaving like one. */
+    @media (max-width: 600px) {
+      .footer { padding: 40px 12px 44px; gap: 14px; }
+      .footer__big {
+        /* small enough that the arrow stays on the line with the last word
+           instead of dropping below it on its own */
+        font-size: clamp(26px, 8vw, 34px);
+      }
+      .footer__colophon {
+        text-align: left;
+        transform: translateY(10px);   /* the desktop row's baseline sink does not apply, but it still sits a touch low */
+        max-width: 30ch;   /* keeps the line breaks off awkward words */
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- The guide buddy's drawing — hidden master copy that
+       scripts/scroll-buddy.js clones for the scroll runner. Inline (never
+       fetched) so the runner starts without waiting on a request. The
+       drawing is a static copy of SPRITE in scripts/guide-buddy.js. -->
+  <div id="gb-sprite-src" hidden><svg viewBox="0 0 124 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="gb__figure"><g class="gb__leg gb__leg--back"><path class="gb__fA" d="M21.5 104.5L24 97C36.6667 96.6667 61 104.5 61 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M63.998 137H58.498C59.6647 120.167 60.798 82 55.998 64" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M68.7505 115.952L63.2053 110.317C68.6636 98.8821 86.6978 80.7647 47.9473 61" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__leg gb__leg--front"><path class="gb__fA" d="M71.5 130L64.5 133.5C65.8333 118.167 64.9 83.5 50.5 67.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(8 0)" d="M31.5 133L35 136.5C38.6667 121.333 45.5 87.9 43.5 69.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M38.9365 126.627L31.1244 126.158C39.9457 113.545 56.4708 83.0564 52 62" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__arm gb__arm--front"><g class="gb__fA" transform="translate(10 8)"><path d="M83.7192 47C85.8859 56.5 93.7192 74.6 107.719 71C121.719 67.4 119.553 42.1667 116.719 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__hand"><path d="M116.719 30L110.719 23.5M116.719 30V14M116.719 30L122.219 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g></g><path class="gb__fD" transform="translate(8.5 8)" d="M83.2334 43.5788C80.3598 52.8894 78.0937 72.4811 92.018 76.3634C105.942 80.2458 116.683 57.3097 120.312 45.3564M120.312 45.3564L118.366 36.7272M120.312 45.3564L128.312 31.5M120.312 45.3564L131.075 37.7141" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><path class="gb__head" transform="translate(13 2) scale(1.15)" d="M8.71 24.14C7.03 27.37 7.51 30.43 7.39 33.5C7.28 36.57 8.34 39.7 8.01 42.56C7.68 45.42 6.17 47.91 5.38 50.65C4.6 53.39 3.65 56.12 3.28 58.98C2.91 61.84 2.68 64.92 3.17 67.79C3.66 70.67 4.96 73.44 6.25 76.24C7.53 79.03 9.03 81.88 10.88 84.55C12.72 87.22 14.76 90.12 17.31 92.28C19.85 94.44 22.95 96.31 26.17 97.5C29.39 98.7 33.01 99.05 36.62 99.45C40.24 99.86 44.04 100 47.87 99.93C51.69 99.86 55.89 100.07 59.59 99.02C63.29 97.97 67.06 96.08 70.04 93.62C73.01 91.16 75.32 87.64 77.44 84.27C79.56 80.89 81.27 77.11 82.74 73.36C84.21 69.61 85.52 65.67 86.28 61.77C87.03 57.86 87.96 53.7 87.28 49.94C86.6 46.18 84.28 42.5 82.2 39.21C80.12 35.92 77 33.18 74.79 30.21C72.58 27.23 70.63 24.25 68.95 21.35C67.27 18.46 66.6 15.28 64.73 12.85C62.85 10.42 60.24 8.39 57.69 6.78C55.14 5.17 52.29 3.79 49.43 3.2C46.56 2.6 43.4 2.79 40.51 3.2C37.62 3.62 34.8 4.71 32.08 5.66C29.35 6.61 26.59 7.47 24.15 8.88C21.72 10.3 20.04 11.61 17.46 14.15C14.89 16.69 10.39 20.92 8.71 24.14Z" fill="var(--color-accent-orange, #8B5CF6)"><animate attributeName="d" dur="10s" repeatCount="indefinite" calcMode="linear" values="M8.71 24.14C7.03 27.37 7.51 30.43 7.39 33.5C7.28 36.57 8.34 39.7 8.01 42.56C7.68 45.42 6.17 47.91 5.38 50.65C4.6 53.39 3.65 56.12 3.28 58.98C2.91 61.84 2.68 64.92 3.17 67.79C3.66 70.67 4.96 73.44 6.25 76.24C7.53 79.03 9.03 81.88 10.88 84.55C12.72 87.22 14.76 90.12 17.31 92.28C19.85 94.44 22.95 96.31 26.17 97.5C29.39 98.7 33.01 99.05 36.62 99.45C40.24 99.86 44.04 100 47.87 99.93C51.69 99.86 55.89 100.07 59.59 99.02C63.29 97.97 67.06 96.08 70.04 93.62C73.01 91.16 75.32 87.64 77.44 84.27C79.56 80.89 81.27 77.11 82.74 73.36C84.21 69.61 85.52 65.67 86.28 61.77C87.03 57.86 87.96 53.7 87.28 49.94C86.6 46.18 84.28 42.5 82.2 39.21C80.12 35.92 77 33.18 74.79 30.21C72.58 27.23 70.63 24.25 68.95 21.35C67.27 18.46 66.6 15.28 64.73 12.85C62.85 10.42 60.24 8.39 57.69 6.78C55.14 5.17 52.29 3.79 49.43 3.2C46.56 2.6 43.4 2.79 40.51 3.2C37.62 3.62 34.8 4.71 32.08 5.66C29.35 6.61 26.59 7.47 24.15 8.88C21.72 10.3 20.04 11.61 17.46 14.15C14.89 16.69 10.39 20.92 8.71 24.14Z;M7.24 20.62C5.56 23.49 4.81 28.26 4.34 32.11C3.87 35.95 4.8 40.1 4.42 43.7C4.03 47.3 2.53 50.42 2.05 53.69C1.56 56.96 1.19 60.2 1.52 63.34C1.84 66.48 2.7 69.71 3.99 72.51C5.27 75.31 7.31 77.81 9.23 80.14C11.16 82.46 13.3 84.56 15.52 86.46C17.74 88.35 20.05 90.16 22.55 91.52C25.05 92.87 27.78 93.87 30.51 94.59C33.24 95.31 36.06 95.61 38.92 95.85C41.79 96.08 44.76 96.22 47.69 96.01C50.63 95.81 53.74 95.6 56.55 94.61C59.35 93.63 61.98 91.92 64.52 90.1C67.07 88.28 69.45 86.04 71.83 83.71C74.2 81.38 76.61 78.91 78.77 76.12C80.93 73.32 83.21 70.26 84.78 66.93C86.35 63.59 88.04 59.75 88.19 56.1C88.33 52.46 86.97 48.66 85.67 45.08C84.37 41.49 82.09 38.17 80.38 34.57C78.67 30.98 76.95 27.22 75.42 23.52C73.88 19.82 73.21 15.66 71.15 12.38C69.1 9.1 66.15 6.13 63.08 3.83C60.01 1.54 56.36 -0.43 52.73 -1.39C49.1 -2.34 44.99 -2.37 41.28 -1.89C37.58 -1.4 33.87 0.06 30.51 1.5C27.14 2.94 23.78 4.53 21.1 6.76C18.42 8.99 16.72 12.56 14.41 14.87C12.1 17.18 8.91 17.75 7.24 20.62Z;M13.58 17.27C12.24 20.19 9.57 23.81 8.16 27.41C6.75 31.01 6.59 35.2 5.13 38.88C3.67 42.56 0.78 45.8 -0.62 49.49C-2.02 53.18 -3.19 57.13 -3.26 61C-3.33 64.87 -2.41 69.08 -1.04 72.71C0.32 76.35 2.55 79.83 4.94 82.83C7.32 85.83 10.26 88.5 13.26 90.7C16.27 92.9 19.65 94.69 22.99 96.02C26.32 97.34 29.9 98.09 33.27 98.65C36.65 99.21 40.01 99.56 43.24 99.37C46.47 99.19 49.8 98.7 52.66 97.54C55.53 96.37 58.21 94.47 60.42 92.39C62.63 90.3 64.05 87.33 65.93 85.01C67.8 82.7 69.74 80.61 71.67 78.49C73.6 76.37 75.71 74.52 77.53 72.3C79.35 70.08 81.34 67.78 82.6 65.18C83.85 62.57 85.01 59.52 85.05 56.67C85.09 53.82 83.83 50.92 82.82 48.07C81.82 45.22 80.15 42.62 79.02 39.56C77.89 36.49 76.79 33.23 76.02 29.7C75.25 26.17 75.58 21.96 74.38 18.38C73.19 14.8 71.25 11.21 68.84 8.23C66.44 5.24 63.33 2.35 59.96 0.48C56.6 -1.4 52.53 -2.58 48.65 -3.01C44.76 -3.44 40.58 -2.88 36.66 -2.1C32.74 -1.32 28.53 -0.33 25.12 1.67C21.71 3.67 18.12 7.29 16.2 9.89C14.27 12.49 14.92 14.36 13.58 17.27Z;M17.33 21.13C15.97 24.42 14.4 26.26 13.21 29.06C12.03 31.87 11.89 35.07 10.23 37.93C8.58 40.78 5.25 43.15 3.29 46.19C1.33 49.22 -0.66 52.59 -1.53 56.14C-2.4 59.69 -2.46 63.76 -1.93 67.49C-1.4 71.22 -0.07 75.04 1.65 78.51C3.37 81.99 5.7 85.41 8.38 88.36C11.05 91.32 14.27 94.07 17.69 96.24C21.11 98.41 25.02 100.09 28.88 101.36C32.73 102.63 36.83 103.65 40.82 103.88C44.8 104.11 49.09 103.89 52.81 102.76C56.53 101.63 60.16 99.54 63.12 97.09C66.07 94.64 68.21 91.05 70.53 88.04C72.84 85.03 75.04 82.01 77 79.04C78.96 76.07 80.84 73.24 82.27 70.24C83.7 67.23 85.04 64.14 85.6 61.01C86.15 57.87 86.4 54.42 85.59 51.42C84.78 48.43 82.55 45.61 80.75 43.03C78.96 40.45 76.5 38.38 74.83 35.94C73.16 33.49 71.66 31.09 70.73 28.38C69.8 25.67 70.2 22.43 69.26 19.67C68.32 16.91 66.9 14.18 65.11 11.81C63.32 9.45 61.07 7.08 58.53 5.48C55.98 3.87 52.9 2.76 49.84 2.18C46.78 1.6 43.47 1.75 40.17 2C36.88 2.24 33.21 2.46 30.07 3.67C26.93 4.89 23.47 6.39 21.35 9.29C19.22 12.2 18.69 17.83 17.33 21.13Z;M10.09 25.16C8.43 28.43 8.9 31.39 8.72 34.38C8.55 37.38 9.51 40.4 9.03 43.11C8.54 45.82 6.8 48.1 5.82 50.66C4.84 53.23 3.67 55.77 3.13 58.48C2.58 61.2 2.21 64.14 2.57 66.93C2.94 69.72 4.1 72.44 5.32 75.21C6.53 77.99 8.02 80.85 9.88 83.57C11.74 86.3 13.86 89.27 16.5 91.55C19.14 93.83 22.37 95.87 25.72 97.26C29.07 98.66 32.85 99.31 36.62 99.91C40.38 100.51 44.38 100.85 48.33 100.87C52.28 100.88 56.58 101.06 60.33 99.99C64.07 98.92 67.81 96.95 70.8 94.44C73.79 91.94 76.13 88.42 78.24 84.98C80.35 81.55 82.04 77.69 83.45 73.83C84.86 69.97 86.07 65.87 86.7 61.83C87.33 57.78 88.05 53.44 87.23 49.56C86.4 45.67 83.94 41.87 81.75 38.51C79.57 35.15 76.39 32.38 74.14 29.41C71.9 26.45 69.92 23.53 68.28 20.73C66.65 17.92 66.08 14.87 64.33 12.57C62.58 10.26 60.16 8.39 57.78 6.92C55.39 5.45 52.73 4.22 50.03 3.74C47.32 3.26 44.32 3.55 41.55 4.03C38.77 4.5 36.05 5.65 33.37 6.6C30.69 7.54 27.93 8.36 25.48 9.72C23.02 11.08 21.2 12.17 18.64 14.74C16.07 17.31 11.74 21.89 10.09 25.16Z;M2.78 21.95C1.22 24.86 0.9 29.61 0.72 33.35C0.55 37.08 1.64 40.83 1.71 44.38C1.79 47.93 1.23 51.39 1.15 54.63C1.07 57.88 0.96 60.92 1.24 63.85C1.51 66.77 1.67 69.64 2.8 72.18C3.92 74.71 6.14 76.85 8 79.08C9.86 81.31 11.82 83.48 13.95 85.57C16.08 87.65 18.19 90.07 20.8 91.59C23.41 93.11 26.53 94.31 29.62 94.69C32.71 95.07 36.11 94.01 39.32 93.87C42.54 93.73 45.55 93.49 48.91 93.83C52.28 94.17 56.09 95.94 59.52 95.94C62.95 95.93 66.96 95.53 69.49 93.78C72.02 92.04 73.32 88.61 74.72 85.47C76.11 82.32 76.86 78.54 77.85 74.91C78.84 71.29 79.79 67.51 80.66 63.7C81.54 59.89 83.26 55.9 83.12 52.04C82.98 48.19 81.32 44.24 79.81 40.58C78.29 36.93 75.69 33.67 74.02 30.1C72.35 26.53 71.16 22.68 69.78 19.14C68.4 15.61 67.78 11.76 65.76 8.9C63.73 6.04 60.63 3.71 57.64 1.98C54.65 0.25 51.23 -1.13 47.8 -1.5C44.38 -1.87 40.54 -1.15 37.08 -0.24C33.61 0.67 30.2 2.4 26.99 3.97C23.78 5.54 20.62 7.21 17.8 9.19C14.98 11.18 12.59 13.75 10.09 15.88C7.59 18 4.34 19.04 2.78 21.95Z;M5.9 18.14C4.7 21.06 2.65 24.75 1.71 28.28C0.78 31.8 0.97 35.53 0.29 39.29C-0.38 43.04 -1.69 46.99 -2.33 50.81C-2.96 54.63 -3.53 58.49 -3.5 62.21C-3.47 65.93 -3.4 69.75 -2.13 73.11C-0.86 76.47 1.76 79.48 4.13 82.36C6.49 85.24 9.18 88 12.04 90.42C14.91 92.83 17.91 95.42 21.32 96.85C24.72 98.29 28.72 99.16 32.47 99.04C36.22 98.91 40.23 97.05 43.81 96.13C47.38 95.21 50.58 93.99 53.92 93.52C57.27 93.04 60.84 93.97 63.89 93.28C66.93 92.59 70.35 91.57 72.19 89.4C74.04 87.23 74.4 83.47 74.95 80.26C75.51 77.05 75.29 73.42 75.52 70.14C75.75 66.85 75.95 63.68 76.35 60.55C76.75 57.41 78.17 54.33 77.94 51.31C77.71 48.29 76.19 45.3 74.98 42.42C73.76 39.54 71.71 37.07 70.67 34.02C69.62 30.98 69.3 27.53 68.71 24.15C68.13 20.77 68.42 16.85 67.14 13.74C65.87 10.63 63.52 7.8 61.07 5.48C58.61 3.15 55.63 0.94 52.4 -0.23C49.16 -1.39 45.33 -1.62 41.66 -1.5C37.99 -1.39 34.15 -0.5 30.39 0.46C26.63 1.42 22.7 2.57 19.12 4.28C15.54 5.99 11.12 8.41 8.91 10.72C6.71 13.03 7.1 15.21 5.9 18.14Z;M10.93 21.02C9.65 24.28 8.52 26.25 7.71 29.05C6.91 31.85 7.09 34.82 6.1 37.83C5.11 40.84 3.06 43.86 1.78 47.11C0.5 50.37 -0.91 53.8 -1.59 57.35C-2.26 60.89 -2.83 64.79 -2.28 68.38C-1.73 71.97 -0.01 75.49 1.74 78.91C3.49 82.32 5.66 85.78 8.22 88.85C10.77 91.93 13.68 95.19 17.08 97.35C20.48 99.51 24.6 101.15 28.63 101.81C32.65 102.46 37.1 101.69 41.23 101.27C45.35 100.84 49.4 99.96 53.37 99.25C57.34 98.55 61.54 98.49 65.04 97.04C68.55 95.59 72.13 93.43 74.42 90.55C76.7 87.68 77.77 83.49 78.76 79.79C79.75 76.09 79.99 72.06 80.35 68.37C80.7 64.69 80.84 61.1 80.88 57.69C80.92 54.28 81.49 50.93 80.6 47.91C79.71 44.88 77.39 42.08 75.52 39.52C73.65 36.97 70.96 35.03 69.38 32.59C67.8 30.15 66.86 27.56 66.04 24.89C65.21 22.23 65.5 19.11 64.42 16.59C63.34 14.07 61.5 11.77 59.55 9.78C57.61 7.78 55.32 5.78 52.75 4.6C50.19 3.41 47.15 2.91 44.17 2.67C41.18 2.42 38.04 2.77 34.83 3.15C31.61 3.52 28.14 3.87 24.89 4.92C21.65 5.98 17.69 6.78 15.36 9.46C13.04 12.15 12.2 17.75 10.93 21.02Z;M8.71 24.14C7.03 27.37 7.51 30.43 7.39 33.5C7.28 36.57 8.34 39.7 8.01 42.56C7.68 45.42 6.17 47.91 5.38 50.65C4.6 53.39 3.65 56.12 3.28 58.98C2.91 61.84 2.68 64.92 3.17 67.79C3.66 70.67 4.96 73.44 6.25 76.24C7.53 79.03 9.03 81.88 10.88 84.55C12.72 87.22 14.76 90.12 17.31 92.28C19.85 94.44 22.95 96.31 26.17 97.5C29.39 98.7 33.01 99.05 36.62 99.45C40.24 99.86 44.04 100 47.87 99.93C51.69 99.86 55.89 100.07 59.59 99.02C63.29 97.97 67.06 96.08 70.04 93.62C73.01 91.16 75.32 87.64 77.44 84.27C79.56 80.89 81.27 77.11 82.74 73.36C84.21 69.61 85.52 65.67 86.28 61.77C87.03 57.86 87.96 53.7 87.28 49.94C86.6 46.18 84.28 42.5 82.2 39.21C80.12 35.92 77 33.18 74.79 30.21C72.58 27.23 70.63 24.25 68.95 21.35C67.27 18.46 66.6 15.28 64.73 12.85C62.85 10.42 60.24 8.39 57.69 6.78C55.14 5.17 52.29 3.79 49.43 3.2C46.56 2.6 43.4 2.79 40.51 3.2C37.62 3.62 34.8 4.71 32.08 5.66C29.35 6.61 26.59 7.47 24.15 8.88C21.72 10.3 20.04 11.61 17.46 14.15C14.89 16.69 10.39 20.92 8.71 24.14Z"/></path><g class="gb__arm gb__arm--back"><path class="gb__fA" d="M32.219 50.4999C25.3857 44.9999 10.419 35.7999 5.21901 42.9999C0.0190084 50.1999 1.38567 64.9999 2.71901 71.4999M2.71901 71.4999L8.21924 82.9999M2.71901 71.4999L8.21924 69.9999M2.71901 71.4999V81.9999" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fB" transform="translate(0 0)" d="M25.5 57.5L7.79032 84M1.5 92L7.79032 84M1.5 84H7.79032M7.79032 84L6 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fD" transform="translate(-1.5 0)" d="M31.6752 44.7846C23.0073 43.4381 5.4458 42.954 4.54247 51.7894C3.63913 60.6248 12.2227 72.7586 16.6274 77.7211M16.6274 77.7211L27.1407 84.9303M16.6274 77.7211L20.6407 73.672M16.6274 77.7211L21.8774 86.8144" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__arm gb__arm--front"><path class="gb__fB" transform="translate(20 0)" d="M82.5 57.5L100.2 84M106.5 92L100.2 84M106.5 84H100.2M100.2 84L102 94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path class="gb__fC" transform="translate(99.5 -3.5)" d="M1.50016 1.50024C2.18488 5.60853 2.93211 10.8004 3.59203 16.5002C5.82351 35.7738 7.05685 60.8565 1.50016 69.5002M3.59203 16.5002C5.72805 13.8336 12.4999 13.5002 8.00029 22.5002" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g><g class="gb__face gb__face--A"><path class="gb__mouth gb__mouth--a" d="M64 50C64.3333 51.3333 66.3 54 69.5 54C72.7 54 74.5 51.3333 75 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--al"><mask id="gb-eye-al" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="48" y="23" width="22" height="22"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-al)"><circle cx="59" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="57" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="60" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--ar"><mask id="gb-eye-ar" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="68" y="23" width="22" height="22"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-ar)"><circle cx="79" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil"><circle cx="81" cy="35" r="6" fill="currentColor"/><circle cx="77" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="80" cy="35" r="1" fill="var(--color-constant-primary)"/></g></g></g></g><g class="gb__face gb__face--B" transform="translate(8 0)"><path class="gb__mouth gb__mouth--b" d="M46 50C46.3333 51.3333 48.3 54 51.5 54C54.7 54 56.5 51.3333 57 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="gb__eye gb__eye--bl"><mask id="gb-eye-bl" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="30" y="23" width="22" height="22"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-bl)"><circle cx="41" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="41" cy="35" r="6" fill="currentColor"/><circle cx="39" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="42" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="43.5" cy="31" r="6" fill="currentColor"/><circle cx="41.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="44.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g><g class="gb__eye gb__eye--br"><mask id="gb-eye-br" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="50" y="23" width="22" height="22"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/></mask><g mask="url(#gb-eye-br)"><circle cx="61" cy="34" r="11" fill="var(--color-constant-primary)"/><g class="gb__pupil gb__pupil--rest"><circle cx="61" cy="35" r="6" fill="currentColor"/><circle cx="59" cy="33" r="2" fill="var(--color-constant-primary)"/><circle cx="62" cy="35" r="1" fill="var(--color-constant-primary)"/></g><g class="gb__pupil gb__pupil--up"><circle cx="63.5" cy="31" r="6" fill="currentColor"/><circle cx="61.5" cy="29" r="2" fill="var(--color-constant-primary)"/><circle cx="64.5" cy="31" r="1" fill="var(--color-constant-primary)"/></g></g></g></g><g class="gb__face gb__face--laugh" transform="translate(8 0)"><path d="M34 36 Q41 27 48 36" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M54 36 Q61 27 68 36" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path transform="translate(42.5 47) scale(0.9)" d="M1 0.5C8 0.5 16 1.5 20 3.5C21 5 21 7 19.5 8.5C16 11 12 12 9.5 11.5C6.5 11 4 8.5 2.5 5.5C1.5 3.5 0.5 1.5 1 0.5Z" fill="var(--color-constant-transparent-87)"/></g></g></svg></div>
+
+  <!-- Static grain over the flat dark; sits at z-index -1 -->
+  <div class="bg-grain" aria-hidden="true"></div>
+
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__identity" href="index.html">
-        <img class="site-header__avatar" src="assets/me.png" alt="" />
+        <img class="site-header__avatar" src="assets/me.png" alt="" width="88" height="88" />
         <span class="site-header__name">Vasilisa Medvedeva</span>
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
           <a class="menu-item__trigger" href="index.html#projects">My projects</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="home.html">Pyroblast</a>
             <a class="menu-item__link" href="nomerogram.html">Nomerogram</a>
-            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
             <a class="menu-item__link" href="dromfines.html">Drom Fines</a>
+            <a class="menu-item__link" href="home.html">Pyroblast</a>
+            <a class="menu-item__link" href="drompdd.html">Drom PDD</a>
           </div>
         </div>
       </nav>
@@ -345,20 +753,55 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title">Hi! I&#8217;ve been working <span class="hero__nowrap">as a product</span> designer <span class="hero__nowrap">for four years.</span></h1>
-      <div class="hero__aside">
-        <p>I create scalable, flexible interfaces that simplify user experiences and help businesses grow &mdash; balancing UX, business goals, and technical constraints.</p>
-        <p>I rapidly test hypotheses and run user interviews to uncover the root causes of behavior, turning insights into clear, valuable solutions.</p>
-        <img class="hero__arrow" src="assets/arrow-down-doodle.svg" alt="" aria-hidden="true" />
-      </div>
+      <p class="hero__meta" data-ru="Лимассол, Кипр">Limassol, Cyprus</p>
+      <h1 class="hero__title" data-ru="Привет! Я&amp;nbsp;проектирую мобильные продукты&lt;br /&gt;для миллионов пользователей">Hi! I&nbsp;design mobile products<br />used by&nbsp;millions of&nbsp;users</h1>
+      <p class="hero__sub" data-ru="Проверяю гипотезы с&nbsp;реальными пользователями, собираю рабочие прототипы с&nbsp;помощью ИИ-инструментов и&nbsp;выпускаю решения, которые двигают метрики">I&nbsp;test hypotheses with real users, build working prototypes with&nbsp;AI&nbsp;tools, and&nbsp;ship fixes that move metrics</p>
+      <a class="hero__arrow-link" href="#projects" aria-label="Scroll to the projects" data-ru-aria="К проектам"><svg class="hero__arrow" viewBox="0 0 56 96" fill="none" aria-hidden="true"><path d="M29.5 3.5C26.6 18 31.4 40 27.8 68C27.3 72.8 27 77.5 27.4 84.5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M27.4 85.5C22.2 77.9 17.4 72.6 12.6 68.8" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M27.4 85.5C32.8 78.4 38 73.2 43.2 69.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></a>
+
     </section>
 
     <div class="projects-grid" id="projects">
+      <!-- Nomerogram — vehicle check by license plate -->
+      <a class="project-card" href="nomerogram.html">
+        <div class="project-card__head">
+          <span class="project-card__name" data-ru="Номерограм">Nomerogram</span>
+          <span class="project-card__desc" data-ru="Проверка истории продаж и&amp;nbsp;фотографий автомобиля по&amp;nbsp;госномеру. Вела поиск, историю и&amp;nbsp;загрузку фотографий на&amp;nbsp;iOS и&amp;nbsp;Android; онбординг почти удвоил число загрузок.">Check a&nbsp;car&#8217;s sale history and&nbsp;photos by&nbsp;its license plate. I owned the&nbsp;search, history and&nbsp;photo contribution flows on&nbsp;iOS and&nbsp;Android; onboarding nearly doubled photo uploads.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip" data-ru="Загрузки фото ×2">Photo uploads &times;2</span>
+            <span class="meta-chip" data-ru="Инсайт: дело было не&amp;nbsp;в&amp;nbsp;кнопке">Insight: it&nbsp;wasn&#8217;t the&nbsp;button</span>
+          </div>
+        </div>
+        <div class="project-card__stage">
+          <div class="project-card__device">
+            <iframe src="flows/nomerogram-scan.html?embed=1" title="Nomerogram — plate scan flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
+      </a>
+
+      <!-- Drom Fines — traffic fines check & payment -->
+      <a class="project-card" href="dromfines.html">
+        <div class="project-card__head">
+          <span class="project-card__name" data-ru="Дром Штрафы">Drom Fines</span>
+          <span class="project-card__desc" data-ru="Проверка и&amp;nbsp;оплата штрафов ГИБДД по&amp;nbsp;официальной базе. Переработала оплату, регистрацию и&amp;nbsp;онбординг; конверсия в&amp;nbsp;оплату выросла вдвое.">Check and&nbsp;pay traffic fines through the&nbsp;official government database. I redesigned payments, registration and&nbsp;onboarding; payment conversion doubled.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip" data-ru="Конверсия в&amp;nbsp;оплату ×2">Payment conversion &times;2</span>
+            <span class="meta-chip" data-ru="+16% регистраций">+16% sign-ups</span>
+          </div>
+        </div>
+        <div class="project-card__stage">
+          <div class="project-card__device">
+            <iframe src="flows/dromfines-payment.html?embed=1" title="Drom Fines — Payment flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
+      </a>
+
       <!-- Pyroblast — messenger for gamers -->
       <a class="project-card" href="home.html">
         <div class="project-card__head">
           <span class="project-card__name">Pyroblast</span>
-          <span class="project-card__desc">A messenger for gamers: chats, channels and streams in one place. Designed solo: the design system, the core messaging experience, and every flow as a live prototype.</span>
+          <span class="project-card__desc" data-ru="Мессенджер для&amp;nbsp;геймеров: чаты, каналы и&amp;nbsp;стримы в&amp;nbsp;одном месте. Спроектировала и&amp;nbsp;задокументировала в&amp;nbsp;одиночку: библиотека компонентов с&amp;nbsp;токенами, состояниями, анимацией и&amp;nbsp;требованиями доступности.">A messenger for&nbsp;gamers: chats, channels and&nbsp;streams in&nbsp;one place. Designed and&nbsp;documented solo: a&nbsp;component library with&nbsp;tokens, states, motion and&nbsp;accessibility specs.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip" data-ru="Дизайн-система">Design system</span>
+            <span class="meta-chip" data-ru="Проект с&amp;nbsp;нуля">Project from&nbsp;scratch</span>
+          </div>
         </div>
         <div class="project-card__stage">
           <div class="project-card__device">
@@ -366,124 +809,113 @@
           </div>        </div>
       </a>
 
-      <!-- Nomerogram — vehicle check by license plate -->
-      <a class="project-card" href="nomerogram.html">
-        <div class="project-card__head">
-          <span class="project-card__name">Nomerogram</span>
-          <span class="project-card__desc">Check a car&#8217;s sale history and photos by its license plate. I owned the search, history and photo contribution flows on iOS and Android; onboarding nearly doubled photo uploads.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">UX research</span>
-            <span class="meta-chip">3 case studies</span>
-          </span>
-        </div>
-        <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/nomerogram/search-history.png" alt="Nomerogram app screens" loading="lazy" />        </div>
-      </a>
-
       <!-- Drom PDD — driving theory exam prep -->
       <a class="project-card" href="drompdd.html">
         <div class="project-card__head">
-          <span class="project-card__name">Drom PDD</span>
-          <span class="project-card__desc">An app for learning traffic rules and passing the driving theory exam, with 10M+ downloads. I redesigned the home screen into a scalable layout and shipped dark mode as part of the design system.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">Redesign</span>
-            <span class="meta-chip">Dark mode</span>
-            <span class="meta-chip">10M+ downloads</span>
-          </span>
+          <span class="project-card__name" data-ru="Дром ПДД">Drom PDD</span>
+          <span class="project-card__desc" data-ru="Приложение для&amp;nbsp;изучения ПДД и&amp;nbsp;сдачи теории, 10 млн+ загрузок. Перестроила главный экран в&amp;nbsp;масштабируемую сетку и&amp;nbsp;выпустила тёмную тему как часть дизайн-системы.">An app for&nbsp;learning traffic rules and&nbsp;passing the&nbsp;driving theory exam, with&nbsp;10M+ downloads. I redesigned the&nbsp;home screen into&nbsp;a&nbsp;scalable layout and&nbsp;shipped dark mode as&nbsp;part of&nbsp;the&nbsp;design system.</span>
+          <div class="project-card__pills">
+            <span class="meta-chip" data-ru="10 млн+ загрузок">10M+ downloads</span>
+            <span class="meta-chip" data-ru="60% выбрали тёмную тему">60% chose dark mode</span>
+          </div>
         </div>
         <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/drompdd/redesign.png" alt="Drom PDD app screens" loading="lazy" />        </div>
-      </a>
-
-      <!-- Drom Fines — traffic fines check & payment -->
-      <a class="project-card" href="dromfines.html">
-        <div class="project-card__head">
-          <span class="project-card__name">Drom Fines</span>
-          <span class="project-card__desc">Check and pay traffic fines through the official government database. I redesigned payments, registration and onboarding; payment conversion doubled and fines revenue grew 5&times;.</span>
-          <span class="project-card__meta">
-            <span class="meta-chip meta-chip--accent">iOS / Android</span>
-            <span class="meta-chip">Payments UX</span>
-            <span class="meta-chip">Lottie onboarding</span>
-            <span class="meta-chip">2&times; payment conversion</span>
-          </span>
-        </div>
-        <div class="project-card__stage">
-          <img class="project-card__cover" src="assets/dromfines/payment.png" alt="Drom Fines app screens" loading="lazy" />        </div>
+          <div class="project-card__device">
+            <iframe src="flows/drompdd-paid.html?embed=1" title="Drom PDD — paid content flow preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+          </div>        </div>
       </a>
 
     </div>
 
     <!-- ── Work Experience ── -->
     <section class="info-section" id="experience">
-      <h2 class="section-title">Work Experience</h2>
+      <h2 class="section-title" data-ru="Опыт работы">Work Experience</h2>
       <div class="info-section__body">
         <article class="xp">
           <div class="xp__head">
+            <span class="xp__company" data-ru="Фриланс">Freelance</span>
+            <span class="xp__role" data-ru="Дизайнер">Designer</span>
+            <span class="xp__years" data-ru="2024 – настоящее время">2024&#8202;&#8211;&#8202;Present</span>
+          </div>
+          <ul>
+            <li data-ru="Перешла на&amp;nbsp;AI-native процесс: синтез ресёрча и&amp;nbsp;концепты с&amp;nbsp;Claude, рабочие прототипы на&amp;nbsp;Claude Code.">Moved to&nbsp;an&nbsp;AI-native process: research synthesis and&nbsp;concepts with&nbsp;Claude, working prototypes built in&nbsp;Claude Code.</li>
+            <li data-ru="Дизайн полным циклом: лендинги, меню, айдентика.">Full-cycle design: landing pages, menus, identity.</li>
+            <li data-ru="Настольная игра — 100 карт, весь арт в&amp;nbsp;Midjourney в&amp;nbsp;едином стиле.">A board game &mdash; 100 cards art-directed in&nbsp;Midjourney, one style throughout.</li>
+          </ul>
+        </article>
+        <article class="xp">
+          <div class="xp__head">
             <span class="xp__company">Pyroblast</span>
-            <span class="xp__role">Product Designer</span>
+            <span class="xp__role" data-ru="Продуктовый дизайнер">Product Designer</span>
             <span class="xp__years">2023&#8202;&#8211;&#8202;2024</span>
           </div>
-          <p>Developed a messenger for gamers (desktop, iOS, Android) from scratch. Conducted user research, built prototypes, tested hypotheses, and was responsible for UX/UI and the design system. Set up Scrum processes within the team, including planning, stand-ups, and task estimation. Coordinated team work and helped prioritize features to ensure consistent product delivery.</p>
+          <ul>
+            <li data-ru="Вела дизайн кроссплатформенного мессенджера для&amp;nbsp;геймеров (десктоп, iOS, Android).">Led design of&nbsp;a&nbsp;cross-platform messenger start-up for&nbsp;gamers (desktop, iOS, Android).</li>
+            <li data-ru="Отвечала за&amp;nbsp;исследования, сценарии, прототипы и&amp;nbsp;UI — от&amp;nbsp;начала до&amp;nbsp;конца.">Owned research, UX flows, prototyping, and&nbsp;UI end to&nbsp;end.</li>
+            <li data-ru="Внедрила лёгкие практики Scrum для&amp;nbsp;связки дизайна и&amp;nbsp;разработки.">Introduced lightweight Scrum practices for&nbsp;design&#8211;engineering collaboration.</li>
+          </ul>
         </article>
         <article class="xp">
           <div class="xp__head">
             <span class="xp__company">Drom</span>
-            <span class="xp__role">Product Designer (iOS and Android)</span>
+            <span class="xp__role" data-ru="Продуктовый дизайнер (iOS и&amp;nbsp;Android)">Product Designer (iOS and&nbsp;Android)</span>
             <span class="xp__years">2019&#8202;&#8211;&#8202;2022</span>
           </div>
-          <p>Worked on an application for driving theory learning and exam preparation. Redesigned the main screen from a static layout into a scrollable, modular one, opening the app up to new sections and cross-promo. The PDD app consistently ranked among the top positions on Google Play and reached over 10 million downloads.</p>
-          <p>Also worked on a traffic fines payment app. After the payment and registration redesign, payment conversion doubled and fines revenue grew 5&times;; an A/B-tested onboarding brought 16% more registrations.</p>
-          <p>At Nomerogram, an app for checking a car&#8217;s history by its license plate, I owned the search, history and photo contribution flows. A redesigned photo upload onboarding nearly doubled the number of uploaded photos.</p>
+          <ul>
+            <li data-ru="Большой опыт работы в&amp;nbsp;кросс-функциональных командах с&amp;nbsp;продактами, аналитиками, разработчиками и&amp;nbsp;QA.">Extensive experience collaborating in&nbsp;cross-functional teams with&nbsp;PMs, analysts, engineers, and&nbsp;QA.</li>
+            <li data-ru="Вела дизайн трёх приложений с&amp;nbsp;10 млн+ загрузок.">Owned the&nbsp;design of&nbsp;3 applications with&nbsp;10M+ downloads.</li>
+            <li data-ru="Удвоила конверсию в&amp;nbsp;оплату: нашла и&amp;nbsp;переработала критичные места сценария через&amp;nbsp;анализ поведения и&amp;nbsp;юзабилити-тесты.">Doubled payment conversion by&nbsp;identifying and&nbsp;redesigning critical user flow issues through behavioral analysis and&nbsp;usability testing.</li>
+            <li data-ru="Почти удвоила число загруженных фотографий, переработав онбординг загрузки: переходы на&amp;nbsp;экран выросли на&amp;nbsp;27%.">Nearly doubled photo submissions by&nbsp;redesigning the&nbsp;photo-upload onboarding flow, increasing visits to&nbsp;the&nbsp;upload screen by&nbsp;27%.</li>
+            <li data-ru="Ускорила эксперименты на&amp;nbsp;главном экране: перестроила архитектуру в&amp;nbsp;модульную систему, и&amp;nbsp;команда стала запускать A/B-тесты с&amp;nbsp;каждым релизом.">Enabled faster experimentation on&nbsp;the&nbsp;main app screen by&nbsp;redesigning the&nbsp;architecture into&nbsp;a&nbsp;modular system, allowing the&nbsp;team to&nbsp;launch A/B tests with&nbsp;every release.</li>
+          </ul>
         </article>
         <article class="xp">
           <div class="xp__head">
             <span class="xp__company">DankoLab</span>
-            <span class="xp__role">Web Designer</span>
+            <span class="xp__role" data-ru="Веб-дизайнер">Web Designer</span>
             <span class="xp__years">2019</span>
           </div>
-          <p>Designed user interfaces for web products.</p>
+          <p data-ru="Проектировала интерфейсы веб-продуктов.">Designed user interfaces for&nbsp;web products.</p>
         </article>
       </div>
     </section>
 
-    <!-- ── Education ── -->
-    <section class="info-section" id="education">
-      <h2 class="section-title">Education</h2>
+    <!-- ── Bit About Me ── -->
+    <section class="info-section" id="about">
+      <div>
+        <h2 class="section-title" data-ru="Немного о&amp;nbsp;себе">Bit About Me</h2>
+      </div>
       <div class="info-section__body">
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">NSU CADE</span>
-            <span class="xp__role">Graphic Designer in Advertising</span>
-            <span class="xp__years">2021</span>
+        <p data-ru="Слушаю лекции по&amp;nbsp;истории и&amp;nbsp;искусству и&amp;nbsp;люблю&amp;nbsp;писать&amp;nbsp;акварелью. Мне&amp;nbsp;важно&amp;nbsp;двигаться: недавно пробежала свой&amp;nbsp;первый полумарафон, хожу в&amp;nbsp;походы и&amp;nbsp;люблю выбираться на&amp;nbsp;природу. Ещё состою в&amp;nbsp;двух книжных клубах, играю в&amp;nbsp;покер и&amp;nbsp;давно&amp;nbsp;люблю&amp;nbsp;Dungeons&amp;nbsp;&amp;amp;&amp;nbsp;Dragons.">I enjoy listening to&nbsp;lectures on&nbsp;history and&nbsp;art, and&nbsp;I love painting with watercolors. Staying active is&nbsp;important&nbsp;to&nbsp;me. I recently ran my&nbsp;first half marathon, and&nbsp;I&nbsp;enjoy hiking and&nbsp;exploring the&nbsp;outdoors. I&#8217;m also part of&nbsp;two book clubs, love playing poker, and&nbsp;have been a big fan of Dungeons &amp; Dragons.</p>
+        <p data-ru="Больше меня — в &lt;a href=&quot;https://instagram.com/va.shamina&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Instagram&lt;/a&gt;.">More of&nbsp;me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>.</p>
+
+        <div class="guess" id="guess">
+          <p class="guess__intro" data-ru="Две правды и&amp;nbsp;ложь. Угадаете, что неправда?">Two truths and&nbsp;a&nbsp;lie. Can you spot the&nbsp;false one?</p>
+          <div class="guess__options">
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span data-ru="Я была вегетарианкой от&amp;nbsp;рождения и&amp;nbsp;до&amp;nbsp;18 лет.">I was vegetarian from&nbsp;birth until I was 18 years old.</span>
+            </button>
+            <button class="guess__option" type="button">
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span data-ru="У&amp;nbsp;меня были две козы, и&amp;nbsp;они были парой.">I had two female goats who were a&nbsp;couple.</span>
+            </button>
+            <button class="guess__option" type="button" data-lie>
+              <span class="guess__mark" aria-hidden="true"><img src="assets/guess-circle.svg" alt="" /></span>
+              <span data-ru="Я росла с&amp;nbsp;пятью сёстрами.">I grew up&nbsp;with&nbsp;five sisters.</span>
+            </button>
           </div>
-          <p>Novosibirsk State University Center for Professional Education.</p>
-        </article>
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">NSPU</span>
-            <span class="xp__role">Bachelor&#8217;s degree</span>
-            <span class="xp__years">2018</span>
-          </div>
-          <p>Novosibirsk State Pedagogical University. Developmental and Child Psychologist specializing in Special Education.</p>
-        </article>
-        <article class="xp">
-          <div class="xp__head">
-            <span class="xp__company">Courses</span>
-          </div>
-          <p>Bang Bang Education — Design Systems, 2023.</p>
-          <p>WDI — Web design intensive, 2019.</p>
-        </article>
+          <p class="guess__result" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 
     <!-- ── Tools ── -->
     <section class="info-section" id="tools">
-      <h2 class="section-title">Tools</h2>
+      <h2 class="section-title" data-ru="Инструменты">Tools</h2>
       <div class="info-section__body">
         <div class="tools-group">
-          <div class="tools-group__label">Design and Systems</div>
+          <div class="tools-group__label" data-ru="Дизайн и&amp;nbsp;системы">Design and&nbsp;Systems</div>
           <div class="tools-group__chips">
             <span class="meta-chip">Figma</span>
             <span class="meta-chip">Tokens Studio</span>
@@ -492,8 +924,9 @@
           </div>
         </div>
         <div class="tools-group">
-          <div class="tools-group__label">Prototyping and Animation</div>
+          <div class="tools-group__label" data-ru="Прототипы и&amp;nbsp;анимация">Prototyping and&nbsp;Animation</div>
           <div class="tools-group__chips">
+            <span class="meta-chip">Claude Code</span>
             <span class="meta-chip">Principle</span>
             <span class="meta-chip">ProtoPie</span>
             <span class="meta-chip">Lottie</span>
@@ -501,22 +934,25 @@
           </div>
         </div>
         <div class="tools-group">
-          <div class="tools-group__label">Research and Testing</div>
+          <div class="tools-group__label" data-ru="Исследования и&amp;nbsp;тесты">Research and&nbsp;Testing</div>
           <div class="tools-group__chips">
             <span class="meta-chip">Maze</span>
             <span class="meta-chip">Miro</span>
           </div>
         </div>
         <div class="tools-group">
-          <div class="tools-group__label">Collaboration and Documentation</div>
+          <div class="tools-group__label" data-ru="Совместная работа и&amp;nbsp;документация">Collaboration and&nbsp;Documentation</div>
           <div class="tools-group__chips">
+            <span class="meta-chip">Jira</span>
             <span class="meta-chip">Confluence</span>
           </div>
         </div>
         <div class="tools-group">
-          <div class="tools-group__label">AI Tools</div>
+          <div class="tools-group__label" data-ru="ИИ-инструменты">AI Tools</div>
           <div class="tools-group__chips">
             <span class="meta-chip">Claude</span>
+            <span class="meta-chip">Claude Code</span>
+            <span class="meta-chip">Midjourney</span>
             <span class="meta-chip">ChatGPT</span>
             <span class="meta-chip">Figma Make</span>
           </div>
@@ -524,33 +960,50 @@
       </div>
     </section>
 
-    <!-- ── Bit About Me ── -->
-    <section class="info-section" id="about">
-      <h2 class="section-title">Bit About Me</h2>
+    <!-- ── Education ── -->
+    <section class="info-section" id="education">
+      <h2 class="section-title" data-ru="Образование">Education</h2>
       <div class="info-section__body">
-        <p>I enjoy listening to lectures on history and art, and I love painting with watercolors. Staying active is important to me — I play tennis and recently ran my first half marathon. For the past couple of years, I&#8217;ve also been a big fan of Dungeons &amp; Dragons.</p>
-        <p>More of me on <a href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a> and <a href="https://www.behance.net/vasilisameba82" target="_blank" rel="noopener">Behance</a>.</p>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company" data-ru="НГУ, ЦДО">NSU CADE</span>
+            <span class="xp__role" data-ru="Графический дизайнер в&amp;nbsp;рекламе">Graphic Designer in&nbsp;Advertising</span>
+            <span class="xp__years">2021</span>
+          </div>
+          <p data-ru="Центр дополнительного профессионального образования НГУ.">Novosibirsk State University Center for&nbsp;Professional Education.</p>
+        </article>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company" data-ru="НГПУ">NSPU</span>
+            <span class="xp__role" data-ru="Бакалавриат">Bachelor&#8217;s degree</span>
+            <span class="xp__years">2018</span>
+          </div>
+          <p data-ru="Новосибирский государственный педагогический университет. Специальный психолог: возрастная и&amp;nbsp;детская психология.">Novosibirsk State Pedagogical University. Developmental and&nbsp;Child Psychologist specializing in&nbsp;Special Education.</p>
+        </article>
+        <article class="xp">
+          <div class="xp__head">
+            <span class="xp__company" data-ru="Курсы">Courses</span>
+          </div>
+          <p data-ru="Bang Bang Education — «Дизайн-системы», 2023.">Bang Bang Education — Design Systems, 2023.</p>
+          <p data-ru="WDI — интенсив по&amp;nbsp;веб-дизайну, 2019.">WDI — Web design intensive, 2019.</p>
+        </article>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span class="footer__note">Want the full story behind a project? Say hi.</span>
-    <span class="footer__links">
-      <a class="footer__mail" href="https://t.me/vamedvedeva" target="_blank" rel="noopener">Telegram</a>
-      <a class="footer__mail" href="https://www.linkedin.com/in/vas-medvedeva/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="footer__mail" href="https://instagram.com/va.shamina" target="_blank" rel="noopener">Instagram</a>
-      <a class="footer__mail" href="https://www.behance.net/vasilisameba82" target="_blank" rel="noopener">Behance</a>
-      <a class="footer__mail" href="mailto:medvedeva_vas@icloud.com">medvedeva_vas@icloud.com</a>
-    </span>
+    <a class="footer__big" href="https://t.me/vamedvedeva" target="_blank" rel="noopener" data-ru="Давайте поговорим&amp;nbsp;&lt;svg class=&quot;footer__arrow&quot; viewBox=&quot;0 0 52 26&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M3 13.4C13 12.6 27 13 48 13&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;">Let&#8217;s talk&nbsp;<svg class="footer__arrow" viewBox="0 0 52 26" fill="none" aria-hidden="true"><path d="M3 13.4C13 12.6 27 13 48 13" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M37 4.5C41.5 8 45 10.8 49 13.2C45 15.6 41.5 18.4 37.2 22" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <span class="footer__colophon" data-ru="© 2026 Василиса Медведева">© 2026 Vasilisa Medvedeva</span>
   </footer>
 
   <script>
     // Always open at the top on reload — otherwise the browser restores the
     // previous scroll position and hides the 10px top offset.
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+    // behavior:'instant' matters — the page sets scroll-behavior:smooth, and a
+    // plain scrollTo would visibly animate the reset on every reload
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.addEventListener('load', function () { window.scrollTo({ top: 0, behavior: 'instant' }); });
 
     // Scale the embedded flow (natural 360px wide) to fill its device frame
     function fitFlows() {
@@ -560,6 +1013,29 @@
     }
     window.addEventListener('load', fitFlows);
     window.addEventListener('resize', fitFlows);
+
+    // App-style loading skeleton for the embedded flows: the iframes are
+    // lazy and can land well after the card is on screen — hold each phone
+    // with a shimmering skeleton until its flow document actually arrives.
+    (function () {
+      document.querySelectorAll('.project-card__device').forEach(function (device) {
+        var frame = device.querySelector('iframe');
+        if (!frame) return;
+        var cover = document.createElement('div');
+        cover.className = 'device-skeleton';
+        cover.setAttribute('aria-hidden', 'true');
+        cover.innerHTML = '<i></i><i></i><i></i><i></i><i></i>';
+        device.appendChild(cover);
+        function ready () {
+          // the initial about:blank also fires load — only dismiss for the real flow
+          try { if (frame.contentDocument && frame.contentDocument.location.href === 'about:blank') return; } catch (e) {}
+          device.classList.add('is-loaded');
+        }
+        frame.addEventListener('load', ready);
+        // a cached flow can finish before this script runs
+        try { if (frame.contentDocument && frame.contentDocument.readyState === 'complete') ready(); } catch (e) {}
+      });
+    })();
 
     // Play the card's embedded flow demo only while the card is hovered; reset on leave.
     (function () {
@@ -574,34 +1050,115 @@
       });
     })();
 
-    // Reveal cards as they scroll into view (staggered)
+    // Touch devices (no hover): autoplay each card's flow once it scrolls into view,
+    // since mouseenter never fires. CSS-only flows (e.g. nomerogram) already loop on load.
     (function () {
-      var cards = document.querySelectorAll('.project-card');
-      function reveal (el, delay) { setTimeout(function () { el.classList.add('is-revealed'); }, delay || 0); }
-      if (!('IntersectionObserver' in window)) {
-        cards.forEach(function (c) { reveal(c); });
-        return;
+      if (!(window.matchMedia && window.matchMedia('(hover: none)').matches)) return;
+      if (!('IntersectionObserver' in window)) return;
+      function tryPlay (iframe, tries) {
+        try {
+          var w = iframe.contentWindow;
+          if (w && typeof w.playDemo === 'function') { w.playDemo(); return; }
+        } catch (e) {}
+        if (tries > 0) setTimeout(function () { tryPlay(iframe, tries - 1); }, 200);
       }
       var io = new IntersectionObserver(function (entries) {
-        var shown = 0;
         entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          reveal(e.target, shown * 110);
-          shown++;
-          io.unobserve(e.target);
+          if (!e.isIntersecting || e.target.__demoStarted) return;
+          e.target.__demoStarted = true;
+          var iframe = e.target.querySelector('.project-card__device iframe');
+          if (iframe) { tryPlay(iframe, 25); }   // retry ~5s to cover lazy-load + flow init
         });
-      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-      var initial = 0;
-      cards.forEach(function (c) {
-        if (c.getBoundingClientRect().top < window.innerHeight) {
-          reveal(c, initial * 110);
-          initial++;
-        } else {
-          io.observe(c);
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.project-card').forEach(function (card) { io.observe(card); });
+    })();
+
+    // Two truths and a lie — reveal the false fact on click
+    (function () {
+      var game = document.getElementById('guess');
+      if (!game) return;
+      var options = Array.prototype.slice.call(game.querySelectorAll('.guess__option'));
+      var result = game.querySelector('.guess__result');
+      // Reserve the hint's height up front (invisible), so revealing it never
+      // pushes the layout below — nothing jumps when the answer is picked.
+      var SAY = {
+        en: {
+          right: 'Correct! I actually grew up with three sisters, not five. I really was a lifelong vegetarian and my goats really were a couple.',
+          wrong: 'Nope, that one’s true! The lie is the five sisters. I grew up with three. The vegetarian years and the goat couple are both real.'
+        },
+        ru: {
+          right: 'Верно! Сестёр у меня три, а не пять. Вегетарианкой я правда была всю жизнь до 18, и козы правда были парой.',
+          wrong: 'А вот и нет, это правда! Ложь — про пять сестёр: их у меня три. Вегетарианство и пара коз — всё настоящее.'
         }
+      };
+      function say (key) { return SAY[(typeof window.lang === 'function' ? window.lang() : 'en')][key]; }
+      function reserveResult () { result.textContent = say('wrong'); result.setAttribute('aria-hidden', 'true'); result.classList.remove('is-shown'); }
+      reserveResult();
+      /* keep the reserved height and any shown answer in the reader's language */
+      document.addEventListener('langchange', function () {
+        if (game.classList.contains('is-done')) result.innerHTML = say(game.dataset.gotIt === '1' ? 'right' : 'wrong');
+        else reserveResult();
+      });
+      // black mark icons (renamed from Group 13/14/15): empty circle → tick / cross
+      var ICON = { empty: 'assets/guess-circle.svg', tick: 'assets/guess-tick.svg', cross: 'assets/guess-cross.svg' };
+      function setIcon (o, name) { var img = o.querySelector('.guess__mark img'); if (img) img.src = ICON[name]; }
+
+      function pick (chosen) {
+        if (game.classList.contains('is-done')) return;
+        game.classList.add('is-done');
+        var gotIt = chosen.hasAttribute('data-lie');
+
+        options.forEach(function (o) {
+          o.disabled = true;
+          if (o.hasAttribute('data-lie')) {
+            o.classList.add('is-lie');
+            setIcon(o, 'tick');
+          } else if (o === chosen) {
+            o.classList.add('is-missed');
+            setIcon(o, 'cross');
+          } else {
+            o.classList.add('is-truth');
+          }
+        });
+
+        game.dataset.gotIt = gotIt ? '1' : '0';
+        result.innerHTML = say(gotIt ? 'right' : 'wrong');
+        result.removeAttribute('aria-hidden');
+        result.classList.add('is-shown');
+      }
+
+      options.forEach(function (o) {
+        o.addEventListener('click', function () { pick(o); });
       });
     })();
+
   </script>
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=8"></script>
+  <script src="scripts/analytics.js?v=2"></script>
+  <script src="scripts/poster-fit.js?v=5"></script>
+  <!-- Guide buddy is off for now. He builds his own chip and runs his own
+       tour, so hiding him in CSS would leave both running; the switch is
+       this line. Uncomment to bring him back — the theme still keeps
+       his eyes working on the dark page. -->
+  <!-- <script src="scripts/guide-buddy.js"></script> -->
+  <script src="scripts/i18n.js"></script>
+  <script src="scripts/scroll-buddy.js?v=7"></script>
+  <script>
+    // Guide buddy tour — the stickman runs along the bottom edge and points
+    // at each stop. Edit the steps freely: target is any CSS selector,
+    // say is the bubble line, hold is how long he stays (ms).
+    // Auto-plays once per session; the bottom-right chip replays it.
+    // id names the stop in the GA4 reports (guide_tour_step / guide_tour_stop).
+    // The buddy script is commented out above; the guard keeps this page
+    // error-free until he's invited back.
+    window.GuideBuddy && GuideBuddy.setTour([
+      { id: 'hero',       target: '.hero__circle',                                    say: '5+ years in. The receipts are further down.',       sayRu: '5+ лет в профессии. Доказательства — ниже.',            hold: 3200 },
+      { id: 'nomerogram', target: '#projects .project-card:nth-child(1)',             say: 'Photo uploads doubled — and it wasn’t the button.',   sayRu: 'Загрузок фото стало вдвое больше — и дело не в кнопке.',  hold: 3400 },
+      { id: 'prototype',  target: '#projects .project-card:nth-child(3) .project-card__pills', say: 'Every case opens with a prototype you can actually tap.', sayRu: 'Каждый кейс открывается прототипом, его можно потыкать.', hold: 3600 },
+      { id: 'experience', target: '#experience',                                      say: 'Three apps at Drom. 10M+ downloads between them.',    sayRu: 'Три приложения в Дроме. 10 млн+ загрузок на всех.',       hold: 3400 },
+      { id: 'quiz',       target: '#guess',                                           say: 'One of these three is false. Your move.',             sayRu: 'Одно из трёх — неправда. Ваш ход.',                      hold: 3400 },
+      { id: 'footer',     target: '.footer__big',                                     say: 'That’s everything. My Telegram’s one tap away.',       sayRu: 'Это всё. Телеграм — в одно касание.',                    hold: 3400 }
+    ], { auto: true, delay: 1600 });
+  </script>
 </body>
 </html>

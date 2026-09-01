@@ -24,6 +24,9 @@
 |---|---|
 | off / unchecked | `t-ring` visible; all other layers hidden |
 | on / checked | `t-fill` + `t-border` + `t-mark` visible; `t-ring` hidden |
+| ⚠️ State missing: pressed | Not defined in Figma. Suggested: thumb/mark scales down slightly while held. Confirm or describe. |
+| ⚠️ State missing: disabled | Not defined in Figma. Suggested: reduce opacity to 38%, no interaction. Confirm or describe. |
+| ⚠️ State missing: focus | Not defined in Figma. Suggested: 2px focus ring (`--color-brand-yellow-secondary`) for keyboard navigation. Confirm or describe. |
 
 ## Tokens
 | Token | Role in this component |

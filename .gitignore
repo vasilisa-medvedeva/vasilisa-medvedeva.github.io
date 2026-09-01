@@ -3,3 +3,15 @@
 
 # Claude Code local files
 .claude/
+
+# Raw source media / stray captures — kept local, not part of the site
+*.MOV
+*.mov
+IMG_*.PNG
+IMG_*.png
+IMG_*.jpg
+Screenshot *.png
+ScreenRecording*
+
+# Local symlink to a neighbouring project — breaks the Pages build if committed
+.spotware-preview

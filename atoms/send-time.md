@@ -48,5 +48,5 @@
 - Minimum contrast: `rgba(0,0,0,0.48)` on white/yellow bubble backgrounds meets WCAG AA for non-UI text at 12px.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

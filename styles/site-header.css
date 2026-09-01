@@ -28,28 +28,50 @@
   color: inherit;
   border-radius: 30px;
 }
+/* One number drives the avatar and the hover ring behind it. They drifted apart
+   once already: the ring is a fixed circle sitting behind the photo, so growing
+   the photo to the ring's own size hid the hover completely. */
+.site-header {
+  --avatar-size: 44px;
+  --avatar-ring: 4px;   /* accent visible around the photo on hover */
+}
 .site-header__avatar {
-  width: 36px;
-  height: 36px;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
   border-radius: 50%;
   object-fit: cover;
   border: 2.5px solid var(--color-primary-transparent-87);
   display: block;
 }
 .site-header__name {
-  font-family: "Archivo", sans-serif;
-  font-weight: 700;
+  /* Same voice as the menu items beside it: the family always matched, but 700
+     with negative tracking against their 500 with positive read as a different
+     typeface altogether. Only the size still sets the name apart. */
+  font-family: var(--font-display, "Archivo", sans-serif);
+  font-weight: 500;
   font-size: 18px;
   line-height: 19px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
   color: var(--color-primary-transparent-87);
   white-space: nowrap;
 }
-/* Hover/press feedback — grey pill behind the whole area (negative margins keep
-   the 60px header height: the padding grows inward, not outward) */
-.site-header__identity { padding: 4px 12px 4px 4px; margin: -4px -12px -4px -4px; }
-.site-header__identity:hover  { background: var(--color-primary-transparent-04); }
-.site-header__identity:active { background: var(--color-primary-transparent-08); }
+/* Hover/press feedback — an orange circle behind the round avatar, matching the
+   circular hover on the nav items (negative margins keep the 60px header height) */
+.site-header__identity {
+  position: relative; z-index: 0;
+  padding: var(--avatar-ring) 12px var(--avatar-ring) var(--avatar-ring);
+  margin: calc(-1 * var(--avatar-ring)) -12px calc(-1 * var(--avatar-ring)) calc(-1 * var(--avatar-ring));
+}
+.site-header__identity::before {
+  content: "";
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: calc(var(--avatar-size) + var(--avatar-ring) * 2);
+  height: calc(var(--avatar-size) + var(--avatar-ring) * 2);
+  border-radius: 50%;
+  z-index: -1;
+}
+.site-header__identity:hover::before  { background: var(--color-accent-orange); }
+.site-header__identity:active::before { background: var(--color-accent-orange-pressed); }
 .site-header__identity:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -66,23 +88,44 @@
   align-items: center;
   gap: 4px;
 }
+/* One tracking for every control in the bar — name, menu, links, CV, language.
+   Set here rather than on the home page so the case pages' headers read the
+   same; they were a step apart while the home page styled its own. */
+.site-header__name,
+.menu-item__trigger,
+.menu-item__link,
+.site-header__link,
+.site-header__cv,
+.lang-switch__btn { letter-spacing: 0.02em; }
+
 .menu-item { position: relative; }
 .menu-item__trigger {
   display: inline-flex;
   align-items: center;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
   font-size: 15px;
   line-height: 20px;
   color: var(--color-primary-transparent-87);
   text-decoration: none;
   padding: 8px 10px;
-  border-radius: 30px;
   white-space: nowrap;
+  /* round hover: a true circle behind the label, as wide as the button itself —
+     it spills out of the 60px header and gets cropped by the top of the screen */
+  position: relative;
+  z-index: 0;
 }
-.menu-item:hover .menu-item__trigger,
-.menu-item:focus-within .menu-item__trigger { background: var(--color-primary-transparent-04); }
-.menu-item__trigger:active { background: var(--color-primary-transparent-08); }
+.menu-item__trigger::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.menu-item:hover .menu-item__trigger::before,
+.menu-item:focus-within .menu-item__trigger::before { background: var(--color-accent-orange); }
+.menu-item__trigger:active::before { background: var(--color-accent-orange-pressed); }
 .menu-item__trigger:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -125,7 +168,7 @@
               visibility 0s;
 }
 .menu-item__link {
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
   font-size: 15px;
   line-height: 20px;
@@ -141,7 +184,10 @@
   outline-offset: -2px;
 }
 /* Narrow screens: the centred menu would collide with identity/contacts */
-@media (max-width: 920px) {
+/* The language switch joined this row, so both collapse points moved out by
+   its width: the sections nav folds away at 980 and the contacts row at 700,
+   which is where each one starts to crowd the Russian name (the longer one). */
+@media (max-width: 980px) {
   .site-header__menu { display: none; }
 }
 
@@ -150,21 +196,40 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  /* The sections nav is absolutely centred, so the row can't rely on
+     space-between to pin the contacts right — once the language switch
+     joined as a third child, space-between parked them over the nav. */
+  margin-left: auto;
 }
 .site-header__link {
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500;
+  /* contacts are utilities, not navigation — a step smaller and dimmer so
+     About me / My projects read as the page's only nav */
+  /* Matches .menu-item__trigger. The contacts used to run a pixel smaller,
+     which read as a hierarchy that is not there — CV, Telegram, LinkedIn and
+     Email are peers of the section menu, not a footnote to it. */
   font-size: 15px;
   line-height: 20px;
-  color: var(--color-primary-transparent-87);
+  color: var(--color-primary-transparent-60);
   text-decoration: none;
   text-underline-offset: 3px;
   padding: 8px 10px;
-  border-radius: 30px;
   white-space: nowrap;
+  /* round hover: a true circle, as wide as the link (see .menu-item__trigger) */
+  position: relative;
+  z-index: 0;
 }
-.site-header__link:hover  { background: var(--color-primary-transparent-04); }
-.site-header__link:active { background: var(--color-primary-transparent-08); }
+.site-header__link::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.site-header__link:hover::before  { background: var(--color-accent-orange); }
+.site-header__link:active::before { background: var(--color-accent-orange-pressed); }
 .site-header__link:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -174,9 +239,12 @@
    hidden on desktop, revealed on phones in place of the contact links. ── */
 .site-header__mobile { display: none; }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .site-header__inner { gap: 8px; padding: 10px 12px; }
   .site-header__links { display: none; }         /* contacts move into the panel */
+  /* with the contacts gone the row is down to three, and space-between would
+     strand the switch in the middle — keep it beside the CV and the burger */
+  .lang-switch { margin-left: auto; }
   .site-header__mobile {
     display: inline-flex;
     align-items: center;
@@ -191,21 +259,35 @@
   }
 }
 
-/* CV — kept visible as the primary recruiter action (yellow pill) */
+/* CV — kept visible as the primary recruiter action, plain text like the desktop links */
 .site-header__cv {
   display: inline-flex; align-items: center;
-  font-family: "Archivo", sans-serif;
-  font-weight: 700; font-size: 14px; line-height: 20px;
+  font-family: var(--font-display, "Archivo", sans-serif);
+  font-weight: 500; font-size: 15px; line-height: 20px;
   color: var(--color-primary-transparent-87);
   text-decoration: none;
-  padding: 7px 14px;
-  border-radius: var(--radius-full, 9999px);
-  background: var(--color-brand-yellow-primary);
+  padding: 7px 10px;
   white-space: nowrap;
+  /* round hover: a true circle, as wide as the link (see .site-header__link) */
+  position: relative;
+  z-index: 0;
 }
-.site-header__cv:active { opacity: 0.8; }
+.site-header__cv::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 100%; aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+.site-header__cv:hover::before  { background: var(--color-accent-orange); }
+.site-header__cv:active::before { background: var(--color-accent-orange-pressed); }
+.site-header__cv:focus-visible {
+  outline: 2px solid var(--color-brand-yellow-secondary);
+  outline-offset: 2px;
+}
 
-/* Burger toggle */
+/* Burger toggle — already a true circle, so the hover/press fill needs no pseudo-element */
 .site-header__burger {
   all: unset;
   box-sizing: border-box;
@@ -215,7 +297,8 @@
   cursor: pointer;
   flex-shrink: 0;
 }
-.site-header__burger:active { background: var(--color-primary-transparent-08); }
+.site-header__burger:hover  { background: var(--color-accent-orange); }
+.site-header__burger:active { background: var(--color-accent-orange-pressed); }
 .site-header__burger:focus-visible {
   outline: 2px solid var(--color-brand-yellow-secondary);
   outline-offset: 2px;
@@ -260,22 +343,56 @@ body.mobile-nav-open .mobile-nav__scrim {
   padding: 76px 20px 28px;         /* clears the 60px header */
   z-index: 19;
   transform: translateY(-100%);
-  transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1);
+  /* closing: accelerate away — a menu that is done should leave briskly */
+  transition: transform 0.22s cubic-bezier(0.4, 0, 1, 1);
   max-height: 100vh; overflow-y: auto;
 }
-body.mobile-nav-open .mobile-nav { transform: translateY(0); }
+body.mobile-nav-open .mobile-nav {
+  transform: translateY(0);
+  /* opening: decelerate in, a touch longer, so the drop has weight */
+  transition: transform 0.36s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+/* ── The contents arrive behind the panel ──────────────────────────────
+   The panel alone dropping reads as one flat slab. Letting each row catch
+   up a beat later turns it into an opening: the eye follows the list down
+   in the order it will be read. The stagger exists only on the way in —
+   on the way out everything leaves together and fast, because a stagger
+   on close reads as lag, not as craft. */
+.mobile-nav__label,
+.mobile-nav__link {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+body.mobile-nav-open .mobile-nav__label,
+body.mobile-nav-open .mobile-nav__link {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.24s ease, transform 0.34s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+body.mobile-nav-open .mobile-nav > *:nth-child(1)  { transition-delay: 0.09s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(2)  { transition-delay: 0.12s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(3)  { transition-delay: 0.15s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(4)  { transition-delay: 0.18s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(5)  { transition-delay: 0.21s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(6)  { transition-delay: 0.24s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(7)  { transition-delay: 0.27s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(8)  { transition-delay: 0.30s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(9)  { transition-delay: 0.33s; }
+body.mobile-nav-open .mobile-nav > *:nth-child(n+10) { transition-delay: 0.36s; }
 
 .mobile-nav__label {
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500; font-size: 12px; line-height: 16px;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--color-primary-transparent-48);
+  color: var(--color-primary-transparent-60);
   margin: 18px 8px 4px;
 }
 .mobile-nav__label:first-child { margin-top: 0; }
 .mobile-nav__link {
   display: block;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-weight: 500; font-size: 18px; line-height: 24px;
   color: var(--color-primary-transparent-87);
   text-decoration: none;
@@ -288,7 +405,116 @@ body.mobile-nav-open .mobile-nav { transform: translateY(0); }
   padding-left: 20px;
 }
 .mobile-nav__link:active { background: var(--color-primary-transparent-04); }
+/* Opens a group where a heading used to sit — the space says "different kind
+   of thing" without spending a line of type on saying it. */
+.mobile-nav__link--group { margin-top: 34px; }
 
-@media (min-width: 601px) {
+@media (min-width: 701px) {
   .mobile-nav, .mobile-nav__scrim { display: none; }
+}
+
+/* Motion-sensitive visitors get the menu, not the choreography */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav,
+  .mobile-nav__scrim,
+  .mobile-nav__label,
+  .mobile-nav__link,
+  .site-header__burger span,
+  .site-header__burger span::before,
+  .site-header__burger span::after {
+    transition: none !important;
+    transition-delay: 0s !important;
+  }
+  .mobile-nav__label,
+  .mobile-nav__link { transform: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Lifted out of the home page's own <style> — which is exactly why every other
+   page still wore the older header. Kept at the end of the file so they keep
+   outranking the base declarations above by source order, the way they did
+   from a later stylesheet.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* The identity inherited the body face, so it sat outside the pair
+   entirely — a third typeface nobody chose. It also carried more weight
+   than the menu beside it; at this size the name does not need to shout
+   over its own navigation. */
+.site-header__identity { font-family: var(--font-display, sans-serif); font-weight: 500; }
+
+/* One ink across the header. The contact links sat at 62% and the idle
+   language at 48%, which made the right-hand half read as secondary — it
+   is not, it holds every way of reaching her. The language switch keeps
+   its state on the drawn ring, which is what that ring is for. */
+.site-header__link,
+.lang-switch__btn { color: var(--color-primary-transparent-87); }
+
+/* Hover paints the accent behind the label and leaves the label alone. It used
+   to force #FFFFFF here, a workaround for an accent that could not carry the
+   page's own ink. The accent was rechosen to be legible under that ink instead,
+   so the override is gone and a label keeps one colour in every state. */
+
+/* The dropdown rows highlight like every other control in the bar: the accent
+   behind the label, the label in white. They used to take a grey wash from the
+   ink tokens, which read as a different component.
+
+   The fill itself is not painted by the row — one .menu-item__marker slides
+   between rows (built by scripts/page-transition.js), so the highlight reads as
+   a single object travelling the list rather than four backgrounds blinking in
+   turn. The rows keep the colour change, which has to stay per-row: only the
+   one under the cursor may go white. */
+.menu-item__marker {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 0;
+  background: var(--color-accent-orange);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;                     /* under the labels, over the panel */
+  transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 140ms ease,
+              height 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.menu-item__marker.is-on { opacity: 1; }
+/* the labels have to sit above the travelling fill */
+.menu-item__link { position: relative; z-index: 1; }
+
+/* Without the script there is no marker, so the rows paint themselves — the
+   menu still highlights, it just does not slide. */
+.menu-item__link:hover { background: var(--color-accent-orange); }
+
+/* With the marker in place the row hands both jobs over to it. .is-marked, not
+   :hover, decides the white label: the panel's 8px of padding lies outside every
+   row, so a cursor resting there ends :hover while the marker stays put. */
+.has-marker .menu-item__link:hover { background: transparent; }
+
+/* The colour change is deliberately asymmetric. The block takes 260ms to cross,
+   so a label that turns white the instant the pointer arrives goes white while
+   it still sits on the bare panel — the word lights up in mid-air, ahead of its
+   own background. Arriving therefore waits 110ms and then fades over 170ms,
+   landing with the block. Leaving has no delay at all: the moment the block
+   pulls away the ink comes straight back, so no row is ever left white on the
+   panel. Same reason the two directions differ in length — catching up reads
+   as quick, being left behind reads as immediate. */
+.has-marker .menu-item__link {
+  color: var(--color-primary-transparent-87);
+  transition: color 200ms cubic-bezier(0.4, 0, 1, 1);
+}
+.has-marker .menu-item__link.is-marked {
+  color: var(--color-primary-transparent-87);
+  transition: color 170ms cubic-bezier(0, 0, 0.2, 1) 110ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-marker .menu-item__link,
+  .has-marker .menu-item__link.is-marked { transition: none; }
+}
+/* Pressed state stays a per-row paint: it is instantaneous by nature, and the
+   marker is mid-flight exactly when it would be needed. */
+.menu-item__link:active { background: var(--color-accent-orange-pressed); }
+
+/* No sliding for anyone who asked for stillness — the highlight simply appears
+   on the row under the cursor, which is what the rows did before. */
+@media (prefers-reduced-motion: reduce) {
+  .menu-item__marker { transition: none; }
 }

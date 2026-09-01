@@ -4,22 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — UI Library</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/docs-guides.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -89,7 +90,7 @@
     }
 
     .state-label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-body-small-font-size);
       font-weight: var(--text-body-small-font-weight);
       line-height: var(--text-body-small-line-height);
@@ -259,7 +260,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.4px;
@@ -308,7 +309,7 @@
       position: absolute;
       top: 14px;
       right: 16px;
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.4px;
@@ -449,7 +450,7 @@
       white-space: nowrap;
     }
 
-    /* ── ATOM: Bubble2.0 ── */
+    /* ── ATOM: Bubble ── */
     /* Speech bubble built as ONE continuous outline (a single <path>), so the
        body and the tail share one stroke — there is no seam where they meet.
        The path is regenerated from the content box size by JS (see the
@@ -1537,13 +1538,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -1729,7 +1729,7 @@
           <div class="docs__row" style="flex-direction:column; align-items:flex-start; gap:4px; border-bottom:none;">
             <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">Touch target min 44 × 44pt</span>
             <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">aria-label includes action + duration + size</span>
-            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">Error: "Download failed. Tap to retry"</span>
+            <span style="font-size:var(--text-body-small-font-size); color:var(--color-primary-transparent-60);">Error: "Download failed. Tap to&nbsp;retry"</span>
           </div>
         </div>
 
@@ -1926,7 +1926,7 @@
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Label</span>
-            <span class="docs__row-value">text token per size (see Variants)</span>
+            <span class="docs__row-value">text token per&nbsp;size (see Variants)</span>
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Spinner</span>
@@ -2045,7 +2045,7 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">40 × 40px · radius 30px · border 1.5px</span></div>
-          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24 × 24px · from icons/general (icon.meet)</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24 × 24px · from&nbsp;icons/general (icon.meet)</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -2483,13 +2483,13 @@
         <div class="docs__section">
           <div class="docs__section-title">Variants</div>
           <div class="docs__row"><span class="docs__row-label">Switch</span><span class="docs__row-value">40 × 24px pill — on/off</span></div>
-          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">24 × 24px circle — multi-select</span></div>
-          <div class="docs__row"><span class="docs__row-label">Radio</span><span class="docs__row-value">24 × 24px circle — single-select</span></div>
+          <div class="docs__row"><span class="docs__row-label">Checkbox</span><span class="docs__row-value">28 × 28px circle — multi-select</span></div>
+          <div class="docs__row"><span class="docs__row-label">Radio</span><span class="docs__row-value">28 × 28px circle — single-select</span></div>
         </div>
 
         <div class="docs__section">
           <div class="docs__section-title">States</div>
-          <div class="docs__row"><span class="docs__row-label">off / unchecked</span><span class="docs__row-value">Gray stroke circle or gray pill</span></div>
+          <div class="docs__row"><span class="docs__row-label">off / unchecked</span><span class="docs__row-value">Gray stroke circle or&nbsp;gray pill</span></div>
           <div class="docs__row"><span class="docs__row-label">on / checked</span><span class="docs__row-value">Yellow fill + white indicator</span></div>
         </div>
 
@@ -2570,7 +2570,7 @@
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Icon</span>
-            <span class="docs__row-value">24 × 24px · from icons/</span>
+            <span class="docs__row-value">24 × 24px · from&nbsp;icons/</span>
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Label</span>
@@ -2668,7 +2668,7 @@
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Icon</span>
-            <span class="docs__row-value">24 × 24px · from icons/</span>
+            <span class="docs__row-value">24 × 24px · from&nbsp;icons/</span>
           </div>
           <div class="docs__row">
             <span class="docs__row-label">Label</span>
@@ -2682,7 +2682,7 @@
 
         <div class="docs__section">
           <div class="docs__section-title">States</div>
-          <div class="docs__row"><span class="docs__row-label">Active</span><span class="docs__row-value">bg brand-red-secondary · white icon and text</span></div>
+          <div class="docs__row"><span class="docs__row-label">Active</span><span class="docs__row-value">bg brand-red-secondary · white icon and&nbsp;text</span></div>
           <div class="docs__row"><span class="docs__row-label">Inactive</span><span class="docs__row-value">bg brand-yellow-4 · border 1.5px primary-32 · grey text</span></div>
         </div>
 
@@ -2816,7 +2816,7 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Statuses</div>
-          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">no modifier</span></div>
+          <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">no&nbsp;modifier</span></div>
           <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">avatar--active · yellow ring</span></div>
           <div class="docs__row"><span class="docs__row-label">not active</span><span class="docs__row-value">avatar--not-active · opacity 0.38</span></div>
           <div class="docs__row"><span class="docs__row-label">live</span><span class="docs__row-value">avatar--live · red ring + chip</span></div>
@@ -2945,15 +2945,15 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">channel-avatar</span><span class="docs__row-value">48 × 48px · shape depends on type</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel-avatar</span><span class="docs__row-value">48 × 48px · shape depends on&nbsp;type</span></div>
           <div class="docs__row"><span class="docs__row-label">shape</span><span class="docs__row-value">channel: squircle r12 · folder: tab+body · direct: circle</span></div>
-          <div class="docs__row"><span class="docs__row-label">Live chip</span><span class="docs__row-value">baked into the live SVG (48 × 52px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">Live chip</span><span class="docs__row-value">baked into&nbsp;the&nbsp;live SVG (48 × 52px)</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Types</div>
           <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">rounded square</span></div>
-          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder shape with a tab</span></div>
+          <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder shape with&nbsp;a&nbsp;tab</span></div>
           <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">circle</span></div>
         </div>
 
@@ -3175,7 +3175,7 @@
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">inline-flex · border-radius:12px · padding:4px 6px · border:1.5px</span></div>
           <div class="docs__row"><span class="docs__row-label">number</span><span class="docs__row-value">text-label-medium-bold · 12px/700 · lh:14px · tracking:0.5px</span></div>
-          <div class="docs__row"><span class="docs__row-label">--cell</span><span class="docs__row-value">red bg · white text · px:7px · used in list rows</span></div>
+          <div class="docs__row"><span class="docs__row-label">--cell</span><span class="docs__row-value">red bg · white text · px:7px · used in&nbsp;list rows</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -3346,7 +3346,7 @@
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">flex row · gap:4px · align-center · w:318px</span></div>
           <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">icons/small/ · 16×16 · variant-specific</span></div>
           <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">Body/Small · info-secondary · forward only</span></div>
-          <div class="docs__row"><span class="docs__row-label">name</span><span class="docs__row-value">Label/Medium · primary-87 (or info-secondary for forward)</span></div>
+          <div class="docs__row"><span class="docs__row-label">name</span><span class="docs__row-value">Label/Medium · primary-87 (or&nbsp;info-secondary for&nbsp;forward)</span></div>
           <div class="docs__row"><span class="docs__row-label">verb</span><span class="docs__row-value">Body/Small · ls:-0.08px · pinned only</span></div>
         </div>
 
@@ -3411,7 +3411,7 @@
       <!-- Preview -->
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">Bubble2.0</div>
+          <div class="component-block__preview-title">Bubble</div>
           <button class="code-toggle-btn" onclick="toggleCode('bubble-2')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
@@ -3449,11 +3449,11 @@
                 <span class="state-label">1 line</span>
               </div>
               <div class="state-wrapper">
-                <div class="bubble2"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">Let's meet at noon by the main entrance.</div></div>
+                <div class="bubble2"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">Let's meet at&nbsp;noon by&nbsp;the&nbsp;main entrance.</div></div>
                 <span class="state-label">2 lines</span>
               </div>
               <div class="state-wrapper">
-                <div class="bubble2"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">The whole plan changed — we now start at nine, gather downstairs, and bring the printed tickets just in case.</div></div>
+                <div class="bubble2"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">The whole plan changed — we&nbsp;now start at&nbsp;nine, gather downstairs, and&nbsp;bring the&nbsp;printed tickets just in&nbsp;case.</div></div>
                 <span class="state-label">Many lines</span>
               </div>
             </div>
@@ -3461,7 +3461,7 @@
 
           <!-- grouped: consecutive messages from one user -->
           <div>
-            <div class="btn-size-label">Group · consecutive messages from one user</div>
+            <div class="btn-size-label">Group · consecutive messages from&nbsp;one user</div>
             <div class="component-block__states" style="align-items:flex-start; gap:48px;">
 
               <!-- sender group (right tail) -->
@@ -3469,7 +3469,7 @@
                 <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
                   <div class="bubble2 bubble2--top"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">First message</div></div>
                   <div class="bubble2 bubble2--mid"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">Another one right after</div></div>
-                  <div class="bubble2 bubble2--last"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">And the last one with a tail</div></div>
+                  <div class="bubble2 bubble2--last"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">And the&nbsp;last one with&nbsp;a&nbsp;tail</div></div>
                 </div>
                 <span class="state-label">Sender · top → mid → last</span>
               </div>
@@ -3479,7 +3479,7 @@
                 <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px;">
                   <div class="bubble2 bubble2--white bubble2--left bubble2--top"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">First message</div></div>
                   <div class="bubble2 bubble2--white bubble2--left bubble2--mid"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">Another one right after</div></div>
-                  <div class="bubble2 bubble2--white bubble2--left bubble2--last"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">And the last one with a tail</div></div>
+                  <div class="bubble2 bubble2--white bubble2--left bubble2--last"><svg class="bubble2__shape" aria-hidden="true"><path/></svg><div class="bubble2__content">And the&nbsp;last one with&nbsp;a&nbsp;tail</div></div>
                 </div>
                 <span class="state-label">Recipient · mirrored</span>
               </div>
@@ -3492,13 +3492,13 @@
 
       <!-- Docs -->
       <aside class="docs">
-        <div class="docs__name">Bubble2.0</div>
+        <div class="docs__name">Bubble</div>
         <span class="docs__type">Atom</span>
 
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">shape</span><span class="docs__row-value">one continuous path · body + tail share a 1.5px stroke</span></div>
-          <div class="docs__row"><span class="docs__row-label">tail</span><span class="docs__row-value">fixed sub-path from Union.svg · bottom corner · never deforms</span></div>
+          <div class="docs__row"><span class="docs__row-label">shape</span><span class="docs__row-value">one continuous path · body + tail share a&nbsp;1.5px stroke</span></div>
+          <div class="docs__row"><span class="docs__row-label">tail</span><span class="docs__row-value">fixed sub-path from&nbsp;Union.svg · bottom corner · never deforms</span></div>
           <div class="docs__row"><span class="docs__row-label">content</span><span class="docs__row-value">text layer · padding 10×16 · drives width & height</span></div>
         </div>
 
@@ -3539,7 +3539,7 @@
       </div>
 
     </div>
-    <!-- /Bubble2.0 -->
+    <!-- /Bubble -->
 
     <div class="section-divider"></div>
 
@@ -3633,7 +3633,7 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">recipient</span><span class="docs__row-value">time only · or Edited + time</span></div>
+          <div class="docs__row"><span class="docs__row-label">recipient</span><span class="docs__row-value">time only · or&nbsp;Edited + time</span></div>
           <div class="docs__row"><span class="docs__row-label">sender</span><span class="docs__row-value">Sending · Sent · Read · N Read (channel) · Edited — all + time</span></div>
         </div>
 
@@ -3805,7 +3805,7 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">button</span><span class="docs__row-value">32×32 · radius 18px · centred icon</span></div>
-          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">16px chevron · 1.5px stroke · flips up when open</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">16px chevron · 1.5px stroke · flips up&nbsp;when open</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -3876,9 +3876,9 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">divider</span><span class="docs__row-value">1px hairline on top · yellow/32</span></div>
+          <div class="docs__row"><span class="docs__row-label">divider</span><span class="docs__row-value">1px hairline on&nbsp;top · yellow/32</span></div>
           <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">library · tabbar/chats-default · 20px</span></div>
-          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">body-large · "N Comments" · grows to fill</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">body-large · "N Comments" · grows to&nbsp;fill</span></div>
           <div class="docs__row"><span class="docs__row-label">arrow</span><span class="docs__row-value">library · small/arrow-right · 16px</span></div>
         </div>
 
@@ -4070,7 +4070,7 @@
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Sizes</div>
           <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">16px glyph</span></div>
-          <div class="docs__row"><span class="docs__row-label">small</span><span class="docs__row-value">12px glyph · overlay on avatars</span></div>
+          <div class="docs__row"><span class="docs__row-label">small</span><span class="docs__row-value">12px glyph · overlay on&nbsp;avatars</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -4133,14 +4133,14 @@
         </div>
 
         <div style="margin-top:20px;">
-          <div class="btn-size-label">Motion — chips in a set</div>
+          <div class="btn-size-label">Motion — chips in&nbsp;a&nbsp;set</div>
           <div class="tag-chip-group" id="chipDemo" style="min-height:32px; margin-bottom:12px;">
             <div class="tag-chip tag-chip--xs"><span class="tag-chip__label">Simpson</span><button class="tag-chip__cancel" onclick="chipDemoRemove(this)" aria-label="Remove Simpson"><img src="icons/small/cancel.svg" aria-hidden="true"></button></div>
             <div class="tag-chip tag-chip--xs"><span class="tag-chip__label">Erin Botosh</span><button class="tag-chip__cancel" onclick="chipDemoRemove(this)" aria-label="Remove Erin Botosh"><img src="icons/small/cancel.svg" aria-hidden="true"></button></div>
             <div class="tag-chip tag-chip--xs"><span class="tag-chip__label">Makenna</span><button class="tag-chip__cancel" onclick="chipDemoRemove(this)" aria-label="Remove Makenna"><img src="icons/small/cancel.svg" aria-hidden="true"></button></div>
           </div>
           <button onclick="chipDemoAdd()" style="all:unset; cursor:pointer; display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:20px; border:1.5px dashed var(--color-primary-transparent-32); font-family:var(--text-label-medium-font-family),sans-serif; font-size:var(--text-label-medium-font-size); color:var(--color-primary-transparent-60);">+ Add chip</button>
-          <span class="state-label" style="display:block; margin-top:8px;">Tap × to remove — the following chips slide over to fill the gap.</span>
+          <span class="state-label" style="display:block; margin-top:8px;">Tap × to&nbsp;remove — the&nbsp;following chips slide over&nbsp;to&nbsp;fill the&nbsp;gap.</span>
         </div>
         <script>
           (function () {
@@ -4245,8 +4245,8 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Usage</div>
-          <div class="docs__row"><span class="docs__row-label">chats list</span><span class="docs__row-value">replaces the unread counter while a meet is live</span></div>
-          <div class="docs__row"><span class="docs__row-label">channel avatar</span><span class="docs__row-value">baked into the live SVG (48 × 52px)</span></div>
+          <div class="docs__row"><span class="docs__row-label">chats list</span><span class="docs__row-value">replaces the&nbsp;unread counter while a&nbsp;meet is&nbsp;live</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel avatar</span><span class="docs__row-value">baked into&nbsp;the&nbsp;live SVG (48 × 52px)</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -4406,6 +4406,7 @@
   </main>
 
   <script src="scripts/nav.js"></script>
+  <script src="scripts/docs-guides.js"></script>
   <script>
     // Toggle interactivity (Switch, Checkbox, Radio, PhotoPlaceholder checkbox)
     document.querySelectorAll('.switch, .toggle-cb, .toggle-radio, .photo-placeholder__checkbox').forEach(function(el) {
@@ -4473,7 +4474,7 @@
   </script>
 
   <script>
-    /* Bubble2.0 — generate one continuous outline from the content size.
+    /* Bubble — generate one continuous outline from the content size.
        The tail is a fixed relative sub-path extracted from Union.svg, dropped
        in at the bottom corner so it never deforms regardless of bubble size. */
     (function () {
@@ -4560,6 +4561,6 @@
     })();
   </script>
 
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
 </body>
 </html>

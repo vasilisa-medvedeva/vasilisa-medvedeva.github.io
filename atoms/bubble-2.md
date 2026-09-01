@@ -1,4 +1,4 @@
-# Bubble2.0
+# Bubble
 
 > A chat message bubble drawn as one continuous outline so the body and tail never seam; its width and height follow the content while the tail keeps a fixed shape.
 
@@ -52,7 +52,6 @@ Stack the bubbles in a flex column with a 2px gap, aligned to the tail side
 | Token | Role in this component |
 |---|---|
 | `--color-brand-yellow-16` | Body fill (yellow) |
-| `--color-brand-yellow-32` | Body stroke (yellow) |
 | `--color-brand-yellow-32` | Body stroke (sender / yellow) |
 | `--color-brand-yellow-24` | Body stroke (recipient / white) |
 | `--color-constant-primary` | Body fill (white variant) |
@@ -73,5 +72,5 @@ Stack the bubbles in a flex column with a 2px gap, aligned to the tail side
 - Contrast: body text uses `--color-primary-transparent-87` on yellow/white fills — meets WCAG AA for body text.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

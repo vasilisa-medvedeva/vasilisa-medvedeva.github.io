@@ -4,22 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Molecules</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/docs-guides.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -85,7 +86,7 @@
     }
 
     .state-label {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       font-size: var(--text-body-small-font-size);
       font-weight: var(--text-body-small-font-weight);
       line-height: var(--text-body-small-line-height);
@@ -223,7 +224,7 @@
     /* ── Code panel ── */
     .code-toggle-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      font-family: "Archivo", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: var(--font-display, "Archivo", sans-serif); font-size: 12px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60);
       background: var(--color-primary-transparent-04);
       border: 1px solid var(--color-primary-transparent-16);
@@ -249,7 +250,7 @@
 
     .copy-code-btn {
       position: absolute; top: 14px; right: 16px;
-      font-family: "Archivo", sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+      font-family: var(--font-display, "Archivo", sans-serif); font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
       color: var(--color-primary-transparent-60); background: #2d2d2d; border: 1px solid #3d3d3d;
       border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
     }
@@ -2090,7 +2091,7 @@
     }
 
 
-    /* ── Atoms reused by BubbleBottom 2.0 (copies from atoms.html) ── */
+    /* ── Atoms reused by BubbleBottom (copies from atoms.html) ── */
 
     .send-time { display: inline-flex; align-items: flex-end; gap: 2px; padding: 1px 4px; }
     .send-time__label, .send-time__time {
@@ -2163,7 +2164,7 @@
     }
     .bubble-comments__arrow { flex-shrink: 0; display: block; width: 16px; height: 16px; }
 
-    /* ── Molecule: BubbleBottom 2.0 ── */
+    /* ── Molecule: BubbleBottom ── */
     /* Transparent bottom strip of a chat bubble: reactions + time (+ comments
        for recipient). No bubble chrome of its own — only the atoms carry colour. */
     .bubble-bottom-2 {
@@ -2205,7 +2206,7 @@
 
     /* ── Atoms reused by Message (copies from atoms.html) ── */
 
-    /* Bubble2.0 — shape (single dynamic SVG path); positions/left are JS-driven. */
+    /* Bubble — shape (single dynamic SVG path); positions/left are JS-driven. */
     .bubble2 {
       --b2-fill: var(--color-brand-yellow-16);
       --b2-stroke: var(--color-brand-yellow-32);
@@ -2280,8 +2281,8 @@
     }
 
     /* ── Molecule: Message ── */
-    /* A full chat message: Bubble2.0 shape filled with [name][forward]text +
-       BubbleBottom 2.0, plus an AvatarPlaceholder for channel messages. */
+    /* A full chat message: Bubble shape filled with [name][forward]text +
+       BubbleBottom, plus an AvatarPlaceholder for channel messages. */
     .message {
       display: flex;
       align-items: flex-end;
@@ -2468,13 +2469,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -2774,7 +2774,7 @@
           <div class="docs__section-title">States</div>
           <div class="docs__row"><span class="docs__row-label">read</span><span class="docs__row-value">subtitle <code class="docs__token">--text-body-medium-*</code> · primary-60</span></div>
           <div class="docs__row"><span class="docs__row-label">unread</span><span class="docs__row-value"><code class="docs__token">--unread</code> · subtitle <code class="docs__token">--text-body-medium-*</code> · primary-87 + counter</span></div>
-          <div class="docs__row"><span class="docs__row-label">pinned</span><span class="docs__row-value">pin icon instead of counter</span></div>
+          <div class="docs__row"><span class="docs__row-label">pinned</span><span class="docs__row-value">pin icon instead of&nbsp;counter</span></div>
         </div>
 
         <div class="docs__section">
@@ -3175,7 +3175,7 @@
           <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">rounded-sq avatar · title + subtitle · chevron</span></div>
           <div class="docs__row"><span class="docs__row-label">folder</span><span class="docs__row-value">folder avatar · title + subtitle · chevron</span></div>
           <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">chevron ↓ + brandYellow/8 bg</span></div>
-          <div class="docs__row"><span class="docs__row-label">toggle</span><span class="docs__row-value">direct only · checkbox on right</span></div>
+          <div class="docs__row"><span class="docs__row-label">toggle</span><span class="docs__row-value">direct only · checkbox on&nbsp;right</span></div>
         </div>
 
         <div class="docs__section">
@@ -3565,7 +3565,7 @@
 
           <div class="btn-size-label" style="margin:16px 0 8px;">Add</div>
 
-          <span class="state-label" style="margin:4px 0 2px;">add · no right block</span>
+          <span class="state-label" style="margin:4px 0 2px;">add · no&nbsp;right block</span>
           <div class="cell-category">
             <div class="cell-category__main">
               <div class="cell-category__title-wrap">
@@ -3587,7 +3587,7 @@
           <div class="docs__section-title">Props</div>
           <div class="docs__row"><span class="docs__row-label">owner</span><span class="docs__row-value">bool · shows drag handle (=)</span></div>
           <div class="docs__row"><span class="docs__row-label">open</span><span class="docs__row-value">bool · chevron down vs right</span></div>
-          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · shows lock badge on title</span></div>
+          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · shows lock badge on&nbsp;title</span></div>
         </div>
 
         <div class="docs__section">
@@ -3658,7 +3658,7 @@
 
         <div style="display:flex; flex-direction:column; width:320px; gap:0;">
 
-          <div class="btn-size-label" style="margin-bottom:8px;">No lock · no message</div>
+          <div class="btn-size-label" style="margin-bottom:8px;">No lock · no&nbsp;message</div>
 
           <span class="state-label" style="margin:4px 0 2px;">owner</span>
           <div class="cell-subchannel">
@@ -3810,8 +3810,8 @@
         <div class="docs__section">
           <div class="docs__section-title">Props</div>
           <div class="docs__row"><span class="docs__row-label">owner</span><span class="docs__row-value">bool · shows menu + drag handle</span></div>
-          <div class="docs__row"><span class="docs__row-label">message</span><span class="docs__row-value">bool · shows NotificationCounter; reduces py to 16px</span></div>
-          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · lock badge on avatar bottom-right</span></div>
+          <div class="docs__row"><span class="docs__row-label">message</span><span class="docs__row-value">bool · shows NotificationCounter; reduces py to&nbsp;16px</span></div>
+          <div class="docs__row"><span class="docs__row-label">lock</span><span class="docs__row-value">bool · lock badge on&nbsp;avatar bottom-right</span></div>
           <div class="docs__row"><span class="docs__row-label">state</span><span class="docs__row-value">regular | selected → brandYellow/16 background</span></div>
         </div>
 
@@ -4138,7 +4138,7 @@
               </button>
               <div class="text-field__field">
                 <div class="text-field__text">
-                  <p class="text-field__value text-field__value--typed">A message is more than just words on a screen or<span class="text-field__caret">|</span></p>
+                  <p class="text-field__value text-field__value--typed">A message is&nbsp;more than just words on&nbsp;a&nbsp;screen or<span class="text-field__caret">|</span></p>
                 </div>
                 <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
               </div>
@@ -4174,7 +4174,7 @@
               </button>
               <div class="text-field__field">
                 <div class="text-field__text">
-                  <p class="text-field__value text-field__value--typed">A message is more than just words on a screen or a piece of paper. It's a<span class="text-field__caret">|</span></p>
+                  <p class="text-field__value text-field__value--typed">A message is&nbsp;more than just words on&nbsp;a&nbsp;screen or&nbsp;a&nbsp;piece of&nbsp;paper. It's a<span class="text-field__caret">|</span></p>
                 </div>
                 <img class="text-field__emoji" src="icons/general/emoji.svg" alt="" aria-hidden="true">
               </div>
@@ -4202,7 +4202,7 @@
           <div class="docs__row"><span class="docs__row-label">enabled</span><span class="docs__row-value">Placeholder primary-60</span></div>
           <div class="docs__row"><span class="docs__row-label">focused</span><span class="docs__row-value">Caret + dimmed placeholder</span></div>
           <div class="docs__row"><span class="docs__row-label">typing</span><span class="docs__row-value">Text primary-87 + caret</span></div>
-          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">Text primary-87, no caret</span></div>
+          <div class="docs__row"><span class="docs__row-label">typed</span><span class="docs__row-value">Text primary-87, no&nbsp;caret</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -4285,7 +4285,7 @@
                     <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
                   </button>
                 </div>
-                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to simulate search</p>
+                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to&nbsp;simulate search</p>
               </div>
               <!-- M -->
               <div>
@@ -4299,7 +4299,7 @@
                     <img src="icons/general/cancel.svg" alt="" aria-hidden="true">
                   </button>
                 </div>
-                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to simulate search</p>
+                <p style="margin:6px 0 0 16px;font-size:12px;color:var(--color-primary-transparent-48);">Press Enter to&nbsp;simulate search</p>
               </div>
             </div>
 
@@ -4424,7 +4424,7 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">318px · pill · border · white bg</span></div>
-          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24 × 24px · search or loader</span></div>
+          <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24 × 24px · search or&nbsp;loader</span></div>
           <div class="docs__row"><span class="docs__row-label">value</span><span class="docs__row-value">Body/Large · flex 1</span></div>
           <div class="docs__row"><span class="docs__row-label">cancel</span><span class="docs__row-value">24 × 24px · typed/progressing only (+ M focused)</span></div>
         </div>
@@ -4609,7 +4609,7 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">control</span><span class="docs__row-value">318px · r 30px · py 6px · pl 16px · pr 8px</span></div>
-          <div class="docs__row"><span class="docs__row-label">text</span><span class="docs__row-value">Body/Large · placeholder or value</span></div>
+          <div class="docs__row"><span class="docs__row-label">text</span><span class="docs__row-value">Body/Large · placeholder or&nbsp;value</span></div>
           <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · error.svg (error only)</span></div>
           <div class="docs__row"><span class="docs__row-label">supporting</span><span class="docs__row-value">Body/Medium · pl 16px · below control</span></div>
         </div>
@@ -4626,10 +4626,10 @@
         </div>
 
         <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Differences from TextFields.L</div>
+          <div class="docs__section-title">Differences from&nbsp;TextFields.L</div>
           <div class="docs__row"><span class="docs__row-label">background</span><span class="docs__row-value">white (#FFF)</span></div>
           <div class="docs__row"><span class="docs__row-label">height</span><span class="docs__row-value">32px (py 6px)</span></div>
-          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">static placeholder — no float</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">static placeholder — no&nbsp;float</span></div>
           <div class="docs__row"><span class="docs__row-label">password</span><span class="docs__row-value">not supported</span></div>
         </div>
 
@@ -4898,8 +4898,8 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">control</span><span class="docs__row-value">318px · r 30px · p 16px all sides</span></div>
-          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — Body/Large inside → Body/Medium at border</span></div>
-          <div class="docs__row"><span class="docs__row-label">input</span><span class="docs__row-value">Body/Large · text or password</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — Body/Large inside → Body/Medium at&nbsp;border</span></div>
+          <div class="docs__row"><span class="docs__row-label">input</span><span class="docs__row-value">Body/Large · text or&nbsp;password</span></div>
           <div class="docs__row"><span class="docs__row-label">eye-btn</span><span class="docs__row-value">24×24px · toggles password visibility</span></div>
           <div class="docs__row"><span class="docs__row-label">icon</span><span class="docs__row-value">24×24px · error.svg (error only)</span></div>
           <div class="docs__row"><span class="docs__row-label">supporting</span><span class="docs__row-value">Body/Medium · pl 16px · below control</span></div>
@@ -4917,10 +4917,10 @@
         </div>
 
         <div class="docs__section docs__section--collapsible">
-          <div class="docs__section-title">Differences from TextFields.S</div>
+          <div class="docs__section-title">Differences from&nbsp;TextFields.S</div>
           <div class="docs__row"><span class="docs__row-label">background</span><span class="docs__row-value">brand-yellow-4 (#FFFCF6)</span></div>
           <div class="docs__row"><span class="docs__row-label">height</span><span class="docs__row-value">52px (p 16px)</span></div>
-          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — rises to border on focus</span></div>
+          <div class="docs__row"><span class="docs__row-label">label</span><span class="docs__row-value">floating — rises to&nbsp;border on&nbsp;focus</span></div>
           <div class="docs__row"><span class="docs__row-label">border typed</span><span class="docs__row-value">primary-48 (not primary-24)</span></div>
           <div class="docs__row"><span class="docs__row-label">password</span><span class="docs__row-value">supported (eye toggle)</span></div>
         </div>
@@ -5003,7 +5003,7 @@
               <div class="tab-bar__indicator-pill"></div>
             </div>
           </div>
-          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Start typing — the Send button appears</p>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Start typing — the&nbsp;Send button appears</p>
         </div>
 
         <div class="if-playground__title">States</div>
@@ -5214,9 +5214,9 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Checkbox top-right, no chip</span></div>
+          <div class="docs__row"><span class="docs__row-label">photo</span><span class="docs__row-value">Checkbox top-right, no&nbsp;chip</span></div>
           <div class="docs__row"><span class="docs__row-label">video</span><span class="docs__row-value">Checkbox top-right + duration chip bottom-right</span></div>
-          <div class="docs__row"><span class="docs__row-label">addMedia</span><span class="docs__row-value">Camera icon centered, no checkbox</span></div>
+          <div class="docs__row"><span class="docs__row-label">addMedia</span><span class="docs__row-value">Camera icon centered, no&nbsp;checkbox</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -5390,7 +5390,7 @@
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">Container</span><span class="docs__row-value">189 × 189px · r 8px · bg primary-16</span></div>
           <div class="docs__row"><span class="docs__row-label">Overlay</span><span class="docs__row-value">rgba(0,0,0,0.4) · blur 2px · download/loading/more</span></div>
-          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center or bottom-right 8px</span></div>
+          <div class="docs__row"><span class="docs__row-label">Chip</span><span class="docs__row-value">VideoChip atom · center or&nbsp;bottom-right 8px</span></div>
           <div class="docs__row"><span class="docs__row-label">Icon</span><span class="docs__row-value">32 × 32px · centered · image download/loading</span></div>
           <div class="docs__row"><span class="docs__row-label">+N label</span><span class="docs__row-value">Headline/Medium · white · centered</span></div>
         </div>
@@ -5483,7 +5483,7 @@
                 </div>
               </div>
               <div class="card-profile-text__bio">
-                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+                <p class="card-profile-text__bio-text">Dive into&nbsp;the&nbsp;magical realm of&nbsp;Dungeons &amp; Dragons! Join us for&nbsp;adventures, character tips, and&nbsp;all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
               </div>
             </div>
             <span class="state-label">private + bio</span>
@@ -5503,7 +5503,7 @@
                 </div>
               </div>
             </div>
-            <span class="state-label">private, no bio</span>
+            <span class="state-label">private, no&nbsp;bio</span>
           </div>
 
           <!-- public + bio -->
@@ -5516,7 +5516,7 @@
                 </div>
               </div>
               <div class="card-profile-text__bio">
-                <p class="card-profile-text__bio-text">Dive into the magical realm of Dungeons &amp; Dragons! Join us for adventures, character tips, and all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
+                <p class="card-profile-text__bio-text">Dive into&nbsp;the&nbsp;magical realm of&nbsp;Dungeons &amp; Dragons! Join us for&nbsp;adventures, character tips, and&nbsp;all things D&amp;D. 🎲✨ #DnD #TabletopGaming</p>
               </div>
             </div>
             <span class="state-label">public + bio</span>
@@ -5532,7 +5532,7 @@
                 </div>
               </div>
             </div>
-            <span class="state-label">public, no bio</span>
+            <span class="state-label">public, no&nbsp;bio</span>
           </div>
 
         </div>
@@ -5553,9 +5553,9 @@
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
           <div class="docs__row"><span class="docs__row-label">private + bio</span><span class="docs__row-value">Lock + bio</span></div>
-          <div class="docs__row"><span class="docs__row-label">private, no bio</span><span class="docs__row-value">Lock only</span></div>
+          <div class="docs__row"><span class="docs__row-label">private, no&nbsp;bio</span><span class="docs__row-value">Lock only</span></div>
           <div class="docs__row"><span class="docs__row-label">public + bio</span><span class="docs__row-value">Bio only</span></div>
-          <div class="docs__row"><span class="docs__row-label">public, no bio</span><span class="docs__row-value">Title + subtitle only</span></div>
+          <div class="docs__row"><span class="docs__row-label">public, no&nbsp;bio</span><span class="docs__row-value">Title + subtitle only</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -5631,7 +5631,7 @@
               <div class="tab-bar__indicator-pill"></div>
             </div>
           </div>
-          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Tap an icon to make it active</p>
+          <p style="margin:8px 0 0 0;font-size:12px;color:var(--color-primary-transparent-48);">Tap an&nbsp;icon to&nbsp;make it&nbsp;active</p>
         </div>
 
         <div class="if-playground__title">States</div>
@@ -5692,7 +5692,7 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
-          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg (tonal · no divider)</span></div>
+          <div class="docs__row"><span class="docs__row-label">tab-bar</span><span class="docs__row-value">318px · yellow-8 bg (tonal · no&nbsp;divider)</span></div>
           <div class="docs__row"><span class="docs__row-label">tab-btn</span><span class="docs__row-value">flex: 1 · height 48px · icon 24×24px</span></div>
           <div class="docs__row"><span class="docs__row-label">indicator</span><span class="docs__row-value">72×2px pill · primary-87 · centred (optional)</span></div>
         </div>
@@ -5786,7 +5786,7 @@
 
         <div class="docs__section docs__section--collapsible">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">tabs</span><span class="docs__row-value">2 or 3 equal switches</span></div>
+          <div class="docs__row"><span class="docs__row-label">tabs</span><span class="docs__row-value">2 or&nbsp;3 equal switches</span></div>
           <div class="docs__row"><span class="docs__row-label">active</span><span class="docs__row-value">left / medium / right (single selection)</span></div>
         </div>
 
@@ -5929,7 +5929,7 @@
         </div>
 
         <!-- 6. no arrowBack + icon -->
-        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">no back · left title · icon</div>
+        <div style="margin-bottom:8px;font-size:11px;color:var(--color-primary-transparent-60);letter-spacing:0.4px;text-transform:uppercase;">no&nbsp;back · left title · icon</div>
         <div style="display:flex;gap:16px;flex-direction:column;margin-bottom:28px;">
           <div class="state-wrapper" style="align-items:flex-start;">
             <div class="top-bar" style="padding-left:16px;padding-right:4px;">
@@ -5942,7 +5942,7 @@
                 </button>
               </div>
             </div>
-            <span class="state-label">no arrow + icon</span>
+            <span class="state-label">no&nbsp;arrow + icon</span>
           </div>
         </div>
 
@@ -6024,10 +6024,10 @@
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">top-bar</span><span class="docs__row-value">412px · h:56px · red-secondary bg · p:4px · gap:8px</span></div>
           <div class="docs__row"><span class="docs__row-label">back</span><span class="docs__row-value">48×48px · arrow-back.svg white · rounded ripple</span></div>
-          <div class="docs__row"><span class="docs__row-label">body</span><span class="docs__row-value">flex:1 · avatar + title (left) or title (centered)</span></div>
+          <div class="docs__row"><span class="docs__row-label">body</span><span class="docs__row-value">flex:1 · avatar + title (left) or&nbsp;title (centered)</span></div>
           <div class="docs__row"><span class="docs__row-label">avatar</span><span class="docs__row-value">32×32px · circle · direct / channel types</span></div>
-          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">title-large 22px/500 · white · left or center</span></div>
-          <div class="docs__row"><span class="docs__row-label">right</span><span class="docs__row-value">icon-btn 48×48 · or text-btn px:12 · or 2×icon-btn</span></div>
+          <div class="docs__row"><span class="docs__row-label">title</span><span class="docs__row-value">title-large 22px/500 · white · left or&nbsp;center</span></div>
+          <div class="docs__row"><span class="docs__row-label">right</span><span class="docs__row-value">icon-btn 48×48 · or&nbsp;text-btn px:12 · or&nbsp;2×icon-btn</span></div>
           <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">white pill · radius:20px · search icon + placeholder</span></div>
         </div>
 
@@ -6036,9 +6036,9 @@
           <div class="docs__row"><span class="docs__row-label">regular</span><span class="docs__row-value">standard screen</span></div>
           <div class="docs__row"><span class="docs__row-label">medium</span><span class="docs__row-value">centered title</span></div>
           <div class="docs__row"><span class="docs__row-label">onlyArrow</span><span class="docs__row-value">back button only</span></div>
-          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">direct chat with avatar</span></div>
-          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">channel with avatar and chevron</span></div>
-          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">search field instead of the title</span></div>
+          <div class="docs__row"><span class="docs__row-label">direct</span><span class="docs__row-value">direct chat with&nbsp;avatar</span></div>
+          <div class="docs__row"><span class="docs__row-label">channel</span><span class="docs__row-value">channel with&nbsp;avatar and&nbsp;chevron</span></div>
+          <div class="docs__row"><span class="docs__row-label">search</span><span class="docs__row-value">search field instead of&nbsp;the&nbsp;title</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -6242,7 +6242,7 @@
           <div class="docs__row"><span class="docs__row-label">--active</span><span class="docs__row-value">Title/Medium label + indicator bar</span></div>
           <div class="docs__row"><span class="docs__row-label">--has-badge</span><span class="docs__row-value">shows NotificationCounter · adjusts width</span></div>
           <div class="docs__row"><span class="docs__row-label">--pressed</span><span class="docs__row-value">darker background</span></div>
-          <div class="docs__row"><span class="docs__row-label">--type-add</span><span class="docs__row-value">⊕ icon instead of label</span></div>
+          <div class="docs__row"><span class="docs__row-label">--type-add</span><span class="docs__row-value">⊕ icon instead of&nbsp;label</span></div>
         </div>
 
         <div class="docs__section docs__section--collapsible">
@@ -6450,7 +6450,7 @@
         <div class="docs__section">
           <div class="docs__section-title">Anatomy</div>
           <div class="docs__row"><span class="docs__row-label">container</span><span class="docs__row-value">334×66 · border-radius:16 16 0 0 · border-bottom:0.5px yellow · py:4 px:12</span></div>
-          <div class="docs__row"><span class="docs__row-label">inner</span><span class="docs__row-value">relative · pl:10px — anchor for the left line</span></div>
+          <div class="docs__row"><span class="docs__row-label">inner</span><span class="docs__row-value">relative · pl:10px — anchor for&nbsp;the&nbsp;left line</span></div>
           <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">reply variant · icon + sender name</span></div>
           <div class="docs__row"><span class="docs__row-label">text</span><span class="docs__row-value">Body/Medium · transparent-60 · single line, ellipsis</span></div>
           <div class="docs__row"><span class="docs__row-label">line</span><span class="docs__row-value">absolute · left:0 · top:3px bottom:4px · w:2px · transparent-87</span></div>
@@ -6575,7 +6575,7 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Variants</div>
-          <div class="docs__row"><span class="docs__row-label">reply</span><span class="docs__row-value">Reply to a message</span></div>
+          <div class="docs__row"><span class="docs__row-label">reply</span><span class="docs__row-value">Reply to&nbsp;a&nbsp;message</span></div>
           <div class="docs__row"><span class="docs__row-label">forward</span><span class="docs__row-value">Forwarded message</span></div>
           <div class="docs__row"><span class="docs__row-label">editing</span><span class="docs__row-value">Edit existing message</span></div>
         </div>
@@ -6628,11 +6628,11 @@
 
     <div class="section-divider"></div>
 
-    <!-- BubbleBottom 2.0 -->
+    <!-- BubbleBottom -->
     <div id="bubble-bottom-2" class="component-block">
       <div class="component-block__preview">
         <div class="component-block__preview-header">
-          <div class="component-block__preview-title">BubbleBottom 2.0</div>
+          <div class="component-block__preview-title">BubbleBottom</div>
           <button class="code-toggle-btn" onclick="toggleCode('bubble-bottom-2')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</button>
         </div>
 
@@ -6802,7 +6802,7 @@
 
       <!-- Docs panel -->
       <div class="docs" id="docs-bubble-bottom-2">
-        <div class="docs__name">BubbleBottom 2.0</div>
+        <div class="docs__name">BubbleBottom</div>
         <span class="docs__type">molecule</span>
 
         <div class="docs__section">
@@ -6827,8 +6827,8 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Tokens</div>
-          <div class="docs__row"><span class="docs__row-label">Surface</span><span class="docs__row-value">transparent (no fill)</span></div>
-          <div class="docs__row"><span class="docs__row-label">Colour / type</span><span class="docs__row-value">delegated to atoms</span></div>
+          <div class="docs__row"><span class="docs__row-label">Surface</span><span class="docs__row-value">transparent (no&nbsp;fill)</span></div>
+          <div class="docs__row"><span class="docs__row-label">Colour / type</span><span class="docs__row-value">delegated to&nbsp;atoms</span></div>
         </div>
 
         <div class="docs__section">
@@ -6869,7 +6869,7 @@
       </div>
 
     </div>
-    <!-- /BubbleBottom 2.0 -->
+    <!-- /BubbleBottom -->
 
     <div class="section-divider"></div>
 
@@ -6906,8 +6906,8 @@
 
         <div class="docs__section">
           <div class="docs__section-title">Uses atoms / molecules</div>
-          <div class="docs__row"><span class="docs__row-label">Bubble2.0</span><span class="docs__row-value">shape · white/left · top/mid/last</span></div>
-          <div class="docs__row"><span class="docs__row-label">BubbleBottom 2.0</span><span class="docs__row-value">time / reactions strip</span></div>
+          <div class="docs__row"><span class="docs__row-label">Bubble</span><span class="docs__row-value">shape · white/left · top/mid/last</span></div>
+          <div class="docs__row"><span class="docs__row-label">BubbleBottom</span><span class="docs__row-value">time / reactions strip</span></div>
           <div class="docs__row"><span class="docs__row-label">InfoTitle</span><span class="docs__row-value">forward variant (link)</span></div>
           <div class="docs__row"><span class="docs__row-label">AvatarPlaceholder</span><span class="docs__row-value">S · channel avatar</span></div>
         </div>
@@ -7224,6 +7224,7 @@
   </main>
 
   <script src="scripts/nav.js"></script>
+  <script src="scripts/docs-guides.js"></script>
 
 
   <script>
@@ -7619,10 +7620,10 @@
     })();
   </script>
 
-  <!-- Message: data-driven 36-variant builder + Bubble2.0 shape drawing -->
+  <!-- Message: data-driven 36-variant builder + Bubble shape drawing -->
   <script>
   (function () {
-    // ---- Bubble2.0 shape (ported from atoms.html) ----
+    // ---- Bubble shape (ported from atoms.html) ----
     var R = 16, R4 = 4;
     var TAIL = "c0 0.162 -0.003 0.323 -0.008 0.483c-0.073 3.301 -0.678 10.185 4.683 14.938c0.127 0.112 0.069 0.325 -0.098 0.352c-6.699 1.085 -9.605 -2.288 -10.916 -3.018c-0.008 0.006 -0.017 0.011 -0.025 0.018c-0.143 0.108 -0.288 0.212 -0.434 0.315c-0.04 0.028 -0.08 0.056 -0.12 0.084c-0.306 0.211 -0.619 0.412 -0.94 0.603c-0.036 0.021 -0.072 0.043 -0.108 0.064c-0.164 0.095 -0.329 0.188 -0.497 0.277c-0.008 0.005 -0.016 0.01 -0.024 0.014c-0.164 0.087 -0.329 0.171 -0.496 0.253c-0.027 0.013 -0.053 0.026 -0.079 0.039c-0.163 0.078 -0.327 0.154 -0.493 0.226c-0.042 0.019 -0.085 0.038 -0.128 0.056c-0.168 0.072 -0.337 0.143 -0.507 0.209c-0.025 0.01 -0.05 0.018 -0.075 0.027c-0.15 0.058 -0.302 0.114 -0.455 0.167c-0.045 0.016 -0.09 0.033 -0.135 0.048c-0.162 0.055 -0.325 0.106 -0.489 0.156c-0.057 0.017 -0.114 0.034 -0.171 0.05c-0.175 0.051 -0.351 0.101 -0.529 0.146c-0.016 0.004 -0.031 0.008 -0.047 0.012c-0.18 0.045 -0.361 0.087 -0.543 0.126c-0.028 0.006 -0.056 0.012 -0.085 0.018c-0.186 0.039 -0.373 0.073 -0.561 0.106c-0.043 0.007 -0.085 0.014 -0.128 0.021c-0.186 0.03 -0.373 0.058 -0.562 0.082c-0.03 0.004 -0.061 0.007 -0.092 0.011c-0.163 0.02 -0.328 0.037 -0.493 0.052c-0.051 0.004 -0.103 0.009 -0.155 0.013c-0.187 0.015 -0.374 0.027 -0.562 0.035c-0.041 0.002 -0.081 0.004 -0.122 0.005c-0.201 0.008 -0.403 0.013 -0.606 0.013";
 
@@ -7936,7 +7937,7 @@
   })();
   </script>
 
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script src="scripts/page-transition.js?v=5"></script>
 </body>
 
 </html>

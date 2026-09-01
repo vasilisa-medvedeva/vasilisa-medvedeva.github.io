@@ -71,7 +71,8 @@
   // Sections (About me / My projects and their dropdown items)
   var menu = inner.querySelector('.site-header__menu');
   if (menu) {
-    var items = menu.querySelectorAll('.menu-item');
+    // Mobile panel surfaces projects first — reverse the desktop nav order (About me, My projects)
+    var items = Array.prototype.slice.call(menu.querySelectorAll('.menu-item')).reverse();
     for (var i = 0; i < items.length; i++) {
       var trigger = items[i].querySelector('.menu-item__trigger');
       if (trigger) addLink(trigger.getAttribute('href'), trigger.textContent.trim(), false);
@@ -82,12 +83,15 @@
     }
   }
 
-  // Contacts (Telegram / LinkedIn / Email — CV stays the pill above)
-  var contacts = contactLinks.filter(function (a) { return a !== cvLink; });
-  if (contacts.length) {
-    addLabel('Contacts');
-    contacts.forEach(function (a) { addLink(a.getAttribute('href'), a.textContent.trim(), false); });
-  }
+  /* Contacts — every way to reach her, the CV included: inside a menu the CV
+     is one more way to get in touch, not a pill of its own. No heading above
+     them; the gap says "different kind of thing", and one fewer label is one
+     fewer line to read. */
+  var contacts = contactLinks.slice();
+  contacts.forEach(function (a, i) {
+    addLink(a.getAttribute('href'), a.textContent.trim(), false);
+    if (i === 0) { panel.lastChild.classList.add('mobile-nav__link--group'); }
+  });
 
   document.body.appendChild(scrim);
   document.body.appendChild(panel);
@@ -105,5 +109,103 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') setOpen(false);
+  });
+})();
+
+/* ── Dropdown highlight: one block that travels ───────────────────────
+   The rows used to paint their own background, so moving between them read
+   as one highlight blinking out and another blinking in. Here a single
+   element slides between rows instead, which is the whole gesture: the
+   highlight is a thing that moves, not a state each row switches on.
+
+   Built from the existing markup — nothing in any page's HTML changes. The
+   rows keep their own :hover colour for the label; only the fill moves. */
+(function () {
+  var dropdowns = document.querySelectorAll('.menu-item__dropdown');
+  if (!dropdowns.length) return;
+
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  Array.prototype.forEach.call(dropdowns, function (menu) {
+    var links = menu.querySelectorAll('.menu-item__link');
+    if (!links.length) return;
+
+    var marker = document.createElement('span');
+    marker.className = 'menu-item__marker';
+    marker.setAttribute('aria-hidden', 'true');
+    menu.insertBefore(marker, menu.firstChild);
+    menu.classList.add('has-marker');   // tells the CSS to stop painting rows itself
+
+    /* The panel is hidden until its parent is hovered, so offsets read as 0
+       on a cold page. Measuring on first entry — when it is laid out — costs
+       nothing and avoids a marker that lands in the wrong place once. */
+    /* The lit row is marked here rather than left to :hover. The panel carries
+       8px of padding above the first row and below the last, and rows sit flush
+       against each other — so the cursor can be inside the panel, with the
+       marker parked on a row, while :hover on that row has already ended. The
+       fill stayed and the label snapped back to ink. Driving both from one
+       place means they cannot disagree. */
+    function moveTo (link) {
+      marker.style.height = link.offsetHeight + 'px';
+      marker.style.transform = 'translateY(' + link.offsetTop + 'px)';
+      marker.classList.add('is-on');
+      for (var i = 0; i < links.length; i++) { links[i].classList.remove('is-marked'); }
+      link.classList.add('is-marked');
+    }
+
+    Array.prototype.forEach.call(links, function (link) {
+      link.addEventListener('pointerenter', function () {
+        /* First landing must not slide in from the top edge: place it with the
+           transition off, then let every later move animate. */
+        if (!marker.classList.contains('is-on') && !still) {
+          marker.style.transition = 'none';
+          moveTo(link);
+          void marker.offsetWidth;          // flush, so the next frame animates
+          marker.style.transition = '';
+          return;
+        }
+        moveTo(link);
+      });
+      link.addEventListener('focus', function () { moveTo(link); });
+    });
+
+    function clear () {
+      marker.classList.remove('is-on');
+      for (var i = 0; i < links.length; i++) { links[i].classList.remove('is-marked'); }
+    }
+    menu.addEventListener('pointerleave', clear);
+    var host = menu.closest('.menu-item');
+    if (host) host.addEventListener('pointerleave', clear);
+  });
+})();
+
+/* ── Phone screenshots: drop the skeleton once the pixels land ─────────
+   The shimmer itself is pure CSS (styles/shot-skeleton.css) and is painted as
+   the image's own background, so it is correct before this script runs and
+   stays correct if the script never runs at all — a shot that fails keeps
+   shimmering rather than collapsing, which is the behaviour we want anyway.
+
+   All this does is stop the animation once it has nothing left to cover: an
+   opaque image is sitting on top of it by then, and leaving a sweep running
+   behind every screenshot on the page is wasted work. */
+(function () {
+  var shots = document.querySelectorAll(
+    '.scan-phone__screen img, .scan-phone__screen video, ' +
+    '.pdd-phone__screen img, .pay-phone__screen img'
+  );
+  if (!shots.length) return;
+
+  function done (el) { el.classList.add('is-shot-loaded'); }
+
+  Array.prototype.forEach.call(shots, function (el) {
+    if (el.tagName === 'VIDEO') {
+      if (el.readyState >= 2) { done(el); return; }
+      el.addEventListener('loadeddata', function () { done(el); }, { once: true });
+      return;
+    }
+    /* complete alone is not enough: it is also true for a failed image, and a
+       broken shot must keep its skeleton rather than reveal an empty frame. */
+    if (el.complete && el.naturalWidth > 0) { done(el); return; }
+    el.addEventListener('load', function () { done(el); }, { once: true });
   });
 })();

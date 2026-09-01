@@ -5,7 +5,6 @@
   top: 60px; left: 0; bottom: 0;   /* below the sticky site header */
   width: 220px;
   background: #fff;
-  border-right: 1px solid var(--color-primary-transparent-16);
   display: flex;
   flex-direction: column;
   padding: 16px 0 24px;
@@ -27,12 +26,12 @@
   justify-content: space-between;
   width: 100%;
   padding: 12px 20px 4px;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-size: var(--text-title-medium-font-size);
   font-weight: var(--text-title-medium-font-weight);
   line-height: var(--text-title-medium-line-height);
   letter-spacing: var(--text-title-medium-letter-spacing);
-  color: var(--color-primary-transparent-60);
+  color: var(--color-primary);
   cursor: pointer;
   user-select: none;
   transition: color 0.15s;
@@ -68,7 +67,7 @@
 .sidebar__link {
   display: block;
   padding: 8px 20px 8px 28px;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-size: var(--text-title-small-font-size);
   font-weight: var(--text-title-small-font-weight);
   line-height: var(--text-title-small-line-height);
@@ -81,6 +80,16 @@
 .sidebar__link:hover,
 .sidebar__link--active {
   background: var(--color-brand-yellow-4);
+  color: var(--color-primary);
+}
+
+/* Standalone top-level link (Overview) — sits above the groups, styled like a group header */
+.sidebar__link--top {
+  padding: 12px 20px;
+  font-size: var(--text-title-medium-font-size);
+  font-weight: var(--text-title-medium-font-weight);
+  line-height: var(--text-title-medium-line-height);
+  letter-spacing: var(--text-title-medium-letter-spacing);
   color: var(--color-primary);
 }
 
@@ -98,7 +107,7 @@
   gap: 6px;
   width: 100%;
   padding: 8px 20px 8px 12px;
-  font-family: "Archivo", sans-serif;
+  font-family: var(--font-display, "Archivo", sans-serif);
   font-size: var(--text-title-small-font-size);
   font-weight: var(--text-title-small-font-weight);
   line-height: var(--text-title-small-line-height);

@@ -1,0 +1,56 @@
+/* Loading skeleton for the screenshots inside the phone mockups.
+
+   The case pages carry ~17MB of screenshots. Until one arrives its <img> is an
+   empty box, and on the light sage sheet that empty box is plainly visible —
+   on the old near-black substrate it never was, which is why this went unnoticed
+   for so long. Worse, a shot that fails outright paints its alt text across the
+   frame at full size.
+
+   The skeleton is painted as the image's own background rather than as an
+   overlay element: an <img> shows its background until its pixels arrive, and
+   the arriving image is opaque, so it covers the skeleton by itself. That means
+   no wrapper, no injected node, and — the part an overlay cannot do for free —
+   a shot that never loads simply keeps shimmering instead of collapsing.
+
+   Same sweep as .device-skeleton on the home page, so the two read as one idea. */
+
+.scan-phone__screen img,
+.scan-phone__screen video,
+.pdd-phone__screen img,
+.pay-phone__screen img {
+  background-color: var(--color-constant-primary);
+  background-image: linear-gradient(100deg,
+                    transparent 32%,
+                    var(--color-primary-transparent-08) 50%,
+                    transparent 68%);
+  background-size: 220% 100%;
+  animation: shot-skeleton-sweep 1.5s ease-in-out infinite;
+  /* Keeps a failed image from painting its alt sentence across the frame. The
+     attribute is untouched, so assistive tech still reads it — only the visual
+     fallback text is suppressed. */
+  font-size: 0;
+}
+
+/* Once the pixels are in, the shimmer has nothing left to cover and would just
+   keep an animation running behind an opaque image. */
+.scan-phone__screen img.is-shot-loaded,
+.scan-phone__screen video.is-shot-loaded,
+.pdd-phone__screen img.is-shot-loaded,
+.pay-phone__screen img.is-shot-loaded {
+  background: none;
+  animation: none;
+}
+
+@keyframes shot-skeleton-sweep {
+  from { background-position: 190% 0; }
+  to   { background-position: -90% 0; }
+}
+
+/* Stillness leaves the flat surface — the frame is still filled, it just does
+   not travel. */
+@media (prefers-reduced-motion: reduce) {
+  .scan-phone__screen img,
+  .scan-phone__screen video,
+  .pdd-phone__screen img,
+  .pay-phone__screen img { animation: none; background-image: none; }
+}

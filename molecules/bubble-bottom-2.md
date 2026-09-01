@@ -1,9 +1,9 @@
-# BubbleBottom 2.0
+# BubbleBottom
 
 > The transparent bottom strip of a chat bubble: reaction pills, delivery time, and (for recipients) a comments link — composed entirely from existing atoms.
 
 ## When to use / when not to use
-- ✅ Use directly below the message text inside a Bubble2.0 to show reactions, status, and comments.
+- ✅ Use directly below the message text inside a Bubble to show reactions, status, and comments.
 - ❌ Don't use standalone — it has no surface of its own; the parent bubble provides background and shape.
 - ❌ Don't add bubble background, padding, or border here — those belong to the bubble wrapper.
 
@@ -66,5 +66,5 @@ The molecule mirrors the Figma component's 4 props — `type` · `emoji` · `row
 - Reaction pills, SendTime, and BubbleComments follow the accessibility rules of their own atoms.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

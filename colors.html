@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pyroblast — Colors</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles/color-tokens.css" />
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2" />
+  <link rel="stylesheet" href="styles/color-tokens.css?v=3" />
   <link rel="stylesheet" href="styles/cursor.css?v=9" />
   <link rel="stylesheet" href="styles/text-tokens.css" />
   <link rel="stylesheet" href="styles/elevation-tokens.css" />
   <link rel="stylesheet" href="styles/nav.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Roboto:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles/page-transition.css?v=3" />
-  <link rel="stylesheet" href="styles/site-header.css" />
+  <link rel="stylesheet" href="styles/site-header.css?v=2" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Archivo", sans-serif;
+      font-family: var(--font-display, "Archivo", sans-serif);
       background: var(--color-constant-primary);
       color: var(--color-primary);
       min-height: 100vh;
@@ -84,6 +84,25 @@
       line-height: 1.3;
       word-break: break-word;
     }
+
+    /* Token value (hex/rgba) — resolved from the live CSS variable by script,
+       so this page can never drift from styles/color-tokens.css */
+    .swatch__value {
+      font-family: "Roboto Mono", "Fira Code", monospace;
+      font-size: 8px;
+      color: var(--color-primary-transparent-48);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .color-group__use {
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 21px;
+      color: var(--color-primary-transparent-60);
+      max-width: 640px;
+      margin: -8px 0 16px;
+    }
   </style>
 </head>
 <body>
@@ -96,13 +115,12 @@
       </a>
       <nav class="site-header__menu" aria-label="Site sections">
         <div class="menu-item">
-          <a class="menu-item__trigger" href="index.html">About me</a>
+          <a class="menu-item__trigger" href="index.html#about">About me</a>
           <div class="menu-item__dropdown">
-            <a class="menu-item__link" href="index.html">Main page</a>
-            <a class="menu-item__link" href="index.html#experience">Work Experience</a>
+            <a class="menu-item__link" href="index.html#experience">Work experience</a>
             <a class="menu-item__link" href="index.html#education">Education</a>
             <a class="menu-item__link" href="index.html#tools">Tools</a>
-            <a class="menu-item__link" href="index.html#about">Bit About Me</a>
+            <a class="menu-item__link" href="index.html#about">Bit about me</a>
           </div>
         </div>
         <div class="menu-item">
@@ -132,6 +150,7 @@
     <!-- Primary -->
     <div class="color-group">
       <div class="color-group__label">Primary</div>
+      <p class="color-group__use">Text, icons and&nbsp;strokes on&nbsp;light surfaces. The alpha steps are the&nbsp;hierarchy: 87 body text, 60 secondary, 48 hints, 32 strokes, 16–04 dividers and&nbsp;fills.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-primary-transparent-87)"></div><div class="swatch__name">transparent‑87</div></div>
@@ -149,6 +168,7 @@
     <!-- Constant -->
     <div class="color-group">
       <div class="color-group__label">Constant</div>
+      <p class="color-group__use">Stays light no&nbsp;matter what it&nbsp;sits on — surfaces, and&nbsp;content on&nbsp;dark or&nbsp;colored fills.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-primary);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-constant-transparent-87);border-color:var(--color-primary-transparent-16)"></div><div class="swatch__name">transparent‑87</div></div>
@@ -166,6 +186,7 @@
     <!-- Brand Red -->
     <div class="color-group">
       <div class="color-group__label">Brand Red</div>
+      <p class="color-group__use">The brand voice: accent buttons, avatars, the&nbsp;notification counter.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-red-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -184,6 +205,7 @@
     <!-- Brand Yellow -->
     <div class="color-group">
       <div class="color-group__label">Brand Yellow</div>
+      <p class="color-group__use">Action and&nbsp;selection: primary buttons, checked states, highlights.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-brand-yellow-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -202,6 +224,7 @@
     <!-- Warning -->
     <div class="color-group">
       <div class="color-group__label">Warning</div>
+      <p class="color-group__use">Errors, destructive actions and&nbsp;the&nbsp;Live badge.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-warning-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -220,6 +243,7 @@
     <!-- Info -->
     <div class="color-group">
       <div class="color-group__label">Info</div>
+      <p class="color-group__use">Informational accents: links, channel avatars, info states.</p>
       <div class="color-swatches">
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-primary)"></div><div class="swatch__name">primary</div></div>
         <div class="swatch"><div class="swatch__tile" style="background:var(--color-info-secondary)"></div><div class="swatch__name">secondary</div></div>
@@ -238,6 +262,21 @@
   </main>
 
   <script src="scripts/nav.js"></script>
-  <script src="scripts/page-transition.js?v=4"></script>
+  <script>
+    // Print each token's real value under its swatch, resolved from the CSS
+    // variable itself — the page stays in sync with color-tokens.css for free.
+    document.querySelectorAll('.swatch').forEach(function (sw) {
+      var tile = sw.querySelector('.swatch__tile');
+      var m = (tile.getAttribute('style') || '').match(/var\((--[a-z0-9-]+)\)/i);
+      if (!m) return;
+      var val = getComputedStyle(document.documentElement).getPropertyValue(m[1]).trim();
+      if (!val) return;
+      var el = document.createElement('div');
+      el.className = 'swatch__value';
+      el.textContent = val.replace(/\s+/g, '').replace(/0\./g, '.');
+      sw.appendChild(el);
+    });
+  </script>
+  <script src="scripts/page-transition.js?v=5"></script>
 </body>
 </html>

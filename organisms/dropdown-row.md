@@ -41,5 +41,5 @@
 - Min touch target 44pt (item ≈ 48px tall)
 
 ## Status
-`draft` — proposed by Claude, confirmed by the user.
+`draft`  
 Version 0.1 | Owner: @medvedeva

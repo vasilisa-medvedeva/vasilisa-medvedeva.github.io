@@ -6,10 +6,15 @@
   --color-primary-transparent-60: rgba(0, 0, 0, 0.60);
   --color-primary-transparent-48: rgba(0, 0, 0, 0.48);
   --color-primary-transparent-32: rgba(0, 0, 0, 0.32);
+  /* ⚠️ Known deviation: -24 and -16 ship flattened one step lighter than their
+     names promise (#D6D6D6 ≈ 16% black, #EBEBEB ≈ 8% black on white). Every
+     hairline border on the site is tuned to these values — correcting them to
+     true 0.24/0.16 alphas is a visible, site-wide change that needs a QA pass
+     against Figma first. Flagged, not hidden. */
   --color-primary-transparent-24: #D6D6D6;
   --color-primary-transparent-16: #EBEBEB;
-  --color-primary-transparent-08: #EBEBEB;
-  --color-primary-transparent-04: #F5F5F5;
+  --color-primary-transparent-08: rgba(0, 0, 0, 0.08);
+  --color-primary-transparent-04: rgba(0, 0, 0, 0.04);
 
   /* Constant */
   --color-constant-primary: #FFFFFF;
@@ -35,6 +40,17 @@
   --color-brand-red-transparent-16: #FBDCD7;
   --color-brand-red-transparent-8: #F9EDEB;
   --color-brand-red-transparent-4: #FCF6F5;
+
+  /* Accent Orange (header hover rounds) */
+  /* Site accent — violet (token keeps its historical name; every page
+     references it, so the name stays put while the color moved on).
+     Dark text on #8B5CF6 clears AA at 4.9:1. */
+  --color-accent-orange: #8B5CF6;
+  --color-accent-orange-pressed: #7C3AED;
+  /* The accent at 87%, for large filled surfaces where it shouts at full
+     strength. Over the dark page it settles to #7C53D9; white text on that
+     clears AA at 5.1:1, where the solid accent only manages 4.2:1. */
+  --color-accent-orange-transparent-87: rgba(139, 92, 246, 0.87);
 
   /* Brand Yellow */
   --color-brand-yellow-primary: #FFC244;

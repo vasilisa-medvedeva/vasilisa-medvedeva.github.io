@@ -42,5 +42,5 @@
 - Provide an `aria-label` with the person's name on `.avatar-ph`; the initial is `aria-hidden`.
 
 ## Status
-`draft` — proposed by Claude, confirm to change.
+`draft`  
 Version 0.1 | Owner: @medvedeva_vas

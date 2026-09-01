@@ -38,9 +38,9 @@ Note: chats are **not** colour-highlighted by state — read, unread and attache
 | Token | Role in this component |
 |---|---|
 | `--color-brand-yellow-4` | Default row surface |
-| `--color-brand-yellow-8` | Attached (grouped) row surface |
+| `--color-brand-yellow-8` | Pressed row surface (transient `--pressed` / `:active` only) |
 | `--color-brand-yellow-16` | Avatar background |
-| `--color-primary-transparent-70` | Avatar initials |
+| `--color-brand-yellow-quaternary` | Avatar initials — darker shade of the yellow-16 background (tonal rule, see Avatar atom) |
 | `--color-primary-transparent-87` | Title · unread subtitle |
 | `--color-primary-transparent-60` | Read subtitle · time |
 | `--color-primary-transparent-16` | Divider hairline |
@@ -65,5 +65,5 @@ Note: chats are **not** colour-highlighted by state — read, unread and attache
 - Contrast: title/subtitle on the cream surface meet AA
 
 ## Status
-`draft` — proposed by Claude, to be confirmed by the user.
+`draft`  
 Version 0.1 | Owner: @medvedeva
